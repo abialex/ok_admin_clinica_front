@@ -1,6 +1,7 @@
 import 'package:admin_clinica_front/core/di/injections.dart';
 import 'package:admin_clinica_front/data/datasources/local/auth_service.dart';
 import 'package:admin_clinica_front/data/models/api_model/api_model.dart';
+import 'package:admin_clinica_front/infraestructura/network/http_status_codes.dart';
 import 'package:dio/dio.dart';
 
 class AppInterceptor extends Interceptor {
@@ -28,10 +29,18 @@ class AppInterceptor extends Interceptor {
   @override
   void onError(DioException error, ErrorInterceptorHandler handler) {
     // Manejar errores de solicitud
+    if (error.response == null) {
+      final responseNoConecctionn = Response<dynamic>(
+        requestOptions: error.requestOptions,
+        statusCode: HttpStatusCodesApp.serverConnectionError,
+        data: null,
+        statusMessage: "No hay conexion al servidor",
+      );
+      return handler.resolve(responseNoConecctionn);
+    }
     ApiModel apiModel = ApiModel.fromJson(error.response?.data);
     error.response?.data = apiModel;
     handler.resolve(error.response!);
-    // super.onError(error, handler);
   }
 }
 
