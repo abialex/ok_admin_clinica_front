@@ -8,7 +8,10 @@ import 'package:get_it/get_it.dart';
 import '../../data/datasources/local/auth_service.dart';
 import '../../data/datasources/remote/asistente_api.dart';
 import '../../data/datasources/remote/doctor_api.dart';
+import '../../data/repositories_impl/cita_repository_impl.dart';
 import '../../data/repositories_impl/usuario_repository_impl.dart';
+import '../../dominio/repositories/icita_repository.dart';
+import '../../dominio/repositories/iusuario_repository.dart';
 
 GetIt locator = GetIt.instance;
 
@@ -21,7 +24,9 @@ Future<void> setupLocator() async {
 }
 
 void setupRepositorys() {
-  locator.registerLazySingleton<UsuarioRepository>(() => UsuarioRepository());
+  locator.registerLazySingleton<IUsuarioRepository>(() => UsuarioRepository());
+  locator
+      .registerLazySingleton<ICitaRepository>(() => CitaRepository(locator()));
 }
 
 void setupServices() {
