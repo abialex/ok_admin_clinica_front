@@ -6,6 +6,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';
 
 import '../../data/datasources/local/auth_service.dart';
+import '../../data/datasources/remote/asistente_api.dart';
 import '../../data/datasources/remote/doctor_api.dart';
 import '../../data/repositories_impl/usuario_repository_impl.dart';
 
@@ -32,6 +33,7 @@ void setupDataSource() {
   locator.registerSingleton<UsuarioApi>(UsuarioApi(locator()));
   locator.registerSingleton<CitaApi>(CitaApi(locator()));
   locator.registerSingleton<DoctorApi>(DoctorApi(locator()));
+  locator.registerSingleton<AsistenteApi>(AsistenteApi(locator()));
 }
 
 void setupBlocs() {
