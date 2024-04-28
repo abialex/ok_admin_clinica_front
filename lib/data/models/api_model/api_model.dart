@@ -8,14 +8,14 @@ class ApiModel {
   final String message;
   final String url;
   final dynamic data;
-  final dynamic fields_errors;
+  final dynamic field_errors;
 
   ApiModel({
     required this.tipo,
     required this.message,
     required this.url,
     required this.data,
-    required this.fields_errors,
+    required this.field_errors,
   });
 
   //fromJson

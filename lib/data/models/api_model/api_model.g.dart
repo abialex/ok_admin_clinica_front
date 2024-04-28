@@ -11,7 +11,7 @@ ApiModel _$ApiModelFromJson(Map<String, dynamic> json) => ApiModel(
       message: json['message'] as String,
       url: json['url'] as String,
       data: json['data'],
-      fields_errors: json['fields_errors'],
+      field_errors: json['field_errors'],
     );
 
 Map<String, dynamic> _$ApiModelToJson(ApiModel instance) => <String, dynamic>{
@@ -19,5 +19,5 @@ Map<String, dynamic> _$ApiModelToJson(ApiModel instance) => <String, dynamic>{
       'message': instance.message,
       'url': instance.url,
       'data': instance.data,
-      'fields_errors': instance.fields_errors,
+      'field_errors': instance.field_errors,
     };

@@ -6,4 +6,11 @@ class Ubicacion {
     this.id,
     this.nombre,
   });
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'nombre': nombre,
+    };
+  }
 }
