@@ -16,7 +16,7 @@ class AsistenteDto {
   final String apellidos;
   final String? celular;
   final String? domicilio;
-  final DateTime? fechaNacimiento;
+  final String? fechaNacimiento;
 
   AsistenteDto({
     required this.id,
@@ -31,8 +31,7 @@ class AsistenteDto {
     this.fechaNacimiento,
   });
   //fromJson
-  factory AsistenteDto.fromJson(Map<String, dynamic> map) =>
-      _$AsistenteDtoFromJson(map);
+  factory AsistenteDto.fromJson(Map<String, dynamic> map) => _$AsistenteDtoFromJson(map);
 
   //ToJson
   Map<String, dynamic> toJson() => _$AsistenteDtoToJson(this);

@@ -17,9 +17,7 @@ AsistenteDto _$AsistenteDtoFromJson(Map<String, dynamic> json) => AsistenteDto(
       apellidos: json['apellidos'] as String,
       celular: json['celular'] as String?,
       domicilio: json['domicilio'] as String?,
-      fechaNacimiento: json['fechaNacimiento'] == null
-          ? null
-          : DateTime.parse(json['fechaNacimiento'] as String),
+      fechaNacimiento: json['fechaNacimiento'] as String?,
     );
 
 Map<String, dynamic> _$AsistenteDtoToJson(AsistenteDto instance) =>
@@ -33,5 +31,5 @@ Map<String, dynamic> _$AsistenteDtoToJson(AsistenteDto instance) =>
       'apellidos': instance.apellidos,
       'celular': instance.celular,
       'domicilio': instance.domicilio,
-      'fechaNacimiento': instance.fechaNacimiento?.toIso8601String(),
+      'fechaNacimiento': instance.fechaNacimiento,
     };
