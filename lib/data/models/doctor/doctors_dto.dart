@@ -5,18 +5,20 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'doctors_dto.g.dart';
 
 @JsonSerializable()
-class DoctorsDto extends Doctor {
+class DoctorsDto {
+  final int id;
   final int usuario_id;
   final String username;
+  final String nombres;
+  final String apellidos;
 
   DoctorsDto({
-    required super.id,
+    required this.id,
     required this.usuario_id,
     required this.username,
-    required super.nombres,
-    required super.apellidos,
-  }) : super(usuarioId: usuario_id, usuarioUsername: username);
-
+    required this.nombres,
+    required this.apellidos,
+  });
   //fromJson
   factory DoctorsDto.fromJson(Map<String, dynamic> map) =>
       _$DoctorsDtoFromJson(map);

@@ -14,6 +14,7 @@ CitaAgilUpdateModel _$CitaAgilUpdateModelFromJson(Map<String, dynamic> json) =>
       ubicacion_id: json['ubicacion_id'] as int,
       fechaHoraCita: json['fechaHoraCita'] as String,
       razon: json['razon'] as String?,
+      celular: json['celular'] as String?,
       datosPaciente: json['datosPaciente'] as String,
     );
 
@@ -25,6 +26,7 @@ Map<String, dynamic> _$CitaAgilUpdateModelToJson(
       'doctor_id': instance.doctor_id,
       'ubicacion_id': instance.ubicacion_id,
       'fechaHoraCita': instance.fechaHoraCita,
+      'celular': instance.celular,
       'razon': instance.razon,
       'datosPaciente': instance.datosPaciente,
     };
