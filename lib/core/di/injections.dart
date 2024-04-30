@@ -2,6 +2,7 @@ import 'package:admin_clinica_front/data/datasources/remote/cita_api.dart';
 import 'package:admin_clinica_front/data/datasources/remote/usuario_api.dart';
 import 'package:admin_clinica_front/data/repositories_impl/local_shared_repository_impl.dart';
 import 'package:admin_clinica_front/dominio/services/citas_service.dart';
+import 'package:admin_clinica_front/dominio/services/usuario_service.dart';
 import 'package:admin_clinica_front/infraestructura/network/api_client.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
@@ -55,6 +56,8 @@ void setupRepositorys() {
 void setupServices() {
   locator.registerLazySingleton<CitasService>(() => CitasService(locator()));
   locator.registerLazySingleton<DoctorService>(() => DoctorService(locator()));
+  locator
+      .registerLazySingleton<UsuarioService>(() => UsuarioService(locator()));
 }
 
 void setupDataSource() {
