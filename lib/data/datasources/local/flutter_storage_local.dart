@@ -2,10 +2,10 @@
 
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-class AuthRepository {
-  final FlutterSecureStorage _secureStorage;
+class FlutterStorageLocal {
+  final FlutterSecureStorage _secureStorage = const FlutterSecureStorage();
 
-  AuthRepository(this._secureStorage);
+  FlutterStorageLocal();
 
   Future<void> saveToken(String token) async {
     await _secureStorage.write(key: _KeyStorage.AUTH_TOKEN, value: token);

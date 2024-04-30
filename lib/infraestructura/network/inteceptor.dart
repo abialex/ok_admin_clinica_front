@@ -1,14 +1,16 @@
 import 'package:admin_clinica_front/core/di/injections.dart';
-import 'package:admin_clinica_front/data/datasources/local/auth_service.dart';
+import 'package:admin_clinica_front/data/datasources/local/flutter_storage_local.dart';
 import 'package:admin_clinica_front/data/models/api_model/api_model.dart';
 import 'package:admin_clinica_front/infraestructura/network/http_status_codes.dart';
 import 'package:dio/dio.dart';
+
+import '../../dominio/repositories/ilocal_repository.dart';
 
 class AppInterceptor extends Interceptor {
   @override
   void onRequest(
       RequestOptions options, RequestInterceptorHandler handler) async {
-    AuthRepository authService = locator<AuthRepository>();
+    ILocalRepository authService = locator<ILocalRepository>();
 
     // Añadir token de autenticación a todas las solicitudes si está disponible
     final token =
@@ -48,7 +50,7 @@ class AppInterceptorEncrypt extends Interceptor {
   @override
   void onRequest(
       RequestOptions options, RequestInterceptorHandler handler) async {
-    AuthRepository authService = locator<AuthRepository>();
+    FlutterStorageLocal authService = locator<FlutterStorageLocal>();
 
     // Añadir token de autenticación a todas las solicitudes si está disponible
     final token =
