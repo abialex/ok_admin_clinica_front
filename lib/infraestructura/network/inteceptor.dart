@@ -8,7 +8,7 @@ class AppInterceptor extends Interceptor {
   @override
   void onRequest(
       RequestOptions options, RequestInterceptorHandler handler) async {
-    AuthService authService = locator<AuthService>();
+    AuthRepository authService = locator<AuthRepository>();
 
     // Añadir token de autenticación a todas las solicitudes si está disponible
     final token =
@@ -48,7 +48,7 @@ class AppInterceptorEncrypt extends Interceptor {
   @override
   void onRequest(
       RequestOptions options, RequestInterceptorHandler handler) async {
-    AuthService authService = locator<AuthService>();
+    AuthRepository authService = locator<AuthRepository>();
 
     // Añadir token de autenticación a todas las solicitudes si está disponible
     final token =
