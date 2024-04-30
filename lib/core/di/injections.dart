@@ -11,10 +11,12 @@ import '../../data/datasources/local/flutter_storage_local.dart';
 import '../../data/datasources/local/shared_preferences_local.dart';
 import '../../data/datasources/remote/asistente_api.dart';
 import '../../data/datasources/remote/doctor_api.dart';
+import '../../data/repositories_impl/asistente_repository_impl.dart';
 import '../../data/repositories_impl/cita_repository_impl.dart';
 import '../../data/repositories_impl/doctor_repository_impl.dart';
 import '../../data/repositories_impl/local_storage_repository_impl.dart';
 import '../../data/repositories_impl/usuario_repository_impl.dart';
+import '../../dominio/repositories/iasistente_repository.dart';
 import '../../dominio/repositories/icita_repository.dart';
 import '../../dominio/repositories/idoctor_repository.dart';
 import '../../dominio/repositories/ilocal_repository.dart';
@@ -36,35 +38,27 @@ Future<void> setupLocator() async {
 
 void setupRepositorys() {
   //SI ES CEL O DESKPTOP
-  if (foundation.defaultTargetPlatform == foundation.TargetPlatform.android ||
-      foundation.defaultTargetPlatform == foundation.TargetPlatform.iOS) {
-    locator.registerLazySingleton<ILocalRepository>(
-        () => FlutterStorageRepository(locator()));
+  if (foundation.defaultTargetPlatform == foundation.TargetPlatform.android || foundation.defaultTargetPlatform == foundation.TargetPlatform.iOS) {
+    locator.registerLazySingleton<ILocalRepository>(() => FlutterStorageRepository(locator()));
   } else {
-    locator.registerLazySingleton<ILocalRepository>(
-        () => SharedPreferencesRepository(locator()));
+    locator.registerLazySingleton<ILocalRepository>(() => SharedPreferencesRepository(locator()));
   }
 
-  locator.registerLazySingleton<IUsuarioRepository>(
-      () => UsuarioRepository(locator()));
-  locator
-      .registerLazySingleton<ICitaRepository>(() => CitaRepository(locator()));
-  locator.registerLazySingleton<IDoctorRepository>(
-      () => DoctorRepository(locator()));
+  locator.registerLazySingleton<IUsuarioRepository>(() => UsuarioRepository(locator()));
+  locator.registerLazySingleton<ICitaRepository>(() => CitaRepository(locator()));
+  locator.registerLazySingleton<IDoctorRepository>(() => DoctorRepository(locator()));
+  locator.registerLazySingleton<IAsistenteRepository>(() => AsistenteRepository(locator()));
 }
 
 void setupServices() {
   locator.registerLazySingleton<CitasService>(() => CitasService(locator()));
   locator.registerLazySingleton<DoctorService>(() => DoctorService(locator()));
-  locator
-      .registerLazySingleton<UsuarioService>(() => UsuarioService(locator()));
+  locator.registerLazySingleton<UsuarioService>(() => UsuarioService(locator()));
 }
 
 void setupDataSource() {
-  locator
-      .registerLazySingleton<FlutterStorageLocal>(() => FlutterStorageLocal());
-  locator.registerLazySingleton<SharedPreferencesLocal>(
-      () => SharedPreferencesLocal());
+  locator.registerLazySingleton<FlutterStorageLocal>(() => FlutterStorageLocal());
+  locator.registerLazySingleton<SharedPreferencesLocal>(() => SharedPreferencesLocal());
   locator.registerLazySingleton<UsuarioApi>(() => UsuarioApi(locator()));
   locator.registerLazySingleton<CitaApi>(() => CitaApi(locator()));
   locator.registerLazySingleton<DoctorApi>(() => DoctorApi(locator()));
