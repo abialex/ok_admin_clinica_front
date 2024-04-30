@@ -10,6 +10,7 @@ class CitaAgilUpdateModel {
   final int doctor_id;
   final int ubicacion_id;
   final String fechaHoraCita;
+  final String? celular;
   final String? razon;
   final String datosPaciente;
 
@@ -20,6 +21,7 @@ class CitaAgilUpdateModel {
     required this.ubicacion_id,
     required this.fechaHoraCita,
     this.razon,
+    this.celular,
     required this.datosPaciente,
   });
   //fromJson

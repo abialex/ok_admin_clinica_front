@@ -12,6 +12,8 @@ CitaAgilCreateModel _$CitaAgilCreateModelFromJson(Map<String, dynamic> json) =>
       datosPaciente: json['datosPaciente'] as String,
       doctor_id: json['doctor_id'] as int,
       ubicacion_id: json['ubicacion_id'] as int,
+      celular: json['celular'] as String?,
+      razon: json['razon'] as String?,
     );
 
 Map<String, dynamic> _$CitaAgilCreateModelToJson(
@@ -21,4 +23,6 @@ Map<String, dynamic> _$CitaAgilCreateModelToJson(
       'ubicacion_id': instance.ubicacion_id,
       'fechaHoraCita': instance.fechaHoraCita,
       'datosPaciente': instance.datosPaciente,
+      'celular': instance.celular,
+      'razon': instance.razon,
     };

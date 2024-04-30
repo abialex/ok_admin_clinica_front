@@ -9,12 +9,16 @@ class CitaAgilCreateModel {
   final int ubicacion_id;
   final String fechaHoraCita;
   final String datosPaciente;
+  final String? celular;
+  final String? razon;
 
   CitaAgilCreateModel({
     required this.fechaHoraCita,
     required this.datosPaciente,
     required this.doctor_id,
     required this.ubicacion_id,
+    this.celular,
+    this.razon,
   });
   //fromJson
   factory CitaAgilCreateModel.fromJson(Map<String, dynamic> map) =>
