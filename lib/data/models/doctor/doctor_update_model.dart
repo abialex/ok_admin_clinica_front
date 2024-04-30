@@ -7,20 +7,24 @@ import 'package:json_annotation/json_annotation.dart';
 part 'doctor_update_model.g.dart';
 
 @JsonSerializable()
-class DoctorUpdateModel extends Doctor {
+class DoctorUpdateModel {
+  final int id;
+  final String dni;
+  final String nombres;
+  final String apellidos;
+  final String celular;
+  final String fechaNacimiento;
   final List<int>? ubicaciones_id;
-  @DateTimeConverter()
-  final DateTime fechaNacimiento;
-  DoctorUpdateModel({
-    required super.id,
-    required super.dni,
-    required super.nombres,
-    required super.apellidos,
-    required super.celular,
-    required this.fechaNacimiento,
-    required this.ubicaciones_id,
-  }) : super(fechaNacimiento: fechaNacimiento);
 
+  DoctorUpdateModel({
+    required this.id,
+    required this.dni,
+    required this.nombres,
+    required this.apellidos,
+    required this.celular,
+    required this.fechaNacimiento,
+    this.ubicaciones_id,
+  });
   factory DoctorUpdateModel.fromJson(Map<String, dynamic> map) =>
       _$DoctorUpdateModelFromJson(map);
 

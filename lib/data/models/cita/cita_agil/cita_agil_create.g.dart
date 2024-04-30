@@ -8,8 +8,8 @@ part of 'cita_agil_create.dart';
 
 CitaAgilCreateModel _$CitaAgilCreateModelFromJson(Map<String, dynamic> json) =>
     CitaAgilCreateModel(
-      fechaHoraCita: json['fechaHoraCita'] as String?,
-      datosPaciente: json['datosPaciente'] as String?,
+      fechaHoraCita: json['fechaHoraCita'] as String,
+      datosPaciente: json['datosPaciente'] as String,
       doctor_id: json['doctor_id'] as int,
       ubicacion_id: json['ubicacion_id'] as int,
     );
@@ -17,8 +17,8 @@ CitaAgilCreateModel _$CitaAgilCreateModelFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$CitaAgilCreateModelToJson(
         CitaAgilCreateModel instance) =>
     <String, dynamic>{
-      'fechaHoraCita': instance.fechaHoraCita,
-      'datosPaciente': instance.datosPaciente,
       'doctor_id': instance.doctor_id,
       'ubicacion_id': instance.ubicacion_id,
+      'fechaHoraCita': instance.fechaHoraCita,
+      'datosPaciente': instance.datosPaciente,
     };

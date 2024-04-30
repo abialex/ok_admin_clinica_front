@@ -7,8 +7,8 @@ part of 'ubicacion_dto.dart';
 // **************************************************************************
 
 UbicacionDto _$UbicacionDtoFromJson(Map<String, dynamic> json) => UbicacionDto(
-      id: json['id'] as int?,
-      nombre: json['nombre'] as String?,
+      id: json['id'] as int,
+      nombre: json['nombre'] as String,
     );
 
 Map<String, dynamic> _$UbicacionDtoToJson(UbicacionDto instance) =>

@@ -8,14 +8,13 @@ part of 'doctor_create_model.dart';
 
 DoctorCreateModel _$DoctorCreateModelFromJson(Map<String, dynamic> json) =>
     DoctorCreateModel(
-      dni: json['dni'] as String?,
-      nombres: json['nombres'] as String?,
-      apellidos: json['apellidos'] as String?,
-      celular: json['celular'] as String?,
-      fechaNacimiento:
-          const DateTimeConverter().fromJson(json['fechaNacimiento'] as String),
-      ubicaciones_id: (json['ubicaciones_id'] as List<dynamic>?)
-          ?.map((e) => e as int)
+      dni: json['dni'] as String,
+      nombres: json['nombres'] as String,
+      apellidos: json['apellidos'] as String,
+      celular: json['celular'] as String,
+      fechaNacimiento: json['fechaNacimiento'] as String,
+      ubicaciones_id: (json['ubicaciones_id'] as List<dynamic>)
+          .map((e) => e as int)
           .toList(),
     );
 
@@ -25,7 +24,6 @@ Map<String, dynamic> _$DoctorCreateModelToJson(DoctorCreateModel instance) =>
       'nombres': instance.nombres,
       'apellidos': instance.apellidos,
       'celular': instance.celular,
+      'fechaNacimiento': instance.fechaNacimiento,
       'ubicaciones_id': instance.ubicaciones_id,
-      'fechaNacimiento':
-          const DateTimeConverter().toJson(instance.fechaNacimiento),
     };

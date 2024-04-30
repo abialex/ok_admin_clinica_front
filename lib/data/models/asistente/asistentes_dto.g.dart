@@ -8,11 +8,11 @@ part of 'asistentes_dto.dart';
 
 AsistentesDto _$AsistentesDtoFromJson(Map<String, dynamic> json) =>
     AsistentesDto(
-      id: json['id'] as int?,
+      id: json['id'] as int,
       usuario_id: json['usuario_id'] as int,
       username: json['username'] as String,
-      nombres: json['nombres'] as String?,
-      apellidos: json['apellidos'] as String?,
+      nombres: json['nombres'] as String,
+      apellidos: json['apellidos'] as String,
     );
 
 Map<String, dynamic> _$AsistentesDtoToJson(AsistentesDto instance) =>

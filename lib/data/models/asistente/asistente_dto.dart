@@ -1,29 +1,35 @@
 // ignore_for_file: non_constant_identifier_names
 
-import 'package:admin_clinica_front/dominio/entities/asistente.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../ubicacion/ubicacion_dto.dart';
 part 'asistente_dto.g.dart';
 
-@JsonSerializable()
-class AsistenteDto extends Asistente {
+@JsonSerializable() //extends Asistente
+class AsistenteDto {
+  final int id;
   final int usuario_id;
   final String usuario_username;
+  final UbicacionDto ubicacion;
+  final String dni;
+  final String nombres;
+  final String apellidos;
+  final String? celular;
+  final String? domicilio;
+  final DateTime? fechaNacimiento;
 
   AsistenteDto({
-    required super.id,
+    required this.id,
     required this.usuario_id,
     required this.usuario_username,
-    required UbicacionDto super.ubicacion,
-    required super.dni,
-    required super.nombres,
-    required super.apellidos,
-    super.celular,
-    super.domicilio,
-    super.fechaNacimiento,
-  }) : super(usuarioId: usuario_id, usuarioUsername: usuario_username);
-
+    required this.ubicacion,
+    required this.dni,
+    required this.nombres,
+    required this.apellidos,
+    this.celular,
+    this.domicilio,
+    this.fechaNacimiento,
+  });
   //fromJson
   factory AsistenteDto.fromJson(Map<String, dynamic> map) =>
       _$AsistenteDtoFromJson(map);

@@ -12,17 +12,17 @@ UserLoginDTO _$UserLoginDTOFromJson(Map<String, dynamic> json) => UserLoginDTO(
       nombres: json['nombres'] as String,
       token: json['token'] as String,
       is_new_token: json['is_new_token'] as bool,
-      rol: json['rol'] as String?,
+      rol: json['rol'] as String,
       dias_token: json['dias_token'] as int,
     );
 
 Map<String, dynamic> _$UserLoginDTOToJson(UserLoginDTO instance) =>
     <String, dynamic>{
-      'username': instance.username,
       'user_id': instance.user_id,
+      'is_new_token': instance.is_new_token,
+      'dias_token': instance.dias_token,
       'nombres': instance.nombres,
       'token': instance.token,
-      'is_new_token': instance.is_new_token,
       'rol': instance.rol,
-      'dias_token': instance.dias_token,
+      'username': instance.username,
     };

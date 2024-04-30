@@ -9,14 +9,13 @@ part of 'asistente_update_model.dart';
 AsistenteUpdateModel _$AsistenteUpdateModelFromJson(
         Map<String, dynamic> json) =>
     AsistenteUpdateModel(
-      id: json['id'] as int?,
-      dni: json['dni'] as String?,
-      nombres: json['nombres'] as String?,
-      apellidos: json['apellidos'] as String?,
-      celular: json['celular'] as String?,
-      tipo: json['tipo'] as int?,
-      fechaNacimiento:
-          const DateTimeConverter().fromJson(json['fechaNacimiento'] as String),
+      id: json['id'] as int,
+      dni: json['dni'] as String,
+      nombres: json['nombres'] as String,
+      apellidos: json['apellidos'] as String,
+      celular: json['celular'] as String,
+      tipo: json['tipo'] as int,
+      fechaNacimiento: json['fechaNacimiento'] as String,
       ubicacion_id: json['ubicacion_id'] as int,
     );
 
@@ -29,7 +28,6 @@ Map<String, dynamic> _$AsistenteUpdateModelToJson(
       'apellidos': instance.apellidos,
       'celular': instance.celular,
       'tipo': instance.tipo,
+      'fechaNacimiento': instance.fechaNacimiento,
       'ubicacion_id': instance.ubicacion_id,
-      'fechaNacimiento':
-          const DateTimeConverter().toJson(instance.fechaNacimiento),
     };

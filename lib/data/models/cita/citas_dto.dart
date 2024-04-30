@@ -6,46 +6,40 @@ import 'package:json_annotation/json_annotation.dart';
 part 'citas_dto.g.dart';
 
 @JsonSerializable()
-class CitasDTO extends Cita {
-  // final int doctor_id;
-  // final int ubicacion_id;
+class CitasDTO {
+  final int id;
+  final String fechaHoraCita;
+  final int estado;
+  final int tipo;
+  final String? celular;
+  final PacienteDTO? paciente;
+  final String? razon;
+  final String? razonOcupado;
+  final String? datosPaciente;
   final String? estado_string;
   final String? tipo_string;
+  final String? fechaConfirmacion;
+  final String? fechaValidacion;
+  final String? fechaInicio;
+  final String? fechaFin;
 
   CitasDTO({
-    required int super.id,
-    // required String super.doctor,
-    // required String super.ubicacion,
-    required String super.fechaHoraCita,
-    required int super.estado,
-    required int super.tipo,
-    required super.celular,
-    PacienteDTO? super.paciente,
-    super.razon,
-    super.razonOcupado,
-    super.datosPaciente,
-    // required this.doctor_id,
-    // required this.ubicacion_id,
-    String? fechaConfirmacion,
-    String? fechaValidacion,
-    String? fechaInicio,
-    String? fechaFin,
-    required this.estado_string,
-    required this.tipo_string,
-  }) : super(
-          // doctorId: doctor_id,
-          // ubicacionId: ubicacion_id,
-          estadoString: estado_string,
-          tipoString: tipo_string,
-          fechaConfirmacion: fechaConfirmacion != null
-              ? DateTime.parse(fechaConfirmacion)
-              : null,
-          fechaValidacion:
-              fechaValidacion != null ? DateTime.parse(fechaValidacion) : null,
-          fechaInicio: fechaInicio != null ? DateTime.parse(fechaInicio) : null,
-          fechaFin: fechaFin != null ? DateTime.parse(fechaFin) : null,
-        );
-
+    required this.id,
+    required this.fechaHoraCita,
+    required this.estado,
+    required this.tipo,
+    this.celular,
+    this.paciente,
+    this.razon,
+    this.razonOcupado,
+    this.datosPaciente,
+    this.estado_string,
+    this.tipo_string,
+    this.fechaConfirmacion,
+    this.fechaValidacion,
+    this.fechaInicio,
+    this.fechaFin,
+  });
   //fromJson
   factory CitasDTO.fromJson(Map<String, dynamic> map) =>
       _$CitasDTOFromJson(map);
