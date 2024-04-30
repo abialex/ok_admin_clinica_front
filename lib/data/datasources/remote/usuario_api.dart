@@ -1,31 +1,38 @@
+import 'package:admin_clinica_front/data/datasources/remote/base_api.dart';
 import 'package:admin_clinica_front/data/models/api_model/api_model.dart';
 import 'package:admin_clinica_front/data/models/usuario/authenticated_dto.dart';
 import 'package:admin_clinica_front/data/models/usuario/user_dto.dart';
 import 'package:admin_clinica_front/data/utils/api_utils.dart';
 import 'package:dio/dio.dart';
 import 'package:either_dart/either.dart';
-import '../../../dominio/entities/usuario.dart';
+import '../../models/usuario/login_user_dto.dart';
 
-class UsuarioApi {
+class UsuarioApi implements BaseApi {
   final Dio _dio;
+  @override
+  String get url => "session/";
   UsuarioApi(this._dio);
 
-  Future<Either<String, User>> login(String name) async {
-    final response = await _dio.post<ApiModel>("session/login",
-        data: {"username": "slg_a_0519", "password": "0519s5762"});
+  Future<Either<String, UserLoginDTO>> login(LoginUserDto loginUserDto) async {
+    final response = await _dio.post<ApiModel>(
+      "${url}login",
+      data: loginUserDto.toJson(),
+    );
     return ApiUtils.reponseHandler(
         response, (data) => UserLoginDTO.fromJson(data));
   }
 
-  Future<Either<String, AuthenticatedDTO>> authenticated(String name) async {
-    final response = await _dio.post<ApiModel>("session/login_authenticated",
-        data: {"token": "slg_a_0519"});
+  Future<Either<String, AuthenticatedDTO>> authenticated(String token) async {
+    final response = await _dio.post<ApiModel>(
+      "${url}login_authenticated",
+      data: {"token": token},
+    );
     return ApiUtils.reponseHandler(
         response, (data) => AuthenticatedDTO.fromJson(data));
   }
 
-  Future<Either<String, bool>> logout(String name) async {
-    final response = await _dio.get<ApiModel>("session/logout");
+  Future<Either<String, bool>> logout() async {
+    final response = await _dio.get<ApiModel>("${url}logout");
     return ApiUtils.reponseHandler(response, (data) => data as bool);
   }
 }

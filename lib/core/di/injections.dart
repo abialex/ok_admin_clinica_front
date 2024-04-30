@@ -1,5 +1,6 @@
 import 'package:admin_clinica_front/data/datasources/remote/cita_api.dart';
 import 'package:admin_clinica_front/data/datasources/remote/usuario_api.dart';
+import 'package:admin_clinica_front/dominio/services/citas_service.dart';
 import 'package:admin_clinica_front/infraestructura/network/api_client.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -17,28 +18,33 @@ GetIt locator = GetIt.instance;
 
 Future<void> setupLocator() async {
   locator.registerSingleton<FlutterSecureStorage>(const FlutterSecureStorage());
-  setupServices();
+  locator.registerLazySingleton<Dio>(() => ApiClient().createDioLocal());
+
   setupDataSource();
   setupRepositorys();
+  setupServices();
+
   setupBlocs();
 }
 
 void setupRepositorys() {
-  locator.registerLazySingleton<IUsuarioRepository>(() => UsuarioRepository());
+  locator
+      .registerLazySingleton<AuthRepository>(() => AuthRepository(locator()));
+  locator.registerLazySingleton<IUsuarioRepository>(
+      () => UsuarioRepository(locator()));
   locator
       .registerLazySingleton<ICitaRepository>(() => CitaRepository(locator()));
 }
 
 void setupServices() {
-  locator.registerLazySingleton<Dio>(() => ApiClient().createDioLocal());
-  locator.registerSingleton<AuthService>(AuthService(locator()));
+  locator.registerLazySingleton<CitasService>(() => CitasService(locator()));
 }
 
 void setupDataSource() {
-  locator.registerSingleton<UsuarioApi>(UsuarioApi(locator()));
-  locator.registerSingleton<CitaApi>(CitaApi(locator()));
-  locator.registerSingleton<DoctorApi>(DoctorApi(locator()));
-  locator.registerSingleton<AsistenteApi>(AsistenteApi(locator()));
+  locator.registerLazySingleton<UsuarioApi>(() => UsuarioApi(locator()));
+  locator.registerLazySingleton<CitaApi>(() => CitaApi(locator()));
+  locator.registerLazySingleton<DoctorApi>(() => DoctorApi(locator()));
+  locator.registerLazySingleton<AsistenteApi>(() => AsistenteApi(locator()));
 }
 
 void setupBlocs() {
