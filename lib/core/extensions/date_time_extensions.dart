@@ -7,4 +7,11 @@ extension DateFormatting on DateTime {
     // Formato de fecha deseado: año-mes-día
     return formatter.format(this);
   }
+
+  String toFormatyyyyMMdd() {
+    final DateFormat formatter = DateFormat('yyyy-MM-dd');
+    minute;
+    // Formato de fecha deseado: año-mes-día
+    return formatter.format(this);
+  }
 }
