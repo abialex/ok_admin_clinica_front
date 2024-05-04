@@ -21,6 +21,12 @@ class DoctorsViewModel {
     required this.nombres,
     required this.apellidos,
   });
+
+  @override
+  String toString() {
+    // TODO: implement toString
+    return nombres;
+  }
 }
 
 class DoctorViewModel {
@@ -56,7 +62,7 @@ class DoctorCreateViewModel {
   final String nombres;
   final String apellidos;
   final String celular;
-  final String fechaNacimiento;
+  final DateTime fechaNacimiento;
   final List<int> ubicacionesId;
 
   DoctorCreateViewModel({
@@ -75,7 +81,7 @@ class DoctorUpdateViewModel {
   final String nombres;
   final String apellidos;
   final String celular;
-  final String fechaNacimiento;
+  final DateTime fechaNacimiento;
   final List<int>? ubicacionesId;
 
   DoctorUpdateViewModel({

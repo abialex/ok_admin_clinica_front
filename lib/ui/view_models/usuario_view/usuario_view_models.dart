@@ -16,6 +16,7 @@ class UsuarioLoginResponseViewModel {
   final String token;
   final String rol;
   final String username;
+  final String? tipo;
 
   UsuarioLoginResponseViewModel({
     required this.userId,
@@ -25,6 +26,7 @@ class UsuarioLoginResponseViewModel {
     required this.token,
     required this.rol,
     required this.username,
+    this.tipo,
   });
 }
 
