@@ -12,6 +12,7 @@ class UserLoginDTO {
   final String token;
   final String rol;
   final String username;
+  final String? tipo;
 
   const UserLoginDTO({
     required this.user_id,
@@ -21,11 +22,11 @@ class UserLoginDTO {
     required this.is_new_token,
     required this.rol,
     required this.dias_token,
+    this.tipo,
   }) : super();
 
   //fromJson
-  factory UserLoginDTO.fromJson(Map<String, dynamic> map) =>
-      _$UserLoginDTOFromJson(map);
+  factory UserLoginDTO.fromJson(Map<String, dynamic> map) => _$UserLoginDTOFromJson(map);
 
   //ToJson
   Map<String, dynamic> toJson() => _$UserLoginDTOToJson(this);

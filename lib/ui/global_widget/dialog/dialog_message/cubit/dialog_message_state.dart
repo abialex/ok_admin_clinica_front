@@ -8,7 +8,7 @@ class DialogMessageState with _$DialogMessageState {
       @Default("titulo") String titulo,
       @Default("texto") String texto,
       @Default(Icons.info_outline) IconData icon,
-      @Default(AppColors.purple) Color colorBackground,
+      @Default(AppColors.greenAccent) Color colorBackground,
       @Default(null) Function()? onAceptar,
       @Default(null) Function()? onCancelar}) = _DialogState;
 }

@@ -8,20 +8,17 @@ import '../../dominio/repositories/ilocal_repository.dart';
 
 class AppInterceptor extends Interceptor {
   @override
-  void onRequest(
-      RequestOptions options, RequestInterceptorHandler handler) async {
+  void onRequest(RequestOptions options, RequestInterceptorHandler handler) async {
     ILocalRepository authService = locator<ILocalRepository>();
 
     // Añadir token de autenticación a todas las solicitudes si está disponible
-    final token =
-        await authService.getToken(); // Deberías obtener esto de manera segura
+    final token = await authService.getToken(); // Deberías obtener esto de manera segura
     options.headers["Authorization"] = "$token";
     super.onRequest(options, handler);
   }
 
   @override
-  void onResponse(
-      Response<dynamic> response, ResponseInterceptorHandler handler) {
+  void onResponse(Response<dynamic> response, ResponseInterceptorHandler handler) {
     // Manejar respuesta
     ApiModel apiModel = ApiModel.fromJson(response.data);
     response.data = apiModel;
@@ -48,13 +45,11 @@ class AppInterceptor extends Interceptor {
 
 class AppInterceptorEncrypt extends Interceptor {
   @override
-  void onRequest(
-      RequestOptions options, RequestInterceptorHandler handler) async {
-    FlutterStorageLocal authService = locator<FlutterStorageLocal>();
+  void onRequest(RequestOptions options, RequestInterceptorHandler handler) async {
+    ILocalRepository authService = locator<ILocalRepository>();
 
     // Añadir token de autenticación a todas las solicitudes si está disponible
-    final token =
-        await authService.getToken(); // Deberías obtener esto de manera segura
+    final token = await authService.getToken(); // Deberías obtener esto de manera segura
     options.headers["Authorization"] = "Bearer $token";
     super.onRequest(options, handler);
   }

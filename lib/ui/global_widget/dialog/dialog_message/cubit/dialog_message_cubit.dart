@@ -13,7 +13,7 @@ class DialogMessageCubit extends Cubit<DialogMessageState> {
       required String texto,
       Function()? onAceptar,
       Function()? onCancelar,
-      Color colorBackground = AppColors.purple,
+      Color colorBackground = AppColors.greenAccent,
       bool onlyOptions = false,
       IconData icon = Icons.info_outline}) {
     emit(state.copyWith(
@@ -29,6 +29,6 @@ class DialogMessageCubit extends Cubit<DialogMessageState> {
   }
 
   disguiseDialog() {
-    emit(state.copyWith(show: false, colorBackground: AppColors.purple));
+    emit(state.copyWith(show: false, colorBackground: AppColors.greenAccent));
   }
 }

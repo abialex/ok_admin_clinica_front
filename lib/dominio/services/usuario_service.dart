@@ -7,8 +7,7 @@ import '../repositories/iusuario_repository.dart';
 class UsuarioService {
   final IUsuarioRepository _usuarioRepository;
   UsuarioService(this._usuarioRepository);
-  Future<Either<String, UsuarioLoginResponseViewModel>> login(
-      UsuarioLoginRequestViewModel loginUserDto) async {
+  Future<Either<String, UsuarioLoginResponseViewModel>> login(UsuarioLoginRequestViewModel loginUserDto) async {
     try {
       LoginUserDto model = LoginUserDto(
         username: loginUserDto.username,
@@ -26,6 +25,7 @@ class UsuarioService {
             token: right.token,
             rol: right.rol,
             username: right.username,
+            tipo: right.tipo,
           ),
         ),
       );
@@ -34,8 +34,7 @@ class UsuarioService {
     }
   }
 
-  Future<Either<String, UsuarioAuthenticatedViewModel>> authenticated(
-      String token) async {
+  Future<Either<String, UsuarioAuthenticatedViewModel>> authenticated(String token) async {
     try {
       final result = _usuarioRepository.authenticated(token);
       return result.fold(

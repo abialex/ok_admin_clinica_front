@@ -23,10 +23,9 @@ class DoctorUpdateModel {
     required this.apellidos,
     required this.celular,
     required this.fechaNacimiento,
-    this.ubicaciones_id,
+    required this.ubicaciones_id,
   });
-  factory DoctorUpdateModel.fromJson(Map<String, dynamic> map) =>
-      _$DoctorUpdateModelFromJson(map);
+  factory DoctorUpdateModel.fromJson(Map<String, dynamic> map) => _$DoctorUpdateModelFromJson(map);
 
   //ToJson
   Map<String, dynamic> toJson() => _$DoctorUpdateModelToJson(this);

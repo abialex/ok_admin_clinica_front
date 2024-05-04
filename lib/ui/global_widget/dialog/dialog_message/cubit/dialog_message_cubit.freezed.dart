@@ -191,7 +191,7 @@ class _$DialogStateImpl implements _DialogState {
       this.titulo = "titulo",
       this.texto = "texto",
       this.icon = Icons.info_outline,
-      this.colorBackground = AppColors.purple,
+      this.colorBackground = AppColors.greenAccent,
       this.onAceptar = null,
       this.onCancelar = null});
 

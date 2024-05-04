@@ -1,3 +1,4 @@
+import 'package:admin_clinica_front/core/extensions/date_time_extensions.dart';
 import 'package:admin_clinica_front/data/models/doctor/doctor_update_model.dart';
 import 'package:either_dart/either.dart';
 
@@ -9,11 +10,9 @@ class DoctorService {
   final IDoctorRepository _doctorRepository;
   DoctorService(this._doctorRepository);
 
-  Future<Either<String, List<DoctorsViewModel>>>
-      getDoctorsByIdUbicacionFromAsistente() async {
+  Future<Either<String, List<DoctorsViewModel>>> getDoctorsByIdUbicacionFromAsistente() async {
     try {
-      final result =
-          await _doctorRepository.getDoctorsByIdUbicacionFromAsistente();
+      final result = await _doctorRepository.getDoctorsByIdUbicacionFromAsistente();
       return result.fold(
         (error) => Left(error),
         (right) => Right(
@@ -81,15 +80,14 @@ class DoctorService {
     }
   }
 
-  Future<Either<String, DoctorCredentialsViewModel>> createDoctor(
-      DoctorCreateViewModel doctorCreateModel) async {
+  Future<Either<String, DoctorCredentialsViewModel>> createDoctor(DoctorCreateViewModel doctorCreateModel) async {
     try {
       final model = DoctorCreateModel(
         dni: doctorCreateModel.dni,
         nombres: doctorCreateModel.nombres,
         apellidos: doctorCreateModel.apellidos,
         celular: doctorCreateModel.celular,
-        fechaNacimiento: doctorCreateModel.fechaNacimiento,
+        fechaNacimiento: doctorCreateModel.fechaNacimiento.toFormatyyyyMMdd(),
         ubicaciones_id: doctorCreateModel.ubicacionesId,
       );
       final result = _doctorRepository.createDoctor(model);
@@ -107,8 +105,7 @@ class DoctorService {
     }
   }
 
-  Future<Either<String, int>> updateDoctor(
-      DoctorUpdateViewModel doctorUpdateModel) async {
+  Future<Either<String, int>> updateDoctor(DoctorUpdateViewModel doctorUpdateModel) async {
     try {
       final model = DoctorUpdateModel(
           id: doctorUpdateModel.id,
@@ -116,7 +113,8 @@ class DoctorService {
           nombres: doctorUpdateModel.nombres,
           apellidos: doctorUpdateModel.apellidos,
           celular: doctorUpdateModel.celular,
-          fechaNacimiento: doctorUpdateModel.fechaNacimiento);
+          ubicaciones_id: doctorUpdateModel.ubicacionesId,
+          fechaNacimiento: doctorUpdateModel.fechaNacimiento.toFormatyyyyMMdd());
       return await _doctorRepository.updateDoctor(model);
     } catch (e) {
       return const Left("Error inesperado");
