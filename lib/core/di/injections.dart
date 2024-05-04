@@ -24,6 +24,10 @@ import '../../dominio/repositories/iusuario_repository.dart';
 import '../../dominio/services/doctor_service.dart';
 import 'package:flutter/foundation.dart' as foundation;
 
+import '../../dominio/services/local_service.dart';
+import '../../ui/modules/cita/bloc/cita_bloc.dart';
+import '../../ui/modules/doctor/bloc/doctor_bloc.dart';
+
 GetIt locator = GetIt.instance;
 
 Future<void> setupLocator() async {
@@ -54,6 +58,7 @@ void setupServices() {
   locator.registerLazySingleton<CitasService>(() => CitasService(locator()));
   locator.registerLazySingleton<DoctorService>(() => DoctorService(locator()));
   locator.registerLazySingleton<UsuarioService>(() => UsuarioService(locator()));
+  locator.registerLazySingleton<LocalService>(() => LocalService(locator()));
 }
 
 void setupDataSource() {
@@ -66,6 +71,8 @@ void setupDataSource() {
 }
 
 void setupBlocs() {
+  // locator.registerLazySingleton<CitaBloc>(() => CitaBloc());
+  // locator.registerLazySingleton<DoctorBloc>(() => DoctorBloc(locator()));
   // locator.registerFactory(
 //     () => MyBloc(
 //       locator<AlumnoRepository>(),
