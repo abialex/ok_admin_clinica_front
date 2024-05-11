@@ -1,7 +1,7 @@
 import 'package:admin_clinica_front/ui/core/router.dart';
+import 'package:admin_clinica_front/ui/global_widget/app_text_style.dart';
 import 'package:admin_clinica_front/ui/global_widget/page/page_base_desktop.dart';
 import 'package:admin_clinica_front/ui/global_widget/page/page_base_phone.dart';
-import 'package:admin_clinica_front/ui/global_widget/text/app_text_font_normal.dart';
 import 'package:admin_clinica_front/ui/modules/doctor/bloc/doctor_bloc.dart';
 import 'package:admin_clinica_front/ui/view_models/doctor_view/doctor_view_models.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +14,6 @@ import '../../../../dominio/repositories/ilocal_repository.dart';
 import '../../../global_widget/bottomSheet/button_sheet.dart';
 import '../../../global_widget/dialog/dialog_message/cubit/dialog_message_cubit.dart';
 import '../../../global_widget/page/page_mixin_base.dart';
-import '../../../global_widget/text/app_text_font_weight.dart';
 
 class DoctorListAdminPage extends StatelessWidget with ResponsiveWidgetMixin {
   const DoctorListAdminPage({super.key});
@@ -87,7 +86,7 @@ class DoctorListAdminPage extends StatelessWidget with ResponsiveWidgetMixin {
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
                                 // const AppTextFontWeight(text: "Doctor:"),
-                                AppTextFontWeight(text: "${item.nombres} ${item.apellidos}"),
+                                AppTextGlobal.lightText(text: "${item.nombres} ${item.apellidos}"),
                               ],
                             ),
                             GestureDetector(
@@ -103,14 +102,14 @@ class DoctorListAdminPage extends StatelessWidget with ResponsiveWidgetMixin {
                                     vertical: 10,
                                   ),
                                   decoration: const BoxDecoration(color: AppColors.white, borderRadius: BorderRadius.all(Radius.circular(10))),
-                                  child: const Row(
+                                  child: Row(
                                     children: [
                                       Icon(
                                         Icons.circle,
                                         color: AppColors.blueSecondary,
                                         size: 15,
                                       ),
-                                      AppTextFontNormal(
+                                      AppTextGlobal.lightText(
                                         text: "Actualizar",
                                       ),
                                     ],
@@ -136,26 +135,26 @@ class DoctorListAdminPage extends StatelessWidget with ResponsiveWidgetMixin {
                       children: [
                         Row(
                           children: [
-                            const AppTextFontWeight(
+                            AppTextGlobal.labelLightText(
                               text: "Nombres",
                             ),
-                            AppTextFontNormal(text: item.nombres)
+                            AppTextGlobal.lightText(text: item.nombres)
                           ],
                         ),
                         Row(
                           children: [
-                            const AppTextFontWeight(
+                            AppTextGlobal.labelLightText(
                               text: "Apellidos",
                             ),
-                            AppTextFontNormal(text: item.apellidos)
+                            AppTextGlobal.lightText(text: item.apellidos)
                           ],
                         ),
                         Row(
                           children: [
-                            const AppTextFontWeight(
+                            AppTextGlobal.labelLightText(
                               text: "Username",
                             ),
-                            AppTextFontNormal(text: item.username)
+                            AppTextGlobal.lightText(text: item.username)
                           ],
                         ),
                       ],

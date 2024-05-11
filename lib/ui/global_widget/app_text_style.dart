@@ -1,7 +1,7 @@
 import 'package:admin_clinica_front/core/utils/app_colors.dart';
 import 'package:flutter/material.dart';
 
-class ConstTextGlobal {
+class _BaseText {
   static Text lightText({
     required String text,
     double? fontSize,
@@ -38,6 +38,7 @@ class ConstTextGlobal {
         fontSize: fontSize ?? 21,
         color: color,
         fontWeight: fontWeight,
+        overflow: TextOverflow.ellipsis,
       ),
     );
   }
@@ -62,47 +63,61 @@ class ConstTextGlobal {
   }
 }
 
-class ConstTextApp {
-  static Text lightText({required String text}) => ConstTextGlobal.lightText(
+class AppTextGlobal {
+  // *: BASE PARA EL APP
+  static Text lightText({required String text}) => _BaseText.lightText(
         text: text,
         color: AppColors.blueSecondary,
       );
-  static Text mediumText({required String text}) => ConstTextGlobal.mediumText(
-        text: text,
-        color: AppColors.blueSecondary,
-      );
-
-  static Text largeText({required String text}) => ConstTextGlobal.largeText(
+  static Text mediumText({required String text}) => _BaseText.mediumText(
         text: text,
         color: AppColors.blueSecondary,
       );
 
-  static Text labelText({required String text}) => ConstTextGlobal.lightText(
+  static Text largeText({required String text}) => _BaseText.largeText(
+        text: text,
+        color: AppColors.blueSecondary,
+      );
+
+  static Text labelLightText({required String text}) => _BaseText.lightText(
         text: text,
         fontWeight: FontWeight.bold,
         color: AppColors.blueSecondary,
       );
-  static Text nameText({required String text}) => ConstTextGlobal.mediumText(
+
+  static Text labelMediumText({required String text}) => _BaseText.mediumText(
+        text: text,
+        fontWeight: FontWeight.bold,
+        color: AppColors.blueSecondary,
+      );
+
+  static Text labelLargeText({required String text}) => _BaseText.largeText(
+        text: text,
+        fontWeight: FontWeight.bold,
+        color: AppColors.blueSecondary,
+      );
+
+  static Text titleText({required String text}) => _BaseText.mediumText(
+        text: text,
+        fontWeight: FontWeight.bold,
+        color: AppColors.blueSecondary,
+      );
+
+  static Text errorlightText({required String text}) => _BaseText.lightText(
+        text: text,
+        color: AppColors.redAccent,
+        fontSize: 13,
+      );
+  // *: ESPECIALIZADO PARA EL APP
+  static Text nameText({required String text}) => _BaseText.mediumText(
         text: text,
         fontWeight: FontWeight.bold,
         color: AppColors.dark,
         fontSize: 20,
       );
-  static Text dateText({required String text}) => ConstTextGlobal.mediumText(
+  static Text dateText({required String text}) => _BaseText.mediumText(
         text: text,
         color: AppColors.darkGray,
         fontSize: 19,
-      );
-
-  static Text titleText({required String text}) => ConstTextGlobal.mediumText(
-        text: text,
-        fontWeight: FontWeight.bold,
-        color: AppColors.blueSecondary,
-      );
-
-  static Text lightTextError({required String text}) => ConstTextGlobal.lightText(
-        text: text,
-        color: AppColors.redAccent,
-        fontSize: 12,
       );
 }

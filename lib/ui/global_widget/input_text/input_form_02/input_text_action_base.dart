@@ -1,6 +1,8 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:admin_clinica_front/core/utils/app_colors.dart';
+import 'package:admin_clinica_front/ui/global_widget/app_box.dart';
+import 'package:admin_clinica_front/ui/global_widget/app_text_style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -8,6 +10,7 @@ class InputTextActionBase extends StatefulWidget {
   const InputTextActionBase({
     required this.iconData,
     required this.isOnTap,
+    required this.label,
     super.key,
     this.initialText,
     this.hintText,
@@ -19,6 +22,7 @@ class InputTextActionBase extends StatefulWidget {
     this.inputFormatDeskptop,
     this.textInputType,
     this.textInputColor,
+    this.autoValidateMode = AutovalidateMode.disabled,
   });
   // Atributos Obligatorios
   final IconData iconData;
@@ -34,6 +38,8 @@ class InputTextActionBase extends StatefulWidget {
   final InputFormatDesktopEnum? inputFormatDeskptop;
   final TextInputType? textInputType;
   final TextStyle? textInputColor;
+  final AutovalidateMode autoValidateMode;
+  final String label;
 
   @override
   State<InputTextActionBase> createState() => _InputTextActionBaseState();
@@ -80,17 +86,19 @@ class _InputTextActionBaseState extends State<InputTextActionBase> {
       child: AbsorbPointer(
         absorbing: widget.isOnTap,
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            AppTextGlobal.labelLightText(
+              text: widget.label,
+            ),
+            AppBox.h4,
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Expanded(
                   child: TextFormField(
-                    // maxLength: 2,
-                    autovalidateMode: AutovalidateMode.onUserInteraction,
-                    //expresion regular
+                    autovalidateMode: widget.autoValidateMode,
                     keyboardType: widget.textInputType,
-                    // maxLength: widget.maxlength,
                     inputFormatters: [
                       _inputFormattedDesktop(widget.inputFormatDeskptop),
                       LengthLimitingTextInputFormatter(
@@ -101,7 +109,6 @@ class _InputTextActionBaseState extends State<InputTextActionBase> {
                     validator: widget.validator,
                     cursorColor: AppColors.blueSecondary,
                     style: widget.textInputColor,
-
                     decoration: InputDecoration(
                       isDense: true,
                       errorMaxLines: 2,
@@ -117,11 +124,9 @@ class _InputTextActionBaseState extends State<InputTextActionBase> {
                       isCollapsed: false,
                       fillColor: AppColors.lightGray,
                       border: OutlineInputBorder(
-                        // borderSide: BorderSide.none,
                         borderRadius: BorderRadius.circular(5),
                       ),
                       focusedBorder: OutlineInputBorder(
-                        // borderSide: BorderSide.none,
                         borderRadius: BorderRadius.circular(5),
                       ),
                       enabledBorder: OutlineInputBorder(
@@ -132,11 +137,18 @@ class _InputTextActionBaseState extends State<InputTextActionBase> {
                         ),
                       ),
                       hintText: widget.hintText,
+                      hintStyle: const TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w400,
+                        color: AppColors.darkGray,
+                      ),
                       contentPadding: EdgeInsets.only(
                         left: 10,
                         // bottom: (widget.paddingVertical ?? 0),
                         // top: (widget.paddingVertical ?? 0),
                       ),
+                      floatingLabelAlignment: FloatingLabelAlignment.start,
+                      floatingLabelBehavior: FloatingLabelBehavior.always,
                     ),
                     controller: valueController,
                   ),

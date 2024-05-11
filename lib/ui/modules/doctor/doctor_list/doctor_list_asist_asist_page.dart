@@ -1,6 +1,6 @@
+import 'package:admin_clinica_front/ui/global_widget/app_text_style.dart';
 import 'package:admin_clinica_front/ui/global_widget/page/page_base_desktop.dart';
 import 'package:admin_clinica_front/ui/global_widget/page/page_base_phone.dart';
-import 'package:admin_clinica_front/ui/global_widget/text/app_text_font_normal.dart';
 import 'package:admin_clinica_front/ui/modules/doctor/bloc/doctor_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -9,10 +9,8 @@ import '../../../../core/di/injections.dart';
 import '../../../../core/utils/app_colors.dart';
 import '../../../../data/datasources/remote/doctor_api.dart';
 import '../../../../dominio/repositories/ilocal_repository.dart';
-import '../../../core/router.dart';
 import '../../../global_widget/dialog/dialog_message/cubit/dialog_message_cubit.dart';
 import '../../../global_widget/page/page_mixin_base.dart';
-import '../../../global_widget/text/app_text_font_weight.dart';
 
 class DoctorListAsistenteAsistentePage extends StatelessWidget with ResponsiveWidgetMixin {
   const DoctorListAsistenteAsistentePage({super.key});
@@ -69,26 +67,26 @@ class DoctorListAsistenteAsistentePage extends StatelessWidget with ResponsiveWi
                       children: [
                         Row(
                           children: [
-                            const AppTextFontWeight(
+                            AppTextGlobal.labelLightText(
                               text: "Nombres",
                             ),
-                            AppTextFontNormal(text: item.nombres)
+                            AppTextGlobal.lightText(text: item.nombres)
                           ],
                         ),
                         Row(
                           children: [
-                            const AppTextFontWeight(
+                            AppTextGlobal.labelLightText(
                               text: "Apellidos",
                             ),
-                            AppTextFontNormal(text: item.apellidos)
+                            AppTextGlobal.lightText(text: item.apellidos)
                           ],
                         ),
                         Row(
                           children: [
-                            const AppTextFontWeight(
+                            AppTextGlobal.labelLightText(
                               text: "Username",
                             ),
-                            AppTextFontNormal(text: item.username)
+                            AppTextGlobal.lightText(text: item.username)
                           ],
                         ),
                       ],

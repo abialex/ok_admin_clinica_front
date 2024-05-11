@@ -1,9 +1,10 @@
-import 'package:admin_clinica_front/ui/global_widget/input_text/input_text_action_base.dart';
+import 'package:admin_clinica_front/ui/global_widget/input_text/input_form_02/input_text_action_base.dart';
 import 'package:flutter/material.dart';
 
 class InputTextBuscar extends StatelessWidget {
   const InputTextBuscar({
     required this.hintText,
+    required this.label,
     super.key,
     this.paddingVertical,
     this.function,
@@ -24,12 +25,13 @@ class InputTextBuscar extends StatelessWidget {
   final String? initialText;
   final TextInputType? textInputType;
   final InputFormatDesktopEnum? inputFormatDesktop;
-
+  final String label;
   final void Function(String)? function;
 
   @override
   Widget build(BuildContext context) {
     return InputTextActionBase(
+      label: label,
       hintText: hintText,
       iconData: Icons.search,
       function: (value) async {

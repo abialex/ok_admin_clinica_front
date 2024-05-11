@@ -1,6 +1,8 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:admin_clinica_front/core/utils/app_colors.dart';
+import 'package:admin_clinica_front/ui/global_widget/app_box.dart';
+import 'package:admin_clinica_front/ui/global_widget/app_text_style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -17,6 +19,7 @@ class InputTextBase extends StatefulWidget {
     this.inputFormatDeskptop,
     this.textInputType,
     this.textInputColor,
+    required this.label,
   });
   // Atributos Obligatorios
   // Atributos Opcionales
@@ -30,6 +33,7 @@ class InputTextBase extends StatefulWidget {
   final InputFormatDesktopEnum? inputFormatDeskptop;
   final TextInputType? textInputType;
   final TextStyle? textInputColor;
+  final String label;
 
   @override
   State<InputTextBase> createState() => _InputTextBaseState();
@@ -71,7 +75,12 @@ class _InputTextBaseState extends State<InputTextBase> {
         valueController.text = await widget.function?.call(valueController.text) ?? '';
       },
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          AppTextGlobal.labelLightText(
+            text: widget.label,
+          ),
+          AppBox.h4,
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [

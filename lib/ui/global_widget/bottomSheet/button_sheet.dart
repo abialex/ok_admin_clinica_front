@@ -1,6 +1,6 @@
 import 'package:admin_clinica_front/core/utils/app_colors.dart';
-import 'package:admin_clinica_front/ui/global_widget/text/app_text_font_normal.dart';
-import 'package:admin_clinica_front/ui/global_widget/text/app_text_font_weight.dart';
+import 'package:admin_clinica_front/ui/global_widget/app_text_style.dart';
+
 import 'package:flutter/material.dart';
 
 class ButtonSheet {
@@ -58,15 +58,15 @@ class instance extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Expanded(
+                  Expanded(
                     flex: 7,
-                    child: AppTextFontWeight(
+                    child: AppTextGlobal.labelLightText(
                       text: "Código ",
                     ),
                   ),
                   Expanded(
                     flex: 6,
-                    child: AppTextFontNormal(
+                    child: AppTextGlobal.lightText(
                       text: "codigo",
                     ),
                   )
@@ -76,15 +76,15 @@ class instance extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Expanded(
+                  Expanded(
                     flex: 7,
-                    child: AppTextFontNormal(
+                    child: AppTextGlobal.labelLightText(
                       text: "Empresa",
                     ),
                   ),
                   Expanded(
                     flex: 6,
-                    child: AppTextFontNormal(
+                    child: AppTextGlobal.lightText(
                       text: "codigo",
                     ),
                   )
@@ -115,7 +115,7 @@ class instance extends StatelessWidget {
                             color: AppColors.blueSecondary,
                             size: 35,
                           ),
-                          AppTextFontNormal(
+                          AppTextGlobal.lightText(
                             text: "sdasd",
                           ),
                         ],
