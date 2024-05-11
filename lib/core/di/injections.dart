@@ -1,7 +1,11 @@
 import 'package:admin_clinica_front/data/datasources/remote/cita_api.dart';
+import 'package:admin_clinica_front/data/datasources/remote/ubicacion_api.dart';
 import 'package:admin_clinica_front/data/datasources/remote/usuario_api.dart';
 import 'package:admin_clinica_front/data/repositories_impl/local_shared_repository_impl.dart';
+import 'package:admin_clinica_front/data/repositories_impl/ubicacion_repository_impl.dart';
+import 'package:admin_clinica_front/dominio/repositories/iubicacion_repository.dart';
 import 'package:admin_clinica_front/dominio/services/citas_service.dart';
+import 'package:admin_clinica_front/dominio/services/ubicacion_service.dart';
 import 'package:admin_clinica_front/dominio/services/usuario_service.dart';
 import 'package:admin_clinica_front/infraestructura/network/api_client.dart';
 import 'package:dio/dio.dart';
@@ -25,8 +29,6 @@ import '../../dominio/services/doctor_service.dart';
 import 'package:flutter/foundation.dart' as foundation;
 
 import '../../dominio/services/local_service.dart';
-import '../../ui/modules/cita/bloc/cita_bloc.dart';
-import '../../ui/modules/doctor/bloc/doctor_bloc.dart';
 
 GetIt locator = GetIt.instance;
 
@@ -52,6 +54,7 @@ void setupRepositorys() {
   locator.registerLazySingleton<ICitaRepository>(() => CitaRepository(locator()));
   locator.registerLazySingleton<IDoctorRepository>(() => DoctorRepository(locator()));
   locator.registerLazySingleton<IAsistenteRepository>(() => AsistenteRepository(locator()));
+  locator.registerLazySingleton<IUbicacionRepository>(() => UbicacionRepository(locator()));
 }
 
 void setupServices() {
@@ -59,6 +62,7 @@ void setupServices() {
   locator.registerLazySingleton<DoctorService>(() => DoctorService(locator()));
   locator.registerLazySingleton<UsuarioService>(() => UsuarioService(locator()));
   locator.registerLazySingleton<LocalService>(() => LocalService(locator()));
+  locator.registerLazySingleton<UbicacionService>(() => UbicacionService(locator()));
 }
 
 void setupDataSource() {
@@ -68,6 +72,7 @@ void setupDataSource() {
   locator.registerLazySingleton<CitaApi>(() => CitaApi(locator()));
   locator.registerLazySingleton<DoctorApi>(() => DoctorApi(locator()));
   locator.registerLazySingleton<AsistenteApi>(() => AsistenteApi(locator()));
+  locator.registerLazySingleton<UbicacionApi>(() => UbicacionApi(locator()));
 }
 
 void setupBlocs() {

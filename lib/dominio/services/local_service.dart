@@ -1,13 +1,13 @@
 import 'package:admin_clinica_front/data/models/usuario/user_dto.dart';
 
-import '../../ui/view_models/local_view/local_view_models.dart';
+import '../../ui/view_models/usuario_view/usuario_view_models.dart';
 import '../repositories/ilocal_repository.dart';
 
 class LocalService {
-  final ILocalRepository _doctorRepository;
-  LocalService(this._doctorRepository);
+  final ILocalRepository _localRepository;
+  LocalService(this._localRepository);
 
-  Future<void> saveUsuario(LocalUsuarioViewModel localUsuarioViewModel) {
+  Future<void> saveUsuario(UsuarioLoginResponseViewModel localUsuarioViewModel) {
     final model = UserLoginDTO(
         user_id: localUsuarioViewModel.userId,
         username: localUsuarioViewModel.username,
@@ -17,15 +17,15 @@ class LocalService {
         rol: localUsuarioViewModel.rol,
         dias_token: localUsuarioViewModel.diasToken,
         tipo: localUsuarioViewModel.tipo);
-    return _doctorRepository.saveUsuario(model);
+    return _localRepository.saveUsuario(model);
   }
 
-  Future<LocalUsuarioViewModel?> getUsuario() async {
-    final model = await _doctorRepository.getUsuario();
+  Future<UsuarioLoginResponseViewModel?> getUsuario() async {
+    final model = await _localRepository.getUsuario();
     if (model == null) {
       null;
     }
-    return LocalUsuarioViewModel(
+    return UsuarioLoginResponseViewModel(
       userId: model!.user_id,
       username: model.username,
       nombres: model.nombres,
@@ -38,6 +38,6 @@ class LocalService {
   }
 
   Future<void> saveToken(String token) async {
-    return await _doctorRepository.saveToken(token);
+    return await _localRepository.saveToken(token);
   }
 }

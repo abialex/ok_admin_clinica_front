@@ -15,6 +15,8 @@ class AppColors {
   static const Color yellowAccent = Color(0xffF4B908);
   static const Color greenAccent = Color.fromARGB(255, 72, 143, 62);
   static const Color lightGray = Color(0xffDDDDDD);
+  static const Color darkGray = Color(0xff888888);
+  static const Color violetAccent = Color(0xffBDF4F4);
   static const Color white = Color(0xffFFFFFF);
   static const Color dark = Color(0xff252837);
   static const Color yellow = Color(0xffFCDD80);

@@ -11,8 +11,7 @@ class CitasService {
   final ICitaRepository _citaRepository;
   CitasService(this._citaRepository);
 
-  Future<Either<String, int>> citaAgilCreate(
-      CitaAgilCreateViewModel view) async {
+  Future<Either<String, int>> citaAgilCreate(CitaAgilCreateViewModel view) async {
     CitaAgilCreateModel model = CitaAgilCreateModel(
       fechaHoraCita: view.fechaHoraCita,
       datosPaciente: view.datosPaciente,
@@ -24,8 +23,7 @@ class CitasService {
     return await _citaRepository.createCitaAgil(model);
   }
 
-  Future<Either<String, int>> updateCitaAgil(
-      CitaAgilUpdateViewModel view) async {
+  Future<Either<String, int>> updateCitaAgil(CitaAgilUpdateViewModel view) async {
     // Aquí puedes agregar lógica de validación o preparación de datos
     CitaAgilUpdateModel model = CitaAgilUpdateModel(
       id: view.id,
@@ -59,18 +57,10 @@ class CitasService {
                     datosPaciente: cita.datosPaciente,
                     estadoString: cita.estado_string,
                     tipoString: cita.tipo_string,
-                    fechaConfirmacion: cita.fechaConfirmacion != null
-                        ? DateTime.parse(cita.fechaConfirmacion!)
-                        : null,
-                    fechaValidacion: cita.fechaValidacion != null
-                        ? DateTime.parse(cita.fechaValidacion!)
-                        : null,
-                    fechaInicio: cita.fechaInicio != null
-                        ? DateTime.parse(cita.fechaInicio!)
-                        : null,
-                    fechaFin: cita.fechaFin != null
-                        ? DateTime.parse(cita.fechaFin!)
-                        : null,
+                    fechaConfirmacion: cita.fechaConfirmacion != null ? DateTime.parse(cita.fechaConfirmacion!) : null,
+                    fechaValidacion: cita.fechaValidacion != null ? DateTime.parse(cita.fechaValidacion!) : null,
+                    fechaInicio: cita.fechaInicio != null ? DateTime.parse(cita.fechaInicio!) : null,
+                    fechaFin: cita.fechaFin != null ? DateTime.parse(cita.fechaFin!) : null,
                   ))
               .toList();
           return Right(finalList);
@@ -81,16 +71,14 @@ class CitasService {
     }
   }
 
-  Future<Either<String, List<CitasViewModel>>>
-      getCitasByFechaIdDoctorIdUbicacion(CitaRequestViewModel view) async {
+  Future<Either<String, List<CitasViewModel>>> getCitasByFechaIdDoctorIdUbicacion(CitaRequestViewModel view) async {
     try {
       CitaRequest request = CitaRequest(
-        fechaHoraCita: view.fechaHoraCita,
+        fechaHoraCita: view.fechaHoraCita.toFormatyyyyMMdd(),
         doctor_id: view.doctorId,
         ubicacion_id: view.ubicacionId,
       );
-      final result =
-          await _citaRepository.getCitasByFechaIdDoctorIdUbicacion(request);
+      final result = await _citaRepository.getCitasByFechaIdDoctorIdUbicacion(request);
       return result.fold(
         (error) => Left(error),
         (responseList) {
@@ -108,18 +96,10 @@ class CitasService {
                   datosPaciente: cita.datosPaciente,
                   estadoString: cita.estado_string,
                   tipoString: cita.tipo_string,
-                  fechaConfirmacion: cita.fechaConfirmacion != null
-                      ? DateTime.parse(cita.fechaConfirmacion!)
-                      : null,
-                  fechaValidacion: cita.fechaValidacion != null
-                      ? DateTime.parse(cita.fechaValidacion!)
-                      : null,
-                  fechaInicio: cita.fechaInicio != null
-                      ? DateTime.parse(cita.fechaInicio!)
-                      : null,
-                  fechaFin: cita.fechaFin != null
-                      ? DateTime.parse(cita.fechaFin!)
-                      : null,
+                  fechaConfirmacion: cita.fechaConfirmacion != null ? DateTime.parse(cita.fechaConfirmacion!) : null,
+                  fechaValidacion: cita.fechaValidacion != null ? DateTime.parse(cita.fechaValidacion!) : null,
+                  fechaInicio: cita.fechaInicio != null ? DateTime.parse(cita.fechaInicio!) : null,
+                  fechaFin: cita.fechaFin != null ? DateTime.parse(cita.fechaFin!) : null,
                 ),
               )
               .toList();
@@ -131,8 +111,7 @@ class CitasService {
     }
   }
 
-  Future<Either<String, List<CitasViewModel>>> getCitasFilterByIdDoctorParams(
-      CitaFilterViewModel paramsView) async {
+  Future<Either<String, List<CitasViewModel>>> getCitasFilterByIdDoctorParams(CitaFilterViewModel paramsView) async {
     final params = {};
     if (paramsView.fecha != null) {
       params['date'] = paramsView.fecha!.toFormatyyyyMMddHHmmss();
@@ -171,18 +150,10 @@ class CitasService {
                 datosPaciente: cita.datosPaciente,
                 estadoString: cita.estado_string,
                 tipoString: cita.tipo_string,
-                fechaConfirmacion: cita.fechaConfirmacion != null
-                    ? DateTime.parse(cita.fechaConfirmacion!)
-                    : null,
-                fechaValidacion: cita.fechaValidacion != null
-                    ? DateTime.parse(cita.fechaValidacion!)
-                    : null,
-                fechaInicio: cita.fechaInicio != null
-                    ? DateTime.parse(cita.fechaInicio!)
-                    : null,
-                fechaFin: cita.fechaFin != null
-                    ? DateTime.parse(cita.fechaFin!)
-                    : null,
+                fechaConfirmacion: cita.fechaConfirmacion != null ? DateTime.parse(cita.fechaConfirmacion!) : null,
+                fechaValidacion: cita.fechaValidacion != null ? DateTime.parse(cita.fechaValidacion!) : null,
+                fechaInicio: cita.fechaInicio != null ? DateTime.parse(cita.fechaInicio!) : null,
+                fechaFin: cita.fechaFin != null ? DateTime.parse(cita.fechaFin!) : null,
               ),
             )
             .toList();
