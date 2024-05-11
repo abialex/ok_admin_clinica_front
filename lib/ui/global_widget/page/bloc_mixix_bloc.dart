@@ -1,0 +1,3 @@
+mixin BlocInit {
+  init();
+}

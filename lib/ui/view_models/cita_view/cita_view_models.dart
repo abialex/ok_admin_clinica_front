@@ -117,7 +117,7 @@ class CitaAgilUpdateViewModel {
 class CitaRequestViewModel {
   final int doctorId;
   final int ubicacionId;
-  final String fechaHoraCita;
+  final DateTime fechaHoraCita;
 
   CitaRequestViewModel({
     required this.doctorId,
