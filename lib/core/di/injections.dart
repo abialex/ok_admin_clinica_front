@@ -8,8 +8,12 @@ import 'package:admin_clinica_front/dominio/services/citas_service.dart';
 import 'package:admin_clinica_front/dominio/services/ubicacion_service.dart';
 import 'package:admin_clinica_front/dominio/services/usuario_service.dart';
 import 'package:admin_clinica_front/infraestructura/network/api_client.dart';
+import 'package:admin_clinica_front/infraestructura/storage/flutter_security_client.dart';
+import 'package:admin_clinica_front/infraestructura/storage/shared_preferences_client.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../data/datasources/local/flutter_storage_local.dart';
 import '../../data/datasources/local/shared_preferences_local.dart';
@@ -35,6 +39,8 @@ GetIt locator = GetIt.instance;
 Future<void> setupLocator() async {
   // locator.registerSingleton<FlutterSecureStorage>(const FlutterSecureStorage());
   locator.registerLazySingleton<Dio>(() => ApiClient().createDioLocal());
+  locator.registerLazySingleton<FlutterSecureStorage>(() => FlutterStorageClient().createSecureStorage());
+  locator.registerSingletonAsync<SharedPreferences>(() async => SharedPreferencesClient().createShredPreferences());
 
   setupDataSource();
   setupRepositorys();
@@ -66,8 +72,8 @@ void setupServices() {
 }
 
 void setupDataSource() {
-  locator.registerLazySingleton<FlutterStorageLocal>(() => FlutterStorageLocal());
-  locator.registerLazySingleton<SharedPreferencesLocal>(() => SharedPreferencesLocal());
+  locator.registerLazySingleton<FlutterStorageLocal>(() => FlutterStorageLocal(locator()));
+  locator.registerLazySingleton<SharedPreferencesLocal>(() => SharedPreferencesLocal(locator()));
   locator.registerLazySingleton<UsuarioApi>(() => UsuarioApi(locator()));
   locator.registerLazySingleton<CitaApi>(() => CitaApi(locator()));
   locator.registerLazySingleton<DoctorApi>(() => DoctorApi(locator()));
