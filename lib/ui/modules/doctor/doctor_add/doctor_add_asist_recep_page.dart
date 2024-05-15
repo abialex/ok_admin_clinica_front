@@ -1,9 +1,9 @@
 import 'package:admin_clinica_front/ui/global_widget/app_box.dart';
+import 'package:admin_clinica_front/ui/global_widget/app_sunat.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_text_style.dart';
 import 'package:admin_clinica_front/ui/global_widget/button_base/button_cancel.dart';
 import 'package:admin_clinica_front/ui/global_widget/button_base/button_success.dart';
 import 'package:admin_clinica_front/ui/global_widget/dropdown_multiselect/dropdown_multiselect.dart';
-import 'package:admin_clinica_front/ui/global_widget/input_text/input_form_02/input_text_action_buscar.dart';
 import 'package:admin_clinica_front/ui/global_widget/input_text/input_form_02/input_text_action_date.dart';
 import 'package:admin_clinica_front/ui/global_widget/input_text/input_form_02/input_text_form_base.dart';
 import 'package:admin_clinica_front/ui/global_widget/page/page_base_desktop.dart';
@@ -45,6 +45,9 @@ class DoctorAddAsistenteRecepcionPage extends StatelessWidget with ResponsiveWid
   PageBasePhone buildMobile(BuildContext context) {
     // final doctorBloc = context.read<DoctorBloc>();
     final ubicacionBloc = context.read<UbicacionBloc>();
+    final nombresController = TextEditingController();
+    final apPaternoController = TextEditingController();
+    final dniController = TextEditingController();
 
     return PageBasePhone(
       title: "Doctor Add",
@@ -54,15 +57,44 @@ class DoctorAddAsistenteRecepcionPage extends StatelessWidget with ResponsiveWid
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             AppBox.h10,
-            const InputTextBuscar(label: "DNI", hintText: "Ingrese DNI"),
+            AppSunatWidget(
+              onTap: (sunatPersona) {
+                if (sunatPersona == null) {
+                  nombresController.text = "";
+                  apPaternoController.text = "";
+                  dniController.text = "";
+
+                  return;
+                }
+                nombresController.text = sunatPersona.nombres;
+                apPaternoController.text = "${sunatPersona.apellidoPaterno} ${sunatPersona.apellidoMaterno}";
+                dniController.text = sunatPersona.numeroDocumento;
+              },
+            ),
+            AppBox.h20,
+            InputTextBase(
+              label: "Nombres",
+              hintText: "Ingrese Nombres",
+              controller: nombresController,
+            ),
             AppBox.h10,
-            const InputTextBase(label: "Nombres", hintText: "Ingrese Nombres"),
+            InputTextBase(
+              label: "Apellidos",
+              hintText: "Ingrese Apellidos",
+              controller: apPaternoController,
+            ),
             AppBox.h10,
-            const InputTextBase(label: "Apellidos", hintText: "Ingrese Apellidos"),
+            InputTextBase(
+              label: "DNI",
+              hintText: "Ingrese DNI",
+              controller: dniController,
+            ),
             AppBox.h10,
-            const InputTextBase(label: "DNI", hintText: "Ingrese DNI"),
-            AppBox.h10,
-            const InputTextBase(label: "CELULAR", hintText: "Ingrese un celular"),
+            InputTextBase(
+              label: "CELULAR",
+              hintText: "Ingrese un celular",
+              controller: TextEditingController(),
+            ),
             AppBox.h10,
             InputTextDate(
               label: "FECHA NACIMIENTO",
