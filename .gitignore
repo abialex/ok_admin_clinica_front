@@ -71,3 +71,5 @@
 
 # Custom files
 # my_custom_directory/
+*.g.dart
+*.freezed.dart

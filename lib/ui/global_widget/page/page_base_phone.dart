@@ -114,10 +114,10 @@ class MySliverHeaderDelegate extends SliverPersistentHeaderDelegate {
     return Stack(
       fit: StackFit.expand,
       children: [
-        Image.network(
-          "https://via.placeholder.com/350x150",
-          fit: BoxFit.cover,
-        ),
+        // Image.network(
+        //   "https://via.placeholder.com/350x150",
+        //   fit: BoxFit.cover,
+        // ),
         GestureDetector(
           onTap: () {
             Navigator.pushReplacementNamed(context, Routes.login);
