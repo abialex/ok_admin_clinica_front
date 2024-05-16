@@ -11,7 +11,6 @@ class SharedPreferencesLocal {
   SharedPreferencesLocal(this._sharedPreferences);
 
   Future<void> saveToken(String token) async {
-    // final preferences = await SharedPreferences.getInstance();
     _sharedPreferences.setString(KeyStorage.AUTH_TOKEN, token);
     // await preferences.setString(_KeyStorage.AUTH_TOKEN, token);
   }
@@ -30,7 +29,6 @@ class SharedPreferencesLocal {
   }
 
   Future<String?> getToken() async {
-    // final preferences = SharedPreferences.getInstance();
     return _sharedPreferences.getString(KeyStorage.AUTH_TOKEN);
   }
 

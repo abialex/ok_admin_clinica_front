@@ -1,11 +1,12 @@
+import 'package:admin_clinica_front/ui/global_widget/custom_navbar_navigation/design_nav_bar_navigation.dart';
 import 'package:bloc/bloc.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../design_nav_bar_navigation.dart';
+part 'navigator_state.dart';
+part 'navigator_cubit.freezed.dart';
 
-part 'navbar_state.dart';
-
-class NavbarCubit extends Cubit<NavbarState> {
-  NavbarCubit() : super(NavbarState());
+class NavigatorCubit extends Cubit<NavigatorState> {
+  NavigatorCubit() : super(const NavigatorState());
 
   void updateIndexCurrent(int index) {
     //moreActions();
@@ -27,7 +28,7 @@ class NavbarCubit extends Cubit<NavbarState> {
     //moreActions();
     emit(state.copyWith(
       //update  currentIndex && save index Old
-      modulesList: modulesList,
+      modulesList: modulesList ?? [],
     ));
   }
 }
