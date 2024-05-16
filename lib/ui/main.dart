@@ -1,10 +1,10 @@
+import 'package:admin_clinica_front/ui/global_widget/custom_navbar_navigation/cubit/navigator_cubit.dart';
 import 'package:admin_clinica_front/ui/modules/home/bloc/home_bloc.dart';
 import 'package:admin_clinica_front/ui/modules/ubicacion/bloc/ubicacion_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'blocs/usuario_session/bloc/usuario_bloc.dart';
-import 'global_widget/custom_navbar_navigation/cubit/navbar_cubit.dart';
 import 'global_widget/dialog/dialog_message/cubit/dialog_message_cubit.dart';
 import 'app.dart';
 import 'modules/cita/bloc/cita_bloc.dart';
@@ -25,7 +25,7 @@ class _MainState extends State<Main> {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (_) => DialogMessageCubit()),
-        BlocProvider(create: (_) => NavbarCubit()),
+        BlocProvider(create: (_) => NavigatorCubit()),
         //bloc
         BlocProvider(create: (context) => DoctorBloc()),
         BlocProvider(create: (context) => CitaBloc()),

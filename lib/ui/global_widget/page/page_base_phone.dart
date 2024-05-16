@@ -1,5 +1,5 @@
 import 'package:admin_clinica_front/core/utils/app_colors.dart';
-import 'package:admin_clinica_front/ui/global_widget/custom_navbar_navigation/cubit/navbar_cubit.dart';
+import 'package:admin_clinica_front/ui/global_widget/custom_navbar_navigation/cubit/navigator_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../core/router.dart';
@@ -77,14 +77,11 @@ class PageBasePhone extends StatelessWidget {
                 iconBackgroundColorNoSelected: AppColors.blueSecondary,
                 iconBackgroundColorSelected: AppColors.white,
                 onDestinationSelected: (p0) async {
-                  context.read<NavbarCubit>().updateIndexDelay(p0);
-                  Navigator.pushReplacementNamed(context, context.read<NavbarCubit>().state.modulesList[p0].routePage);
+                  context.read<NavigatorCubit>().updateIndexDelay(p0);
+                  Navigator.pushReplacementNamed(context, context.read<NavigatorCubit>().state.modulesList[p0].routePage);
                 },
-                items: context.read<NavbarCubit>().state.modulesList,
-                currentIndex: context.read<NavbarCubit>().state.delayIndex,
-                onTabChanged: (s) {
-                  print("s");
-                },
+                items: context.read<NavigatorCubit>().state.modulesList,
+                currentIndex: context.read<NavigatorCubit>().state.delayIndex,
               )),
         ],
       ),
@@ -120,6 +117,9 @@ class MySliverHeaderDelegate extends SliverPersistentHeaderDelegate {
         // ),
         GestureDetector(
           onTap: () {
+            final navbarCubit = context.read<NavigatorCubit>();
+            navbarCubit.updateIndexDelay(1);
+
             Navigator.pushReplacementNamed(context, Routes.login);
           },
           child: Container(

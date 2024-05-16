@@ -1,10 +1,10 @@
 import 'dart:math';
 
 import 'package:admin_clinica_front/core/utils/app_colors.dart';
+import 'package:admin_clinica_front/ui/global_widget/custom_navbar_navigation/cubit/navigator_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'dart:ui' as ui;
-import 'cubit/navbar_cubit.dart';
 
 class DesignNavCustom extends StatefulWidget {
   final Function(int)? onDestinationSelected;
@@ -13,7 +13,6 @@ class DesignNavCustom extends StatefulWidget {
   final Color iconColor;
   final Color backgroundColor;
   final List<RutasNav> items;
-  final Function(int) onTabChanged;
   final int initialIndex;
   final double heightNavBar;
   final int currentIndex;
@@ -26,7 +25,6 @@ class DesignNavCustom extends StatefulWidget {
     this.iconBackgroundColorNoSelected = AppColors.greenAccent,
     this.iconColor = AppColors.white,
     required this.items,
-    required this.onTabChanged,
     this.initialIndex = 0,
     this.heightNavBar = 85,
     this.currentIndex = -1,
@@ -76,7 +74,7 @@ class _DesignNavCustomState extends State<DesignNavCustom> with TickerProviderSt
   void initState() {
     super.initState();
 
-    final navbarCubit = context.read<NavbarCubit>();
+    final navbarCubit = context.read<NavigatorCubit>();
     navbarCubit.updateIndexCurrent(widget.currentIndex);
 
     positionChild = widget.heightNavBar / 7;
@@ -161,7 +159,7 @@ class _DesignNavCustomState extends State<DesignNavCustom> with TickerProviderSt
       //   ),
       // );
     }
-    final navbarCubit = context.read<NavbarCubit>();
+    final navbarCubit = context.read<NavigatorCubit>();
     final int currentIndexCubit = navbarCubit.state.currentIndex;
     final int oldIndexCubit = navbarCubit.state.oldIndex;
     List<int> listBetweenChild = createListBetweenChildIndexs(start: oldIndexCubit, end: currentIndexCubit);
@@ -351,6 +349,10 @@ class RutasNav {
     required this.routePage,
     this.page,
   });
+  @override
+  String toString() {
+    return routePage;
+  }
 }
 
 class ArcoPainter extends CustomPainter {
