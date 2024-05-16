@@ -14,7 +14,10 @@ class InputTextDate extends StatefulWidget {
     this.paddingVertical,
     this.changeDate,
     this.helper,
+    this.validator,
+    this.initialText,
   });
+  final String? initialText;
   final String hintText;
   final DateTime minDate;
   final DateTime maxDate;
@@ -22,6 +25,7 @@ class InputTextDate extends StatefulWidget {
   final String? helper;
   final void Function(String, DateTime)? changeDate;
   final String label;
+  final String? Function(String?)? validator;
 
   @override
   State<InputTextDate> createState() => _InputTextDateState();
@@ -58,10 +62,12 @@ class _InputTextDateState extends State<InputTextDate> {
   @override
   Widget build(BuildContext context) {
     return InputTextActionBase(
+      validator: widget.validator,
       label: widget.label,
       paddingVertical: widget.paddingVertical,
       iconData: Icons.date_range,
-      initialText: DateFormat('dd/MM/yyyy').format(selectedDate),
+      initialText: widget.initialText ?? DateFormat('dd/MM/yyyy').format(selectedDate),
+      hintText: widget.hintText,
       isOnTap: true,
       function: (value) async {
         final dateSelect = await _selectDate(context);
