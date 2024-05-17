@@ -1,6 +1,6 @@
+import 'package:admin_clinica_front/ui/modules/doctor/bloc/doctor_update_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import '../../../../core/di/injections.dart';
 import '../../../../core/utils/app_colors.dart';
 import '../../../../data/datasources/remote/doctor_api.dart';
@@ -10,15 +10,14 @@ import '../../../global_widget/dialog/dialog_message/cubit/dialog_message_cubit.
 import '../../../global_widget/page/page_base_desktop.dart';
 import '../../../global_widget/page/page_base_phone.dart';
 import '../../../global_widget/page/page_mixin_base.dart';
-import '../bloc/doctor_bloc.dart';
 
 class DoctorUpdateAsistenteRecepcionPage extends StatelessWidget with ResponsiveWidgetMixin {
   const DoctorUpdateAsistenteRecepcionPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final doctorBloc = context.read<DoctorBloc>();
-    return BlocBuilder<DoctorBloc, DoctorState>(
+    final doctorBloc = context.read<DoctorUpdateBloc>();
+    return BlocBuilder<DoctorUpdateBloc, DoctorUpdateState>(
       bloc: doctorBloc,
       builder: (context, state) {
         return whatIs(context);
@@ -35,7 +34,7 @@ class DoctorUpdateAsistenteRecepcionPage extends StatelessWidget with Responsive
 
   @override
   PageBasePhone buildMobile(BuildContext context) {
-    final doctorBloc = context.read<DoctorBloc>();
+    final doctorBloc = context.read<DoctorUpdateBloc>();
     return PageBasePhone(
       title: "Doctor update",
       bodySliver: SliverToBoxAdapter(
@@ -60,7 +59,7 @@ class DoctorUpdateAsistenteRecepcionPage extends StatelessWidget with Responsive
               children: [
                 ElevatedButton(
                     onPressed: () async {
-                      await doctorBloc.updateDoctor();
+                      // await doctorBloc.updateDoctor();
                       Navigator.pushNamed(context, Routes.doctor_list);
                     },
                     child: Text("update doctor")),

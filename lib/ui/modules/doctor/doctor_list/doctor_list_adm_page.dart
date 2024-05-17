@@ -2,7 +2,7 @@ import 'package:admin_clinica_front/ui/core/router.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_text_style.dart';
 import 'package:admin_clinica_front/ui/global_widget/page/page_base_desktop.dart';
 import 'package:admin_clinica_front/ui/global_widget/page/page_base_phone.dart';
-import 'package:admin_clinica_front/ui/modules/doctor/bloc/doctor_bloc.dart';
+import 'package:admin_clinica_front/ui/modules/doctor/bloc/doctor_list_bloc.dart';
 import 'package:admin_clinica_front/ui/view_models/doctor_view/doctor_view_models.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -21,8 +21,8 @@ class DoctorListAdminPage extends StatelessWidget with ResponsiveWidgetMixin {
   @override
   Widget build(BuildContext context) {
     final dialogCubit = context.read<DialogMessageCubit>();
-    final doctorBloc = context.read<DoctorBloc>();
-    return BlocBuilder<DoctorBloc, DoctorState>(
+    final doctorBloc = context.read<DoctorListBloc>();
+    return BlocBuilder<DoctorListBloc, DoctorListState>(
       bloc: doctorBloc,
       builder: (context, state) {
         return whatIs(context);
@@ -39,7 +39,7 @@ class DoctorListAdminPage extends StatelessWidget with ResponsiveWidgetMixin {
 
   @override
   PageBasePhone buildMobile(BuildContext context) {
-    final doctorbloc = context.read<DoctorBloc>();
+    final doctorbloc = context.read<DoctorListBloc>();
     return PageBasePhone(
       floatingWidget: FloatingActionButton(
         backgroundColor: AppColors.blueSecondary,
@@ -104,7 +104,7 @@ class DoctorListAdminPage extends StatelessWidget with ResponsiveWidgetMixin {
                                   decoration: const BoxDecoration(color: AppColors.white, borderRadius: BorderRadius.all(Radius.circular(10))),
                                   child: Row(
                                     children: [
-                                      Icon(
+                                      const Icon(
                                         Icons.circle,
                                         color: AppColors.blueSecondary,
                                         size: 15,

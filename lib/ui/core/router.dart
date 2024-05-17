@@ -86,7 +86,7 @@ class AppRouter {
 
       case Routes.base_asistenteRecepcion + Routes.doctor_add:
         return PageRouteBuilder(
-          pageBuilder: (_, __, ___) => const DoctorAddAsistenteRecepcionPage(),
+          pageBuilder: (_, __, ___) => DoctorAddAsistenteRecepcionPage(),
           //   transitionsBuilder: _createSlideFadeTransition,
         );
       case Routes.base_asistenteRecepcion + Routes.doctor_update:
