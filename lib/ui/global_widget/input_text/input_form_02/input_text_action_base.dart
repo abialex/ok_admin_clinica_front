@@ -136,6 +136,13 @@ class _InputTextActionBaseState extends State<InputTextActionBase> {
                           width: 0,
                         ),
                       ),
+                      errorBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(5),
+                        borderSide: BorderSide(
+                          color: AppColors.redAccent,
+                        ),
+                      ),
+                      errorStyle: TextStyle(color: AppColors.redAccent),
                       hintText: widget.hintText,
                       hintStyle: const TextStyle(
                         fontSize: 14,

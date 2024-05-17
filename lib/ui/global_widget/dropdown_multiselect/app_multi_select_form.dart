@@ -1,6 +1,7 @@
 import 'package:admin_clinica_front/core/utils/app_colors.dart';
 import 'package:admin_clinica_front/ui/global_widget/dropdown_multiselect/custom_multi_select.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 
 class MultiSelectForm<T> extends FormField<List<MultiSelectItem<T>>> {
   MultiSelectForm({
@@ -17,9 +18,10 @@ class MultiSelectForm<T> extends FormField<List<MultiSelectItem<T>>> {
           builder: (FormFieldState<List<MultiSelectItem<T>>> state) {
             List<MultiSelectItem<T>> listSelect = state.value ?? [];
             return Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
+                  alignment: Alignment.center,
                   padding: const EdgeInsets.symmetric(vertical: 3),
                   decoration: BoxDecoration(
                     color: AppColors.lightGray,
@@ -32,6 +34,7 @@ class MultiSelectForm<T> extends FormField<List<MultiSelectItem<T>>> {
                     onSelect: (p0) {
                       listSelect = p0;
                       state.didChange(listSelect); // Actualiza el estado del FormField
+                      onSelect?.call(p0);
                     },
                   ),
                 ),
@@ -40,8 +43,8 @@ class MultiSelectForm<T> extends FormField<List<MultiSelectItem<T>>> {
                     padding: const EdgeInsets.only(top: 5, left: 11),
                     child: Text(
                       state.errorText!,
-                      style: const TextStyle(color: Colors.red),
-                    ),
+                      style: const TextStyle(color: AppColors.redAccent, fontSize: 12),
+                    ).animate().shake(rotation: 0.02),
                   ),
               ],
             );
