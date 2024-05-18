@@ -121,7 +121,10 @@ class DoctorAddAsistenteRecepcionPage extends StatelessWidget with ResponsiveWid
                 label: "CELULAR",
                 hintText: "Ingrese un celular",
                 controller: _celularController,
-                validator: (value) => Validators.validateLengthIfIsNoEmpty(value, 9),
+                validator: (value) => Validators.validateWithMultiple([
+                  Validators.validateNotEmpty,
+                  (value) => Validators.validateLength(value, 9),
+                ], value),
                 maxlength: 9,
               ),
               AppBox.h10,
@@ -204,9 +207,12 @@ class DoctorAddAsistenteRecepcionPage extends StatelessWidget with ResponsiveWid
           children: [
             Row(
               children: [
-                const Expanded(
+                Expanded(
                   child: ButtonCancel(
                     text: "Cancelar",
+                    onClick: () {
+                      Navigator.pop(context);
+                    },
                   ),
                 ),
                 AppBox.w10,

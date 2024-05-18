@@ -3,6 +3,7 @@ import 'package:admin_clinica_front/ui/global_widget/app_text_style.dart';
 import 'package:admin_clinica_front/ui/global_widget/page/page_base_desktop.dart';
 import 'package:admin_clinica_front/ui/global_widget/page/page_base_phone.dart';
 import 'package:admin_clinica_front/ui/modules/doctor/bloc/doctor_list_bloc.dart';
+import 'package:admin_clinica_front/ui/modules/doctor/bloc/doctor_update_bloc.dart';
 import 'package:admin_clinica_front/ui/view_models/doctor_view/doctor_view_models.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -93,7 +94,10 @@ class DoctorListAsistenteRecepcionPage extends StatelessWidget with ResponsiveWi
                             ),
                             GestureDetector(
                               onTap: () {
-                                Navigator.pushNamed(context, Routes.doctor_update);
+                                Navigator.pop(context);
+                                final doctorUpdateBloc = context.read<DoctorUpdateBloc>();
+                                doctorUpdateBloc.add(DoctorUpdateEvent.getDoctor(item.id));
+                                Navigator.pushNamed(context, Routes.base_asistenteRecepcion + Routes.doctor_update);
                               },
                               child: Container(
                                 padding: const EdgeInsets.symmetric(
