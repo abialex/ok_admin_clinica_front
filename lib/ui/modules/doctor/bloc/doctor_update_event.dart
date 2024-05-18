@@ -2,5 +2,6 @@ part of 'doctor_update_bloc.dart';
 
 @freezed
 class DoctorUpdateEvent with _$DoctorUpdateEvent {
-  const factory DoctorUpdateEvent.started() = _Started;
+  factory DoctorUpdateEvent.getDoctor(int id) = GetDoctor;
+  factory DoctorUpdateEvent.updateDoctor(DoctorUpdateViewModel doctorUpdateView) = DoctorUpdatedEvent;
 }

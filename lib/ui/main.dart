@@ -1,6 +1,7 @@
 import 'package:admin_clinica_front/ui/global_widget/custom_navbar_navigation/cubit/navigator_cubit.dart';
 import 'package:admin_clinica_front/ui/modules/doctor/bloc/doctor_create_bloc.dart';
 import 'package:admin_clinica_front/ui/modules/doctor/bloc/doctor_list_bloc.dart';
+import 'package:admin_clinica_front/ui/modules/doctor/bloc/doctor_update_bloc.dart';
 import 'package:admin_clinica_front/ui/modules/home/bloc/home_bloc.dart';
 import 'package:admin_clinica_front/ui/modules/ubicacion/bloc/ubicacion_bloc.dart';
 import 'package:flutter/material.dart';
@@ -29,8 +30,8 @@ class _MainState extends State<Main> {
         BlocProvider(create: (_) => NavigatorCubit()),
         //bloc
         BlocProvider(create: (context) => DoctorListBloc()),
-
         BlocProvider(create: (context) => DoctorCreateBloc()),
+        BlocProvider(create: (context) => DoctorUpdateBloc()),
         BlocProvider(create: (context) => CitaBloc()),
         BlocProvider(create: (context) => HomeBloc()),
         BlocProvider(create: (context) => UsuarioBloc()),
