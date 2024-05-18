@@ -31,6 +31,7 @@ class MultiSelectForm<T> extends FormField<List<MultiSelectItem<T>>> {
                   child: MultiSelect<T>(
                     items: items,
                     itemBuilder: itemBuilder,
+                    itemsSelected: itemsSelected,
                     onSelect: (p0) {
                       listSelect = p0;
                       state.didChange(listSelect); // Actualiza el estado del FormField

@@ -23,6 +23,7 @@ class InputTextActionBase extends StatefulWidget {
     this.textInputType,
     this.textInputColor,
     this.autoValidateMode = AutovalidateMode.disabled,
+    this.controller,
   });
   // Atributos Obligatorios
   final IconData iconData;
@@ -40,17 +41,19 @@ class InputTextActionBase extends StatefulWidget {
   final TextStyle? textInputColor;
   final AutovalidateMode autoValidateMode;
   final String label;
+  final TextEditingController? controller;
 
   @override
   State<InputTextActionBase> createState() => _InputTextActionBaseState();
 }
 
 class _InputTextActionBaseState extends State<InputTextActionBase> {
-  final valueController = TextEditingController();
+  late TextEditingController valueController;
   String? validatorMensajeCustom;
   @override
   void initState() {
     super.initState();
+    valueController = widget.controller ?? TextEditingController();
     valueController.text = widget.initialText ?? '';
   }
 
