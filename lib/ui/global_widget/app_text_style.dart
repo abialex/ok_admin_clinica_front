@@ -79,16 +79,24 @@ class AppTextGlobal {
         color: AppColors.blueSecondary,
       );
 
-  static Text labelLightText({required String text}) => _BaseText.lightText(
+  static Text labelLightText({required String text, double? fontSize, Color colorText = AppColors.blueSecondary}) => _BaseText.lightText(
         text: text,
         fontWeight: FontWeight.bold,
-        color: AppColors.blueSecondary,
+        color: colorText,
+        fontSize: fontSize,
       );
 
-  static Text labelMediumText({required String text}) => _BaseText.mediumText(
+  static Text labelSmallText({required String text, FontWeight fontWeight = FontWeight.bold, Color colorText = AppColors.blueSecondary}) => _BaseText.lightText(
+        text: text,
+        fontWeight: fontWeight,
+        color: colorText,
+        fontSize: 12,
+      );
+
+  static Text labelMediumText({required String text, Color colorText = AppColors.blueSecondary}) => _BaseText.mediumText(
         text: text,
         fontWeight: FontWeight.bold,
-        color: AppColors.blueSecondary,
+        color: colorText,
       );
 
   static Text labelLargeText({required String text}) => _BaseText.largeText(

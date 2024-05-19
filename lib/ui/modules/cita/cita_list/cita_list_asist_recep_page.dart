@@ -1,4 +1,5 @@
 import 'package:admin_clinica_front/core/extensions/date_time_extensions.dart';
+import 'package:admin_clinica_front/ui/global_widget/page/mobile/app_header_mobile.dart';
 import 'package:admin_clinica_front/ui/global_widget/page/page_base_desktop.dart';
 import 'package:admin_clinica_front/ui/global_widget/page/page_base_phone.dart';
 import 'package:flutter/material.dart';
@@ -49,6 +50,10 @@ class CitaListAsistenteRecepcionPage extends StatelessWidget with ResponsiveWidg
           child: const Icon(Icons.add),
         ),
         title: "Cita Page PADRE",
+        headerWidget: const HeaderMobile(
+          subTitle: "Doctor",
+          title: "CITAS",
+        ),
         bodySliver: citaBloc.state.map(
           initial: (state) {
             citaBloc.add(CitaEvent.getCitas());
@@ -86,26 +91,9 @@ class CitaListAsistenteRecepcionPage extends StatelessWidget with ResponsiveWidg
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: const Text("ss"),
+        title: const Text("TABLET"),
       ),
-      body: Stack(
-        fit: StackFit.expand,
-        children: [
-          // const DialogCubitPage(),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              const Text(
-                'You have pushed :',
-              ),
-              Text(
-                '3213123',
-                style: Theme.of(context).textTheme.headlineMedium,
-              ),
-            ],
-          ),
-        ],
-      ),
+      body: const SizedBox.shrink(),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
           final api = locator<DoctorApi>();

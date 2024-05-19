@@ -1,5 +1,5 @@
-import 'package:admin_clinica_front/data/repositories_impl/usuario_repository_impl.dart';
 import 'package:admin_clinica_front/ui/blocs/usuario_session/bloc/usuario_bloc.dart';
+import 'package:admin_clinica_front/ui/global_widget/page/mobile/app_header_mobile.dart';
 import 'package:admin_clinica_front/ui/modules/home/bloc/home_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -7,7 +7,6 @@ import '../../../core/di/injections.dart';
 import '../../../core/utils/app_colors.dart';
 import '../../../data/datasources/remote/doctor_api.dart';
 import '../../../dominio/repositories/ilocal_repository.dart';
-import '../../../dominio/services/usuario_service.dart';
 import '../../global_widget/page/page_base_desktop.dart';
 import '../../global_widget/page/page_base_phone.dart';
 import '../../global_widget/page/page_mixin_base.dart';
@@ -39,7 +38,10 @@ class HomePage extends StatelessWidget with ResponsiveWidgetMixin {
   PageBasePhone buildMobile(BuildContext context) {
     final usuarioBloc = context.read<UsuarioBloc>();
     return PageBasePhone(
-      headerWidget: Text("${usuarioBloc.state.usuario?.rol ?? "N/A"} ${usuarioBloc.state.usuario?.tipo ?? ""}"),
+      headerWidget: const HeaderMobile(
+        subTitle: "Doctor",
+        title: "HOME",
+      ),
       title: "Home page",
       bodySliver: SliverList(
         delegate: SliverChildBuilderDelegate(

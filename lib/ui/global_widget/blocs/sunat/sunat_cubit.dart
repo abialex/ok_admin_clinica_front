@@ -36,4 +36,8 @@ class SunatCubit extends Cubit<SunatState> {
       return null;
     }
   }
+
+  void initial() {
+    emit(SunatState.initial());
+  }
 }

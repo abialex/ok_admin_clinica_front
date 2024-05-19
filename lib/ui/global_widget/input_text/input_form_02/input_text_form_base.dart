@@ -47,7 +47,7 @@ class _InputTextBaseState extends State<InputTextBase> {
   @override
   void initState() {
     super.initState();
-    valueController = widget.controller ?? TextEditingController();
+    valueController = widget.controller;
     valueController.text = widget.initialText ?? '';
   }
 
@@ -90,7 +90,7 @@ class _InputTextBaseState extends State<InputTextBase> {
               Expanded(
                 child: TextFormField(
                   // maxLength: 2,
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  autovalidateMode: AutovalidateMode.disabled,
                   //expresion regular
                   keyboardType: widget.textInputType,
                   // maxLength: widget.maxlength,
@@ -114,6 +114,7 @@ class _InputTextBaseState extends State<InputTextBase> {
                     filled: true,
                     isCollapsed: false,
                     fillColor: AppColors.lightGray,
+                    errorStyle: TextStyle(color: AppColors.redAccent),
                     border: OutlineInputBorder(
                       // borderSide: BorderSide.none,
                       borderRadius: BorderRadius.circular(5),
@@ -122,12 +123,23 @@ class _InputTextBaseState extends State<InputTextBase> {
                       // borderSide: BorderSide.none,
                       borderRadius: BorderRadius.circular(5),
                     ),
+
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(5),
                       borderSide: BorderSide(
                         color: Colors.transparent,
                         width: 0,
                       ),
+                    ),
+                    errorBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(5),
+                        borderSide: BorderSide(
+                          color: AppColors.redAccent,
+                        )),
+                    hintStyle: const TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w400,
+                      color: AppColors.darkGray,
                     ),
                     hintText: widget.hintText,
                     contentPadding: EdgeInsets.only(

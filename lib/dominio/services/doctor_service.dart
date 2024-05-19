@@ -71,6 +71,7 @@ class DoctorService {
             nombres: right.nombres,
             apellidos: right.apellidos,
             dni: right.dni,
+            celular: right.celular,
             ubicacionesId: right.ubicaciones.map((e) => e.id).toList(),
           ),
         ),
