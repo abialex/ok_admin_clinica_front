@@ -10,6 +10,7 @@ import 'package:admin_clinica_front/ui/global_widget/dropdown_multiselect/app_mu
 import 'package:admin_clinica_front/ui/global_widget/dropdown_multiselect/custom_multi_select.dart';
 import 'package:admin_clinica_front/ui/global_widget/input_text/input_form_02/input_text_action_date.dart';
 import 'package:admin_clinica_front/ui/global_widget/input_text/input_form_02/input_text_form_base.dart';
+import 'package:admin_clinica_front/ui/global_widget/page/mobile/app_header_mobile.dart';
 import 'package:admin_clinica_front/ui/modules/doctor/bloc/doctor_list_bloc.dart';
 import 'package:admin_clinica_front/ui/modules/doctor/bloc/doctor_update_bloc.dart';
 import 'package:admin_clinica_front/ui/modules/ubicacion/bloc/ubicacion_bloc.dart';
@@ -64,7 +65,10 @@ class DoctorUpdateAsistenteRecepcionPage extends StatelessWidget with Responsive
     final doctorListBloc = context.read<DoctorListBloc>();
     return PageBasePhone(
       title: "Doctor Add",
-      headerWidget: const Text("Modificar doctor"),
+      headerWidget: const HeaderMobile(
+        subTitle: "Doctor",
+        title: "MODIFICAR DOCTOR",
+      ),
       bodySliver: SliverToBoxAdapter(
           child: doctorUpdateBloc.state.map(
         initial: (stt) {

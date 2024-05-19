@@ -1,4 +1,5 @@
 import 'package:admin_clinica_front/ui/core/router.dart';
+import 'package:admin_clinica_front/ui/global_widget/page/mobile/app_header_mobile.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_text_style.dart';
 import 'package:admin_clinica_front/ui/global_widget/page/page_base_desktop.dart';
 import 'package:admin_clinica_front/ui/global_widget/page/page_base_phone.dart';
@@ -53,7 +54,10 @@ class DoctorListAsistenteRecepcionPage extends StatelessWidget with ResponsiveWi
         },
         child: const Icon(Icons.add),
       ),
-      headerWidget: const Text("Asistente Recepcion"),
+      headerWidget: const HeaderMobile(
+        subTitle: "Doctor",
+        title: "DOCTORES",
+      ),
       title: "Doctor page",
       bodySliver: doctorbloc.state.map(
         initial: (sst) {
@@ -129,7 +133,7 @@ class DoctorListAsistenteRecepcionPage extends StatelessWidget with ResponsiveWi
                     );
                   },
                   child: Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                    margin: const EdgeInsets.symmetric(vertical: 5),
                     padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                     decoration: const BoxDecoration(
                       color: AppColors.lightGray,

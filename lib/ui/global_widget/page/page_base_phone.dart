@@ -1,4 +1,5 @@
 import 'package:admin_clinica_front/core/utils/app_colors.dart';
+import 'package:admin_clinica_front/ui/global_widget/app_box.dart';
 import 'package:admin_clinica_front/ui/global_widget/custom_navbar_navigation/cubit/navigator_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -45,9 +46,13 @@ class PageBasePhone extends StatelessWidget {
                     ),
 
                     // Body
-
-                    bodySliver,
-
+                    SliverToBoxAdapter(
+                      child: AppBox.h10,
+                    ),
+                    SliverPadding(padding: const EdgeInsets.symmetric(horizontal: 15), sliver: bodySliver),
+                    SliverToBoxAdapter(
+                      child: AppBox.h10,
+                    ),
                     // Footer
                     SliverFillRemaining(
                       hasScrollBody: false, // el contenido ocupa todo el espacio que sliverList ocupa
@@ -89,8 +94,8 @@ class PageBasePhone extends StatelessWidget {
   }
 }
 
-const _maxExtend = 50.0;
-const _minExtend = 50.0;
+const _maxExtend = 90.0;
+const _minExtend = 90.0;
 
 class MySliverHeaderDelegate extends SliverPersistentHeaderDelegate {
   final Widget widgetHeader;
@@ -124,21 +129,21 @@ class MySliverHeaderDelegate extends SliverPersistentHeaderDelegate {
           },
           child: Container(
             // height: 400,
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                colors: [Colors.transparent, Colors.black54],
-                stops: [0.5, 1.0],
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                tileMode: TileMode.repeated,
-              ),
-            ),
+            // decoration: const BoxDecoration(
+            //   gradient: LinearGradient(
+            //     colors: [Colors.transparent, Colors.black54],
+            //     stops: [0.5, 1.0],
+            //     begin: Alignment.topCenter,
+            //     end: Alignment.bottomCenter,
+            //     tileMode: TileMode.repeated,
+            //   ),
+            // ),
             child: Column(
               children: [
                 Container(
+                  color: AppColors.white,
                   alignment: Alignment.center,
-                  color: AppColors.yellow,
-                  height: 50,
+                  height: 90,
                   child: widgetHeader,
                 ),
                 AnimatedSwitcher(

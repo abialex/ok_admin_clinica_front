@@ -9,6 +9,7 @@ import 'package:admin_clinica_front/ui/global_widget/dropdown_multiselect/app_mu
 import 'package:admin_clinica_front/ui/global_widget/dropdown_multiselect/custom_multi_select.dart';
 import 'package:admin_clinica_front/ui/global_widget/input_text/input_form_02/input_text_action_date.dart';
 import 'package:admin_clinica_front/ui/global_widget/input_text/input_form_02/input_text_form_base.dart';
+import 'package:admin_clinica_front/ui/global_widget/page/mobile/app_header_mobile.dart';
 import 'package:admin_clinica_front/ui/global_widget/page/page_base_desktop.dart';
 import 'package:admin_clinica_front/ui/global_widget/page/page_base_phone.dart';
 import 'package:admin_clinica_front/ui/modules/doctor/bloc/doctor_create_bloc.dart';
@@ -64,7 +65,10 @@ class DoctorAddAsistenteRecepcionPage extends StatelessWidget with ResponsiveWid
 
     return PageBasePhone(
       title: "Doctor Add",
-      headerWidget: const Text("Agregar doctor"),
+      headerWidget: const HeaderMobile(
+        subTitle: "Doctor",
+        title: "CREAR DOCTOR",
+      ),
       bodySliver: SliverToBoxAdapter(
         child: Form(
           key: formKey,
