@@ -8,4 +8,5 @@ class AppConstSvgs {
   static const String descripcion = '${_path}descripcion.svg';
   static const String logo_string = '${_path}logo_string.svg';
   static const String logo_string_descripcion = '${_path}logo_string_descripcion.svg';
+  static const String doctor = '${_path}doctor.svg';
 }
