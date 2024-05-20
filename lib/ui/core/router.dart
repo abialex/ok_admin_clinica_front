@@ -1,8 +1,10 @@
 // ignore_for_file: constant_identifier_names
 
+import 'package:admin_clinica_front/ui/global_widget/custom_navbar_navigation/cubit/navigator_cubit.dart';
 import 'package:admin_clinica_front/ui/modules/doctor/doctor_list/doctor_list_adm_page.dart';
 import 'package:admin_clinica_front/ui/modules/login/page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../modules/cita/cita_add/cita_add_asist_recep_page.dart';
 import '../modules/cita/cita_list/cita_list_asist_recep_page.dart';
@@ -186,7 +188,10 @@ class NotFoundPage extends StatelessWidget {
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                Navigator.pushNamed(context, Routes.home); // O navegar a una ruta específica
+                // !falta validar para que se redirija al home
+                final navbarCubit = context.read<NavigatorCubit>();
+                navbarCubit.updateIndexDelay(1);
+                Navigator.pushReplacementNamed(context, Routes.login);
               },
               child: const Text('Go Back'),
             ),

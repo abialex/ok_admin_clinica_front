@@ -20,8 +20,8 @@ class CitaDTO {
   final String? datosPaciente;
   final int doctor_id;
   final int ubicacion_id;
-  final String? estado_string;
-  final String? tipo_string;
+  final String estado_string;
+  final String tipo_string;
   final String? fechaConfirmacion;
   final String? fechaValidacion;
   final String? fechaInicio;
@@ -41,8 +41,8 @@ class CitaDTO {
     this.datosPaciente,
     required this.doctor_id,
     required this.ubicacion_id,
-    this.estado_string,
-    this.tipo_string,
+    required this.estado_string,
+    required this.tipo_string,
     this.fechaConfirmacion,
     this.fechaValidacion,
     this.fechaInicio,

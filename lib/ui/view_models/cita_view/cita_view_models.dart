@@ -1,12 +1,15 @@
+import 'package:admin_clinica_front/dominio/entities/tipo_cita.dart';
+
 class CitaViewModel {
-  final int? id;
-  final int? doctorId;
-  final int? ubicacionId;
-  final String? estadoString;
-  final String? tipoString;
-  final String? fechaHoraCita;
-  final int? estado;
-  final int? tipo;
+  final int id;
+  final String doctor;
+  final int doctorId;
+  final int ubicacionId;
+  final String estadoString;
+  final String tipoString;
+  final DateTime fechaHoraCita;
+  final EstadoCita estado;
+  final int tipo;
   final String? razon;
   final String? razonOcupado;
   final String? datosPaciente;
@@ -16,16 +19,18 @@ class CitaViewModel {
   final DateTime? fechaInicio;
   final DateTime? fechaFin;
   final int? pacienteId;
+  final String? pacienteDatos;
 
   CitaViewModel({
-    this.id,
-    this.doctorId,
-    this.ubicacionId,
-    this.estadoString,
-    this.tipoString,
-    this.fechaHoraCita,
-    this.estado,
-    this.tipo,
+    required this.id,
+    required this.doctor,
+    required this.doctorId,
+    required this.ubicacionId,
+    required this.estadoString,
+    required this.tipoString,
+    required this.fechaHoraCita,
+    required this.estado,
+    required this.tipo,
     this.razon,
     this.razonOcupado,
     this.datosPaciente,
@@ -35,21 +40,22 @@ class CitaViewModel {
     this.fechaInicio,
     this.fechaFin,
     this.pacienteId,
+    this.pacienteDatos,
   });
 }
 
 class CitasViewModel {
   final int id;
   final DateTime fechaHoraCita;
-  final int estado;
+  final EstadoCita estado;
   final int tipo;
   final String? celular;
   final String? pacienteDatos;
   final String? razon;
   final String? razonOcupado;
   final String? datosPaciente;
-  final String? estadoString;
-  final String? tipoString;
+  final String estadoString;
+  final String tipoString;
   final DateTime? fechaConfirmacion;
   final DateTime? fechaValidacion;
   final DateTime? fechaInicio;
@@ -65,8 +71,8 @@ class CitasViewModel {
     this.razon,
     this.razonOcupado,
     this.datosPaciente,
-    this.estadoString,
-    this.tipoString,
+    required this.estadoString,
+    required this.tipoString,
     this.fechaConfirmacion,
     this.fechaValidacion,
     this.fechaInicio,
@@ -98,7 +104,7 @@ class CitaAgilUpdateViewModel {
   final int ubicacionId;
   final DateTime fechaHoraCita;
   final String datosPaciente;
-  final int estado;
+  final EstadoCita estado;
   final String? razon;
   final String? celular;
 
@@ -144,21 +150,31 @@ class CitaFilterViewModel {
   });
 }
 
-class CitaOcupadaCreateViewModel extends CitaViewModel {
+class CitaOcupadaCreateViewModel {
+  final int doctorId;
+  final int ubicacionId;
+  final String fechaHoraCita;
+  final String razonOcupado;
+
   CitaOcupadaCreateViewModel({
-    required super.doctorId,
-    required super.ubicacionId,
-    required super.fechaHoraCita,
-    required super.razonOcupado,
+    required this.doctorId,
+    required this.ubicacionId,
+    required this.fechaHoraCita,
+    required this.razonOcupado,
   });
 }
 
-class CitaOcupadaUpdateViewModel extends CitaViewModel {
+class CitaOcupadaUpdateViewModel {
+  final int id;
+  final int doctorId;
+  final int ubicacionId;
+  final DateTime fechaHoraCita;
+  final String razonOcupado;
   CitaOcupadaUpdateViewModel({
-    required super.id,
-    required super.doctorId,
-    required super.ubicacionId,
-    required super.fechaHoraCita,
-    required super.razonOcupado,
+    required this.id,
+    required this.doctorId,
+    required this.ubicacionId,
+    required this.fechaHoraCita,
+    required this.razonOcupado,
   });
 }

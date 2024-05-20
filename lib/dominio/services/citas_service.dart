@@ -1,5 +1,6 @@
 import 'package:admin_clinica_front/core/extensions/date_time_extensions.dart';
 import 'package:admin_clinica_front/data/models/request/request_model.dart';
+import 'package:admin_clinica_front/dominio/entities/tipo_cita.dart';
 import 'package:either_dart/either.dart';
 
 import '../../data/models/cita/cita_agil/cita_agil_create.dart';
@@ -28,7 +29,7 @@ class CitasService {
     CitaAgilUpdateModel model = CitaAgilUpdateModel(
       id: view.id,
       razon: view.razon,
-      estado: view.estado,
+      estado: EstadoCitaExtension.fromEstado(view.estado),
       fechaHoraCita: view.fechaHoraCita.toFormatyyyyMMddHHmmss(),
       datosPaciente: view.datosPaciente,
       doctor_id: view.doctorId,
@@ -48,7 +49,7 @@ class CitasService {
               .map((cita) => CitasViewModel(
                     id: cita.id,
                     fechaHoraCita: DateTime.parse(cita.fechaHoraCita),
-                    estado: cita.estado,
+                    estado: EstadoCitaExtension.fromNumber(cita.estado),
                     tipo: cita.tipo,
                     celular: cita.celular,
                     pacienteDatos: cita.paciente?.nombres,
@@ -87,7 +88,7 @@ class CitasService {
                 (cita) => CitasViewModel(
                   id: cita.id,
                   fechaHoraCita: DateTime.parse(cita.fechaHoraCita),
-                  estado: cita.estado,
+                  estado: EstadoCitaExtension.fromNumber(cita.estado),
                   tipo: cita.tipo,
                   celular: cita.celular,
                   pacienteDatos: cita.paciente?.nombres,
@@ -141,7 +142,7 @@ class CitasService {
               (cita) => CitasViewModel(
                 id: cita.id,
                 fechaHoraCita: DateTime.parse(cita.fechaHoraCita),
-                estado: cita.estado,
+                estado: EstadoCitaExtension.fromNumber(cita.estado),
                 tipo: cita.tipo,
                 celular: cita.celular,
                 pacienteDatos: cita.paciente?.nombres,
@@ -173,11 +174,43 @@ class CitasService {
       case TipoAccionEnum.validar:
         return _citaRepository.validarCita(idcita);
       case TipoAccionEnum.cancelar:
-        return const Left("falta cancelar");
+        return const Left("falta cancelar en la App");
       case TipoAccionEnum.eliminar:
         return _citaRepository.deleteCitaById(idcita);
       default:
-        return const Left("tipo no definido");
+        return const Left("tipo no definido en la App");
+    }
+  }
+
+  Future<Either<String, CitaViewModel>> getCitaById(int citaId) async {
+    try {
+      final result = await _citaRepository.getCitaById(citaId);
+
+      return result.fold(
+        (error) => Left(error),
+        (dto) => Right(CitaViewModel(
+          id: dto.id,
+          doctorId: dto.doctor_id,
+          ubicacionId: dto.ubicacion_id,
+          fechaHoraCita: DateTime.parse(dto.fechaHoraCita),
+          doctor: dto.doctor,
+          estadoString: dto.estado_string,
+          tipoString: dto.tipo_string,
+          tipo: dto.tipo,
+          celular: dto.celular,
+          pacienteDatos: dto.paciente?.nombres,
+          razon: dto.razon,
+          razonOcupado: dto.razonOcupado,
+          datosPaciente: dto.datosPaciente,
+          estado: EstadoCitaExtension.fromNumber(dto.estado),
+          fechaConfirmacion: dto.fechaConfirmacion != null ? DateTime.parse(dto.fechaConfirmacion!) : null,
+          fechaValidacion: dto.fechaValidacion != null ? DateTime.parse(dto.fechaValidacion!) : null,
+          fechaInicio: dto.fechaInicio != null ? DateTime.parse(dto.fechaInicio!) : null,
+          fechaFin: dto.fechaFin != null ? DateTime.parse(dto.fechaFin!) : null,
+        )),
+      );
+    } catch (e) {
+      return const Left("Error inesperado");
     }
   }
 }
