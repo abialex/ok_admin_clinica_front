@@ -1,7 +1,10 @@
+import 'dart:async';
+
 import 'package:admin_clinica_front/core/utils/app_colors.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_box.dart';
 import 'package:admin_clinica_front/ui/global_widget/custom_navbar_navigation/cubit/navigator_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../core/router.dart';
 import '../custom_navbar_navigation/design_nav_bar_navigation.dart';
@@ -14,7 +17,12 @@ class PageBasePhone extends StatelessWidget {
   final String title;
   final Widget floatingWidget;
   final double heightExpand;
-  const PageBasePhone({
+  final double maxEntend;
+  final double minEntend;
+  final void Function()? onReachedTop;
+  final void Function()? onReachedBottom;
+
+  PageBasePhone({
     super.key,
     required this.bodySliver,
     required this.title,
@@ -22,47 +30,90 @@ class PageBasePhone extends StatelessWidget {
     this.footerSliver = const SizedBox.shrink(),
     this.headerWidget = const SizedBox.shrink(),
     this.heightExpand = 200,
+    this.maxEntend = 90,
+    this.minEntend = 90,
+    this.onReachedTop,
+    this.onReachedBottom,
   });
+  late ScrollController _scrollController;
+  Timer? _timer;
+
+  void _onReachedTop() {
+    if (_timer != null) {
+      _timer!.cancel();
+    }
+
+    _timer = Timer(Duration(milliseconds: 600), () {
+      onReachedTop?.call();
+
+      // Realiza aquí la acción que deseas ejecutar después del tiempo
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
+    _scrollController = ScrollController()
+      ..addListener(() {
+        if (_scrollController.position.atEdge) {
+          bool isTop = _scrollController.position.pixels == 0;
+          if (isTop) {
+            // onReachedTop?.call();
+          } else {
+            onReachedBottom?.call();
+          }
+        }
+      });
     return Scaffold(
       body: Column(
         children: [
           Expanded(
             child: Stack(
               children: [
-                CustomScrollView(
-                  slivers: <Widget>[
-                    // Header
-                    SliverPersistentHeader(
-                      delegate: MySliverHeaderDelegate(
-                        title: title,
-                        expandedHeight: heightExpand,
-                        widgetHeader: headerWidget,
+                NotificationListener<ScrollNotification>(
+                  onNotification: (ScrollNotification notification) {
+                    if (notification is OverscrollNotification) {
+                      if (_scrollController.position.pixels <= -0) {
+                        // print(_scrollController.position.pixels.toString());
+                        // _onReachedTop();
+                      }
+                    }
+                    return true;
+                  },
+                  child: CustomScrollView(
+                    controller: _scrollController,
+                    slivers: <Widget>[
+                      // Header
+                      SliverPersistentHeader(
+                        delegate: MySliverHeaderDelegate(
+                          title: title,
+                          expandedHeight: heightExpand,
+                          widgetHeader: headerWidget,
+                          maxExtend: maxEntend,
+                          minExtend: minEntend,
+                        ),
+                        pinned: true,
+                        // floating: false,
                       ),
-                      pinned: true,
-                      // floating: false,
-                    ),
 
-                    // Body
-                    SliverToBoxAdapter(
-                      child: AppBox.h10,
-                    ),
-                    SliverPadding(padding: const EdgeInsets.symmetric(horizontal: 15), sliver: bodySliver),
-                    SliverToBoxAdapter(
-                      child: AppBox.h10,
-                    ),
-                    // Footer
-                    SliverFillRemaining(
-                      hasScrollBody: false, // el contenido ocupa todo el espacio que sliverList ocupa
-                      fillOverscroll: false,
-                      child: Container(
-                        padding: const EdgeInsets.only(bottom: 20),
-                        child: footerSliver,
+                      // Body
+                      SliverToBoxAdapter(
+                        child: AppBox.h10,
                       ),
-                    ),
-                  ],
+                      SliverPadding(padding: const EdgeInsets.symmetric(horizontal: 15), sliver: bodySliver),
+                      SliverToBoxAdapter(
+                        child: AppBox.h10,
+                      ),
+                      // Footer
+                      SliverFillRemaining(
+                        hasScrollBody: false, // el contenido ocupa todo el espacio que sliverList ocupa
+                        fillOverscroll: false,
+                        child: Container(
+                          padding: const EdgeInsets.only(bottom: 20),
+                          child: footerSliver,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
                 Positioned(
                   bottom: 16,
@@ -78,8 +129,8 @@ class PageBasePhone extends StatelessWidget {
               child: DesignNavCustom(
                 heightNavBar: 70,
                 initialIndex: 2,
-                backgroundColor: AppColors.blueSecondary,
-                iconBackgroundColorNoSelected: AppColors.blueSecondary,
+                backgroundColor: AppColors.slgPrincipal,
+                iconBackgroundColorNoSelected: AppColors.slgPrincipal,
                 iconBackgroundColorSelected: AppColors.white,
                 onDestinationSelected: (p0) async {
                   context.read<NavigatorCubit>().updateIndexDelay(p0);
@@ -94,20 +145,21 @@ class PageBasePhone extends StatelessWidget {
   }
 }
 
-const _maxExtend = 90.0;
-const _minExtend = 90.0;
-
 class MySliverHeaderDelegate extends SliverPersistentHeaderDelegate {
   final Widget widgetHeader;
   final Widget widgetHeaderBody;
   final double expandedHeight;
   final String title;
+  final double maxExtend;
+  final double minExtend;
 
   MySliverHeaderDelegate({
     required this.expandedHeight,
     required this.title,
     this.widgetHeader = const SizedBox.shrink(),
     this.widgetHeaderBody = const SizedBox.shrink(),
+    required this.maxExtend,
+    required this.minExtend,
   });
 
   @override
@@ -143,7 +195,7 @@ class MySliverHeaderDelegate extends SliverPersistentHeaderDelegate {
                 Container(
                   color: AppColors.white,
                   alignment: Alignment.center,
-                  height: 90,
+                  height: maxExtend,
                   child: widgetHeader,
                 ),
                 AnimatedSwitcher(
@@ -177,10 +229,10 @@ class MySliverHeaderDelegate extends SliverPersistentHeaderDelegate {
   }
 
   @override
-  double get maxExtent => _maxExtend;
+  double get maxExtent => maxExtend;
 
   @override
-  double get minExtent => _minExtend;
+  double get minExtent => minExtend;
 
   @override
   bool shouldRebuild(MySliverHeaderDelegate oldDelegate) {

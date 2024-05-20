@@ -20,7 +20,7 @@ class CitaBloc extends Bloc<CitaEvent, CitaState> {
 
   Future<void> getCitas(GetCitas event, Emitter<CitaState> emit) async {
     emit(Loading());
-    await Future.delayed(const Duration(milliseconds: 500));
+    await Future.delayed(const Duration(milliseconds: 200));
     final responseApi = await _citaService.getCitasByFechaIdDoctorIdUbicacion(CitaRequestViewModel(
       doctorId: 1,
       ubicacionId: 2,

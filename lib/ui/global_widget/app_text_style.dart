@@ -8,11 +8,12 @@ class _BaseText {
     Color? color,
     FontWeight? fontWeight,
     TextAlign? textAlign,
+    int? maxLines,
   }) {
     return Text(
       text,
       softWrap: true,
-      maxLines: 1,
+      maxLines: maxLines ?? 1,
       textAlign: textAlign,
       style: TextStyle(
         fontSize: fontSize ?? 16,
@@ -65,9 +66,11 @@ class _BaseText {
 
 class AppTextGlobal {
   // *: BASE PARA EL APP
-  static Text lightText({required String text}) => _BaseText.lightText(
+  static Text lightText({required String text, int? maxLines, double? fontSize, Color colorText = AppColors.dark}) => _BaseText.lightText(
         text: text,
-        color: AppColors.blueSecondary,
+        color: colorText,
+        maxLines: maxLines,
+        fontSize: fontSize,
       );
   static Text mediumText({required String text}) => _BaseText.mediumText(
         text: text,
@@ -79,7 +82,12 @@ class AppTextGlobal {
         color: AppColors.blueSecondary,
       );
 
-  static Text labelLightText({required String text, double? fontSize, Color colorText = AppColors.blueSecondary}) => _BaseText.lightText(
+  static Text labelLightText({
+    required String text,
+    double? fontSize,
+    Color colorText = AppColors.dark,
+  }) =>
+      _BaseText.lightText(
         text: text,
         fontWeight: FontWeight.bold,
         color: colorText,

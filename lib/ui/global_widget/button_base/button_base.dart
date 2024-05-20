@@ -7,26 +7,30 @@ class ButtonCustomBase extends StatelessWidget {
   final String text;
   final double? height;
   final void Function()? onClick;
-  const ButtonCustomBase({
-    super.key,
-    required this.backgroundColor,
-    required this.textColor,
-    required this.text,
-    this.height,
-    this.onClick,
-  });
+  final EdgeInsets padding;
+  final double? width;
+  const ButtonCustomBase(
+      {super.key,
+      required this.backgroundColor,
+      required this.textColor,
+      required this.text,
+      this.padding = const EdgeInsets.symmetric(
+        horizontal: 20,
+        vertical: 10,
+      ),
+      this.height,
+      this.onClick,
+      this.width});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onClick,
       child: Container(
+        width: width,
         height: height,
         alignment: Alignment.center,
-        padding: const EdgeInsets.symmetric(
-          horizontal: 20,
-          vertical: 10,
-        ),
+        padding: padding,
         decoration: BoxDecoration(
           borderRadius: const BorderRadius.all(Radius.circular(10)),
           border: Border.all(width: 0.3, color: AppColors.grey),

@@ -1,9 +1,12 @@
+import 'package:admin_clinica_front/core/constants/app_const_svgs.dart';
 import 'package:admin_clinica_front/core/extensions/date_time_extensions.dart';
 import 'package:admin_clinica_front/core/utils/app_cita_config.dart';
+import 'package:admin_clinica_front/core/utils/app_colors.dart';
 import 'package:admin_clinica_front/dominio/entities/tipo_cita.dart';
 import 'package:admin_clinica_front/dominio/services/citas_service.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_box.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_text_style.dart';
+import 'package:admin_clinica_front/ui/global_widget/button_base/button_base.dart';
 import 'package:admin_clinica_front/ui/global_widget/button_base/button_cancel.dart';
 import 'package:admin_clinica_front/ui/global_widget/button_base/button_success.dart';
 import 'package:admin_clinica_front/ui/global_widget/dialog/dialog_message/cubit/dialog_message_cubit.dart';
@@ -12,6 +15,8 @@ import 'package:admin_clinica_front/ui/view_models/cita_view/cita_view_models.da
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_svg/svg.dart';
 
 class CitasCard extends StatelessWidget {
   final CitasViewModel cita;
@@ -20,16 +25,21 @@ class CitasCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dialogCubit = context.read<DialogMessageCubit>();
     return BlocProvider(
       create: (context) => CitaIndexBloc(),
       child: BlocBuilder<CitaIndexBloc, CitaIndexState>(
         builder: (context, state) {
           final bloc = context.read<CitaIndexBloc>();
           return Container(
-              margin: const EdgeInsets.all(10.0),
+              margin: const EdgeInsets.symmetric(
+                vertical: 15,
+                horizontal: 5,
+              ),
               decoration: BoxDecoration(
-                border: Border.all(color: cita.estado.color),
+                border: Border.all(
+                  color: AppColors.slg01,
+                  width: 0.3,
+                ),
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(10.0),
                 boxShadow: const [
@@ -60,35 +70,87 @@ class CitasCard extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const SizedBox(height: 5.0),
-                            Text('Hora: ${stt.cita.fechaHoraCita.toFormatHHmm()}'),
-                            const SizedBox(height: 5.0),
-                            Text('Estado: ${stt.cita.estadoString}').animate().flip(),
-                            const SizedBox(height: 5.0),
-                            Text('Tipo: ${stt.cita.tipoString}'),
-                            if (cita.celular != null) ...[
-                              const SizedBox(height: 5.0),
-                              Text('Celular: ${stt.cita.celular}'),
-                            ],
-                            if (cita.razon != null) ...[
-                              const SizedBox(height: 5.0),
-                              Text('Razón: ${stt.cita.razon}'),
-                            ],
+                            AppBox.h20,
+                            if (cita.datosPaciente != null)
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  const Icon(
+                                    Icons.person,
+                                    color: AppColors.slg01,
+                                  ),
+                                  // AppTextGlobal.labelLightText(text: "Paciente SLG:"),
+                                  Expanded(child: Center(child: AppTextGlobal.lightText(text: stt.cita.datosPaciente!.toUpperCase()))),
+                                  AppBox.w6,
+                                ],
+                              ),
+                            if (cita.pacienteDatos != null)
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  const Icon(
+                                    Icons.person,
+                                    color: AppColors.slg01,
+                                  ),
+                                  // AppTextGlobal.labelLightText(text: "Paciente Libre:"),
+                                  Expanded(child: Center(child: AppTextGlobal.lightText(text: stt.cita.pacienteDatos!.toUpperCase()))),
+                                  AppBox.w6,
+                                ],
+                              ),
+                            AppBox.h10,
+
+                            // if (stt.cita.celular != null)
+                            //   Row(
+                            //     children: [
+                            //       const Icon(
+                            //         Icons.phone,
+                            //         color: AppColors.slg01,
+                            //       ),
+                            //       AppBox.w4,
+                            //       AppTextGlobal.lightText(text: stt.cita.celular!).animate().flip(),
+                            //     ],
+                            //   ),
+                            if (cita.razon != null)
+                              Row(
+                                children: [
+                                  AppTextGlobal.labelLightText(text: "Razón:"),
+                                  AppBox.w4,
+                                  AppTextGlobal.lightText(text: stt.cita.razon!),
+                                ],
+                              ),
                             if (cita.razonOcupado != null) ...[
                               const SizedBox(height: 5.0),
                               Text('Razón Ocupado: ${stt.cita.razonOcupado}'),
                             ],
-                            if (cita.datosPaciente != null) ...[
-                              const SizedBox(height: 5.0),
-                              Text('Paciente de SLG : ${stt.cita.datosPaciente}'),
-                            ],
-                            if (cita.pacienteDatos != null) ...[
-                              const SizedBox(height: 5.0),
-                              Text('Paciente libre: ${stt.cita.pacienteDatos}'),
-                            ],
-                            const Row(
-                              children: [ButtonSuccess(text: "editar"), ButtonCancel(text: "eliminar")],
-                            )
+                            AppBox.h4,
+
+                            Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                // AppTextGlobal.labelLightText(text: "Estado:"),
+                                Container(
+                                    padding: EdgeInsets.symmetric(
+                                      vertical: 2.5,
+                                      horizontal: 5,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      color: stt.cita.estado.color,
+                                      borderRadius: const BorderRadius.all(
+                                        Radius.circular(
+                                          10,
+                                        ),
+                                      ),
+                                    ),
+                                    child: AppTextGlobal.labelLightText(
+                                      text: stt.cita.estadoString,
+                                      colorText: AppColors.white,
+                                      fontSize: 14,
+                                    ).animate().flip()),
+                              ],
+                            ),
+
                             // if (cita.fechaConfirmacion != null) ...[
                             //   const SizedBox(height: 5.0),
                             //   Text('Fecha de Confirmación: ${cita.fechaConfirmacion}'),
@@ -105,44 +167,228 @@ class CitasCard extends StatelessWidget {
                             //   const SizedBox(height: 5.0),
                             //   Text('Fecha de Fin: ${cita.fechaFin}'),
                             // ],
+
+                            AppBox.h16,
                           ],
                         ),
                       ),
                       Positioned(
-                        right: -10,
+                        right: 0,
+                        top: 0,
+                        child: () {
+                          const widthBtn = 100.0;
+                          switch (stt.cita.estado) {
+                            case EstadoCita.pendiente:
+                              return GestureDetector(
+                                onTap: () {
+                                  nextCita(context, stt.cita);
+                                },
+                                child: Container(
+                                  padding: const EdgeInsets.all(2.5),
+                                  child: Row(
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: [
+                                      AppTextGlobal.labelLightText(text: "Confirmar", fontSize: 12),
+                                      AppBox.w2,
+                                      SvgPicture.asset(
+                                        AppConstSvgs.state_confirmado,
+                                        height: 15,
+                                        color: EstadoCita.confirmado.color,
+                                      )
+                                          .animate(
+                                            onPlay: (controller) => controller.loop(reverse: true),
+                                          )
+                                          .slide(
+                                            delay: 1.seconds,
+                                            duration: 0.8.seconds,
+                                            begin: Offset(0, 0),
+                                            end: Offset(0, -0.5),
+                                            curve: Curves.bounceIn,
+                                          ),
+                                    ],
+                                  ),
+                                ),
+                              );
+
+                            case EstadoCita.confirmado:
+                              return GestureDetector(
+                                onTap: () {
+                                  nextCita(context, stt.cita);
+                                },
+                                child: Container(
+                                  padding: EdgeInsets.all(2.5),
+                                  child: Row(
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: [
+                                      AppTextGlobal.labelLightText(text: "Validar", fontSize: 12),
+                                      const Icon(
+                                        Icons.warning,
+                                        color: AppColors.yellow,
+                                        size: 18,
+                                      )
+                                          .animate(
+                                            onPlay: (controller) => controller.loop(reverse: true),
+                                          )
+                                          .shake(delay: 2.5.seconds, duration: 0.5.seconds),
+                                    ],
+                                  ),
+                                ),
+                              );
+
+                            // ButtonCustomBase(
+                            //   width: widthBtn,
+                            //   padding: const EdgeInsets.symmetric(
+                            //     vertical: 2.5,
+                            //     horizontal: 5,
+                            //   ),
+                            //   backgroundColor: AppColors.yellow,
+                            //   textColor: AppColors.white,
+                            //   text: "Validar",
+                            //   onClick: () {
+                            //     nextCita(context, stt.cita);
+                            //   },
+                            // );
+
+                            case EstadoCita.atendiendo:
+                              return CircleAvatar(
+                                backgroundColor: stt.cita.estado.color,
+                                child: const Icon(Icons.timer_outlined),
+                              );
+
+                            case EstadoCita.finalizado:
+                              return ButtonCustomBase(
+                                width: widthBtn,
+                                backgroundColor: stt.cita.estado.color,
+                                textColor: AppColors.white,
+                                text: "validar",
+                                onClick: () {
+                                  nextCita(context, stt.cita);
+                                },
+                              );
+                            case EstadoCita.validado:
+                              return const CircleAvatar(
+                                backgroundColor: AppColors.slgPrincipal,
+                                child: Icon(Icons.check),
+                              );
+
+                            default:
+                              return ButtonCustomBase(
+                                backgroundColor: stt.cita.estado.color,
+                                textColor: AppColors.white,
+                                text: "default",
+                                onClick: () {
+                                  // nextCita(context, stt.cita);
+                                },
+                              );
+                          }
+                        }(),
+                      ),
+                      Positioned(
+                        left: -0,
                         top: -15,
-                        child: ButtonSuccess(
-                          text: () {
-                            switch (stt.cita.estado) {
-                              case EstadoCita.pendiente:
-                                return "Confirmar";
-
-                              case EstadoCita.confirmado:
-                                return "Validar ojo";
-
-                              case EstadoCita.atendiendo:
-                                return "No puede";
-
-                              case EstadoCita.finalizado:
-                                return "Validar";
-                              case EstadoCita.validado:
-                                return "Concluido";
-
-                              default:
-                                return "Acccion no soportada";
-                            }
-                          }(),
-                          onClick: () {
-                            nextCita(context, stt.cita);
-                          },
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 2.5),
+                          decoration: const BoxDecoration(
+                            borderRadius: BorderRadius.vertical(top: Radius.circular(10)),
+                            color: AppColors.white,
+                            border: Border(
+                              left: BorderSide(
+                                color: AppColors.slg01,
+                                width: 0.3,
+                              ),
+                              top: BorderSide(
+                                color: AppColors.slg01,
+                                width: 0.3,
+                              ),
+                              right: BorderSide(
+                                color: AppColors.slg01,
+                                width: 0.2999,
+                                // width: 1,
+                              ),
+                            ),
+                          ),
+                          child: Row(
+                            children: [
+                              const Icon(
+                                Icons.av_timer_rounded,
+                                color: AppColors.slg01,
+                              ),
+                              // AppTextGlobal.labelLightText(text: "Hora:"),
+                              AppBox.w2,
+                              AppTextGlobal.labelLightText(text: stt.cita.fechaHoraCita.toFormatHHmm()),
+                            ],
+                          ),
                         ),
                       ),
+                      Positioned(
+                        bottom: 2,
+                        right: 2,
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2.5),
+                          decoration: const BoxDecoration(
+                            // borderRadius: BorderRadius.vertical(top: Radius.circular(10)),
+                            color: AppColors.white,
+                          ),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              // AppTextGlobal.labelLightText(text: "Tipo:"),
+                              // AppBox.w4,
+                              AppTextGlobal.lightText(text: stt.cita.tipoString, fontSize: 12, colorText: AppColors.grey),
+                            ],
+                          ),
+                        ),
+                      ),
+                      Positioned(
+                        bottom: 0,
+                        left: 1,
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2.5),
+                          decoration: const BoxDecoration(
+                            // borderRadius: BorderRadius.vertical(top: Radius.circular(10)),
+                            color: AppColors.white,
+                          ),
+                          child: Row(
+                            children: [
+                              if (stt.cita.celular != null) ...[
+                                const Icon(
+                                  Icons.phone,
+                                  color: AppColors.dark,
+                                  size: 16,
+                                ),
+                                AppBox.w4,
+                                AppTextGlobal.lightText(
+                                  text: stt.cita.celular!,
+                                  fontSize: 14,
+                                  colorText: AppColors.dark,
+                                ),
+                              ] else ...[
+                                Transform.rotate(
+                                  angle: 3.1416 * 0.5,
+                                  child: const Icon(
+                                    Icons.phone_disabled_sharp,
+                                    color: AppColors.lightGray,
+                                    size: 16,
+                                  ),
+                                ),
+                                AppBox.w4,
+                                AppTextGlobal.lightText(
+                                  text: "Sin registrar",
+                                  fontSize: 14,
+                                  colorText: AppColors.lightGray,
+                                ),
+                              ]
+                            ],
+                          ),
+                        ),
+                      )
                     ],
                   );
                 },
                 failure: (stt) {
                   return Container(
-                      padding: EdgeInsets.symmetric(
+                      padding: const EdgeInsets.symmetric(
                         vertical: 10,
                         horizontal: 20,
                       ),
@@ -180,31 +426,36 @@ class CitasCard extends StatelessWidget {
       case EstadoCita.confirmado:
         titulo = "¿Seguro(a) de querer validar?";
         texto = "Está permitido validar si el doctor no inició la atención";
-        tipoAccion = TipoAccionEnum.validar;
+        dialogCubit.showWarningAlert(
+            texto: texto,
+            onAceptar: () {
+              bloc.add(CitaIndexEvent.nextCita(cita, TipoAccionEnum.validar));
+            });
+
+        return;
       case EstadoCita.atendiendo:
         titulo = "Todavía en atención!";
         texto = "el doctor no ha finalizado la cita";
-        dialogCubit.showDialog(titulo: titulo, texto: texto);
+        dialogCubit.showInfoAlert(texto: texto);
         return;
 
       case EstadoCita.finalizado:
         titulo = "¿Seguro(a) de validar?";
-        texto = "la cita estará pendiente para que el doctor acepte";
+        texto = "¿El paciente está en recepción?";
         tipoAccion = TipoAccionEnum.validar;
       case EstadoCita.validado:
-        titulo = "la cita ya está concluida";
+        titulo = "la cita ya ha concluido";
         texto = ":)";
-        dialogCubit.showDialog(titulo: titulo, texto: texto);
+        dialogCubit.showInfoAlert(texto: titulo);
         return;
 
       default:
         texto = "Estado no soportado en este caso";
         titulo = "Permisos de asistenta de recepción";
-        dialogCubit.showDialog(titulo: titulo, texto: texto);
+        dialogCubit.showErrorAlert(texto: texto);
         return;
     }
-    dialogCubit.showDialog(
-      titulo: titulo,
+    dialogCubit.showConfirmationAlert(
       texto: texto,
       onAceptar: () {
         bloc.add(CitaIndexEvent.nextCita(cita, tipoAccion));
@@ -229,21 +480,38 @@ class CitasGroupedByHour extends StatelessWidget {
       physics: const NeverScrollableScrollPhysics(),
       shrinkWrap: true,
       children: CitaConfig.horaList.map((hora) {
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Text(
-                hora.horaString2,
-                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0),
+        return Container(
+          decoration: const BoxDecoration(
+            color: AppColors.lightBackgroundColor,
+            borderRadius: BorderRadius.all(
+              Radius.circular(10),
+            ),
+          ),
+          margin: const EdgeInsets.symmetric(
+            vertical: 5,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      hora.horaString2,
+                      style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0),
+                    ),
+                    AppTextGlobal.labelLightText(text: hora.listItems.length.toString(), colorText: AppColors.lightGray)
+                  ],
+                ),
               ),
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: hora.listItems.map((cita) => CitasCard(cita: cita)).toList(),
-            ),
-          ],
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: hora.listItems.map((cita) => CitasCard(cita: cita)).toList(),
+              ),
+            ],
+          ),
         );
       }).toList(),
     );

@@ -4,9 +4,9 @@ class CitaConfig {
   static final List<Hora> horaList = [
     Hora(hora: 8, horaString: "08 am", horaString2: "08:00 am", listItems: []),
     Hora(hora: 9, horaString: "09 am", horaString2: "09:00 am", listItems: []),
+    Hora(hora: 10, horaString: "10 am", horaString2: "10:00 am", listItems: []),
     Hora(hora: 11, horaString: "11 am", horaString2: "11:00 am", listItems: []),
     Hora(hora: 12, horaString: "12 pm", horaString2: "12:00 pm", listItems: []),
-    Hora(hora: 10, horaString: "10 am", horaString2: "10:00 am", listItems: []),
     Hora(hora: 15, horaString: "03 pm", horaString2: "03:00 pm", listItems: []),
     Hora(hora: 16, horaString: "04 pm", horaString2: "04:00 pm", listItems: []),
     Hora(

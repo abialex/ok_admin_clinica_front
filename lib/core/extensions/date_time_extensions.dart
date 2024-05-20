@@ -16,7 +16,7 @@ extension DateFormatting on DateTime {
   }
 
   String toFormatHHmm() {
-    final DateFormat formatter = DateFormat('HH:mm');
+    final DateFormat formatter = DateFormat('HH:mm a');
     minute;
     // Formato de fecha deseado: año-mes-día
     return formatter.format(this);

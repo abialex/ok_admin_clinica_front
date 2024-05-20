@@ -19,7 +19,7 @@ class AppColors {
   static const Color violetAccent = Color(0xffBDF4F4);
   static const Color white = Color(0xffFFFFFF);
   static const Color dark = Color(0xff252837);
-  static const Color yellow = Color(0xffFCDD80);
+  static const Color yellow = Color.fromARGB(255, 241, 181, 0);
   static const Color lightwhite = Color(0xffDDDDDD);
   static const Color cyan = Color(0xff83EEE6);
   static const Color slg01 = Color(0xff555555);
