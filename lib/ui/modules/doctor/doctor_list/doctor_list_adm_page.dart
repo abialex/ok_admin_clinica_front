@@ -20,7 +20,6 @@ class DoctorListAdminPage extends StatelessWidget with ResponsiveWidgetMixin {
 
   @override
   Widget build(BuildContext context) {
-    final dialogCubit = context.read<DialogMessageCubit>();
     final doctorBloc = context.read<DoctorListBloc>();
     return BlocBuilder<DoctorListBloc, DoctorListState>(
       bloc: doctorBloc,
@@ -207,7 +206,7 @@ class DoctorListAdminPage extends StatelessWidget with ResponsiveWidgetMixin {
           storage.saveToken("token 1f9579b30ba59f8dc25a853528d3adac2609f69d");
           final result = await api.getDoctorsByIdUbicacionFromAsistente();
           result.fold((left) => print(left), (right) => print(right));
-          dialog.showDialog(titulo: "s", texto: "s");
+          dialog.showCustomAlert(titulo: "s", texto: "s");
         },
         tooltip: 'Increment',
         child: const Icon(Icons.add),

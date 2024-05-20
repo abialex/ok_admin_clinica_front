@@ -63,7 +63,7 @@ class _LoginPageState extends State<LoginPage> {
                     usuarioLoaded: (state) {
                       final router = modulesRouterList.where((e) => e.modulesName == state.usuario.rol && e.modulesTipo == state.usuario.tipo).firstOrNull;
                       final indexHome = router?.modulesList.indexWhere((element) => element.routePage == Routes.home);
-                      if (indexHome == -1) dialogCubit.showDialog(titulo: "Módulo faltante", texto: "La aplicación ha iniciado sin el módulo Home");
+                      if (indexHome == -1) dialogCubit.showCustomAlert(titulo: "Módulo faltante", texto: "La aplicación ha iniciado sin el módulo Home");
                       context.read<NavigatorCubit>().setupModules(router?.modulesList);
                       context.read<NavigatorCubit>().updateIndexDelay(indexHome ?? -1);
                       usuarioBloc.setUsuario(state.usuario);
