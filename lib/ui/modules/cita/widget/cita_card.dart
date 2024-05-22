@@ -7,7 +7,6 @@ import 'package:admin_clinica_front/dominio/services/citas_service.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_box.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_text_style.dart';
 import 'package:admin_clinica_front/ui/global_widget/button_base/button_base.dart';
-import 'package:admin_clinica_front/ui/global_widget/button_base/button_cancel.dart';
 import 'package:admin_clinica_front/ui/global_widget/button_base/button_success.dart';
 import 'package:admin_clinica_front/ui/global_widget/dialog/dialog_message/cubit/dialog_message_cubit.dart';
 import 'package:admin_clinica_front/ui/modules/cita/bloc/cita_index_bloc/cita_index_bloc.dart';
@@ -101,17 +100,6 @@ class CitasCard extends StatelessWidget {
                               ),
                             AppBox.h10,
 
-                            // if (stt.cita.celular != null)
-                            //   Row(
-                            //     children: [
-                            //       const Icon(
-                            //         Icons.phone,
-                            //         color: AppColors.slg01,
-                            //       ),
-                            //       AppBox.w4,
-                            //       AppTextGlobal.lightText(text: stt.cita.celular!).animate().flip(),
-                            //     ],
-                            //   ),
                             if (cita.razon != null)
                               Row(
                                 children: [
@@ -131,7 +119,9 @@ class CitasCard extends StatelessWidget {
                               children: [
                                 // AppTextGlobal.labelLightText(text: "Estado:"),
                                 Container(
-                                    padding: EdgeInsets.symmetric(
+                                    alignment: Alignment.center,
+                                    width: 110,
+                                    padding: const EdgeInsets.symmetric(
                                       vertical: 2.5,
                                       horizontal: 5,
                                     ),
@@ -176,16 +166,14 @@ class CitasCard extends StatelessWidget {
                         right: 0,
                         top: 0,
                         child: () {
-                          const widthBtn = 100.0;
                           switch (stt.cita.estado) {
                             case EstadoCita.pendiente:
-                              return GestureDetector(
+                              return _buildActionState(
                                 onTap: () {
                                   nextCita(context, stt.cita);
                                 },
-                                child: Container(
-                                  padding: const EdgeInsets.all(2.5),
-                                  child: Row(
+                                builder: () {
+                                  return Row(
                                     crossAxisAlignment: CrossAxisAlignment.center,
                                     children: [
                                       AppTextGlobal.labelLightText(text: "Confirmar", fontSize: 12),
@@ -201,74 +189,108 @@ class CitasCard extends StatelessWidget {
                                           .slide(
                                             delay: 1.seconds,
                                             duration: 0.8.seconds,
-                                            begin: Offset(0, 0),
-                                            end: Offset(0, -0.5),
+                                            begin: const Offset(0, 0),
+                                            end: const Offset(0, -0.5),
                                             curve: Curves.bounceIn,
                                           ),
                                     ],
-                                  ),
-                                ),
+                                  );
+                                },
                               );
 
                             case EstadoCita.confirmado:
-                              return GestureDetector(
+                              return _buildActionState(
                                 onTap: () {
                                   nextCita(context, stt.cita);
                                 },
-                                child: Container(
-                                  padding: EdgeInsets.all(2.5),
-                                  child: Row(
+                                builder: () {
+                                  return Row(
                                     crossAxisAlignment: CrossAxisAlignment.center,
                                     children: [
                                       AppTextGlobal.labelLightText(text: "Validar", fontSize: 12),
+                                      AppBox.w2,
                                       const Icon(
                                         Icons.warning,
                                         color: AppColors.yellow,
-                                        size: 18,
+                                        size: 16,
                                       )
                                           .animate(
                                             onPlay: (controller) => controller.loop(reverse: true),
                                           )
                                           .shake(delay: 2.5.seconds, duration: 0.5.seconds),
                                     ],
-                                  ),
-                                ),
+                                  );
+                                },
                               );
 
-                            // ButtonCustomBase(
-                            //   width: widthBtn,
-                            //   padding: const EdgeInsets.symmetric(
-                            //     vertical: 2.5,
-                            //     horizontal: 5,
-                            //   ),
-                            //   backgroundColor: AppColors.yellow,
-                            //   textColor: AppColors.white,
-                            //   text: "Validar",
-                            //   onClick: () {
-                            //     nextCita(context, stt.cita);
-                            //   },
-                            // );
-
                             case EstadoCita.atendiendo:
-                              return CircleAvatar(
-                                backgroundColor: stt.cita.estado.color,
-                                child: const Icon(Icons.timer_outlined),
+                              return _buildActionState(
+                                onTap: () {
+                                  nextCita(context, stt.cita);
+                                },
+                                builder: () {
+                                  return Row(
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: [
+                                      AppTextGlobal.labelLightText(text: "Finalizar", fontSize: 12),
+                                      AppBox.w2,
+                                      SvgPicture.asset(
+                                        AppConstSvgs.state_finalizado,
+                                        height: 15,
+                                        color: EstadoCita.finalizado.color,
+                                      )
+                                          .animate(
+                                            onPlay: (controller) => controller.loop(reverse: true),
+                                          )
+                                          .shake(delay: 2.5.seconds, duration: 0.5.seconds),
+                                    ],
+                                  );
+                                },
                               );
 
                             case EstadoCita.finalizado:
-                              return ButtonCustomBase(
-                                width: widthBtn,
-                                backgroundColor: stt.cita.estado.color,
-                                textColor: AppColors.white,
-                                text: "validar",
-                                onClick: () {
+                              return _buildActionState(
+                                onTap: () {
                                   nextCita(context, stt.cita);
+                                },
+                                builder: () {
+                                  return Row(
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: [
+                                      AppTextGlobal.labelLightText(text: "Validar", fontSize: 12),
+                                      AppBox.w2,
+                                      SvgPicture.asset(
+                                        AppConstSvgs.state_validado,
+                                        height: 15,
+                                        color: EstadoCita.validado.color,
+                                      )
+                                          .animate(
+                                            onPlay: (controller) => controller.loop(reverse: true),
+                                          )
+                                          .shake(delay: 2.5.seconds, duration: 0.5.seconds),
+                                    ],
+                                  );
                                 },
                               );
                             case EstadoCita.validado:
-                              return const CircleAvatar(
-                                backgroundColor: AppColors.slgPrincipal,
-                                child: Icon(Icons.check),
+                              return _buildActionState(
+                                onTap: () {
+                                  // nextCita(context, stt.cita);
+                                },
+                                builder: () {
+                                  return Row(
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: [
+                                      // AppTextGlobal.labelLightText(text: "Concluido", fontSize: 12),
+                                      // AppBox.w2,
+                                      SvgPicture.asset(
+                                        AppConstSvgs.state_validado,
+                                        height: 15,
+                                        color: EstadoCita.validado.color,
+                                      ),
+                                    ],
+                                  );
+                                },
                               );
 
                             default:
@@ -407,6 +429,16 @@ class CitasCard extends StatelessWidget {
                 },
               ));
         },
+      ),
+    );
+  }
+
+  GestureDetector _buildActionState({Function()? onTap, required Widget Function() builder}) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.all(5),
+        child: builder(),
       ),
     );
   }
