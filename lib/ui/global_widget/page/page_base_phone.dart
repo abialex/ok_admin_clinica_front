@@ -1,12 +1,12 @@
+// ignore_for_file: must_be_immutable
+
 import 'dart:async';
 
 import 'package:admin_clinica_front/core/utils/app_colors.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_box.dart';
 import 'package:admin_clinica_front/ui/global_widget/custom_navbar_navigation/cubit/navigator_cubit.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../core/router.dart';
 import '../custom_navbar_navigation/design_nav_bar_navigation.dart';
 
 class PageBasePhone extends StatelessWidget {
@@ -172,44 +172,41 @@ class MySliverHeaderDelegate extends SliverPersistentHeaderDelegate {
         //   "https://via.placeholder.com/350x150",
         //   fit: BoxFit.cover,
         // ),
-        GestureDetector(
-          onTap: () {
-            final navbarCubit = context.read<NavigatorCubit>();
-            navbarCubit.updateIndexDelay(1);
 
-            Navigator.pushReplacementNamed(context, Routes.login);
-          },
-          child: Container(
-            // height: 400,
-            // decoration: const BoxDecoration(
-            //   gradient: LinearGradient(
-            //     colors: [Colors.transparent, Colors.black54],
-            //     stops: [0.5, 1.0],
-            //     begin: Alignment.topCenter,
-            //     end: Alignment.bottomCenter,
-            //     tileMode: TileMode.repeated,
-            //   ),
-            // ),
-            child: Column(
-              children: [
-                Container(
-                  color: AppColors.white,
-                  alignment: Alignment.center,
-                  height: maxExtend,
-                  child: widgetHeader,
-                ),
-                AnimatedSwitcher(
-                  duration: const Duration(milliseconds: 300),
-                  child: shrinkOffset == 0
-                      ? Container(
-                          alignment: Alignment.center,
-                          color: AppColors.lightFillColor,
-                          child: widgetHeaderBody,
-                        )
-                      : const SizedBox.shrink(),
-                )
-              ],
-            ),
+        //  final navbarCubit = context.read<NavigatorCubit>();
+        //   navbarCubit.updateIndexDelay(1);
+
+        //   Navigator.pushReplacementNamed(context, Routes.login);
+        Container(
+          // height: 400,
+          // decoration: const BoxDecoration(
+          //   gradient: LinearGradient(
+          //     colors: [Colors.transparent, Colors.black54],
+          //     stops: [0.5, 1.0],
+          //     begin: Alignment.topCenter,
+          //     end: Alignment.bottomCenter,
+          //     tileMode: TileMode.repeated,
+          //   ),
+          // ),
+          child: Column(
+            children: [
+              Container(
+                color: AppColors.white,
+                alignment: Alignment.center,
+                height: maxExtend,
+                child: widgetHeader,
+              ),
+              AnimatedSwitcher(
+                duration: const Duration(milliseconds: 300),
+                child: shrinkOffset == 0
+                    ? Container(
+                        alignment: Alignment.center,
+                        color: AppColors.lightFillColor,
+                        child: widgetHeaderBody,
+                      )
+                    : const SizedBox.shrink(),
+              )
+            ],
           ),
         ),
         // Positioned(

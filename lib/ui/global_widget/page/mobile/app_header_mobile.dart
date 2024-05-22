@@ -2,11 +2,16 @@ import 'package:admin_clinica_front/core/constants/app_const_svgs.dart';
 import 'package:admin_clinica_front/core/di/injections.dart';
 import 'package:admin_clinica_front/core/utils/app_colors.dart';
 import 'package:admin_clinica_front/dominio/services/local_service.dart';
+import 'package:admin_clinica_front/ui/core/router.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_box.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_text_style.dart';
+import 'package:admin_clinica_front/ui/global_widget/custom_navbar_navigation/cubit/navigator_cubit.dart';
+import 'package:admin_clinica_front/ui/global_widget/dialog/dialog_message/cubit/dialog_message_cubit.dart';
 import 'package:admin_clinica_front/ui/view_models/usuario_view/usuario_view_models.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 
 class HeaderMobile extends StatelessWidget {
@@ -21,6 +26,7 @@ class HeaderMobile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final auth = locator<LocalService>();
+    final dialog = context.read<DialogMessageCubit>();
     return Container(
       // color: AppColors.white,
       padding: const EdgeInsets.only(top: 5, right: 12.5, left: 12.5),
@@ -71,11 +77,22 @@ class HeaderMobile extends StatelessWidget {
                 top: 10,
                 child: Column(
                   children: [
-                    SvgPicture.asset(
-                      AppConstSvgs.logo,
-                      color: AppColors.white,
-                      height: 35,
-                    ).animate().rotate(end: 0.5),
+                    GestureDetector(
+                      onTap: () {
+                        dialog.showConfirmationAlert(
+                            texto: "¿Seguro de cerrar sesión?",
+                            onAceptar: () {
+                              final navbarCubit = context.read<NavigatorCubit>();
+                              navbarCubit.updateIndexDelay(1);
+                              Navigator.pushReplacementNamed(context, Routes.login);
+                            });
+                      },
+                      child: SvgPicture.asset(
+                        AppConstSvgs.logo,
+                        color: AppColors.white,
+                        height: 35,
+                      ).animate().rotate(end: 0.5),
+                    ),
                     AppBox.h8,
                     SvgPicture.asset(
                       AppConstSvgs.logo_string,
