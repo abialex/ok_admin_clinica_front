@@ -90,16 +90,14 @@ class DialogCubitPage extends StatelessWidget {
                                     ? Row(
                                         children: [
                                           Expanded(
-                                            child: Expanded(
-                                              child: ButtonCustomBase(
-                                                textColor: AppColors.white,
-                                                backgroundColor: state.colorBackground,
-                                                onClick: () {
-                                                  dialogCubit.disguiseDialog();
-                                                  state.onAceptar?.call();
-                                                },
-                                                text: "Aceptar",
-                                              ),
+                                            child: ButtonCustomBase(
+                                              textColor: AppColors.white,
+                                              backgroundColor: state.colorBackground,
+                                              onClick: () {
+                                                dialogCubit.disguiseDialog();
+                                                state.onAceptar?.call();
+                                              },
+                                              text: "Aceptar",
                                             ),
                                           ),
                                         ],

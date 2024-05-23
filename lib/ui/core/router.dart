@@ -52,14 +52,14 @@ class AppRouter {
         );
       case Routes.base_admin + Routes.cita_list:
         return PageRouteBuilder(
-          pageBuilder: (_, __, ___) => const CitaListAsistenteRecepcionPage(),
+          pageBuilder: (_, __, ___) => CitaListAsistenteRecepcionPage(),
           // transitionsBuilder: _createTransition,
         );
 
       // return MaterialPageRoute(builder: (_) => const CitaPage());
       case Routes.base_asistenteRecepcion + Routes.cita_list:
         return PageRouteBuilder(
-          pageBuilder: (_, __, ___) => const CitaListAsistenteRecepcionPage(),
+          pageBuilder: (_, __, ___) => CitaListAsistenteRecepcionPage(),
           //  transitionsBuilder: _createScaleTransition,
         );
 
