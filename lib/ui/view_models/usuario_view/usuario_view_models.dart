@@ -17,6 +17,7 @@ class UsuarioLoginResponseViewModel {
   final String rol;
   final String username;
   final String? tipo;
+  final List<int> ubicaciones;
 
   UsuarioLoginResponseViewModel({
     required this.userId,
@@ -27,6 +28,7 @@ class UsuarioLoginResponseViewModel {
     required this.rol,
     required this.username,
     this.tipo,
+    required this.ubicaciones,
   });
 }
 

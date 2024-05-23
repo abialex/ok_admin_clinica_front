@@ -122,12 +122,12 @@ class CitaAgilUpdateViewModel {
 
 class CitaRequestViewModel {
   final int doctorId;
-  final int ubicacionId;
+  final List<int> ubicacionesId;
   final DateTime fechaHoraCita;
 
   CitaRequestViewModel({
     required this.doctorId,
-    required this.ubicacionId,
+    required this.ubicacionesId,
     required this.fechaHoraCita,
   });
 }

@@ -77,7 +77,7 @@ class CitasService {
       CitaRequest request = CitaRequest(
         fechaHoraCita: view.fechaHoraCita.toFormatyyyyMMdd(),
         doctor_id: view.doctorId,
-        ubicacion_id: view.ubicacionId,
+        ubicaciones_id: view.ubicacionesId,
       );
       final result = await _citaRepository.getCitasByFechaIdDoctorIdUbicacion(request);
       return result.fold(

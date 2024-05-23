@@ -16,14 +16,15 @@ class LocalService {
         is_new_token: localUsuarioViewModel.isNewToken,
         rol: localUsuarioViewModel.rol,
         dias_token: localUsuarioViewModel.diasToken,
-        tipo: localUsuarioViewModel.tipo);
+        tipo: localUsuarioViewModel.tipo,
+        ubicaciones: localUsuarioViewModel.ubicaciones);
     return _localRepository.saveUsuario(model);
   }
 
   Future<UsuarioLoginResponseViewModel?> getUsuario() async {
     final model = await _localRepository.getUsuario();
     if (model == null) {
-      null;
+      return null;
     }
     return UsuarioLoginResponseViewModel(
       userId: model!.user_id,
@@ -34,6 +35,7 @@ class LocalService {
       rol: model.rol,
       diasToken: model.dias_token,
       tipo: model.tipo,
+      ubicaciones: model.ubicaciones,
     );
   }
 
