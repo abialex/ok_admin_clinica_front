@@ -9,12 +9,14 @@ part of 'request_model.dart';
 CitaRequest _$CitaRequestFromJson(Map<String, dynamic> json) => CitaRequest(
       fechaHoraCita: json['fechaHoraCita'] as String,
       doctor_id: json['doctor_id'] as int,
-      ubicacion_id: json['ubicacion_id'] as int,
+      ubicaciones_id: (json['ubicaciones_id'] as List<dynamic>)
+          .map((e) => e as int)
+          .toList(),
     );
 
 Map<String, dynamic> _$CitaRequestToJson(CitaRequest instance) =>
     <String, dynamic>{
       'fechaHoraCita': instance.fechaHoraCita,
       'doctor_id': instance.doctor_id,
-      'ubicacion_id': instance.ubicacion_id,
+      'ubicaciones_id': instance.ubicaciones_id,
     };

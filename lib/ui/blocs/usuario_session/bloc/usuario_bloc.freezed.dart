@@ -22,6 +22,8 @@ mixin _$UsuarioEvent {
     required TResult Function(UsuarioLoginResponseViewModel? usuario)
         setupUsuario,
     required TResult Function(UsuarioLoginResponseViewModel usuario) setUsuario,
+    required TResult Function(int doctorIdSelected) setDoctorIdSelected,
+    required TResult Function(int? doctorIdSelected) setupDoctorIdSelected,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -29,6 +31,8 @@ mixin _$UsuarioEvent {
     TResult? Function()? started,
     TResult? Function(UsuarioLoginResponseViewModel? usuario)? setupUsuario,
     TResult? Function(UsuarioLoginResponseViewModel usuario)? setUsuario,
+    TResult? Function(int doctorIdSelected)? setDoctorIdSelected,
+    TResult? Function(int? doctorIdSelected)? setupDoctorIdSelected,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -36,6 +40,8 @@ mixin _$UsuarioEvent {
     TResult Function()? started,
     TResult Function(UsuarioLoginResponseViewModel? usuario)? setupUsuario,
     TResult Function(UsuarioLoginResponseViewModel usuario)? setUsuario,
+    TResult Function(int doctorIdSelected)? setDoctorIdSelected,
+    TResult Function(int? doctorIdSelected)? setupDoctorIdSelected,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -44,6 +50,10 @@ mixin _$UsuarioEvent {
     required TResult Function(_Started value) started,
     required TResult Function(SetupUsuarioEvent value) setupUsuario,
     required TResult Function(SetUsuarioEvent value) setUsuario,
+    required TResult Function(SetDoctorIdSelectedEvent value)
+        setDoctorIdSelected,
+    required TResult Function(SetupDoctorIdSelectedEvent value)
+        setupDoctorIdSelected,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -51,6 +61,8 @@ mixin _$UsuarioEvent {
     TResult? Function(_Started value)? started,
     TResult? Function(SetupUsuarioEvent value)? setupUsuario,
     TResult? Function(SetUsuarioEvent value)? setUsuario,
+    TResult? Function(SetDoctorIdSelectedEvent value)? setDoctorIdSelected,
+    TResult? Function(SetupDoctorIdSelectedEvent value)? setupDoctorIdSelected,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -58,6 +70,8 @@ mixin _$UsuarioEvent {
     TResult Function(_Started value)? started,
     TResult Function(SetupUsuarioEvent value)? setupUsuario,
     TResult Function(SetUsuarioEvent value)? setUsuario,
+    TResult Function(SetDoctorIdSelectedEvent value)? setDoctorIdSelected,
+    TResult Function(SetupDoctorIdSelectedEvent value)? setupDoctorIdSelected,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -123,6 +137,8 @@ class _$StartedImpl implements _Started {
     required TResult Function(UsuarioLoginResponseViewModel? usuario)
         setupUsuario,
     required TResult Function(UsuarioLoginResponseViewModel usuario) setUsuario,
+    required TResult Function(int doctorIdSelected) setDoctorIdSelected,
+    required TResult Function(int? doctorIdSelected) setupDoctorIdSelected,
   }) {
     return started();
   }
@@ -133,6 +149,8 @@ class _$StartedImpl implements _Started {
     TResult? Function()? started,
     TResult? Function(UsuarioLoginResponseViewModel? usuario)? setupUsuario,
     TResult? Function(UsuarioLoginResponseViewModel usuario)? setUsuario,
+    TResult? Function(int doctorIdSelected)? setDoctorIdSelected,
+    TResult? Function(int? doctorIdSelected)? setupDoctorIdSelected,
   }) {
     return started?.call();
   }
@@ -143,6 +161,8 @@ class _$StartedImpl implements _Started {
     TResult Function()? started,
     TResult Function(UsuarioLoginResponseViewModel? usuario)? setupUsuario,
     TResult Function(UsuarioLoginResponseViewModel usuario)? setUsuario,
+    TResult Function(int doctorIdSelected)? setDoctorIdSelected,
+    TResult Function(int? doctorIdSelected)? setupDoctorIdSelected,
     required TResult orElse(),
   }) {
     if (started != null) {
@@ -157,6 +177,10 @@ class _$StartedImpl implements _Started {
     required TResult Function(_Started value) started,
     required TResult Function(SetupUsuarioEvent value) setupUsuario,
     required TResult Function(SetUsuarioEvent value) setUsuario,
+    required TResult Function(SetDoctorIdSelectedEvent value)
+        setDoctorIdSelected,
+    required TResult Function(SetupDoctorIdSelectedEvent value)
+        setupDoctorIdSelected,
   }) {
     return started(this);
   }
@@ -167,6 +191,8 @@ class _$StartedImpl implements _Started {
     TResult? Function(_Started value)? started,
     TResult? Function(SetupUsuarioEvent value)? setupUsuario,
     TResult? Function(SetUsuarioEvent value)? setUsuario,
+    TResult? Function(SetDoctorIdSelectedEvent value)? setDoctorIdSelected,
+    TResult? Function(SetupDoctorIdSelectedEvent value)? setupDoctorIdSelected,
   }) {
     return started?.call(this);
   }
@@ -177,6 +203,8 @@ class _$StartedImpl implements _Started {
     TResult Function(_Started value)? started,
     TResult Function(SetupUsuarioEvent value)? setupUsuario,
     TResult Function(SetUsuarioEvent value)? setUsuario,
+    TResult Function(SetDoctorIdSelectedEvent value)? setDoctorIdSelected,
+    TResult Function(SetupDoctorIdSelectedEvent value)? setupDoctorIdSelected,
     required TResult orElse(),
   }) {
     if (started != null) {
@@ -259,6 +287,8 @@ class _$SetupUsuarioEventImpl implements SetupUsuarioEvent {
     required TResult Function(UsuarioLoginResponseViewModel? usuario)
         setupUsuario,
     required TResult Function(UsuarioLoginResponseViewModel usuario) setUsuario,
+    required TResult Function(int doctorIdSelected) setDoctorIdSelected,
+    required TResult Function(int? doctorIdSelected) setupDoctorIdSelected,
   }) {
     return setupUsuario(usuario);
   }
@@ -269,6 +299,8 @@ class _$SetupUsuarioEventImpl implements SetupUsuarioEvent {
     TResult? Function()? started,
     TResult? Function(UsuarioLoginResponseViewModel? usuario)? setupUsuario,
     TResult? Function(UsuarioLoginResponseViewModel usuario)? setUsuario,
+    TResult? Function(int doctorIdSelected)? setDoctorIdSelected,
+    TResult? Function(int? doctorIdSelected)? setupDoctorIdSelected,
   }) {
     return setupUsuario?.call(usuario);
   }
@@ -279,6 +311,8 @@ class _$SetupUsuarioEventImpl implements SetupUsuarioEvent {
     TResult Function()? started,
     TResult Function(UsuarioLoginResponseViewModel? usuario)? setupUsuario,
     TResult Function(UsuarioLoginResponseViewModel usuario)? setUsuario,
+    TResult Function(int doctorIdSelected)? setDoctorIdSelected,
+    TResult Function(int? doctorIdSelected)? setupDoctorIdSelected,
     required TResult orElse(),
   }) {
     if (setupUsuario != null) {
@@ -293,6 +327,10 @@ class _$SetupUsuarioEventImpl implements SetupUsuarioEvent {
     required TResult Function(_Started value) started,
     required TResult Function(SetupUsuarioEvent value) setupUsuario,
     required TResult Function(SetUsuarioEvent value) setUsuario,
+    required TResult Function(SetDoctorIdSelectedEvent value)
+        setDoctorIdSelected,
+    required TResult Function(SetupDoctorIdSelectedEvent value)
+        setupDoctorIdSelected,
   }) {
     return setupUsuario(this);
   }
@@ -303,6 +341,8 @@ class _$SetupUsuarioEventImpl implements SetupUsuarioEvent {
     TResult? Function(_Started value)? started,
     TResult? Function(SetupUsuarioEvent value)? setupUsuario,
     TResult? Function(SetUsuarioEvent value)? setUsuario,
+    TResult? Function(SetDoctorIdSelectedEvent value)? setDoctorIdSelected,
+    TResult? Function(SetupDoctorIdSelectedEvent value)? setupDoctorIdSelected,
   }) {
     return setupUsuario?.call(this);
   }
@@ -313,6 +353,8 @@ class _$SetupUsuarioEventImpl implements SetupUsuarioEvent {
     TResult Function(_Started value)? started,
     TResult Function(SetupUsuarioEvent value)? setupUsuario,
     TResult Function(SetUsuarioEvent value)? setUsuario,
+    TResult Function(SetDoctorIdSelectedEvent value)? setDoctorIdSelected,
+    TResult Function(SetupDoctorIdSelectedEvent value)? setupDoctorIdSelected,
     required TResult orElse(),
   }) {
     if (setupUsuario != null) {
@@ -401,6 +443,8 @@ class _$SetUsuarioEventImpl implements SetUsuarioEvent {
     required TResult Function(UsuarioLoginResponseViewModel? usuario)
         setupUsuario,
     required TResult Function(UsuarioLoginResponseViewModel usuario) setUsuario,
+    required TResult Function(int doctorIdSelected) setDoctorIdSelected,
+    required TResult Function(int? doctorIdSelected) setupDoctorIdSelected,
   }) {
     return setUsuario(usuario);
   }
@@ -411,6 +455,8 @@ class _$SetUsuarioEventImpl implements SetUsuarioEvent {
     TResult? Function()? started,
     TResult? Function(UsuarioLoginResponseViewModel? usuario)? setupUsuario,
     TResult? Function(UsuarioLoginResponseViewModel usuario)? setUsuario,
+    TResult? Function(int doctorIdSelected)? setDoctorIdSelected,
+    TResult? Function(int? doctorIdSelected)? setupDoctorIdSelected,
   }) {
     return setUsuario?.call(usuario);
   }
@@ -421,6 +467,8 @@ class _$SetUsuarioEventImpl implements SetUsuarioEvent {
     TResult Function()? started,
     TResult Function(UsuarioLoginResponseViewModel? usuario)? setupUsuario,
     TResult Function(UsuarioLoginResponseViewModel usuario)? setUsuario,
+    TResult Function(int doctorIdSelected)? setDoctorIdSelected,
+    TResult Function(int? doctorIdSelected)? setupDoctorIdSelected,
     required TResult orElse(),
   }) {
     if (setUsuario != null) {
@@ -435,6 +483,10 @@ class _$SetUsuarioEventImpl implements SetUsuarioEvent {
     required TResult Function(_Started value) started,
     required TResult Function(SetupUsuarioEvent value) setupUsuario,
     required TResult Function(SetUsuarioEvent value) setUsuario,
+    required TResult Function(SetDoctorIdSelectedEvent value)
+        setDoctorIdSelected,
+    required TResult Function(SetupDoctorIdSelectedEvent value)
+        setupDoctorIdSelected,
   }) {
     return setUsuario(this);
   }
@@ -445,6 +497,8 @@ class _$SetUsuarioEventImpl implements SetUsuarioEvent {
     TResult? Function(_Started value)? started,
     TResult? Function(SetupUsuarioEvent value)? setupUsuario,
     TResult? Function(SetUsuarioEvent value)? setUsuario,
+    TResult? Function(SetDoctorIdSelectedEvent value)? setDoctorIdSelected,
+    TResult? Function(SetupDoctorIdSelectedEvent value)? setupDoctorIdSelected,
   }) {
     return setUsuario?.call(this);
   }
@@ -455,6 +509,8 @@ class _$SetUsuarioEventImpl implements SetUsuarioEvent {
     TResult Function(_Started value)? started,
     TResult Function(SetupUsuarioEvent value)? setupUsuario,
     TResult Function(SetUsuarioEvent value)? setUsuario,
+    TResult Function(SetDoctorIdSelectedEvent value)? setDoctorIdSelected,
+    TResult Function(SetupDoctorIdSelectedEvent value)? setupDoctorIdSelected,
     required TResult orElse(),
   }) {
     if (setUsuario != null) {
@@ -475,29 +531,348 @@ abstract class SetUsuarioEvent implements UsuarioEvent {
 }
 
 /// @nodoc
+abstract class _$$SetDoctorIdSelectedEventImplCopyWith<$Res> {
+  factory _$$SetDoctorIdSelectedEventImplCopyWith(
+          _$SetDoctorIdSelectedEventImpl value,
+          $Res Function(_$SetDoctorIdSelectedEventImpl) then) =
+      __$$SetDoctorIdSelectedEventImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({int doctorIdSelected});
+}
+
+/// @nodoc
+class __$$SetDoctorIdSelectedEventImplCopyWithImpl<$Res>
+    extends _$UsuarioEventCopyWithImpl<$Res, _$SetDoctorIdSelectedEventImpl>
+    implements _$$SetDoctorIdSelectedEventImplCopyWith<$Res> {
+  __$$SetDoctorIdSelectedEventImplCopyWithImpl(
+      _$SetDoctorIdSelectedEventImpl _value,
+      $Res Function(_$SetDoctorIdSelectedEventImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? doctorIdSelected = null,
+  }) {
+    return _then(_$SetDoctorIdSelectedEventImpl(
+      null == doctorIdSelected
+          ? _value.doctorIdSelected
+          : doctorIdSelected // ignore: cast_nullable_to_non_nullable
+              as int,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$SetDoctorIdSelectedEventImpl implements SetDoctorIdSelectedEvent {
+  const _$SetDoctorIdSelectedEventImpl(this.doctorIdSelected);
+
+  @override
+  final int doctorIdSelected;
+
+  @override
+  String toString() {
+    return 'UsuarioEvent.setDoctorIdSelected(doctorIdSelected: $doctorIdSelected)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$SetDoctorIdSelectedEventImpl &&
+            (identical(other.doctorIdSelected, doctorIdSelected) ||
+                other.doctorIdSelected == doctorIdSelected));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, doctorIdSelected);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$SetDoctorIdSelectedEventImplCopyWith<_$SetDoctorIdSelectedEventImpl>
+      get copyWith => __$$SetDoctorIdSelectedEventImplCopyWithImpl<
+          _$SetDoctorIdSelectedEventImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() started,
+    required TResult Function(UsuarioLoginResponseViewModel? usuario)
+        setupUsuario,
+    required TResult Function(UsuarioLoginResponseViewModel usuario) setUsuario,
+    required TResult Function(int doctorIdSelected) setDoctorIdSelected,
+    required TResult Function(int? doctorIdSelected) setupDoctorIdSelected,
+  }) {
+    return setDoctorIdSelected(doctorIdSelected);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? started,
+    TResult? Function(UsuarioLoginResponseViewModel? usuario)? setupUsuario,
+    TResult? Function(UsuarioLoginResponseViewModel usuario)? setUsuario,
+    TResult? Function(int doctorIdSelected)? setDoctorIdSelected,
+    TResult? Function(int? doctorIdSelected)? setupDoctorIdSelected,
+  }) {
+    return setDoctorIdSelected?.call(doctorIdSelected);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? started,
+    TResult Function(UsuarioLoginResponseViewModel? usuario)? setupUsuario,
+    TResult Function(UsuarioLoginResponseViewModel usuario)? setUsuario,
+    TResult Function(int doctorIdSelected)? setDoctorIdSelected,
+    TResult Function(int? doctorIdSelected)? setupDoctorIdSelected,
+    required TResult orElse(),
+  }) {
+    if (setDoctorIdSelected != null) {
+      return setDoctorIdSelected(doctorIdSelected);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Started value) started,
+    required TResult Function(SetupUsuarioEvent value) setupUsuario,
+    required TResult Function(SetUsuarioEvent value) setUsuario,
+    required TResult Function(SetDoctorIdSelectedEvent value)
+        setDoctorIdSelected,
+    required TResult Function(SetupDoctorIdSelectedEvent value)
+        setupDoctorIdSelected,
+  }) {
+    return setDoctorIdSelected(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Started value)? started,
+    TResult? Function(SetupUsuarioEvent value)? setupUsuario,
+    TResult? Function(SetUsuarioEvent value)? setUsuario,
+    TResult? Function(SetDoctorIdSelectedEvent value)? setDoctorIdSelected,
+    TResult? Function(SetupDoctorIdSelectedEvent value)? setupDoctorIdSelected,
+  }) {
+    return setDoctorIdSelected?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Started value)? started,
+    TResult Function(SetupUsuarioEvent value)? setupUsuario,
+    TResult Function(SetUsuarioEvent value)? setUsuario,
+    TResult Function(SetDoctorIdSelectedEvent value)? setDoctorIdSelected,
+    TResult Function(SetupDoctorIdSelectedEvent value)? setupDoctorIdSelected,
+    required TResult orElse(),
+  }) {
+    if (setDoctorIdSelected != null) {
+      return setDoctorIdSelected(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class SetDoctorIdSelectedEvent implements UsuarioEvent {
+  const factory SetDoctorIdSelectedEvent(final int doctorIdSelected) =
+      _$SetDoctorIdSelectedEventImpl;
+
+  int get doctorIdSelected;
+  @JsonKey(ignore: true)
+  _$$SetDoctorIdSelectedEventImplCopyWith<_$SetDoctorIdSelectedEventImpl>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$SetupDoctorIdSelectedEventImplCopyWith<$Res> {
+  factory _$$SetupDoctorIdSelectedEventImplCopyWith(
+          _$SetupDoctorIdSelectedEventImpl value,
+          $Res Function(_$SetupDoctorIdSelectedEventImpl) then) =
+      __$$SetupDoctorIdSelectedEventImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({int? doctorIdSelected});
+}
+
+/// @nodoc
+class __$$SetupDoctorIdSelectedEventImplCopyWithImpl<$Res>
+    extends _$UsuarioEventCopyWithImpl<$Res, _$SetupDoctorIdSelectedEventImpl>
+    implements _$$SetupDoctorIdSelectedEventImplCopyWith<$Res> {
+  __$$SetupDoctorIdSelectedEventImplCopyWithImpl(
+      _$SetupDoctorIdSelectedEventImpl _value,
+      $Res Function(_$SetupDoctorIdSelectedEventImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? doctorIdSelected = freezed,
+  }) {
+    return _then(_$SetupDoctorIdSelectedEventImpl(
+      freezed == doctorIdSelected
+          ? _value.doctorIdSelected
+          : doctorIdSelected // ignore: cast_nullable_to_non_nullable
+              as int?,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$SetupDoctorIdSelectedEventImpl implements SetupDoctorIdSelectedEvent {
+  const _$SetupDoctorIdSelectedEventImpl(this.doctorIdSelected);
+
+  @override
+  final int? doctorIdSelected;
+
+  @override
+  String toString() {
+    return 'UsuarioEvent.setupDoctorIdSelected(doctorIdSelected: $doctorIdSelected)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$SetupDoctorIdSelectedEventImpl &&
+            (identical(other.doctorIdSelected, doctorIdSelected) ||
+                other.doctorIdSelected == doctorIdSelected));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, doctorIdSelected);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$SetupDoctorIdSelectedEventImplCopyWith<_$SetupDoctorIdSelectedEventImpl>
+      get copyWith => __$$SetupDoctorIdSelectedEventImplCopyWithImpl<
+          _$SetupDoctorIdSelectedEventImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() started,
+    required TResult Function(UsuarioLoginResponseViewModel? usuario)
+        setupUsuario,
+    required TResult Function(UsuarioLoginResponseViewModel usuario) setUsuario,
+    required TResult Function(int doctorIdSelected) setDoctorIdSelected,
+    required TResult Function(int? doctorIdSelected) setupDoctorIdSelected,
+  }) {
+    return setupDoctorIdSelected(doctorIdSelected);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? started,
+    TResult? Function(UsuarioLoginResponseViewModel? usuario)? setupUsuario,
+    TResult? Function(UsuarioLoginResponseViewModel usuario)? setUsuario,
+    TResult? Function(int doctorIdSelected)? setDoctorIdSelected,
+    TResult? Function(int? doctorIdSelected)? setupDoctorIdSelected,
+  }) {
+    return setupDoctorIdSelected?.call(doctorIdSelected);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? started,
+    TResult Function(UsuarioLoginResponseViewModel? usuario)? setupUsuario,
+    TResult Function(UsuarioLoginResponseViewModel usuario)? setUsuario,
+    TResult Function(int doctorIdSelected)? setDoctorIdSelected,
+    TResult Function(int? doctorIdSelected)? setupDoctorIdSelected,
+    required TResult orElse(),
+  }) {
+    if (setupDoctorIdSelected != null) {
+      return setupDoctorIdSelected(doctorIdSelected);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Started value) started,
+    required TResult Function(SetupUsuarioEvent value) setupUsuario,
+    required TResult Function(SetUsuarioEvent value) setUsuario,
+    required TResult Function(SetDoctorIdSelectedEvent value)
+        setDoctorIdSelected,
+    required TResult Function(SetupDoctorIdSelectedEvent value)
+        setupDoctorIdSelected,
+  }) {
+    return setupDoctorIdSelected(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Started value)? started,
+    TResult? Function(SetupUsuarioEvent value)? setupUsuario,
+    TResult? Function(SetUsuarioEvent value)? setUsuario,
+    TResult? Function(SetDoctorIdSelectedEvent value)? setDoctorIdSelected,
+    TResult? Function(SetupDoctorIdSelectedEvent value)? setupDoctorIdSelected,
+  }) {
+    return setupDoctorIdSelected?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Started value)? started,
+    TResult Function(SetupUsuarioEvent value)? setupUsuario,
+    TResult Function(SetUsuarioEvent value)? setUsuario,
+    TResult Function(SetDoctorIdSelectedEvent value)? setDoctorIdSelected,
+    TResult Function(SetupDoctorIdSelectedEvent value)? setupDoctorIdSelected,
+    required TResult orElse(),
+  }) {
+    if (setupDoctorIdSelected != null) {
+      return setupDoctorIdSelected(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class SetupDoctorIdSelectedEvent implements UsuarioEvent {
+  const factory SetupDoctorIdSelectedEvent(final int? doctorIdSelected) =
+      _$SetupDoctorIdSelectedEventImpl;
+
+  int? get doctorIdSelected;
+  @JsonKey(ignore: true)
+  _$$SetupDoctorIdSelectedEventImplCopyWith<_$SetupDoctorIdSelectedEventImpl>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
 mixin _$UsuarioState {
   bool get isValid => throw _privateConstructorUsedError; //valid form
   bool get fetching => throw _privateConstructorUsedError; //solicitando
   UsuarioLoginResponseViewModel? get usuario =>
-      throw _privateConstructorUsedError;
+      throw _privateConstructorUsedError; //solicitando
+  int? get doctorIdSelected => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(
-            bool isValid, bool fetching, UsuarioLoginResponseViewModel? usuario)
+    required TResult Function(bool isValid, bool fetching,
+            UsuarioLoginResponseViewModel? usuario, int? doctorIdSelected)
         initial,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(bool isValid, bool fetching,
-            UsuarioLoginResponseViewModel? usuario)?
+            UsuarioLoginResponseViewModel? usuario, int? doctorIdSelected)?
         initial,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(bool isValid, bool fetching,
-            UsuarioLoginResponseViewModel? usuario)?
+            UsuarioLoginResponseViewModel? usuario, int? doctorIdSelected)?
         initial,
     required TResult orElse(),
   }) =>
@@ -531,7 +906,10 @@ abstract class $UsuarioStateCopyWith<$Res> {
       _$UsuarioStateCopyWithImpl<$Res, UsuarioState>;
   @useResult
   $Res call(
-      {bool isValid, bool fetching, UsuarioLoginResponseViewModel? usuario});
+      {bool isValid,
+      bool fetching,
+      UsuarioLoginResponseViewModel? usuario,
+      int? doctorIdSelected});
 }
 
 /// @nodoc
@@ -550,6 +928,7 @@ class _$UsuarioStateCopyWithImpl<$Res, $Val extends UsuarioState>
     Object? isValid = null,
     Object? fetching = null,
     Object? usuario = freezed,
+    Object? doctorIdSelected = freezed,
   }) {
     return _then(_value.copyWith(
       isValid: null == isValid
@@ -564,6 +943,10 @@ class _$UsuarioStateCopyWithImpl<$Res, $Val extends UsuarioState>
           ? _value.usuario
           : usuario // ignore: cast_nullable_to_non_nullable
               as UsuarioLoginResponseViewModel?,
+      doctorIdSelected: freezed == doctorIdSelected
+          ? _value.doctorIdSelected
+          : doctorIdSelected // ignore: cast_nullable_to_non_nullable
+              as int?,
     ) as $Val);
   }
 }
@@ -577,7 +960,10 @@ abstract class _$$InitialImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {bool isValid, bool fetching, UsuarioLoginResponseViewModel? usuario});
+      {bool isValid,
+      bool fetching,
+      UsuarioLoginResponseViewModel? usuario,
+      int? doctorIdSelected});
 }
 
 /// @nodoc
@@ -594,6 +980,7 @@ class __$$InitialImplCopyWithImpl<$Res>
     Object? isValid = null,
     Object? fetching = null,
     Object? usuario = freezed,
+    Object? doctorIdSelected = freezed,
   }) {
     return _then(_$InitialImpl(
       isValid: null == isValid
@@ -608,6 +995,10 @@ class __$$InitialImplCopyWithImpl<$Res>
           ? _value.usuario
           : usuario // ignore: cast_nullable_to_non_nullable
               as UsuarioLoginResponseViewModel?,
+      doctorIdSelected: freezed == doctorIdSelected
+          ? _value.doctorIdSelected
+          : doctorIdSelected // ignore: cast_nullable_to_non_nullable
+              as int?,
     ));
   }
 }
@@ -616,7 +1007,10 @@ class __$$InitialImplCopyWithImpl<$Res>
 
 class _$InitialImpl implements _Initial {
   const _$InitialImpl(
-      {this.isValid = false, this.fetching = false, this.usuario = null});
+      {this.isValid = false,
+      this.fetching = false,
+      this.usuario = null,
+      this.doctorIdSelected = null});
 
   @override
   @JsonKey()
@@ -629,10 +1023,14 @@ class _$InitialImpl implements _Initial {
   @override
   @JsonKey()
   final UsuarioLoginResponseViewModel? usuario;
+//solicitando
+  @override
+  @JsonKey()
+  final int? doctorIdSelected;
 
   @override
   String toString() {
-    return 'UsuarioState.initial(isValid: $isValid, fetching: $fetching, usuario: $usuario)';
+    return 'UsuarioState.initial(isValid: $isValid, fetching: $fetching, usuario: $usuario, doctorIdSelected: $doctorIdSelected)';
   }
 
   @override
@@ -643,11 +1041,14 @@ class _$InitialImpl implements _Initial {
             (identical(other.isValid, isValid) || other.isValid == isValid) &&
             (identical(other.fetching, fetching) ||
                 other.fetching == fetching) &&
-            (identical(other.usuario, usuario) || other.usuario == usuario));
+            (identical(other.usuario, usuario) || other.usuario == usuario) &&
+            (identical(other.doctorIdSelected, doctorIdSelected) ||
+                other.doctorIdSelected == doctorIdSelected));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, isValid, fetching, usuario);
+  int get hashCode =>
+      Object.hash(runtimeType, isValid, fetching, usuario, doctorIdSelected);
 
   @JsonKey(ignore: true)
   @override
@@ -658,33 +1059,33 @@ class _$InitialImpl implements _Initial {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(
-            bool isValid, bool fetching, UsuarioLoginResponseViewModel? usuario)
+    required TResult Function(bool isValid, bool fetching,
+            UsuarioLoginResponseViewModel? usuario, int? doctorIdSelected)
         initial,
   }) {
-    return initial(isValid, fetching, usuario);
+    return initial(isValid, fetching, usuario, doctorIdSelected);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(bool isValid, bool fetching,
-            UsuarioLoginResponseViewModel? usuario)?
+            UsuarioLoginResponseViewModel? usuario, int? doctorIdSelected)?
         initial,
   }) {
-    return initial?.call(isValid, fetching, usuario);
+    return initial?.call(isValid, fetching, usuario, doctorIdSelected);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(bool isValid, bool fetching,
-            UsuarioLoginResponseViewModel? usuario)?
+            UsuarioLoginResponseViewModel? usuario, int? doctorIdSelected)?
         initial,
     required TResult orElse(),
   }) {
     if (initial != null) {
-      return initial(isValid, fetching, usuario);
+      return initial(isValid, fetching, usuario, doctorIdSelected);
     }
     return orElse();
   }
@@ -722,7 +1123,8 @@ abstract class _Initial implements UsuarioState {
   const factory _Initial(
       {final bool isValid,
       final bool fetching,
-      final UsuarioLoginResponseViewModel? usuario}) = _$InitialImpl;
+      final UsuarioLoginResponseViewModel? usuario,
+      final int? doctorIdSelected}) = _$InitialImpl;
 
   @override
   bool get isValid;
@@ -730,6 +1132,8 @@ abstract class _Initial implements UsuarioState {
   bool get fetching;
   @override //solicitando
   UsuarioLoginResponseViewModel? get usuario;
+  @override //solicitando
+  int? get doctorIdSelected;
   @override
   @JsonKey(ignore: true)
   _$$InitialImplCopyWith<_$InitialImpl> get copyWith =>
