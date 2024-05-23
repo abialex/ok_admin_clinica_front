@@ -35,4 +35,14 @@ class SharedPreferencesLocal {
   Future<void> signOut() async {
     // await preferences.delete(key: _KeyStorage.AUTH_TOKEN);
   }
+
+  Future<void> saveDoctorIdSelected(int doctorIdSelected) async {
+    _sharedPreferences.setString(KeyStorage.DOCTOR_ID, doctorIdSelected.toString());
+  }
+
+  Future<int?> getDoctorIdSelected() async {
+    final result = _sharedPreferences.getString(KeyStorage.DOCTOR_ID);
+    if (result == null) return null;
+    return int.parse(result);
+  }
 }

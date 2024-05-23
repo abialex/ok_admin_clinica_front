@@ -5,4 +5,6 @@ abstract class ILocalRepository {
   Future<String?> getToken();
   Future<void> saveUsuario(UserLoginDTO userLoginDTO);
   Future<UserLoginDTO?> getUsuario();
+  Future<void> saveDoctorIdSelected(int doctorIdSelected);
+  Future<int?> getDoctorIdSelected();
 }

@@ -6,5 +6,6 @@ class UsuarioState with _$UsuarioState {
     @Default(false) bool isValid, //valid form
     @Default(false) bool fetching, //solicitando
     @Default(null) UsuarioLoginResponseViewModel? usuario, //solicitando
+    @Default(null) int? doctorIdSelected, //solicitando
   }) = _Initial;
 }

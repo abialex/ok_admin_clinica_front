@@ -32,4 +32,13 @@ class FlutterStorageLocal {
     final result = await _secureStorage.read(key: KeyStorage.USER);
     return result != null ? UserLoginDTO.fromJson(jsonDecode(result)) : null;
   }
+
+  Future<int?> getDoctorIdSelected() async {
+    final result = await _secureStorage.read(key: KeyStorage.DOCTOR_ID);
+    return result != null ? int.parse(result) : null;
+  }
+
+  Future<void> saveDoctorIdSelected(int doctorIdSelected) async {
+    await _secureStorage.write(key: KeyStorage.DOCTOR_ID, value: doctorIdSelected.toString());
+  }
 }

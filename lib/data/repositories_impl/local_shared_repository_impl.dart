@@ -25,4 +25,14 @@ class SharedPreferencesRepository implements ILocalRepository {
   Future<UserLoginDTO?> getUsuario() {
     return _local.getUsuario();
   }
+
+  @override
+  Future<int?> getDoctorIdSelected() {
+    return _local.getDoctorIdSelected();
+  }
+
+  @override
+  Future<void> saveDoctorIdSelected(int doctorIdSelected) {
+    return _local.saveDoctorIdSelected(doctorIdSelected);
+  }
 }

@@ -40,4 +40,12 @@ class LocalService {
   Future<void> saveToken(String token) async {
     return await _localRepository.saveToken(token);
   }
+
+  Future<void> saveIdDoctorSelected(int doctorId) async {
+    return await _localRepository.saveDoctorIdSelected(doctorId);
+  }
+
+  Future<int?> getIdDoctorSelected() async {
+    return await _localRepository.getDoctorIdSelected();
+  }
 }
