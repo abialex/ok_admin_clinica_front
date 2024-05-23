@@ -5,20 +5,34 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 class DoctorCarousel extends StatelessWidget {
+  final int? doctorIdInitialSelected;
   final List<DoctorsViewModel> doctors;
+  final void Function(DoctorsViewModel) onChanged;
 
-  const DoctorCarousel({super.key, required this.doctors});
+  const DoctorCarousel({
+    super.key,
+    required this.doctors,
+    required this.onChanged,
+    this.doctorIdInitialSelected,
+  });
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 75,
+      height: 60,
       child: PageView.builder(
+        onPageChanged: (value) => onChanged(doctors[value]),
         itemCount: doctors.length,
-        controller: PageController(viewportFraction: 0.75),
+        controller: PageController(
+            viewportFraction: 0.75,
+            initialPage: doctors
+                .indexWhere(
+                  (element) => doctorIdInitialSelected == element.id,
+                )
+                .clamp(0, doctors.length)),
         itemBuilder: (context, index) {
           return Transform.scale(
-            scale: 0.95,
+            scale: 0.9,
             child: Card(
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(15.0),
@@ -33,17 +47,8 @@ class DoctorCarousel extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        // ClipRRect(
-                        //   borderRadius: BorderRadius.vertical(top: Radius.circular(15.0)),
-                        //   child: Image.network(
-                        //     doctors[index].imageUrl,
-                        //     fit: BoxFit.cover,
-                        //     height: 100,
-                        //     width: double.infinity,
-                        //   ),
-                        // ),
                         Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+                          padding: const EdgeInsets.symmetric(vertical: 2.5, horizontal: 8),
                           child: AppTextGlobal.labelLightText(text: doctors[index].nombres),
                         ),
                         Padding(

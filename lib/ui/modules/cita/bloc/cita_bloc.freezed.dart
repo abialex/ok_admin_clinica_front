@@ -16,19 +16,22 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$CitaEvent {
+  CitaRequestViewModel get citaRequestViewModel =>
+      throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() getCitas,
+    required TResult Function(CitaRequestViewModel citaRequestViewModel)
+        getCitas,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? getCitas,
+    TResult? Function(CitaRequestViewModel citaRequestViewModel)? getCitas,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? getCitas,
+    TResult Function(CitaRequestViewModel citaRequestViewModel)? getCitas,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -48,12 +51,18 @@ mixin _$CitaEvent {
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $CitaEventCopyWith<CitaEvent> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class $CitaEventCopyWith<$Res> {
   factory $CitaEventCopyWith(CitaEvent value, $Res Function(CitaEvent) then) =
       _$CitaEventCopyWithImpl<$Res, CitaEvent>;
+  @useResult
+  $Res call({CitaRequestViewModel citaRequestViewModel});
 }
 
 /// @nodoc
@@ -65,13 +74,30 @@ class _$CitaEventCopyWithImpl<$Res, $Val extends CitaEvent>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? citaRequestViewModel = null,
+  }) {
+    return _then(_value.copyWith(
+      citaRequestViewModel: null == citaRequestViewModel
+          ? _value.citaRequestViewModel
+          : citaRequestViewModel // ignore: cast_nullable_to_non_nullable
+              as CitaRequestViewModel,
+    ) as $Val);
+  }
 }
 
 /// @nodoc
-abstract class _$$GetCitasImplCopyWith<$Res> {
+abstract class _$$GetCitasImplCopyWith<$Res>
+    implements $CitaEventCopyWith<$Res> {
   factory _$$GetCitasImplCopyWith(
           _$GetCitasImpl value, $Res Function(_$GetCitasImpl) then) =
       __$$GetCitasImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({CitaRequestViewModel citaRequestViewModel});
 }
 
 /// @nodoc
@@ -81,51 +107,77 @@ class __$$GetCitasImplCopyWithImpl<$Res>
   __$$GetCitasImplCopyWithImpl(
       _$GetCitasImpl _value, $Res Function(_$GetCitasImpl) _then)
       : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? citaRequestViewModel = null,
+  }) {
+    return _then(_$GetCitasImpl(
+      null == citaRequestViewModel
+          ? _value.citaRequestViewModel
+          : citaRequestViewModel // ignore: cast_nullable_to_non_nullable
+              as CitaRequestViewModel,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$GetCitasImpl extends GetCitas {
-  _$GetCitasImpl() : super._();
+  _$GetCitasImpl(this.citaRequestViewModel) : super._();
+
+  @override
+  final CitaRequestViewModel citaRequestViewModel;
 
   @override
   String toString() {
-    return 'CitaEvent.getCitas()';
+    return 'CitaEvent.getCitas(citaRequestViewModel: $citaRequestViewModel)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$GetCitasImpl);
+        (other.runtimeType == runtimeType &&
+            other is _$GetCitasImpl &&
+            (identical(other.citaRequestViewModel, citaRequestViewModel) ||
+                other.citaRequestViewModel == citaRequestViewModel));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, citaRequestViewModel);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$GetCitasImplCopyWith<_$GetCitasImpl> get copyWith =>
+      __$$GetCitasImplCopyWithImpl<_$GetCitasImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() getCitas,
+    required TResult Function(CitaRequestViewModel citaRequestViewModel)
+        getCitas,
   }) {
-    return getCitas();
+    return getCitas(citaRequestViewModel);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? getCitas,
+    TResult? Function(CitaRequestViewModel citaRequestViewModel)? getCitas,
   }) {
-    return getCitas?.call();
+    return getCitas?.call(citaRequestViewModel);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? getCitas,
+    TResult Function(CitaRequestViewModel citaRequestViewModel)? getCitas,
     required TResult orElse(),
   }) {
     if (getCitas != null) {
-      return getCitas();
+      return getCitas(citaRequestViewModel);
     }
     return orElse();
   }
@@ -160,8 +212,16 @@ class _$GetCitasImpl extends GetCitas {
 }
 
 abstract class GetCitas extends CitaEvent {
-  factory GetCitas() = _$GetCitasImpl;
+  factory GetCitas(final CitaRequestViewModel citaRequestViewModel) =
+      _$GetCitasImpl;
   GetCitas._() : super._();
+
+  @override
+  CitaRequestViewModel get citaRequestViewModel;
+  @override
+  @JsonKey(ignore: true)
+  _$$GetCitasImplCopyWith<_$GetCitasImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc

@@ -13,6 +13,7 @@ class UserLoginDTO {
   final String rol;
   final String username;
   final String? tipo;
+  final List<int> ubicaciones;
 
   const UserLoginDTO({
     required this.user_id,
@@ -23,6 +24,7 @@ class UserLoginDTO {
     required this.rol,
     required this.dias_token,
     this.tipo,
+    required this.ubicaciones,
   }) : super();
 
   //fromJson
