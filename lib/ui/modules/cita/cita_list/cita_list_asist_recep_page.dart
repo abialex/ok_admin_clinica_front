@@ -1,6 +1,7 @@
 // ignore_for_file: must_be_immutable
 import 'package:admin_clinica_front/ui/blocs/usuario_session/bloc/usuario_bloc.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_box.dart';
+import 'package:admin_clinica_front/ui/global_widget/date/app_date_picker_cupertino.dart';
 import 'package:admin_clinica_front/ui/global_widget/page/mobile/app_header_mobile.dart';
 import 'package:admin_clinica_front/ui/global_widget/page/page_base_desktop.dart';
 import 'package:admin_clinica_front/ui/global_widget/page/page_base_phone.dart';
@@ -8,7 +9,6 @@ import 'package:admin_clinica_front/ui/modules/cita/widget/cita_card.dart';
 import 'package:admin_clinica_front/ui/modules/cita/widget/doctor_carrusel_card.dart';
 import 'package:admin_clinica_front/ui/modules/doctor/bloc/doctor_list_bloc.dart';
 import 'package:admin_clinica_front/ui/view_models/cita_view/cita_view_models.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../core/di/injections.dart';
@@ -127,42 +127,24 @@ class CitaListAsistenteRecepcionPage extends StatelessWidget with ResponsiveWidg
           ),
           SizedBox(
             height: 35,
-            child: Row(
-              children: [
-                Text("data"),
-                Expanded(
-                  child: Transform.scale(
-                    scale: 0.95,
-                    child: CupertinoDatePicker(
-                      // key: UniqueKey(),
-                      initialDateTime: dateSelected,
-                      onDateTimeChanged: (value) {
-                        dateSelected = value;
-                        if (usuarioBloc.state.doctorIdSelected != null) {
-                          citaBloc.add(
-                            CitaEvent.getCitas(
-                              CitaRequestViewModel(
-                                doctorId: usuarioBloc.state.doctorIdSelected!,
-                                ubicacionesId: usuarioBloc.state.usuario?.ubicaciones ?? [],
-                                fechaHoraCita: dateSelected,
-                              ),
-                            ),
-                          );
-                        }
-                      },
-                      dateOrder: DatePickerDateOrder.ymd,
-                      mode: CupertinoDatePickerMode.date,
-                      use24hFormat: true,
-                      minimumYear: 2023,
-                    ),
-                  ),
-                ),
-                GestureDetector(
-                    onTap: () {
-                      dateSelected = DateTime.now();
-                    },
-                    child: Text("data")),
-              ],
+            child: Transform.scale(
+              scale: 0.95,
+              child: AppDatePickerCupertino(
+                initialDateTime: DateTime.now(),
+                onDateTimeChanged: (value) {
+                  if (usuarioBloc.state.doctorIdSelected != null) {
+                    citaBloc.add(
+                      CitaEvent.getCitas(
+                        CitaRequestViewModel(
+                          doctorId: usuarioBloc.state.doctorIdSelected!,
+                          ubicacionesId: usuarioBloc.state.usuario?.ubicaciones ?? [],
+                          fechaHoraCita: value,
+                        ),
+                      ),
+                    );
+                  }
+                },
+              ),
             ),
           ),
           AppBox.h10,
