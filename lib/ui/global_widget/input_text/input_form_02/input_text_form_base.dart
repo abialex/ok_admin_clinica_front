@@ -111,6 +111,7 @@ class _InputTextBaseState extends State<InputTextBase> {
                     // suffixIconConstraints: BoxConstraints(),
                     // suffixIconColor: OdebinColors.blanco_principal,
                     suffixIcon: buildSuffixIcon(),
+                    suffixIconConstraints: BoxConstraints(minHeight: 48, maxWidth: 10),
                     filled: true,
                     isCollapsed: false,
                     fillColor: AppColors.lightGray,
