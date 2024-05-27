@@ -1,3 +1,4 @@
+import 'package:admin_clinica_front/ui/view_models/doctor_view/doctor_view_models.dart';
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -19,15 +20,15 @@ class UsuarioBloc extends Bloc<UsuarioEvent, UsuarioState> {
     on<SetUsuarioEvent>((event, emit) {
       emit(state.copyWith(usuario: event.usuario));
     });
-    on<SetDoctorIdSelectedEvent>((event, emit) {
+    on<SetDoctorSelectedEvent>((event, emit) {
       emit(state.copyWith(doctorIdSelected: event.doctorIdSelected));
     });
-    on<SetupDoctorIdSelectedEvent>((event, emit) {
+    on<SetupDoctorSelectedEvent>((event, emit) {
       emit(state.copyWith(doctorIdSelected: event.doctorIdSelected));
     });
 
     getUsuario();
-    getDoctorIdSelected();
+    getDoctorSelected();
   }
   getUsuario() async {
     final result = await _localService.getUsuario();
@@ -40,13 +41,13 @@ class UsuarioBloc extends Bloc<UsuarioEvent, UsuarioState> {
     add(SetUsuarioEvent(usuario));
   }
 
-  setDoctorIdSelected(int doctorId) async {
-    await _localService.saveIdDoctorSelected(doctorId);
-    add(SetDoctorIdSelectedEvent(doctorId));
+  setDoctorSelected(DoctorsViewModel doctorId) async {
+    await _localService.saveDoctorSelected(doctorId);
+    add(SetDoctorSelectedEvent(doctorId));
   }
 
-  getDoctorIdSelected() async {
+  getDoctorSelected() async {
     final result = await _localService.getIdDoctorSelected();
-    add(SetupDoctorIdSelectedEvent(result));
+    add(SetupDoctorSelectedEvent(result));
   }
 }

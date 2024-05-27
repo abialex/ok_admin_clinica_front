@@ -5,14 +5,16 @@ import 'package:admin_clinica_front/ui/global_widget/date/app_date_picker_cupert
 import 'package:admin_clinica_front/ui/global_widget/page/mobile/app_header_mobile.dart';
 import 'package:admin_clinica_front/ui/global_widget/page/page_base_desktop.dart';
 import 'package:admin_clinica_front/ui/global_widget/page/page_base_phone.dart';
+import 'package:admin_clinica_front/ui/modules/cita/bloc/cita_crear_bloc/cita_create_bloc.dart';
+import 'package:admin_clinica_front/ui/modules/cita/bloc/cita_crear_bloc/cita_create_event.dart';
 import 'package:admin_clinica_front/ui/modules/cita/widget/cita_card.dart';
 import 'package:admin_clinica_front/ui/modules/cita/widget/doctor_carrusel_card.dart';
 import 'package:admin_clinica_front/ui/modules/doctor/bloc/doctor_list_bloc.dart';
 import 'package:admin_clinica_front/ui/view_models/cita_view/cita_view_models.dart';
+import 'package:admin_clinica_front/ui/view_models/doctor_view/doctor_view_models.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../core/di/injections.dart';
-import '../../../../core/utils/app_colors.dart';
 import '../../../../data/datasources/remote/doctor_api.dart';
 import '../../../../dominio/repositories/ilocal_repository.dart';
 import '../../../core/router.dart';
@@ -22,15 +24,17 @@ import '../bloc/cita_bloc.dart';
 class CitaListAsistenteRecepcionPage extends StatelessWidget with ResponsiveWidgetMixin {
   CitaListAsistenteRecepcionPage({super.key});
   DateTime dateSelected = DateTime.now();
+  DoctorsViewModel? doctorSelected;
   @override
   Widget build(BuildContext context) {
     final citaBloc = context.read<CitaBloc>();
     final usuarioBloc = context.read<UsuarioBloc>();
     if (usuarioBloc.state.doctorIdSelected != null) {
+      doctorSelected = usuarioBloc.state.doctorIdSelected;
       citaBloc.add(
         CitaEvent.getCitas(
           CitaRequestViewModel(
-            doctorId: usuarioBloc.state.doctorIdSelected!,
+            doctorId: doctorSelected!.id,
             ubicacionesId: usuarioBloc.state.usuario?.ubicaciones ?? [],
             fechaHoraCita: DateTime.now(),
           ),
@@ -38,7 +42,7 @@ class CitaListAsistenteRecepcionPage extends StatelessWidget with ResponsiveWidg
       );
     }
     return BlocBuilder<CitaBloc, CitaState>(
-      bloc: citaBloc,
+      // bloc: citaBloc,
       builder: (context, state) {
         return whatIs(context);
       },
@@ -65,18 +69,7 @@ class CitaListAsistenteRecepcionPage extends StatelessWidget with ResponsiveWidg
 
       maxEntend: 195,
       minEntend: 195,
-      floatingWidget: FloatingActionButton(
-        mini: true,
-        backgroundColor: AppColors.slg01,
-        foregroundColor: AppColors.white,
-        onPressed: () {
-          Navigator.pushNamed(
-            context,
-            Routes.base_asistenteRecepcion + Routes.cita_add,
-          );
-        },
-        child: const Icon(Icons.add),
-      ),
+
       title: "Cita Page PADRE",
       headerWidget: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -102,19 +95,18 @@ class CitaListAsistenteRecepcionPage extends StatelessWidget with ResponsiveWidg
                   },
                   doctorsLoaded: (stt) {
                     return DoctorCarousel(
-                      doctorIdInitialSelected: usuarioBloc.state.doctorIdSelected,
+                      doctorIdInitialSelected: doctorSelected?.id,
                       doctors: stt.doctors,
                       onChanged: (doctor) {
-                        citaBloc.add(
-                          CitaEvent.getCitas(
-                            CitaRequestViewModel(
-                              doctorId: doctor.id,
-                              ubicacionesId: usuarioBloc.state.usuario?.ubicaciones ?? [],
-                              fechaHoraCita: dateSelected,
-                            ),
+                        doctorSelected = doctor;
+                        usuarioBloc.setDoctorSelected(doctor);
+                        citaBloc.add(CitaEvent.getCitas(
+                          CitaRequestViewModel(
+                            doctorId: doctor.id,
+                            ubicacionesId: usuarioBloc.state.usuario?.ubicaciones ?? [],
+                            fechaHoraCita: dateSelected,
                           ),
-                        );
-                        usuarioBloc.add(UsuarioEvent.setupDoctorIdSelected(doctor.id));
+                        ));
                       },
                     );
                   },
@@ -132,16 +124,15 @@ class CitaListAsistenteRecepcionPage extends StatelessWidget with ResponsiveWidg
               child: AppDatePickerCupertino(
                 initialDateTime: DateTime.now(),
                 onDateTimeChanged: (value) {
-                  if (usuarioBloc.state.doctorIdSelected != null) {
-                    citaBloc.add(
-                      CitaEvent.getCitas(
-                        CitaRequestViewModel(
-                          doctorId: usuarioBloc.state.doctorIdSelected!,
-                          ubicacionesId: usuarioBloc.state.usuario?.ubicaciones ?? [],
-                          fechaHoraCita: value,
-                        ),
+                  dateSelected = value;
+                  if (doctorSelected != null) {
+                    citaBloc.add(CitaEvent.getCitas(
+                      CitaRequestViewModel(
+                        doctorId: doctorSelected!.id,
+                        ubicacionesId: usuarioBloc.state.usuario?.ubicaciones ?? [],
+                        fechaHoraCita: value,
                       ),
-                    );
+                    ));
                   }
                 },
               ),
@@ -153,8 +144,20 @@ class CitaListAsistenteRecepcionPage extends StatelessWidget with ResponsiveWidg
       bodySliver: SliverToBoxAdapter(
         child: citaBloc.state.map(
           initial: (state) {
-            // citaBloc.add(CitaEvent.getCitas(CitaRequestViewModel(doctorId: 1, ubicacionId: 1, fechaHoraCita: DateTime.now())));
-            return const SizedBox.shrink();
+            return GestureDetector(
+              onTap: () {
+                citaBloc.add(
+                  CitaEvent.getCitas(
+                    CitaRequestViewModel(
+                      doctorId: doctorSelected?.id ?? 0,
+                      ubicacionesId: usuarioBloc.state.usuario?.ubicaciones ?? [],
+                      fechaHoraCita: DateTime.now(),
+                    ),
+                  ),
+                );
+              },
+              child: const SizedBox.shrink(),
+            );
           },
           loading: (state) {
             return const Text("loading");
@@ -162,6 +165,15 @@ class CitaListAsistenteRecepcionPage extends StatelessWidget with ResponsiveWidg
           citaLoaded: (state) {
             return CitasGroupedByHour(
               citas: state.citas,
+              onAdd: (hora, horaString) {
+                //todo: update
+                //? doctor y hora
+                context.read<CitaCreateBloc>().add(CitaCreateEvent.citaPreCreateLocal(doctorSelected, dateSelected, hora, horaString));
+                Navigator.pushNamed(
+                  context,
+                  Routes.base_asistenteRecepcion + Routes.cita_add,
+                );
+              },
             );
           },
           failure: (state) {
@@ -218,3 +230,14 @@ class CitaListAsistenteRecepcionPage extends StatelessWidget with ResponsiveWidg
     );
   }
 }
+
+// class DatosDoctorCubit extends Cubit<String> {
+//   final String init;
+//   DatosDoctorCubit({required this.init}) : super("SIN DOCTOR");
+
+//   void changeDoctorDatos(String mode) {
+//     emit(mode);
+//   }
+
+
+// }

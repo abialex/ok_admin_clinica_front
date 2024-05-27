@@ -2,6 +2,7 @@
 
 import 'dart:convert';
 
+import 'package:admin_clinica_front/data/models/doctor/doctor_dto.dart';
 import 'package:admin_clinica_front/data/utils/key_storage.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
@@ -33,12 +34,12 @@ class FlutterStorageLocal {
     return result != null ? UserLoginDTO.fromJson(jsonDecode(result)) : null;
   }
 
-  Future<int?> getDoctorIdSelected() async {
-    final result = await _secureStorage.read(key: KeyStorage.DOCTOR_ID);
-    return result != null ? int.parse(result) : null;
+  Future<DoctorDto?> getDoctorSelected() async {
+    final result = await _secureStorage.read(key: KeyStorage.DOCTOR);
+    return result != null ? DoctorDto.fromJson(jsonDecode(result)) : null;
   }
 
-  Future<void> saveDoctorIdSelected(int doctorIdSelected) async {
-    await _secureStorage.write(key: KeyStorage.DOCTOR_ID, value: doctorIdSelected.toString());
+  Future<void> saveDoctorSelected(DoctorDto doctorIdSelected) async {
+    await _secureStorage.write(key: KeyStorage.DOCTOR, value: jsonEncode(doctorIdSelected.toJson()));
   }
 }

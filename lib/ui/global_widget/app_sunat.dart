@@ -49,9 +49,8 @@ class AppSunatWidget extends StatelessWidget {
                       },
                     ),
                     Positioned(
-                      right: 45,
-                      top: 30,
-                      bottom: 0,
+                      right: 55,
+                      top: 40,
                       child: SvgPicture.asset(
                         AppConstIcons.sunatLogo,
                         height: 25,

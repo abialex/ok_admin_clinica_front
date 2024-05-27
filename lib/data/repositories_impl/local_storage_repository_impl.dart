@@ -1,3 +1,4 @@
+import 'package:admin_clinica_front/data/models/doctor/doctor_dto.dart';
 import 'package:admin_clinica_front/data/models/usuario/user_dto.dart';
 
 import '../../dominio/repositories/ilocal_repository.dart';
@@ -29,12 +30,12 @@ class FlutterStorageRepository implements ILocalRepository {
   }
 
   @override
-  Future<int?> getDoctorIdSelected() {
-    return _local.getDoctorIdSelected();
+  Future<DoctorDto?> getDoctorSelected() {
+    return _local.getDoctorSelected();
   }
 
   @override
-  Future<void> saveDoctorIdSelected(int doctorIdSelected) {
-    return _local.saveDoctorIdSelected(doctorIdSelected);
+  Future<void> saveDoctorSelected(DoctorDto doctorIdSelected) {
+    return _local.saveDoctorSelected(doctorIdSelected);
   }
 }

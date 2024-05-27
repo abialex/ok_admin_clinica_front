@@ -64,9 +64,9 @@ class AppRouter {
         );
 
       // return MaterialPageRoute(builder: (_) => const CitaListPage());
-      case Routes.cita_add:
+      case Routes.base_asistenteRecepcion + Routes.cita_add:
         return PageRouteBuilder(
-          pageBuilder: (_, __, ___) => const CitaAddPage(),
+          pageBuilder: (_, __, ___) => CitaAddPage(),
           //   transitionsBuilder: _createSlideFadeTransition,
         );
 
@@ -191,7 +191,7 @@ class NotFoundPage extends StatelessWidget {
                 // !falta validar para que se redirija al home
                 final navbarCubit = context.read<NavigatorCubit>();
                 navbarCubit.updateIndexDelay(1);
-                Navigator.pushReplacementNamed(context, Routes.login);
+                Navigator.pop(context);
               },
               child: const Text('Go Back'),
             ),

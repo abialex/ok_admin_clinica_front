@@ -14,7 +14,7 @@ class CitasService {
 
   Future<Either<String, int>> citaAgilCreate(CitaAgilCreateViewModel view) async {
     CitaAgilCreateModel model = CitaAgilCreateModel(
-      fechaHoraCita: view.fechaHoraCita,
+      fechaHoraCita: view.fechaHoraCita.toFormatyyyyMMddHHmmss(),
       datosPaciente: view.datosPaciente,
       doctor_id: view.doctorId,
       ubicacion_id: view.ubicacionId,

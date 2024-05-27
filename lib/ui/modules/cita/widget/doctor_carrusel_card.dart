@@ -18,6 +18,9 @@ class DoctorCarousel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (doctorIdInitialSelected == null && doctors.isNotEmpty) {
+      onChanged(doctors[0]);
+    }
     return SizedBox(
       height: 60,
       child: PageView.builder(

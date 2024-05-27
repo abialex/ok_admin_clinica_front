@@ -86,12 +86,14 @@ class AppTextGlobal {
     required String text,
     double? fontSize,
     Color colorText = AppColors.dark,
+    TextAlign? textAlign,
   }) =>
       _BaseText.lightText(
         text: text,
         fontWeight: FontWeight.bold,
         color: colorText,
         fontSize: fontSize,
+        textAlign: textAlign,
       );
 
   static Text labelSmallText({required String text, FontWeight fontWeight = FontWeight.bold, Color colorText = AppColors.blueSecondary}) => _BaseText.lightText(
@@ -119,10 +121,11 @@ class AppTextGlobal {
         color: AppColors.blueSecondary,
       );
 
-  static Text errorlightText({required String text}) => _BaseText.lightText(
+  static Text errorlightText({required String text, int maxLines = 1}) => _BaseText.lightText(
         text: text,
         color: AppColors.redAccent,
         fontSize: 13,
+        maxLines: maxLines,
       );
   // *: ESPECIALIZADO PARA EL APP
   static Text nameText({required String text}) => _BaseText.mediumText(

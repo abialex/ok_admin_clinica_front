@@ -1,4 +1,6 @@
+import 'package:admin_clinica_front/data/models/doctor/doctor_dto.dart';
 import 'package:admin_clinica_front/data/models/usuario/user_dto.dart';
+import 'package:admin_clinica_front/ui/view_models/doctor_view/doctor_view_models.dart';
 
 import '../../ui/view_models/usuario_view/usuario_view_models.dart';
 import '../repositories/ilocal_repository.dart';
@@ -43,11 +45,28 @@ class LocalService {
     return await _localRepository.saveToken(token);
   }
 
-  Future<void> saveIdDoctorSelected(int doctorId) async {
-    return await _localRepository.saveDoctorIdSelected(doctorId);
+  Future<void> saveDoctorSelected(DoctorsViewModel doctor) async {
+    final modelDto = DoctorDto(
+      id: doctor.id,
+      usuario_id: doctor.usuarioId,
+      usuario_username: doctor.username,
+      ubicaciones: [],
+      dni: "",
+      nombres: doctor.nombres,
+      apellidos: doctor.apellidos,
+    );
+    return await _localRepository.saveDoctorSelected(modelDto);
   }
 
-  Future<int?> getIdDoctorSelected() async {
-    return await _localRepository.getDoctorIdSelected();
+  Future<DoctorsViewModel?> getIdDoctorSelected() async {
+    final dto = await _localRepository.getDoctorSelected();
+    if (dto == null) return null;
+    return DoctorsViewModel(
+      id: dto.id,
+      apellidos: dto.apellidos,
+      usuarioId: dto.usuario_id,
+      username: dto.usuario_username,
+      nombres: dto.nombres,
+    );
   }
 }

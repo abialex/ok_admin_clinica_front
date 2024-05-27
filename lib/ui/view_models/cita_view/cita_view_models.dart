@@ -83,7 +83,7 @@ class CitasViewModel {
 class CitaAgilCreateViewModel {
   final int doctorId;
   final int ubicacionId;
-  final String fechaHoraCita;
+  final DateTime fechaHoraCita;
   final String datosPaciente;
   final String? razon;
   final String? celular;
