@@ -4,6 +4,7 @@ import 'package:admin_clinica_front/ui/blocs/usuario_session/bloc/usuario_bloc.d
 import 'package:admin_clinica_front/ui/global_widget/app_box.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_construccion.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_text_style.dart';
+import 'package:admin_clinica_front/ui/global_widget/button_base/button_success.dart';
 import 'package:admin_clinica_front/ui/global_widget/page/mobile/app_header_mobile.dart';
 import 'package:admin_clinica_front/ui/global_widget/page/page_base_desktop.dart';
 import 'package:admin_clinica_front/ui/global_widget/page/page_base_phone.dart';
@@ -174,11 +175,13 @@ class CitaAddPage extends StatelessWidget with ResponsiveWidgetMixin {
                   ubicacionesId: stt.ubicacionesId,
                   fechaHoraCita: stt.fechaCita,
                 )));
-                return GestureDetector(
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
-                    child: Text("Cita creada"));
+                return Center(
+                    child: ButtonSuccess(
+                  text: "Volver",
+                  onClick: () {
+                    Navigator.pop(context);
+                  },
+                ));
               },
               failure: (stt) {
                 return AppTextGlobal.errorlightText(text: stt.error, maxLines: 2);

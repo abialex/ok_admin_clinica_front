@@ -109,10 +109,10 @@ class AppTextGlobal {
         color: colorText,
       );
 
-  static Text labelLargeText({required String text}) => _BaseText.largeText(
+  static Text labelLargeText({required String text, Color colorText = AppColors.dark}) => _BaseText.largeText(
         text: text,
         fontWeight: FontWeight.bold,
-        color: AppColors.blueSecondary,
+        color: colorText,
       );
 
   static Text titleText({required String text}) => _BaseText.mediumText(

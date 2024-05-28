@@ -1,6 +1,7 @@
 // ignore_for_file: must_be_immutable
 import 'package:admin_clinica_front/ui/blocs/usuario_session/bloc/usuario_bloc.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_box.dart';
+import 'package:admin_clinica_front/ui/global_widget/app_loader.dart';
 import 'package:admin_clinica_front/ui/global_widget/date/app_date_picker_cupertino.dart';
 import 'package:admin_clinica_front/ui/global_widget/page/mobile/app_header_mobile.dart';
 import 'package:admin_clinica_front/ui/global_widget/page/page_base_desktop.dart';
@@ -61,6 +62,7 @@ class CitaListAsistenteRecepcionPage extends StatelessWidget with ResponsiveWidg
     final citaBloc = context.read<CitaBloc>();
     final doctorBloc = context.read<DoctorListBloc>();
     final usuarioBloc = context.read<UsuarioBloc>();
+    final loaderCubit = context.read<LoaderCubit>();
 
     return PageBasePhone(
       onReachedTop: () {
@@ -87,6 +89,7 @@ class CitaListAsistenteRecepcionPage extends StatelessWidget with ResponsiveWidg
               builder: (context, state) {
                 return state.map(
                   initial: (stt) {
+                    loaderCubit.show();
                     doctorBloc.add(GetDoctors());
                     return const SizedBox.shrink();
                   },
@@ -94,6 +97,7 @@ class CitaListAsistenteRecepcionPage extends StatelessWidget with ResponsiveWidg
                     return const SizedBox.shrink();
                   },
                   doctorsLoaded: (stt) {
+                    loaderCubit.hidden();
                     return DoctorCarousel(
                       doctorIdInitialSelected: doctorSelected?.id,
                       doctors: stt.doctors,
@@ -111,6 +115,7 @@ class CitaListAsistenteRecepcionPage extends StatelessWidget with ResponsiveWidg
                     );
                   },
                   failure: (stt) {
+                    loaderCubit.hidden();
                     return Text(stt.error);
                   },
                 );
@@ -160,9 +165,11 @@ class CitaListAsistenteRecepcionPage extends StatelessWidget with ResponsiveWidg
             );
           },
           loading: (state) {
-            return const Text("loading");
+            loaderCubit.show();
+            return const SizedBox.shrink();
           },
           citaLoaded: (state) {
+            loaderCubit.hidden();
             return CitasGroupedByHour(
               citas: state.citas,
               onAdd: (hora, horaString) {

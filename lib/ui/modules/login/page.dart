@@ -1,9 +1,11 @@
 import 'package:admin_clinica_front/ui/blocs/usuario_session/bloc/usuario_bloc.dart';
 import 'package:admin_clinica_front/ui/core/router.dart';
+import 'package:admin_clinica_front/ui/global_widget/app_loader.dart';
 import 'package:admin_clinica_front/ui/global_widget/custom_navbar_navigation/cubit/navigator_cubit.dart';
 import 'package:admin_clinica_front/ui/global_widget/dialog/dialog_message/cubit/dialog_message_cubit.dart';
 import 'package:admin_clinica_front/ui/modules/login/bloc/login_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../core/app_routes.dart';
 
@@ -23,6 +25,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     final usuarioBloc = context.read<UsuarioBloc>();
     final dialogCubit = context.read<DialogMessageCubit>();
+    final loaderCubit = context.read<LoaderCubit>();
     return BlocProvider(
       create: (context) => LoginBloc(),
       child: BlocBuilder<LoginBloc, LoginState>(
@@ -58,23 +61,31 @@ class _LoginPageState extends State<LoginPage> {
                       );
                     },
                     loading: (state) {
-                      return const Text("cargando");
+                      loaderCubit.show();
+                      return const SizedBox.shrink();
                     },
                     usuarioLoaded: (state) {
+                      loaderCubit.hidden();
+
                       final router = modulesRouterList.where((e) => e.modulesName == state.usuario.rol && e.modulesTipo == state.usuario.tipo).firstOrNull;
                       final indexHome = router?.modulesList.indexWhere((element) => element.routePage == Routes.home);
                       if (indexHome == -1) dialogCubit.showCustomAlert(titulo: "Módulo faltante", texto: "La aplicación ha iniciado sin el módulo Home");
                       context.read<NavigatorCubit>().setupModules(router?.modulesList);
                       context.read<NavigatorCubit>().updateIndexDelay(indexHome ?? -1);
                       usuarioBloc.setUsuario(state.usuario);
-                      WidgetsBinding.instance.addPostFrameCallback((_) {
-                        Future.delayed(_);
+                      WidgetsBinding.instance.addPostFrameCallback((_) async {
+                        await Future.delayed(2.seconds);
                         Navigator.pushReplacementNamed(context, Routes.home);
                       });
 
-                      return const Text("Bienvenido");
+                      return const Text(
+                        "Bienvenido",
+                        style: TextStyle(fontSize: 30),
+                      );
                     },
                     failure: (state) {
+                      loaderCubit.hidden();
+
                       return Column(
                         children: [
                           ElevatedButton(

@@ -11,7 +11,9 @@ class AppColors {
   static const Color lightBackgroundColor = Color(0xffF4F7F9);
   static const Color darkBackgroundColor = Color(0xff1E1C2A);
   static const Color redAccent = Color(0xffFD6270);
+  static const Color redSunat = Color(0xffAE0042);
   static const Color blueAccent = Color(0xff01A2FD);
+  static const Color blueSunat = Color(0xff0063AC);
   static const Color yellowAccent = Color(0xffF4B908);
   static const Color greenAccent = Color.fromARGB(255, 72, 143, 62);
   static const Color lightGray = Color(0xffDDDDDD);
