@@ -1,10 +1,22 @@
-import 'package:admin_clinica_front/core/extensions/date_time_extensions.dart';
+// ignore_for_file: must_be_immutable
+import 'package:admin_clinica_front/ui/blocs/usuario_session/bloc/usuario_bloc.dart';
+import 'package:admin_clinica_front/ui/global_widget/app_box.dart';
+import 'package:admin_clinica_front/ui/global_widget/app_loader.dart';
+import 'package:admin_clinica_front/ui/global_widget/date/app_date_picker_cupertino.dart';
+import 'package:admin_clinica_front/ui/global_widget/dialog/dialog_message/cubit/dialog_message_cubit.dart';
+import 'package:admin_clinica_front/ui/global_widget/page/mobile/app_header_mobile.dart';
 import 'package:admin_clinica_front/ui/global_widget/page/page_base_desktop.dart';
 import 'package:admin_clinica_front/ui/global_widget/page/page_base_phone.dart';
+import 'package:admin_clinica_front/ui/modules/cita/bloc/cita_crear_bloc/cita_create_bloc.dart';
+import 'package:admin_clinica_front/ui/modules/cita/bloc/cita_crear_bloc/cita_create_event.dart';
+import 'package:admin_clinica_front/ui/modules/cita/widget/cita_card.dart';
+import 'package:admin_clinica_front/ui/modules/cita/widget/doctor_carrusel_card.dart';
+import 'package:admin_clinica_front/ui/modules/doctor/bloc/doctor_list_bloc.dart';
+import 'package:admin_clinica_front/ui/view_models/cita_view/cita_view_models.dart';
+import 'package:admin_clinica_front/ui/view_models/doctor_view/doctor_view_models.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../core/di/injections.dart';
-import '../../../../core/utils/app_colors.dart';
 import '../../../../data/datasources/remote/doctor_api.dart';
 import '../../../../dominio/repositories/ilocal_repository.dart';
 import '../../../core/router.dart';
@@ -12,13 +24,27 @@ import '../../../global_widget/page/page_mixin_base.dart';
 import '../bloc/cita_bloc.dart';
 
 class CitaListAsistenteRecepcionPage extends StatelessWidget with ResponsiveWidgetMixin {
-  const CitaListAsistenteRecepcionPage({super.key});
-
+  CitaListAsistenteRecepcionPage({super.key});
+  DateTime dateSelected = DateTime.now();
+  DoctorsViewModel? doctorSelected;
   @override
   Widget build(BuildContext context) {
     final citaBloc = context.read<CitaBloc>();
+    final usuarioBloc = context.read<UsuarioBloc>();
+    if (usuarioBloc.state.doctorIdSelected != null) {
+      doctorSelected = usuarioBloc.state.doctorIdSelected;
+      citaBloc.add(
+        CitaEvent.getCitas(
+          CitaRequestViewModel(
+            doctorId: doctorSelected!.id,
+            ubicacionesId: usuarioBloc.state.usuario?.ubicaciones ?? [],
+            fechaHoraCita: DateTime.now(),
+          ),
+        ),
+      );
+    }
     return BlocBuilder<CitaBloc, CitaState>(
-      bloc: citaBloc,
+      // bloc: citaBloc,
       builder: (context, state) {
         return whatIs(context);
       },
@@ -35,77 +61,169 @@ class CitaListAsistenteRecepcionPage extends StatelessWidget with ResponsiveWidg
   @override
   PageBasePhone buildMobile(BuildContext context) {
     final citaBloc = context.read<CitaBloc>();
+    final doctorBloc = context.read<DoctorListBloc>();
+    final usuarioBloc = context.read<UsuarioBloc>();
+    final loaderCubit = context.read<LoaderCubit>();
+    final dialogCubit = context.read<DialogMessageCubit>();
 
     return PageBasePhone(
-        floatingWidget: FloatingActionButton(
-          backgroundColor: AppColors.blueSecondary,
-          foregroundColor: AppColors.white,
-          onPressed: () {
-            Navigator.pushNamed(
-              context,
-              Routes.base_asistenteRecepcion + Routes.cita_add,
+      onReachedTop: () {
+        doctorBloc.add(GetDoctors());
+      },
+
+      maxEntend: 195,
+      minEntend: 195,
+
+      headerWidget: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          const Expanded(
+            child: HeaderMobile(
+              subTitle: "Doctor",
+              title: "CITAS",
+            ),
+          ),
+          // AppBox.h2,
+          SizedBox(
+            height: 60,
+            child: BlocBuilder<DoctorListBloc, DoctorListState>(
+              builder: (context, state) {
+                return state.map(
+                  initial: (stt) {
+                    loaderCubit.show();
+                    doctorBloc.add(GetDoctors());
+                    return const SizedBox.shrink();
+                  },
+                  loading: (stt) {
+                    return const SizedBox.shrink();
+                  },
+                  doctorsLoaded: (stt) {
+                    loaderCubit.hidden();
+                    return DoctorCarousel(
+                      doctorIdInitialSelected: doctorSelected?.id,
+                      doctors: stt.doctors,
+                      onChanged: (doctor) {
+                        doctorSelected = doctor;
+                        usuarioBloc.setDoctorSelected(doctor);
+                        citaBloc.add(CitaEvent.getCitas(
+                          CitaRequestViewModel(
+                            doctorId: doctor.id,
+                            ubicacionesId: usuarioBloc.state.usuario?.ubicaciones ?? [],
+                            fechaHoraCita: dateSelected,
+                          ),
+                        ));
+                      },
+                    );
+                  },
+                  failure: (stt) {
+                    loaderCubit.hidden();
+                    return Text(stt.error);
+                  },
+                );
+              },
+            ),
+          ),
+          SizedBox(
+            height: 35,
+            child: Transform.scale(
+              scale: 0.95,
+              child: AppDatePickerCupertino(
+                initialDateTime: DateTime.now(),
+                onDateTimeChanged: (value) {
+                  dateSelected = value;
+                  if (doctorSelected != null) {
+                    citaBloc.add(CitaEvent.getCitas(
+                      CitaRequestViewModel(
+                        doctorId: doctorSelected!.id,
+                        ubicacionesId: usuarioBloc.state.usuario?.ubicaciones ?? [],
+                        fechaHoraCita: value,
+                      ),
+                    ));
+                  }
+                },
+              ),
+            ),
+          ),
+          AppBox.h10,
+        ],
+      ),
+      bodySliver: SliverToBoxAdapter(
+        child: citaBloc.state.map(
+          initial: (state) {
+            return GestureDetector(
+              onTap: () {
+                citaBloc.add(
+                  CitaEvent.getCitas(
+                    CitaRequestViewModel(
+                      doctorId: doctorSelected?.id ?? 0,
+                      ubicacionesId: usuarioBloc.state.usuario?.ubicaciones ?? [],
+                      fechaHoraCita: DateTime.now(),
+                    ),
+                  ),
+                );
+              },
+              child: const SizedBox.shrink(),
             );
           },
-          child: const Icon(Icons.add),
-        ),
-        title: "Cita Page PADRE",
-        bodySliver: citaBloc.state.map(
-          initial: (state) {
-            citaBloc.add(CitaEvent.getCitas());
-            return SliverToBoxAdapter(child: SizedBox.shrink());
-          },
           loading: (state) {
-            return SliverToBoxAdapter(child: Text("loading"));
+            loaderCubit.show();
+            return const SizedBox.shrink();
           },
           citaLoaded: (state) {
-            return SliverList(
-              delegate: SliverChildBuilderDelegate(
-                (context, index) {
-                  final item = state.citas[index];
-                  return Text(item.estado.toString());
-                },
-                childCount: state.citas.length,
-              ),
+            loaderCubit.hidden();
+            return CitasGroupedByHour(
+              citas: state.citas,
+              onAdd: (hora, horaString) {
+                context.read<CitaCreateBloc>().add(CitaCreateEvent.citaPreCreateLocal(doctorSelected, dateSelected, hora, horaString));
+                Navigator.pushNamed(
+                  context,
+                  Routes.base_asistenteRecepcion + Routes.cita_add,
+                );
+              },
+              onBlock: (hora, horaString) {
+                dialogCubit.showErrorAlert(texto: "sin implementar");
+              },
             );
           },
           failure: (state) {
-            return SliverToBoxAdapter(child: Text(state.error));
+            return Text(state.error);
           },
-        )
-        //  SliverList(
-        //   delegate: SliverChildBuilderDelegate(
-        //     (context, index) => Text("s"),
-        //     childCount: 5,
-        //   ),
-        // ),
-        );
+        ),
+      ),
+
+      //  SliverList(
+      //   delegate: SliverChildBuilderDelegate(
+      //     (context, index) => Text("s"),
+      //     childCount: 5,
+      //   ),
+      // ),
+    );
   }
+
+  // Container _buildError(AsyncSnapshot<int?> snapshot) {
+  //   return Container(
+  //       margin: const EdgeInsets.all(10),
+  //       padding: const EdgeInsets.all(10),
+  //       decoration: const BoxDecoration(
+  //         color: AppColors.red,
+  //         borderRadius: BorderRadius.all(
+  //           Radius.circular(10),
+  //         ),
+  //       ),
+  //       child: Text(
+  //         'Error: ${snapshot.error}',
+  //         style: const TextStyle(color: AppColors.white),
+  //       ));
+  // }
 
   @override
   Widget buildTablet(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: const Text("ss"),
+        title: const Text("TABLET"),
       ),
-      body: Stack(
-        fit: StackFit.expand,
-        children: [
-          // const DialogCubitPage(),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              const Text(
-                'You have pushed :',
-              ),
-              Text(
-                '3213123',
-                style: Theme.of(context).textTheme.headlineMedium,
-              ),
-            ],
-          ),
-        ],
-      ),
+      body: const SizedBox.shrink(),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
           final api = locator<DoctorApi>();
@@ -121,3 +239,14 @@ class CitaListAsistenteRecepcionPage extends StatelessWidget with ResponsiveWidg
     );
   }
 }
+
+// class DatosDoctorCubit extends Cubit<String> {
+//   final String init;
+//   DatosDoctorCubit({required this.init}) : super("SIN DOCTOR");
+
+//   void changeDoctorDatos(String mode) {
+//     emit(mode);
+//   }
+
+
+// }

@@ -20,7 +20,7 @@ class ButtonSuccess extends StatelessWidget {
       onClick: onClick,
       text: text,
       height: height,
-      backgroundColor: AppColors.blueAccent,
+      backgroundColor: AppColors.slg01,
       textColor: AppColors.white,
     );
   }

@@ -1,4 +1,6 @@
+import 'package:admin_clinica_front/data/models/doctor/doctor_dto.dart';
 import 'package:admin_clinica_front/data/models/usuario/user_dto.dart';
+import 'package:admin_clinica_front/ui/view_models/doctor_view/doctor_view_models.dart';
 
 import '../../ui/view_models/usuario_view/usuario_view_models.dart';
 import '../repositories/ilocal_repository.dart';
@@ -16,14 +18,15 @@ class LocalService {
         is_new_token: localUsuarioViewModel.isNewToken,
         rol: localUsuarioViewModel.rol,
         dias_token: localUsuarioViewModel.diasToken,
-        tipo: localUsuarioViewModel.tipo);
+        tipo: localUsuarioViewModel.tipo,
+        ubicaciones: localUsuarioViewModel.ubicaciones);
     return _localRepository.saveUsuario(model);
   }
 
   Future<UsuarioLoginResponseViewModel?> getUsuario() async {
     final model = await _localRepository.getUsuario();
     if (model == null) {
-      null;
+      return null;
     }
     return UsuarioLoginResponseViewModel(
       userId: model!.user_id,
@@ -34,10 +37,36 @@ class LocalService {
       rol: model.rol,
       diasToken: model.dias_token,
       tipo: model.tipo,
+      ubicaciones: model.ubicaciones,
     );
   }
 
   Future<void> saveToken(String token) async {
     return await _localRepository.saveToken(token);
+  }
+
+  Future<void> saveDoctorSelected(DoctorsViewModel doctor) async {
+    final modelDto = DoctorDto(
+      id: doctor.id,
+      usuario_id: doctor.usuarioId,
+      usuario_username: doctor.username,
+      ubicaciones: [],
+      dni: "",
+      nombres: doctor.nombres,
+      apellidos: doctor.apellidos,
+    );
+    return await _localRepository.saveDoctorSelected(modelDto);
+  }
+
+  Future<DoctorsViewModel?> getIdDoctorSelected() async {
+    final dto = await _localRepository.getDoctorSelected();
+    if (dto == null) return null;
+    return DoctorsViewModel(
+      id: dto.id,
+      apellidos: dto.apellidos,
+      usuarioId: dto.usuario_id,
+      username: dto.usuario_username,
+      nombres: dto.nombres,
+    );
   }
 }

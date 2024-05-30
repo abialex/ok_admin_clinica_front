@@ -1,8 +1,10 @@
 import 'package:admin_clinica_front/ui/core/router.dart';
+import 'package:admin_clinica_front/ui/global_widget/page/mobile/app_header_mobile.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_text_style.dart';
 import 'package:admin_clinica_front/ui/global_widget/page/page_base_desktop.dart';
 import 'package:admin_clinica_front/ui/global_widget/page/page_base_phone.dart';
-import 'package:admin_clinica_front/ui/modules/doctor/bloc/doctor_bloc.dart';
+import 'package:admin_clinica_front/ui/modules/doctor/bloc/doctor_list_bloc.dart';
+import 'package:admin_clinica_front/ui/modules/doctor/bloc/doctor_update_bloc.dart';
 import 'package:admin_clinica_front/ui/view_models/doctor_view/doctor_view_models.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -20,9 +22,8 @@ class DoctorListAsistenteRecepcionPage extends StatelessWidget with ResponsiveWi
 
   @override
   Widget build(BuildContext context) {
-    final dialogCubit = context.read<DialogMessageCubit>();
-    final doctorBloc = context.read<DoctorBloc>();
-    return BlocBuilder<DoctorBloc, DoctorState>(
+    final doctorBloc = context.read<DoctorListBloc>();
+    return BlocBuilder<DoctorListBloc, DoctorListState>(
       bloc: doctorBloc,
       builder: (context, state) {
         return whatIs(context);
@@ -39,7 +40,7 @@ class DoctorListAsistenteRecepcionPage extends StatelessWidget with ResponsiveWi
 
   @override
   PageBasePhone buildMobile(BuildContext context) {
-    final doctorbloc = context.read<DoctorBloc>();
+    final doctorbloc = context.read<DoctorListBloc>();
     return PageBasePhone(
       floatingWidget: FloatingActionButton(
         backgroundColor: AppColors.blueSecondary,
@@ -52,8 +53,10 @@ class DoctorListAsistenteRecepcionPage extends StatelessWidget with ResponsiveWi
         },
         child: const Icon(Icons.add),
       ),
-      headerWidget: const Text("Asistente Recepcion"),
-      title: "Doctor page",
+      headerWidget: const HeaderMobile(
+        subTitle: "Doctor",
+        title: "DOCTORES",
+      ),
       bodySliver: doctorbloc.state.map(
         initial: (sst) {
           doctorbloc.add(GetDoctors());
@@ -93,7 +96,10 @@ class DoctorListAsistenteRecepcionPage extends StatelessWidget with ResponsiveWi
                             ),
                             GestureDetector(
                               onTap: () {
-                                Navigator.pushNamed(context, Routes.doctor_update);
+                                Navigator.pop(context);
+                                final doctorUpdateBloc = context.read<DoctorUpdateBloc>();
+                                doctorUpdateBloc.add(DoctorUpdateEvent.getDoctor(item.id));
+                                Navigator.pushNamed(context, Routes.base_asistenteRecepcion + Routes.doctor_update);
                               },
                               child: Container(
                                 padding: const EdgeInsets.symmetric(
@@ -125,7 +131,7 @@ class DoctorListAsistenteRecepcionPage extends StatelessWidget with ResponsiveWi
                     );
                   },
                   child: Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                    margin: const EdgeInsets.symmetric(vertical: 5),
                     padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                     decoration: const BoxDecoration(
                       color: AppColors.lightGray,
@@ -212,7 +218,7 @@ class DoctorListAsistenteRecepcionPage extends StatelessWidget with ResponsiveWi
           storage.saveToken("token 1f9579b30ba59f8dc25a853528d3adac2609f69d");
           final result = await api.getDoctorsByIdUbicacionFromAsistente();
           result.fold((left) => print(left), (right) => print(right));
-          dialog.showDialog(titulo: "s", texto: "s");
+          dialog.showCustomAlert(titulo: "s", texto: "s");
         },
         tooltip: 'Increment',
         child: const Icon(Icons.add),
