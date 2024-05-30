@@ -1,4 +1,7 @@
+import 'package:admin_clinica_front/ui/global_widget/app_loader.dart';
 import 'package:admin_clinica_front/ui/global_widget/custom_navbar_navigation/cubit/navigator_cubit.dart';
+import 'package:admin_clinica_front/ui/modules/cita/bloc/cita_crear_bloc/cita_create_bloc.dart';
+import 'package:admin_clinica_front/ui/modules/cita/bloc/cita_update_bloc/cita_update_bloc.dart';
 import 'package:admin_clinica_front/ui/modules/doctor/bloc/doctor_create_bloc.dart';
 import 'package:admin_clinica_front/ui/modules/doctor/bloc/doctor_list_bloc.dart';
 import 'package:admin_clinica_front/ui/modules/doctor/bloc/doctor_update_bloc.dart';
@@ -28,11 +31,14 @@ class _MainState extends State<Main> {
       providers: [
         BlocProvider(create: (_) => DialogMessageCubit()),
         BlocProvider(create: (_) => NavigatorCubit()),
+        BlocProvider(create: (_) => LoaderCubit()),
         //bloc
         BlocProvider(create: (context) => DoctorListBloc()),
         BlocProvider(create: (context) => DoctorCreateBloc()),
         BlocProvider(create: (context) => DoctorUpdateBloc()),
         BlocProvider(create: (context) => CitaBloc()),
+        BlocProvider(create: (context) => CitaUpdateBloc()),
+        BlocProvider(create: (context) => CitaCreateBloc()),
         BlocProvider(create: (context) => HomeBloc()),
         BlocProvider(create: (context) => UsuarioBloc()),
         BlocProvider(create: (context) => UbicacionBloc()),
@@ -43,20 +49,3 @@ class _MainState extends State<Main> {
     );
   }
 }
-
-// void main() async {
-//   await setupLocator();
-//   runApp(
-//     MultiBlocProvider(
-//       providers: [
-//         BlocProvider(
-//           create: (_) => DialogMessageCubit(),
-//         ),
-//         BlocProvider(
-//           create: (_) => NavbarCubit(),
-//         ),
-//       ],
-//       child: const MyApp(),
-//     ),
-//   );
-// }

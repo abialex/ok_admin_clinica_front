@@ -1,3 +1,4 @@
+import 'package:admin_clinica_front/data/models/doctor/doctor_dto.dart';
 import 'package:admin_clinica_front/data/models/usuario/user_dto.dart';
 
 import '../../dominio/repositories/ilocal_repository.dart';
@@ -24,5 +25,15 @@ class SharedPreferencesRepository implements ILocalRepository {
   @override
   Future<UserLoginDTO?> getUsuario() {
     return _local.getUsuario();
+  }
+
+  @override
+  Future<DoctorDto?> getDoctorSelected() {
+    return _local.getDoctorSelected();
+  }
+
+  @override
+  Future<void> saveDoctorSelected(DoctorDto doctorIdSelected) {
+    return _local.saveDoctorSelected(doctorIdSelected);
   }
 }

@@ -19,6 +19,7 @@ class DoctorListBloc extends Bloc<DoctorListEvent, DoctorListState> {
   }
 
   Future<void> getDoctors(GetDoctors event, Emitter<DoctorListState> emit) async {
+    emit(DoctorListState.loading());
     final usuario = await _localService.getUsuario();
     late Either<String, List<DoctorsViewModel>> result;
     switch (usuario!.rol) {

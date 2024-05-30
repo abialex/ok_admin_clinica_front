@@ -1,7 +1,9 @@
 // ignore_for_file: constant_identifier_names
 
 import 'dart:convert';
+import 'package:admin_clinica_front/data/models/doctor/doctor_dto.dart';
 import 'package:admin_clinica_front/data/utils/key_storage.dart';
+import 'package:admin_clinica_front/ui/view_models/doctor_view/doctor_view_models.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../models/usuario/user_dto.dart';
@@ -34,5 +36,16 @@ class SharedPreferencesLocal {
 
   Future<void> signOut() async {
     // await preferences.delete(key: _KeyStorage.AUTH_TOKEN);
+  }
+
+  Future<void> saveDoctorSelected(DoctorDto doctor) async {
+    String jsonString = json.encode(doctor.toJson());
+    _sharedPreferences.setString(KeyStorage.DOCTOR, jsonString);
+  }
+
+  Future<DoctorDto?> getDoctorSelected() async {
+    final result = _sharedPreferences.getString(KeyStorage.DOCTOR);
+    if (result == null) return null;
+    return DoctorDto.fromJson(jsonDecode(result));
   }
 }
