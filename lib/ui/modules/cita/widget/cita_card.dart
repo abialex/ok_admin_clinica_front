@@ -506,18 +506,19 @@ class CitasCard extends StatelessWidget {
                               ),
                               body: CustomScrollView(
                                 slivers: [
-                                  _buildOptionsBottomModal(
-                                    onTap: () {
-                                      Navigator.pop(context);
-                                      Navigator.pushNamed(
-                                        context,
-                                        Routes.base_asistenteRecepcion + Routes.cita_update,
-                                      );
-                                      context.read<CitaUpdateBloc>().add(CitaUpdateEvent.citaGetById(stt.cita.id));
-                                    },
-                                    text: "MODIFICAR",
-                                  ),
-                                  if (stt.cita.estado != EstadoCita.cancelado)
+                                  if (stt.cita.estado == EstadoCita.pendiente)
+                                    _buildOptionsBottomModal(
+                                      onTap: () {
+                                        Navigator.pop(context);
+                                        Navigator.pushNamed(
+                                          context,
+                                          Routes.base_asistenteRecepcion + Routes.cita_update,
+                                        );
+                                        context.read<CitaUpdateBloc>().add(CitaUpdateEvent.citaGetById(stt.cita.id));
+                                      },
+                                      text: "MODIFICAR",
+                                    ),
+                                  if (stt.cita.estado == EstadoCita.pendiente)
                                     _buildOptionsBottomModal(
                                       onTap: () {
                                         dialogCubit.showCustomAlert(
@@ -669,7 +670,7 @@ class CitasCard extends StatelessWidget {
     switch (cita.estado) {
       case EstadoCita.pendiente:
         titulo = "¿Seguro(a) de confirmar?";
-        texto = "la cita estará pendiente para que el doctor acepte";
+        texto = "la cita estará pendiente para que el doctor acepte, una vez confirmada la cita ya no se podrá modificar.";
         tipoAccion = TipoAccionEnum.confirmar;
 
       case EstadoCita.confirmado:
@@ -716,11 +717,13 @@ class CitasCard extends StatelessWidget {
 class CitasGroupedByHour extends StatelessWidget {
   final List<CitasViewModel> citas;
   final Function(int, String)? onAdd;
+  final Function(int, String)? onBlock;
 
   const CitasGroupedByHour({
     super.key,
     required this.citas,
     this.onAdd,
+    this.onBlock,
   });
 
   @override
@@ -756,14 +759,36 @@ class CitasGroupedByHour extends StatelessWidget {
                       hora.horaString2,
                       style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0),
                     ),
-                    AppTextGlobal.labelLightText(text: hora.listItems.length.toString(), colorText: AppColors.lightGray),
-                    GestureDetector(
-                      onTap: () {
-                        onAdd?.call(hora.hora, hora.horaString);
-                      },
-                      child: const CircleAvatar(
-                        child: Icon(Icons.add),
-                      ),
+                    // AppTextGlobal.labelLightText(text: hora.listItems.length.toString(), colorText: AppColors.lightGray),
+                    Row(
+                      children: [
+                        Visibility(
+                          visible: hora.listItems.isEmpty,
+                          child: GestureDetector(
+                            onTap: () {
+                              onBlock?.call(hora.hora, hora.horaString);
+                            },
+                            child: const CircleAvatar(
+                              minRadius: 2.5,
+                              backgroundColor: AppColors.redSunat,
+                              foregroundColor: AppColors.white,
+                              child: Icon(Icons.block),
+                            ),
+                          ),
+                        ),
+                        AppBox.w8,
+                        GestureDetector(
+                          onTap: () {
+                            onAdd?.call(hora.hora, hora.horaString);
+                          },
+                          child: const CircleAvatar(
+                            minRadius: 2.5,
+                            backgroundColor: AppColors.slg01,
+                            foregroundColor: AppColors.white,
+                            child: Icon(Icons.add),
+                          ),
+                        )
+                      ],
                     )
                   ],
                 ),
