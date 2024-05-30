@@ -12,7 +12,6 @@ import 'package:admin_clinica_front/ui/global_widget/input_text/input_form_02/in
 import 'package:admin_clinica_front/ui/global_widget/page/mobile/app_header_mobile.dart';
 import 'package:admin_clinica_front/ui/global_widget/page/page_base_desktop.dart';
 import 'package:admin_clinica_front/ui/global_widget/page/page_base_phone.dart';
-import 'package:admin_clinica_front/ui/modules/cita/widget/form_pages.dart';
 import 'package:admin_clinica_front/ui/modules/doctor/bloc/doctor_create_bloc.dart';
 import 'package:admin_clinica_front/ui/modules/doctor/bloc/doctor_list_bloc.dart';
 import 'package:admin_clinica_front/ui/modules/ubicacion/bloc/ubicacion_bloc.dart';
@@ -65,7 +64,6 @@ class DoctorAddAsistenteRecepcionPage extends StatelessWidget with ResponsiveWid
     final doctorListBloc = context.read<DoctorListBloc>();
 
     return PageBasePhone(
-      title: "Doctor Add",
       headerWidget: const HeaderMobile(
         subTitle: "Doctor",
         title: "CREAR DOCTOR",

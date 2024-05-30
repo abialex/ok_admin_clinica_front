@@ -1,3 +1,4 @@
+import 'package:admin_clinica_front/core/constants/app_const_svgs.dart';
 import 'package:admin_clinica_front/core/extensions/date_time_extensions.dart';
 import 'package:admin_clinica_front/core/utils/app_colors.dart';
 import 'package:admin_clinica_front/ui/blocs/usuario_session/bloc/usuario_bloc.dart';
@@ -16,9 +17,12 @@ import 'package:admin_clinica_front/ui/modules/cita/cita_add/forms/cita_add_agil
 import 'package:admin_clinica_front/ui/modules/cita/cita_add/forms/cita_add_ocupada.dart';
 import 'package:admin_clinica_front/ui/modules/cita/widget/form_pages.dart';
 import 'package:admin_clinica_front/ui/view_models/cita_view/cita_view_models.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
 import '../../../global_widget/page/page_mixin_base.dart';
 
 class CitaAddPage extends StatelessWidget with ResponsiveWidgetMixin {
@@ -47,9 +51,10 @@ class CitaAddPage extends StatelessWidget with ResponsiveWidgetMixin {
     if (ubicacionesPersonal.length > 1) {
       citaCreateBloc.add(CitaCreateEvent.citaCreateError("Tiene mas de una ubicación asignada, consulte al administrador"));
     }
+    String doctorDatos = "";
 
     return PageBasePhone(
-      title: "S",
+      showNavbar: false,
       headerWidget: const HeaderMobile(title: "CREAR CITA"),
       bodySliver: SliverToBoxAdapter(
         child: BlocBuilder<CitaCreateBloc, CitaCreateState>(
@@ -62,7 +67,7 @@ class CitaAddPage extends StatelessWidget with ResponsiveWidgetMixin {
                 return const SizedBox.shrink();
               },
               citaUploadPreDatos: (stt) {
-                final doctorDatos = stt.doctorDatos != null ? "${stt.doctorDatos!.nombres} ${stt.doctorDatos!.apellidos}" : "SIN DOCTOR SELECCIONADO";
+                doctorDatos = stt.doctorDatos != null ? "${stt.doctorDatos!.nombres} ${stt.doctorDatos!.apellidos}" : "SIN DOCTOR SELECCIONADO";
                 return Column(
                   children: [
                     Container(
@@ -85,22 +90,6 @@ class CitaAddPage extends StatelessWidget with ResponsiveWidgetMixin {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              // Expanded(
-                              //   child: SvgPicture.asset(
-                              //     AppConstSvgs.doctor,
-                              //     height: 33,
-                              //   )
-                              //       .animate(
-                              //         onPlay: (controller) => controller.loop(),
-                              //       )
-                              //       .scale(
-                              //         curve: Curves.bounceIn,
-                              //         delay: 2.seconds,
-                              //         duration: 0.75.seconds,
-                              //         begin: const Offset(1, 1),
-                              //         end: const Offset(1.1, 1.1),
-                              //       ),
-                              // ),
                               Expanded(
                                 flex: 7,
                                 child: AppTextGlobal.labelLightText(
@@ -170,17 +159,63 @@ class CitaAddPage extends StatelessWidget with ResponsiveWidgetMixin {
                 );
               },
               citaCreateSuccess: (stt) {
-                citaBloc.add(GetCitas(CitaRequestViewModel(
-                  doctorId: stt.doctorId,
-                  ubicacionesId: stt.ubicacionesId,
-                  fechaHoraCita: stt.fechaCita,
-                )));
+                citaBloc.add(
+                  GetCitas(
+                    CitaRequestViewModel(
+                      doctorId: stt.doctorId,
+                      ubicacionesId: stt.ubicacionesId,
+                      fechaHoraCita: stt.fechaCita,
+                    ),
+                  ),
+                );
                 return Center(
-                    child: ButtonSuccess(
-                  text: "Volver",
-                  onClick: () {
-                    Navigator.pop(context);
-                  },
+                    child: Column(
+                  children: [
+                    AppBox.h20,
+                    CircleAvatar(
+                      backgroundColor: AppColors.lightBackgroundColor,
+                      maxRadius: 120,
+                      child: Padding(
+                        padding: const EdgeInsets.all(10),
+                        child: SvgPicture.asset(
+                          AppConstSvgs.logo,
+                          color: AppColors.slgPrincipal,
+                        ),
+                      ),
+                    )
+                        .animate(
+                          onPlay: (controller) => controller.loop(),
+                        )
+                        .rotate(
+                          delay: 2.seconds,
+                          duration: 1.5.seconds,
+                        ),
+                    AppBox.h20,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        AppTextGlobal.lightText(text: ""),
+                        AppTextGlobal.labelLightText(text: "CITA ÁGIL "),
+                        AppTextGlobal.lightText(text: "para el "),
+                        AppTextGlobal.labelLightText(text: stt.fechaCita.toFormatddMMyyyySlash()),
+                        AppTextGlobal.lightText(text: " a las "),
+                        AppTextGlobal.labelLightText(text: stt.fechaCita.toFormatHHmm()),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        AppTextGlobal.lightText(text: "Dr(a). : "),
+                        Expanded(child: AppTextGlobal.labelLightText(text: "ALEXIS JAMPIER YALLE ALARCON")),
+                      ],
+                    ),
+                    AppBox.h20,
+                    ButtonSuccess(
+                      text: "VER CITAS",
+                      onClick: () {
+                        Navigator.pop(context);
+                      },
+                    ),
+                  ],
                 ));
               },
               failure: (stt) {

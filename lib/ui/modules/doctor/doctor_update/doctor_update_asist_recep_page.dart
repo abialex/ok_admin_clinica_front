@@ -64,7 +64,6 @@ class DoctorUpdateAsistenteRecepcionPage extends StatelessWidget with Responsive
     final doctorUpdateBloc = context.read<DoctorUpdateBloc>();
     final doctorListBloc = context.read<DoctorListBloc>();
     return PageBasePhone(
-      title: "Doctor Add",
       headerWidget: const HeaderMobile(
         subTitle: "Doctor",
         title: "MODIFICAR DOCTOR",

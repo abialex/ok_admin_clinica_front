@@ -1,4 +1,3 @@
-import 'package:admin_clinica_front/ui/blocs/usuario_session/bloc/usuario_bloc.dart';
 import 'package:admin_clinica_front/ui/global_widget/page/mobile/app_header_mobile.dart';
 import 'package:admin_clinica_front/ui/modules/home/bloc/home_bloc.dart';
 import 'package:flutter/material.dart';
@@ -36,13 +35,11 @@ class HomePage extends StatelessWidget with ResponsiveWidgetMixin {
 
   @override
   PageBasePhone buildMobile(BuildContext context) {
-    final usuarioBloc = context.read<UsuarioBloc>();
     return PageBasePhone(
       headerWidget: const HeaderMobile(
         subTitle: "Doctor",
         title: "HOME",
       ),
-      title: "Home page",
       bodySliver: SliverList(
         delegate: SliverChildBuilderDelegate(
           (BuildContext context, int index) {

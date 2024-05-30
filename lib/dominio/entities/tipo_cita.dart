@@ -2,30 +2,24 @@ import 'dart:ui';
 
 import 'package:admin_clinica_front/core/utils/app_colors.dart';
 
-enum EstadoCita {
-  pendiente,
-  confirmado,
-  atendiendo,
-  finalizado,
-  validado,
-  cancelado,
+enum TipoCita {
+  tentativa,
+  agil,
+  completa,
+  ocupada,
 }
 
-extension EstadoCitaExtension on EstadoCita {
+extension TipoCitaExtension on TipoCita {
   String get name {
     switch (this) {
-      case EstadoCita.pendiente:
-        return 'Pendiente';
-      case EstadoCita.confirmado:
-        return 'Confirmado';
-      case EstadoCita.atendiendo:
-        return 'Atendiendo';
-      case EstadoCita.finalizado:
-        return 'Finalizado';
-      case EstadoCita.validado:
-        return 'Validado';
-      case EstadoCita.cancelado:
-        return 'Cancelado';
+      case TipoCita.tentativa:
+        return 'Agil';
+      case TipoCita.agil:
+        return 'Completa';
+      case TipoCita.completa:
+        return 'Tentativa';
+      case TipoCita.ocupada:
+        return 'Ocupada';
       default:
         return '';
     }
@@ -33,56 +27,44 @@ extension EstadoCitaExtension on EstadoCita {
 
   Color get color {
     switch (this) {
-      case EstadoCita.pendiente:
+      case TipoCita.tentativa:
         return AppColors.orange;
-      case EstadoCita.confirmado:
+      case TipoCita.agil:
         return AppColors.blue;
-      case EstadoCita.atendiendo:
+      case TipoCita.completa:
         return AppColors.green;
-      case EstadoCita.finalizado:
+      case TipoCita.ocupada:
         return AppColors.grey;
-      case EstadoCita.validado:
-        return AppColors.purple;
-      case EstadoCita.cancelado:
-        return AppColors.red;
       default:
         return AppColors.dark;
     }
   }
 
-  static EstadoCita fromNumber(int number) {
+  static TipoCita fromNumber(int number) {
     switch (number) {
       case 1:
-        return EstadoCita.pendiente;
+        return TipoCita.tentativa;
       case 2:
-        return EstadoCita.confirmado;
+        return TipoCita.agil;
       case 3:
-        return EstadoCita.atendiendo;
+        return TipoCita.completa;
       case 4:
-        return EstadoCita.finalizado;
-      case 5:
-        return EstadoCita.validado;
-      case 6:
-        return EstadoCita.cancelado;
+        return TipoCita.ocupada;
       default:
         throw ArgumentError('Invalid number for EstadoCita');
     }
   }
 
-  static int fromEstado(EstadoCita estado) {
+  static int fromEstado(TipoCita estado) {
     switch (estado) {
-      case EstadoCita.pendiente:
+      case TipoCita.tentativa:
         return 1;
-      case EstadoCita.confirmado:
+      case TipoCita.agil:
         return 2;
-      case EstadoCita.atendiendo:
+      case TipoCita.completa:
         return 3;
-      case EstadoCita.finalizado:
+      case TipoCita.ocupada:
         return 4;
-      case EstadoCita.validado:
-        return 5;
-      case EstadoCita.cancelado:
-        return 6;
       default:
         throw ArgumentError('Invalid EstadoCita');
     }

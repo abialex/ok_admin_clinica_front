@@ -22,7 +22,6 @@ class DoctorListAsistenteRecepcionPage extends StatelessWidget with ResponsiveWi
 
   @override
   Widget build(BuildContext context) {
-    final dialogCubit = context.read<DialogMessageCubit>();
     final doctorBloc = context.read<DoctorListBloc>();
     return BlocBuilder<DoctorListBloc, DoctorListState>(
       bloc: doctorBloc,
@@ -58,7 +57,6 @@ class DoctorListAsistenteRecepcionPage extends StatelessWidget with ResponsiveWi
         subTitle: "Doctor",
         title: "DOCTORES",
       ),
-      title: "Doctor page",
       bodySliver: doctorbloc.state.map(
         initial: (sst) {
           doctorbloc.add(GetDoctors());

@@ -37,7 +37,6 @@ class DoctorListAsistenteAsistentePage extends StatelessWidget with ResponsiveWi
   PageBasePhone buildMobile(BuildContext context) {
     final doctorbloc = context.read<DoctorListBloc>();
     return PageBasePhone(
-      title: "Doctor page",
       bodySliver: doctorbloc.state.map(
         initial: (stt) {
           doctorbloc.add(GetDoctors());

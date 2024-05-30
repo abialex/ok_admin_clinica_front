@@ -72,7 +72,6 @@ class CitaListAsistenteRecepcionPage extends StatelessWidget with ResponsiveWidg
       maxEntend: 195,
       minEntend: 195,
 
-      title: "Cita Page PADRE",
       headerWidget: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [

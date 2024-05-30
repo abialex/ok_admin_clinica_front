@@ -1,6 +1,7 @@
 // ignore_for_file: constant_identifier_names
 
 import 'package:admin_clinica_front/ui/global_widget/custom_navbar_navigation/cubit/navigator_cubit.dart';
+import 'package:admin_clinica_front/ui/modules/cita/cita_update/cita_update_page.dart';
 import 'package:admin_clinica_front/ui/modules/doctor/doctor_list/doctor_list_adm_page.dart';
 import 'package:admin_clinica_front/ui/modules/login/page.dart';
 import 'package:flutter/material.dart';
@@ -27,6 +28,7 @@ class Routes {
 
   static const String cita_list = '/cita_list';
   static const String cita_add = '/cita_add';
+  static const String cita_update = '/cita_update';
   static const String citaDetails = '/products/details';
 
   static const String login = '/';
@@ -67,6 +69,11 @@ class AppRouter {
       case Routes.base_asistenteRecepcion + Routes.cita_add:
         return PageRouteBuilder(
           pageBuilder: (_, __, ___) => CitaAddPage(),
+          //   transitionsBuilder: _createSlideFadeTransition,
+        );
+      case Routes.base_asistenteRecepcion + Routes.cita_update:
+        return PageRouteBuilder(
+          pageBuilder: (_, __, ___) => CitaUpdateAsistenteRecepcionPage(),
           //   transitionsBuilder: _createSlideFadeTransition,
         );
 

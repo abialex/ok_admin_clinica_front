@@ -51,7 +51,6 @@ class DoctorListAdminPage extends StatelessWidget with ResponsiveWidgetMixin {
         },
         child: const Icon(Icons.add),
       ),
-      title: "Doctor page",
       bodySliver: doctorbloc.state.map(
         initial: (stt) {
           doctorbloc.add(GetDoctors());

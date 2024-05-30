@@ -1,3 +1,4 @@
+import 'package:admin_clinica_front/dominio/entities/estado_cita.dart';
 import 'package:admin_clinica_front/dominio/entities/tipo_cita.dart';
 
 class CitaViewModel {
@@ -9,7 +10,7 @@ class CitaViewModel {
   final String tipoString;
   final DateTime fechaHoraCita;
   final EstadoCita estado;
-  final int tipo;
+  final TipoCita tipo;
   final String? razon;
   final String? razonOcupado;
   final String? datosPaciente;
@@ -48,7 +49,7 @@ class CitasViewModel {
   final int id;
   final DateTime fechaHoraCita;
   final EstadoCita estado;
-  final int tipo;
+  final TipoCita tipo;
   final String? celular;
   final String? pacienteDatos;
   final String? razon;

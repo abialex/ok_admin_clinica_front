@@ -1,5 +1,6 @@
 import 'package:admin_clinica_front/core/extensions/date_time_extensions.dart';
 import 'package:admin_clinica_front/data/models/request/request_model.dart';
+import 'package:admin_clinica_front/dominio/entities/estado_cita.dart';
 import 'package:admin_clinica_front/dominio/entities/tipo_cita.dart';
 import 'package:either_dart/either.dart';
 
@@ -24,7 +25,7 @@ class CitasService {
     return await _citaRepository.createCitaAgil(model);
   }
 
-  Future<Either<String, int>> updateCitaAgil(CitaAgilUpdateViewModel view) async {
+  Future<Either<String, int>> citaAgilUpdate(CitaAgilUpdateViewModel view) async {
     // Aquí puedes agregar lógica de validación o preparación de datos
     CitaAgilUpdateModel model = CitaAgilUpdateModel(
       id: view.id,
@@ -50,7 +51,7 @@ class CitasService {
                     id: cita.id,
                     fechaHoraCita: DateTime.parse(cita.fechaHoraCita),
                     estado: EstadoCitaExtension.fromNumber(cita.estado),
-                    tipo: cita.tipo,
+                    tipo: TipoCitaExtension.fromNumber(cita.estado),
                     celular: cita.celular,
                     pacienteDatos: cita.paciente != null ? "${cita.paciente!.nombres} ${cita.paciente?.apellidos}" : null,
                     razon: cita.razon,
@@ -89,7 +90,7 @@ class CitasService {
                   id: cita.id,
                   fechaHoraCita: DateTime.parse(cita.fechaHoraCita),
                   estado: EstadoCitaExtension.fromNumber(cita.estado),
-                  tipo: cita.tipo,
+                  tipo: TipoCitaExtension.fromNumber(cita.tipo),
                   celular: cita.celular,
                   pacienteDatos: cita.paciente != null ? "${cita.paciente!.nombres} ${cita.paciente?.apellidos}" : null,
                   razon: cita.razon,
@@ -143,7 +144,7 @@ class CitasService {
                 id: cita.id,
                 fechaHoraCita: DateTime.parse(cita.fechaHoraCita),
                 estado: EstadoCitaExtension.fromNumber(cita.estado),
-                tipo: cita.tipo,
+                tipo: TipoCitaExtension.fromNumber(cita.estado),
                 celular: cita.celular,
                 pacienteDatos: cita.paciente != null ? "${cita.paciente!.nombres} ${cita.paciente?.apellidos}" : null,
                 razon: cita.razon,
@@ -196,7 +197,7 @@ class CitasService {
           doctor: dto.doctor,
           estadoString: dto.estado_string,
           tipoString: dto.tipo_string,
-          tipo: dto.tipo,
+          tipo: TipoCitaExtension.fromNumber(dto.tipo),
           celular: dto.celular,
           pacienteDatos: dto.paciente != null ? "${dto.paciente!.nombres} ${dto.paciente?.apellidos}" : null,
           razon: dto.razon,

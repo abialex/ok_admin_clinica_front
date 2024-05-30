@@ -2,8 +2,9 @@ import 'package:admin_clinica_front/core/constants/app_const_svgs.dart';
 import 'package:admin_clinica_front/core/extensions/date_time_extensions.dart';
 import 'package:admin_clinica_front/core/utils/app_cita_config.dart';
 import 'package:admin_clinica_front/core/utils/app_colors.dart';
-import 'package:admin_clinica_front/dominio/entities/tipo_cita.dart';
+import 'package:admin_clinica_front/dominio/entities/estado_cita.dart';
 import 'package:admin_clinica_front/dominio/services/citas_service.dart';
+import 'package:admin_clinica_front/ui/core/router.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_box.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_text_style.dart';
 import 'package:admin_clinica_front/ui/global_widget/button_base/button_base.dart';
@@ -11,6 +12,8 @@ import 'package:admin_clinica_front/ui/global_widget/button_base/button_success.
 import 'package:admin_clinica_front/ui/global_widget/dialog/dialog_message/cubit/dialog_message_cubit.dart';
 import 'package:admin_clinica_front/ui/global_widget/modal/bottomModal/app_bottom_modal.dart';
 import 'package:admin_clinica_front/ui/modules/cita/bloc/cita_index_bloc/cita_index_bloc.dart';
+import 'package:admin_clinica_front/ui/modules/cita/bloc/cita_update_bloc/cita_update_bloc.dart';
+import 'package:admin_clinica_front/ui/modules/cita/bloc/cita_update_bloc/cita_update_event.dart';
 import 'package:admin_clinica_front/ui/view_models/cita_view/cita_view_models.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -65,406 +68,78 @@ class CitasCard extends StatelessWidget {
                   );
                 },
                 citaLoaded: (stt) {
-                  return Expanded(
-                    child: Stack(
-                      clipBehavior: Clip.none,
-                      children: [
-                        Row(
-                          children: [
-                            Container(
-                              decoration: const BoxDecoration(
-                                color: AppColors.slg01,
-                                borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(10.0),
-                                  topRight: Radius.circular(10.0),
-                                ),
+                  return Stack(
+                    clipBehavior: Clip.none,
+                    children: [
+                      Row(
+                        children: [
+                          Container(
+                            decoration: const BoxDecoration(
+                              color: AppColors.slg01,
+                              borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(10.0),
+                                topRight: Radius.circular(10.0),
                               ),
-                              width: sizeButtonLeft,
-                              child: const Icon(Icons.abc),
                             ),
-                            Expanded(
-                              child: Padding(
-                                padding: const EdgeInsets.all(15.0),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    AppBox.h20,
-                                    if (cita.datosPaciente != null)
-                                      Row(
-                                        crossAxisAlignment: CrossAxisAlignment.center,
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          const Icon(
-                                            Icons.person,
-                                            color: AppColors.slg01,
-                                          ),
-                                          // AppTextGlobal.labelLightText(text: "Paciente SLG:"),
-                                          Expanded(child: Center(child: AppTextGlobal.lightText(text: stt.cita.datosPaciente!.toUpperCase()))),
-                                          AppBox.w6,
-                                        ],
-                                      ),
-                                    if (cita.pacienteDatos != null)
-                                      Row(
-                                        crossAxisAlignment: CrossAxisAlignment.center,
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          const Icon(
-                                            Icons.person,
-                                            color: AppColors.slg01,
-                                          ),
-                                          // AppTextGlobal.labelLightText(text: "Paciente Libre:"),
-                                          Expanded(child: Center(child: AppTextGlobal.lightText(text: stt.cita.pacienteDatos!.toUpperCase()))),
-                                          AppBox.w6,
-                                        ],
-                                      ),
-                                    AppBox.h10,
-
-                                    if (cita.razon != null)
-                                      Row(
-                                        children: [
-                                          AppTextGlobal.labelLightText(text: "Razón:"),
-                                          AppBox.w4,
-                                          AppTextGlobal.lightText(text: stt.cita.razon!),
-                                        ],
-                                      ),
-                                    if (cita.razonOcupado != null) ...[
-                                      const SizedBox(height: 5.0),
-                                      Text('Razón Ocupado: ${stt.cita.razonOcupado}'),
-                                    ],
-                                    AppBox.h4,
-
+                            width: sizeButtonLeft,
+                            child: const Icon(Icons.abc),
+                          ),
+                          Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.all(10.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  AppBox.h20,
+                                  if (cita.datosPaciente != null)
                                     Row(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        // AppTextGlobal.labelLightText(text: "Estado:"),
-                                        Container(
-                                            alignment: Alignment.center,
-                                            width: 110,
-                                            padding: const EdgeInsets.symmetric(
-                                              vertical: 2.5,
-                                              horizontal: 5,
-                                            ),
-                                            decoration: BoxDecoration(
-                                              color: stt.cita.estado.color,
-                                              borderRadius: const BorderRadius.all(
-                                                Radius.circular(
-                                                  10,
-                                                ),
-                                              ),
-                                            ),
-                                            child: AppTextGlobal.labelLightText(
-                                              text: stt.cita.estadoString,
-                                              colorText: AppColors.white,
-                                              fontSize: 14,
-                                            ).animate().flip()),
-                                      ],
-                                    ),
-
-                                    // if (cita.fechaConfirmacion != null) ...[
-                                    //   const SizedBox(height: 5.0),
-                                    //   Text('Fecha de Confirmación: ${cita.fechaConfirmacion}'),
-                                    // ],
-                                    // if (cita.fechaValidacion != null) ...[
-                                    //   const SizedBox(height: 5.0),
-                                    //   Text('Fecha de Validación: ${cita.fechaValidacion}'),
-                                    // ],
-                                    // if (cita.fechaInicio != null) ...[
-                                    //   const SizedBox(height: 5.0),
-                                    //   Text('Fecha de Inicio: ${cita.fechaInicio}'),
-                                    // ],
-                                    // if (cita.fechaFin != null) ...[
-                                    //   const SizedBox(height: 5.0),
-                                    //   Text('Fecha de Fin: ${cita.fechaFin}'),
-                                    // ],
-
-                                    AppBox.h16,
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        Positioned(
-                          right: 0,
-                          top: 0,
-                          child: () {
-                            switch (stt.cita.estado) {
-                              case EstadoCita.pendiente:
-                                return _buildActionState(
-                                  onTap: () {
-                                    nextCita(context, stt.cita);
-                                  },
-                                  builder: () {
-                                    return Row(
                                       crossAxisAlignment: CrossAxisAlignment.center,
-                                      children: [
-                                        AppTextGlobal.labelLightText(text: "Confirmar", fontSize: 12),
-                                        AppBox.w2,
-                                        SvgPicture.asset(
-                                          AppConstSvgs.state_confirmado,
-                                          height: 15,
-                                          color: EstadoCita.confirmado.color,
-                                        )
-                                            .animate(
-                                              onPlay: (controller) => controller.loop(reverse: true),
-                                            )
-                                            .slide(
-                                              delay: 1.seconds,
-                                              duration: 0.8.seconds,
-                                              begin: const Offset(0, 0),
-                                              end: const Offset(0, -0.5),
-                                              curve: Curves.bounceIn,
-                                            ),
-                                      ],
-                                    );
-                                  },
-                                );
-
-                              case EstadoCita.confirmado:
-                                return _buildActionState(
-                                  onTap: () {
-                                    nextCita(context, stt.cita);
-                                  },
-                                  builder: () {
-                                    return Row(
-                                      crossAxisAlignment: CrossAxisAlignment.center,
-                                      children: [
-                                        AppTextGlobal.labelLightText(text: "Validar", fontSize: 12),
-                                        AppBox.w2,
-                                        const Icon(
-                                          Icons.warning,
-                                          color: AppColors.yellow,
-                                          size: 16,
-                                        )
-                                            .animate(
-                                              onPlay: (controller) => controller.loop(reverse: true),
-                                            )
-                                            .shake(delay: 2.5.seconds, duration: 0.5.seconds),
-                                      ],
-                                    );
-                                  },
-                                );
-
-                              case EstadoCita.atendiendo:
-                                return _buildActionState(
-                                  onTap: () {
-                                    nextCita(context, stt.cita);
-                                  },
-                                  builder: () {
-                                    return Row(
-                                      crossAxisAlignment: CrossAxisAlignment.center,
-                                      children: [
-                                        AppTextGlobal.labelLightText(text: "Finalizar", fontSize: 12),
-                                        AppBox.w2,
-                                        SvgPicture.asset(
-                                          AppConstSvgs.state_finalizado,
-                                          height: 15,
-                                          color: EstadoCita.finalizado.color,
-                                        )
-                                            .animate(
-                                              onPlay: (controller) => controller.loop(reverse: true),
-                                            )
-                                            .shake(delay: 2.5.seconds, duration: 0.5.seconds),
-                                      ],
-                                    );
-                                  },
-                                );
-
-                              case EstadoCita.finalizado:
-                                return _buildActionState(
-                                  onTap: () {
-                                    nextCita(context, stt.cita);
-                                  },
-                                  builder: () {
-                                    return Row(
-                                      crossAxisAlignment: CrossAxisAlignment.center,
-                                      children: [
-                                        AppTextGlobal.labelLightText(text: "Validar", fontSize: 12),
-                                        AppBox.w2,
-                                        SvgPicture.asset(
-                                          AppConstSvgs.state_validado,
-                                          height: 15,
-                                          color: EstadoCita.validado.color,
-                                        )
-                                            .animate(
-                                              onPlay: (controller) => controller.loop(reverse: true),
-                                            )
-                                            .shake(delay: 2.5.seconds, duration: 0.5.seconds),
-                                      ],
-                                    );
-                                  },
-                                );
-                              case EstadoCita.validado:
-                                return _buildActionState(
-                                  onTap: () {
-                                    // nextCita(context, stt.cita);
-                                  },
-                                  builder: () {
-                                    return Row(
-                                      crossAxisAlignment: CrossAxisAlignment.center,
-                                      children: [
-                                        // AppTextGlobal.labelLightText(text: "Concluido", fontSize: 12),
-                                        // AppBox.w2,
-                                        SvgPicture.asset(
-                                          AppConstSvgs.state_validado,
-                                          height: 15,
-                                          color: EstadoCita.validado.color,
-                                        ),
-                                      ],
-                                    );
-                                  },
-                                );
-
-                              default:
-                                return ButtonCustomBase(
-                                  backgroundColor: stt.cita.estado.color,
-                                  textColor: AppColors.white,
-                                  text: "default",
-                                  onClick: () {
-                                    // nextCita(context, stt.cita);
-                                  },
-                                );
-                            }
-                          }(),
-                        ),
-                        Positioned(
-                          left: -0,
-                          top: -15,
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 2.5),
-                            decoration: const BoxDecoration(
-                              borderRadius: BorderRadius.vertical(top: Radius.circular(10)),
-                              color: AppColors.white,
-                              border: Border(
-                                left: BorderSide(
-                                  color: AppColors.slg01,
-                                  width: 0.3,
-                                ),
-                                top: BorderSide(
-                                  color: AppColors.slg01,
-                                  width: 0.3,
-                                ),
-                                right: BorderSide(
-                                  color: AppColors.slg01,
-                                  width: 0.2999,
-                                  // width: 1,
-                                ),
-                              ),
-                            ),
-                            child: Row(
-                              children: [
-                                const Icon(
-                                  Icons.av_timer_rounded,
-                                  color: AppColors.slg01,
-                                ),
-                                // AppTextGlobal.labelLightText(text: "Hora:"),
-                                AppBox.w2,
-                                AppTextGlobal.labelLightText(text: stt.cita.fechaHoraCita.toFormatHHmm()),
-                              ],
-                            ),
-                          ),
-                        ),
-                        // *tipó
-                        Positioned(
-                          bottom: 2,
-                          right: 2,
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2.5),
-                            decoration: const BoxDecoration(
-                              // borderRadius: BorderRadius.vertical(top: Radius.circular(10)),
-                              color: AppColors.white,
-                            ),
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                // AppTextGlobal.labelLightText(text: "Tipo:"),
-                                // AppBox.w4,
-                                AppTextGlobal.lightText(text: stt.cita.tipoString, fontSize: 12, colorText: AppColors.grey),
-                              ],
-                            ),
-                          ),
-                        ),
-                        // *celular
-                        Positioned(
-                          bottom: 0,
-                          left: sizeButtonLeft + 1,
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2.5),
-                            decoration: const BoxDecoration(
-                              // borderRadius: BorderRadius.vertical(top: Radius.circular(10)),
-                              color: AppColors.white,
-                            ),
-                            child: Row(
-                              children: [
-                                if (stt.cita.celular != null) ...[
-                                  const Icon(
-                                    Icons.phone,
-                                    color: AppColors.dark,
-                                    size: 16,
-                                  ),
-                                  AppBox.w4,
-                                  AppTextGlobal.lightText(
-                                    text: stt.cita.celular!,
-                                    fontSize: 14,
-                                    colorText: AppColors.dark,
-                                  ),
-                                ] else ...[
-                                  Transform.rotate(
-                                    angle: 3.1416 * 0.5,
-                                    child: const Icon(
-                                      Icons.phone_disabled_sharp,
-                                      color: AppColors.lightGray,
-                                      size: 16,
-                                    ),
-                                  ),
-                                  AppBox.w4,
-                                  AppTextGlobal.lightText(
-                                    text: "Sin registrar",
-                                    fontSize: 14,
-                                    colorText: AppColors.lightGray,
-                                  ),
-                                ]
-                              ],
-                            ),
-                          ),
-                        ),
-                        Positioned(
-                          bottom: 0,
-                          left: 0,
-                          top: 17.5,
-                          child: GestureDetector(
-                            onTap: () {
-                              AppBottomModal.showBottomModal(
-                                context,
-                                header: Column(
-                                  children: [
-                                    AppBox.h10,
-                                    if (cita.datosPaciente != null)
-                                      Row(
-                                        crossAxisAlignment: CrossAxisAlignment.center,
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Expanded(child: Center(child: AppTextGlobal.lightText(text: stt.cita.datosPaciente!.toUpperCase()))),
-                                          AppBox.w6,
-                                        ],
-                                      ),
-                                    if (cita.pacienteDatos != null)
-                                      Row(
-                                        crossAxisAlignment: CrossAxisAlignment.center,
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Expanded(child: Center(child: AppTextGlobal.lightText(text: stt.cita.pacienteDatos!.toUpperCase()))),
-                                          AppBox.w6,
-                                        ],
-                                      ),
-                                    AppBox.h10,
-                                    Row(
-                                      mainAxisSize: MainAxisSize.max,
                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       children: [
-                                        // AppTextGlobal.labelLightText(text: "Estado:"),
-                                        Container(
+                                        const Icon(
+                                          Icons.person,
+                                          color: AppColors.slg01,
+                                        ),
+                                        // AppTextGlobal.labelLightText(text: "Paciente SLG:"),
+                                        Expanded(child: Center(child: AppTextGlobal.lightText(text: stt.cita.datosPaciente!.toUpperCase()))),
+                                        AppBox.w6,
+                                      ],
+                                    ),
+                                  if (cita.pacienteDatos != null)
+                                    Row(
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        const Icon(
+                                          Icons.person,
+                                          color: AppColors.slg01,
+                                        ),
+                                        // AppTextGlobal.labelLightText(text: "Paciente Libre:"),
+                                        Expanded(child: Center(child: AppTextGlobal.lightText(text: stt.cita.pacienteDatos!.toUpperCase()))),
+                                        AppBox.w6,
+                                      ],
+                                    ),
+                                  AppBox.h10,
+
+                                  if (cita.razon != null)
+                                    Row(
+                                      children: [
+                                        AppTextGlobal.labelLightText(text: "Razón:", fontSize: 13),
+                                        AppBox.w4,
+                                        AppTextGlobal.lightText(text: stt.cita.razon!, fontSize: 13),
+                                      ],
+                                    ),
+                                  if (cita.razonOcupado != null) ...[
+                                    const SizedBox(height: 5.0),
+                                    Text('Razón Ocupado: ${stt.cita.razonOcupado}'),
+                                  ],
+                                  AppBox.h4,
+
+                                  Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      // AppTextGlobal.labelLightText(text: "Estado:"),
+                                      Container(
                                           alignment: Alignment.center,
                                           width: 110,
                                           padding: const EdgeInsets.symmetric(
@@ -483,96 +158,431 @@ class CitasCard extends StatelessWidget {
                                             text: stt.cita.estadoString,
                                             colorText: AppColors.white,
                                             fontSize: 14,
-                                          ).animate().flip(),
-                                        ),
-                                        Row(
-                                          children: [
-                                            const Icon(
-                                              Icons.av_timer_rounded,
-                                              color: AppColors.slg01,
-                                            ),
-                                            // AppTextGlobal.labelLightText(text: "Hora:"),
-                                            AppBox.w2,
-                                            AppTextGlobal.labelLightText(text: stt.cita.fechaHoraCita.toFormatHHmm()),
-                                          ],
-                                        )
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                                body: CustomScrollView(
-                                  slivers: [
-                                    _buildOptionsBottomModal(
-                                      onTap: () {},
-                                      text: "MODIFICAR",
-                                    ),
-                                    if (stt.cita.estado != EstadoCita.cancelado)
-                                      _buildOptionsBottomModal(
-                                        onTap: () {
-                                          dialogCubit.showCustomAlert(
-                                            titulo: "CANCELAR",
-                                            texto: "SIN IMPLEMENTAR",
-                                            icon: Icons.cancel,
-                                            colorBackground: AppColors.red,
-                                          );
-                                        },
-                                        text: "CANCELAR",
-                                      ),
-                                    if (stt.cita.celular != null)
-                                      _buildOptionsBottomModal(
-                                        onTap: () {
-                                          dialogCubit.showCustomAlert(
-                                            titulo: "Llamar",
-                                            texto: "Seguro que quiere llamar a ${stt.cita.datosPaciente ?? (stt.cita.pacienteDatos ?? "No tiene nombre")}",
-                                            icon: Icons.phone,
-                                            colorBackground: AppColors.blueSunat,
-                                            onAceptar: () {
-                                              FlutterPhoneDirectCaller.callNumber(stt.cita.celular!);
-                                            },
-                                          );
-                                        },
-                                        text: "LLAMAR",
-                                      ),
-                                  ],
-                                ),
-                              );
-                            },
-                            child: Container(
-                              decoration: const BoxDecoration(
-                                color: AppColors.slg01,
-                                borderRadius: BorderRadius.only(
-                                  bottomRight: Radius.circular(10.0),
-                                  topRight: Radius.circular(10.0),
-                                ),
-                              ),
-                              width: sizeButtonLeft,
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  const Icon(
-                                    Icons.circle,
-                                    color: AppColors.white,
-                                    size: 13,
+                                          ).animate().flip()),
+                                    ],
                                   ),
+
+                                  // if (cita.fechaConfirmacion != null) ...[
+                                  //   const SizedBox(height: 5.0),
+                                  //   Text('Fecha de Confirmación: ${cita.fechaConfirmacion}'),
+                                  // ],
+                                  // if (cita.fechaValidacion != null) ...[
+                                  //   const SizedBox(height: 5.0),
+                                  //   Text('Fecha de Validación: ${cita.fechaValidacion}'),
+                                  // ],
+                                  // if (cita.fechaInicio != null) ...[
+                                  //   const SizedBox(height: 5.0),
+                                  //   Text('Fecha de Inicio: ${cita.fechaInicio}'),
+                                  // ],
+                                  // if (cita.fechaFin != null) ...[
+                                  //   const SizedBox(height: 5.0),
+                                  //   Text('Fecha de Fin: ${cita.fechaFin}'),
+                                  // ],
+
                                   AppBox.h16,
-                                  const Icon(
-                                    Icons.circle,
-                                    color: AppColors.white,
-                                    size: 13,
-                                  ),
-                                  AppBox.h16,
-                                  const Icon(
-                                    Icons.circle,
-                                    color: AppColors.white,
-                                    size: 13,
-                                  ),
                                 ],
                               ),
                             ),
                           ),
-                        )
-                      ],
-                    ),
+                        ],
+                      ),
+                      Positioned(
+                        right: 0,
+                        top: 0,
+                        child: () {
+                          switch (stt.cita.estado) {
+                            case EstadoCita.pendiente:
+                              return _buildActionState(
+                                onTap: () {
+                                  nextCita(context, stt.cita);
+                                },
+                                builder: () {
+                                  return Row(
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: [
+                                      AppTextGlobal.labelLightText(text: "Confirmar", fontSize: 12),
+                                      AppBox.w2,
+                                      SvgPicture.asset(
+                                        AppConstSvgs.state_confirmado,
+                                        height: 15,
+                                        color: EstadoCita.confirmado.color,
+                                      )
+                                          .animate(
+                                            onPlay: (controller) => controller.loop(reverse: true),
+                                          )
+                                          .slide(
+                                            delay: 1.seconds,
+                                            duration: 0.8.seconds,
+                                            begin: const Offset(0, 0),
+                                            end: const Offset(0, -0.5),
+                                            curve: Curves.bounceIn,
+                                          ),
+                                    ],
+                                  );
+                                },
+                              );
+
+                            case EstadoCita.confirmado:
+                              return _buildActionState(
+                                onTap: () {
+                                  nextCita(context, stt.cita);
+                                },
+                                builder: () {
+                                  return Row(
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: [
+                                      AppTextGlobal.labelLightText(text: "Validar", fontSize: 12),
+                                      AppBox.w2,
+                                      const Icon(
+                                        Icons.warning,
+                                        color: AppColors.yellow,
+                                        size: 16,
+                                      )
+                                          .animate(
+                                            onPlay: (controller) => controller.loop(reverse: true),
+                                          )
+                                          .shake(delay: 2.5.seconds, duration: 0.5.seconds),
+                                    ],
+                                  );
+                                },
+                              );
+
+                            case EstadoCita.atendiendo:
+                              return _buildActionState(
+                                onTap: () {
+                                  nextCita(context, stt.cita);
+                                },
+                                builder: () {
+                                  return Row(
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: [
+                                      AppTextGlobal.labelLightText(text: "Finalizar", fontSize: 12),
+                                      AppBox.w2,
+                                      SvgPicture.asset(
+                                        AppConstSvgs.state_finalizado,
+                                        height: 15,
+                                        color: EstadoCita.finalizado.color,
+                                      )
+                                          .animate(
+                                            onPlay: (controller) => controller.loop(reverse: true),
+                                          )
+                                          .shake(delay: 2.5.seconds, duration: 0.5.seconds),
+                                    ],
+                                  );
+                                },
+                              );
+
+                            case EstadoCita.finalizado:
+                              return _buildActionState(
+                                onTap: () {
+                                  nextCita(context, stt.cita);
+                                },
+                                builder: () {
+                                  return Row(
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: [
+                                      AppTextGlobal.labelLightText(text: "Validar", fontSize: 12),
+                                      AppBox.w2,
+                                      SvgPicture.asset(
+                                        AppConstSvgs.state_validado,
+                                        height: 15,
+                                        color: EstadoCita.validado.color,
+                                      )
+                                          .animate(
+                                            onPlay: (controller) => controller.loop(reverse: true),
+                                          )
+                                          .shake(delay: 2.5.seconds, duration: 0.5.seconds),
+                                    ],
+                                  );
+                                },
+                              );
+                            case EstadoCita.validado:
+                              return _buildActionState(
+                                onTap: () {
+                                  // nextCita(context, stt.cita);
+                                },
+                                builder: () {
+                                  return Row(
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: [
+                                      // AppTextGlobal.labelLightText(text: "Concluido", fontSize: 12),
+                                      // AppBox.w2,
+                                      SvgPicture.asset(
+                                        AppConstSvgs.state_validado,
+                                        height: 15,
+                                        color: EstadoCita.validado.color,
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
+
+                            default:
+                              return ButtonCustomBase(
+                                backgroundColor: stt.cita.estado.color,
+                                textColor: AppColors.white,
+                                text: "default",
+                                onClick: () {
+                                  // nextCita(context, stt.cita);
+                                },
+                              );
+                          }
+                        }(),
+                      ),
+                      Positioned(
+                        left: -0,
+                        top: -15,
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 2.5),
+                          decoration: const BoxDecoration(
+                            borderRadius: BorderRadius.vertical(top: Radius.circular(10)),
+                            color: AppColors.white,
+                            border: Border(
+                              left: BorderSide(
+                                color: AppColors.slg01,
+                                width: 0.3,
+                              ),
+                              top: BorderSide(
+                                color: AppColors.slg01,
+                                width: 0.3,
+                              ),
+                              right: BorderSide(
+                                color: AppColors.slg01,
+                                width: 0.2999,
+                                // width: 1,
+                              ),
+                            ),
+                          ),
+                          child: Row(
+                            children: [
+                              const Icon(
+                                Icons.av_timer_rounded,
+                                color: AppColors.slg01,
+                              ),
+                              // AppTextGlobal.labelLightText(text: "Hora:"),
+                              AppBox.w2,
+                              AppTextGlobal.labelLightText(text: stt.cita.fechaHoraCita.toFormatHHmm()),
+                            ],
+                          ),
+                        ),
+                      ),
+                      // *tipó
+                      Positioned(
+                        bottom: 2,
+                        right: 2,
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2.5),
+                          decoration: const BoxDecoration(
+                            // borderRadius: BorderRadius.vertical(top: Radius.circular(10)),
+                            color: AppColors.white,
+                          ),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              // AppTextGlobal.labelLightText(text: "Tipo:"),
+                              // AppBox.w4,
+                              AppTextGlobal.lightText(
+                                text: stt.cita.tipoString,
+                                fontSize: 12,
+                                colorText: AppColors.grey,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      // *celular
+                      Positioned(
+                        bottom: 0,
+                        left: sizeButtonLeft + 10,
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2.5),
+                          decoration: const BoxDecoration(
+                            // borderRadius: BorderRadius.vertical(top: Radius.circular(10)),
+                            color: AppColors.white,
+                          ),
+                          child: Row(
+                            children: [
+                              if (stt.cita.celular != null) ...[
+                                const Icon(
+                                  Icons.phone,
+                                  color: AppColors.grey,
+                                  size: 14,
+                                ),
+                                AppBox.w4,
+                                AppTextGlobal.lightText(
+                                  text: stt.cita.celular!,
+                                  fontSize: 12,
+                                  colorText: AppColors.grey,
+                                ),
+                              ] else ...[
+                                Transform.rotate(
+                                  angle: 3.1416 * 0.5,
+                                  child: const Icon(
+                                    Icons.phone_disabled_sharp,
+                                    color: AppColors.lightGray,
+                                    size: 16,
+                                  ),
+                                ),
+                                AppBox.w4,
+                                AppTextGlobal.lightText(
+                                  text: "Sin registrar",
+                                  fontSize: 14,
+                                  colorText: AppColors.lightGray,
+                                ),
+                              ]
+                            ],
+                          ),
+                        ),
+                      ),
+                      Positioned(
+                        bottom: 0,
+                        left: 0,
+                        top: 17.5,
+                        child: GestureDetector(
+                          onTap: () {
+                            AppBottomModal.showBottomModal(
+                              context,
+                              header: Column(
+                                children: [
+                                  AppBox.h10,
+                                  if (cita.datosPaciente != null)
+                                    Row(
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Expanded(child: Center(child: AppTextGlobal.lightText(text: stt.cita.datosPaciente!.toUpperCase()))),
+                                      ],
+                                    ),
+                                  if (cita.pacienteDatos != null)
+                                    Row(
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Expanded(child: Center(child: AppTextGlobal.lightText(text: stt.cita.pacienteDatos!.toUpperCase()))),
+                                      ],
+                                    ),
+                                  AppBox.h10,
+                                  Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      // AppTextGlobal.labelLightText(text: "Estado:"),
+                                      Container(
+                                        alignment: Alignment.center,
+                                        width: 110,
+                                        padding: const EdgeInsets.symmetric(
+                                          vertical: 2.5,
+                                          horizontal: 5,
+                                        ),
+                                        decoration: BoxDecoration(
+                                          color: stt.cita.estado.color,
+                                          borderRadius: const BorderRadius.all(
+                                            Radius.circular(
+                                              10,
+                                            ),
+                                          ),
+                                        ),
+                                        child: AppTextGlobal.labelLightText(
+                                          text: stt.cita.estadoString,
+                                          colorText: AppColors.white,
+                                          fontSize: 14,
+                                        ).animate().flip(),
+                                      ),
+                                      Row(
+                                        children: [
+                                          const Icon(
+                                            Icons.av_timer_rounded,
+                                            color: AppColors.slg01,
+                                          ),
+                                          // AppTextGlobal.labelLightText(text: "Hora:"),
+                                          AppBox.w2,
+                                          AppTextGlobal.labelLightText(text: stt.cita.fechaHoraCita.toFormatHHmm()),
+                                        ],
+                                      )
+                                    ],
+                                  ),
+                                ],
+                              ),
+                              body: CustomScrollView(
+                                slivers: [
+                                  _buildOptionsBottomModal(
+                                    onTap: () {
+                                      Navigator.pop(context);
+                                      Navigator.pushNamed(
+                                        context,
+                                        Routes.base_asistenteRecepcion + Routes.cita_update,
+                                      );
+                                      context.read<CitaUpdateBloc>().add(CitaUpdateEvent.citaGetById(stt.cita.id));
+                                    },
+                                    text: "MODIFICAR",
+                                  ),
+                                  if (stt.cita.estado != EstadoCita.cancelado)
+                                    _buildOptionsBottomModal(
+                                      onTap: () {
+                                        dialogCubit.showCustomAlert(
+                                          titulo: "CANCELAR",
+                                          texto: "SIN IMPLEMENTAR",
+                                          icon: Icons.cancel,
+                                          colorBackground: AppColors.red,
+                                        );
+                                      },
+                                      text: "CANCELAR",
+                                    ),
+                                  if (stt.cita.celular != null)
+                                    _buildOptionsBottomModal(
+                                      onTap: () {
+                                        dialogCubit.showCustomAlert(
+                                          titulo: "Llamar",
+                                          texto: "Seguro que quiere llamar a ${stt.cita.datosPaciente ?? (stt.cita.pacienteDatos ?? "No tiene nombre")}",
+                                          icon: Icons.phone,
+                                          colorBackground: AppColors.blueSunat,
+                                          onAceptar: () {
+                                            FlutterPhoneDirectCaller.callNumber(stt.cita.celular!);
+                                          },
+                                        );
+                                      },
+                                      text: "LLAMAR",
+                                    ),
+                                ],
+                              ),
+                            );
+                          },
+                          child: Container(
+                            decoration: const BoxDecoration(
+                              color: AppColors.slg01,
+                              borderRadius: BorderRadius.only(
+                                bottomRight: Radius.circular(10.0),
+                                topRight: Radius.circular(10.0),
+                              ),
+                            ),
+                            width: sizeButtonLeft,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Icon(
+                                  Icons.circle,
+                                  color: AppColors.white,
+                                  size: 13,
+                                ),
+                                AppBox.h16,
+                                const Icon(
+                                  Icons.circle,
+                                  color: AppColors.white,
+                                  size: 13,
+                                ),
+                                AppBox.h16,
+                                const Icon(
+                                  Icons.circle,
+                                  color: AppColors.white,
+                                  size: 13,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      )
+                    ],
                   );
                 },
                 failure: (stt) {
