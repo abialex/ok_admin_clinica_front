@@ -23,7 +23,12 @@ class CitaHoraBloc extends Bloc<CitaHoraEvent, CitaHoraState> {
     final existsCitaOcupada = citaList.any((element) => element.tipo == TipoCita.ocupada);
     emit(LoadingState());
     if (existsCitaOcupada) {
-      emit(CitaHoraState.citaBloqueada(citaList[0].id));
+      emit(
+        CitaHoraState.citaBloqueada(
+          citaList[0].id,
+          citaList[0].razonOcupado,
+        ),
+      );
     } else {
       emit(CitaHoraState.citaLibre(citaList));
     }
@@ -31,45 +36,21 @@ class CitaHoraBloc extends Bloc<CitaHoraEvent, CitaHoraState> {
 
   Future<void> blockCita(BlockCitaEvent event, Emitter<CitaHoraState> emit) async {
     emit(LoadingState());
-    await Future.delayed(const Duration(seconds: 1));
-    // final cita = event.citaViewModel;
-
-    // final result = await citaService.nextPaso(event.tipoAccion, cita.id);
-    // if (result.isRight) {
-    //   add(CitaHoraEvent.releaseCita(cita.id));
-    // } else {
-    //   emit(Failure(result.left));
-    // }
+    //*create cita ocupada
+    final result = await citaService.citaOcupadaCreate(event.citaOcupadaCreateViewModel);
+    if (result.isRight) {
+      emit(CitaHoraState.citaBloqueada(
+        result.right,
+        event.citaOcupadaCreateViewModel.razonOcupado,
+      ));
+    } else {
+      emit(CitaHoraState.failure(result.left));
+    }
   }
 
   Future<void> releaseCita(ReleaseCitaEvent event, Emitter<CitaHoraState> emit) async {
     emit(LoadingState());
-    // final result = await citaService.getCitaById(event.citaId);
-    // if (result.isRight) {
-    //   final citasViewModel = result.right;
-    //   emit(
-    //     CitaLibreLoadedState(
-    //       CitasViewModel(
-    //         id: citasViewModel.id,
-    //         fechaHoraCita: citasViewModel.fechaHoraCita,
-    //         estado: citasViewModel.estado,
-    //         tipo: citasViewModel.tipo,
-    //         estadoString: citasViewModel.estadoString,
-    //         tipoString: citasViewModel.tipoString,
-    //         celular: citasViewModel.celular,
-    //         datosPaciente: citasViewModel.datosPaciente,
-    //         fechaConfirmacion: citasViewModel.fechaConfirmacion,
-    //         fechaFin: citasViewModel.fechaFin,
-    //         fechaInicio: citasViewModel.fechaInicio,
-    //         fechaValidacion: citasViewModel.fechaValidacion,
-    //         pacienteDatos: citasViewModel.pacienteDatos,
-    //         razon: citasViewModel.razon,
-    //         razonOcupado: citasViewModel.razonOcupado,
-    //       ),
-    //     ),
-    //   );
-    // } else {
-    //   emit(Failure(result.left));
-    // }
+    await Future.delayed(const Duration(seconds: 1));
+    emit(CitaHoraState.citaLibre([]));
   }
 }

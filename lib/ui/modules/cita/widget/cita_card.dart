@@ -17,6 +17,7 @@ import 'package:admin_clinica_front/ui/modules/cita/bloc/cita_update_bloc/cita_u
 import 'package:admin_clinica_front/ui/modules/cita/bloc/cita_update_bloc/cita_update_event.dart';
 import 'package:admin_clinica_front/ui/view_models/cita_view/cita_view_models.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
@@ -719,14 +720,14 @@ class CitasCard extends StatelessWidget {
 class CitasGroupedByHour extends StatelessWidget {
   final List<CitasViewModel> citas;
   final Function(int, String)? onAdd;
-  final Function(int, String)? onBlock;
+  final CitaOcupadaCreateViewModel Function(int) onBlock;
   final Function(int)? onRelease;
 
   const CitasGroupedByHour({
     super.key,
     required this.citas,
     this.onAdd,
-    this.onBlock,
+    required this.onBlock,
     this.onRelease,
   });
 
@@ -745,122 +746,195 @@ class CitasGroupedByHour extends StatelessWidget {
           create: (context) => CitaHoraBloc(),
           child: BlocBuilder<CitaHoraBloc, CitaHoraState>(
             builder: (context, state) {
-              return state.map(
-                initial: (stt) {
-                  context.read<CitaHoraBloc>().add(CitaHoraEvent.initial(hora.listItems));
-                  return const SizedBox.shrink();
-                },
-                loading: (stt) {
-                  return const SizedBox.shrink();
-                },
-                citaBloqueada: (stt) {
-                  return Container(
-                    decoration: const BoxDecoration(
-                      color: AppColors.redSunat,
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(10),
-                      ),
-                    ),
-                    margin: const EdgeInsets.symmetric(
-                      vertical: 5,
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              AppTextGlobal.labelMediumText(text: hora.horaString2, colorText: AppColors.white),
-                              GestureDetector(
-                                onTap: () {
-                                  onRelease?.call(stt.citaId);
-                                },
-                                child: const Icon(
-                                  Icons.lock_open_sharp,
-                                  color: AppColors.white,
-                                ),
-                              )
-                            ],
-                          ),
+              return AnimatedSwitcher(
+                duration: 0.5.seconds,
+                child: state.map(
+                  initial: (stt) {
+                    context.read<CitaHoraBloc>().add(CitaHoraEvent.initial(hora.listItems));
+                    return const SizedBox.shrink();
+                  },
+                  loading: (stt) {
+                    return Container(
+                      decoration: const BoxDecoration(
+                        color: AppColors.lightBackgroundColor,
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(10),
                         ),
-                        // Column(
-                        //   crossAxisAlignment: CrossAxisAlignment.stretch,
-                        //   children: hora.listItems.map((cita) => CitasCard(cita: cita)).toList(),
-                        // ),
-                      ],
-                    ),
-                  );
-                },
-                citaLibre: (stt) {
-                  return Container(
-                    decoration: const BoxDecoration(
-                      color: AppColors.lightBackgroundColor,
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(10),
                       ),
-                    ),
-                    margin: const EdgeInsets.symmetric(
-                      vertical: 5,
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                hora.horaString2,
-                                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0),
-                              ),
-                              AppTextGlobal.labelLightText(text: hora.listItems.length.toString(), colorText: AppColors.lightGray),
-                              Row(
-                                children: [
-                                  Visibility(
-                                    visible: hora.listItems.isEmpty,
-                                    child: GestureDetector(
+                      margin: const EdgeInsets.symmetric(
+                        vertical: 5,
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            AppTextGlobal.labelMediumText(text: hora.horaString2, colorText: AppColors.slg01),
+                            SvgPicture.asset(
+                              AppConstSvgs.logo,
+                              height: 25,
+                              color: AppColors.slgPrincipal,
+                            )
+                                .animate(
+                                  onPlay: (controller) => controller.loop(),
+                                )
+                                .rotate(
+                                  duration: 1.25.seconds,
+                                ),
+                            const SizedBox.shrink()
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                  citaBloqueada: (stt) {
+                    return Container(
+                      key: UniqueKey(),
+                      decoration: const BoxDecoration(
+                        color: AppColors.redSunat,
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(10),
+                        ),
+                      ),
+                      margin: const EdgeInsets.symmetric(
+                        vertical: 5,
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                AppTextGlobal.labelMediumText(text: hora.horaString2, colorText: AppColors.white),
+                                AppBox.w8,
+                                Expanded(
+                                  child: stt.razonOcupado != null
+                                      ? AppTextGlobal.labelLightText(
+                                          text: stt.razonOcupado!,
+                                          colorText: AppColors.white,
+                                          textAlign: TextAlign.center,
+                                          fontSize: 11,
+                                          maxLines: 2,
+                                        )
+                                      : AppTextGlobal.labelLightText(
+                                          text: stt.razonOcupado ?? "OCUPADO",
+                                          colorText: AppColors.white,
+                                          textAlign: TextAlign.center,
+                                        ),
+                                ),
+                                AppBox.w8,
+                                GestureDetector(
+                                  onTap: () {
+                                    context.read<CitaHoraBloc>().add(CitaHoraEvent.releaseCita(stt.citaId));
+                                    onRelease?.call(stt.citaId);
+                                  },
+                                  child: const Icon(
+                                    Icons.lock_open_sharp,
+                                    color: AppColors.white,
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                          // Column(
+                          //   crossAxisAlignment: CrossAxisAlignment.stretch,
+                          //   children: hora.listItems.map((cita) => CitasCard(cita: cita)).toList(),
+                          // ),
+                        ],
+                      ),
+                    );
+                  },
+                  citaLibre: (stt) {
+                    return Container(
+                      key: UniqueKey(),
+                      decoration: const BoxDecoration(
+                        color: AppColors.lightBackgroundColor,
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(10),
+                        ),
+                      ),
+                      margin: const EdgeInsets.symmetric(
+                        vertical: 5,
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                AppTextGlobal.labelMediumText(text: hora.horaString2, colorText: AppColors.slg01),
+                                AppTextGlobal.labelLightText(text: hora.listItems.length.toString(), colorText: AppColors.lightGray),
+                                Row(
+                                  children: [
+                                    Visibility(
+                                      visible: hora.listItems.isEmpty,
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          context.read<CitaHoraBloc>().add(CitaHoraEvent.blockCita(onBlock(hora.hora)));
+                                        },
+                                        child: const CircleAvatar(
+                                          minRadius: 2.5,
+                                          backgroundColor: AppColors.redSunat,
+                                          foregroundColor: AppColors.white,
+                                          child: Icon(Icons.block),
+                                        ),
+                                      ),
+                                    ),
+                                    AppBox.w8,
+                                    GestureDetector(
                                       onTap: () {
-                                        onBlock?.call(hora.hora, hora.horaString);
+                                        onAdd?.call(hora.hora, hora.horaString);
                                       },
                                       child: const CircleAvatar(
                                         minRadius: 2.5,
-                                        backgroundColor: AppColors.redSunat,
+                                        backgroundColor: AppColors.slg01,
                                         foregroundColor: AppColors.white,
-                                        child: Icon(Icons.block),
+                                        child: Icon(Icons.add),
                                       ),
-                                    ),
-                                  ),
-                                  AppBox.w8,
-                                  GestureDetector(
-                                    onTap: () {
-                                      onAdd?.call(hora.hora, hora.horaString);
-                                    },
-                                    child: const CircleAvatar(
-                                      minRadius: 2.5,
-                                      backgroundColor: AppColors.slg01,
-                                      foregroundColor: AppColors.white,
-                                      child: Icon(Icons.add),
-                                    ),
-                                  )
-                                ],
-                              )
-                            ],
+                                    )
+                                  ],
+                                )
+                              ],
+                            ),
                           ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: hora.listItems.map((cita) => CitasCard(cita: cita)).toList(),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                  failure: (stt) {
+                    return Container(
+                      key: UniqueKey(),
+                      decoration: const BoxDecoration(
+                        color: AppColors.lightBackgroundColor,
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(10),
                         ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: hora.listItems.map((cita) => CitasCard(cita: cita)).toList(),
+                      ),
+                      margin: const EdgeInsets.symmetric(
+                        vertical: 5,
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            AppTextGlobal.labelMediumText(text: hora.horaString2, colorText: AppColors.slg01),
+                            AppTextGlobal.errorlightText(text: stt.error),
+                            const SizedBox.shrink(),
+                          ],
                         ),
-                      ],
-                    ),
-                  );
-                },
-                failure: (stt) {
-                  return const SizedBox.shrink();
-                },
+                      ),
+                    );
+                  },
+                ),
               );
             },
           ),

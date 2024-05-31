@@ -5,7 +5,7 @@ class CitaViewModel {
   final int id;
   final String doctor;
   final int doctorId;
-  final int ubicacionId;
+  final int? ubicacionId;
   final String estadoString;
   final String tipoString;
   final DateTime fechaHoraCita;
@@ -26,7 +26,7 @@ class CitaViewModel {
     required this.id,
     required this.doctor,
     required this.doctorId,
-    required this.ubicacionId,
+    this.ubicacionId,
     required this.estadoString,
     required this.tipoString,
     required this.fechaHoraCita,
@@ -153,28 +153,24 @@ class CitaFilterViewModel {
 
 class CitaOcupadaCreateViewModel {
   final int doctorId;
-  final int ubicacionId;
-  final String fechaHoraCita;
-  final String razonOcupado;
+  final DateTime fechaHoraCita;
+  final String? razonOcupado;
 
   CitaOcupadaCreateViewModel({
     required this.doctorId,
-    required this.ubicacionId,
     required this.fechaHoraCita,
-    required this.razonOcupado,
+    this.razonOcupado,
   });
 }
 
 class CitaOcupadaUpdateViewModel {
   final int id;
   final int doctorId;
-  final int ubicacionId;
   final DateTime fechaHoraCita;
   final String razonOcupado;
   CitaOcupadaUpdateViewModel({
     required this.id,
     required this.doctorId,
-    required this.ubicacionId,
     required this.fechaHoraCita,
     required this.razonOcupado,
   });

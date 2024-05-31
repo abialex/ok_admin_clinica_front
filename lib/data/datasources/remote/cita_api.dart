@@ -1,6 +1,7 @@
 import 'package:admin_clinica_front/data/models/api_model/api_model.dart';
 import 'package:admin_clinica_front/data/models/cita/cita_agil/cita_agil_create.dart';
 import 'package:admin_clinica_front/data/models/cita/cita_agil/cita_agil_update.dart';
+import 'package:admin_clinica_front/data/models/cita/cita_ocupada/cita_ocupada_create.dart';
 import 'package:admin_clinica_front/data/models/cita/citas_dto.dart';
 import 'package:dio/dio.dart';
 import 'package:either_dart/either.dart';
@@ -20,8 +21,7 @@ class CitaApi {
 
   Future<Either<String, List<CitasDTO>>> getCitaAll() async {
     final response = await _dio.get<ApiModel>("citas/cita/");
-    return ApiUtils.reponseHandler(response,
-        (data) => (data as List).map((e) => CitasDTO.fromJson(e)).toList());
+    return ApiUtils.reponseHandler(response, (data) => (data as List).map((e) => CitasDTO.fromJson(e)).toList());
   }
 
   Future<Either<String, bool>> deleteCitaById(int id) async {
@@ -61,30 +61,25 @@ class CitaApi {
     return ApiUtils.reponseHandler(response, (data) => (data as bool));
   }
 
-  Future<Either<String, List<CitasDTO>>> getCitasByFechaIdDoctorIdUbicacion(
-      CitaRequest citaRequest) async {
+  Future<Either<String, List<CitasDTO>>> getCitasByFechaIdDoctorIdUbicacion(CitaRequest citaRequest) async {
     final response = await _dio.post<ApiModel>(
       "citas/citas-by-fecha-iddoctor-idubicacion",
       data: citaRequest.toJson(),
     );
-    return ApiUtils.reponseHandler(response,
-        (data) => (data as List).map((e) => CitasDTO.fromJson(e)).toList());
+    return ApiUtils.reponseHandler(response, (data) => (data as List).map((e) => CitasDTO.fromJson(e)).toList());
   }
 
-  Future<Either<String, List<CitasDTO>>> getCitasFilterByIdDoctorParams(
-      dynamic params) async {
+  Future<Either<String, List<CitasDTO>>> getCitasFilterByIdDoctorParams(dynamic params) async {
     params = params.isEmpty ? null : params;
 
     final response = await _dio.get<ApiModel>(
       "citas/citas-list-filter-by-iddoctor/",
       queryParameters: params,
     );
-    return ApiUtils.reponseHandler(response,
-        (data) => (data as List).map((e) => CitasDTO.fromJson(e)).toList());
+    return ApiUtils.reponseHandler(response, (data) => (data as List).map((e) => CitasDTO.fromJson(e)).toList());
   }
 
-  Future<Either<String, int>> createCitaAgil(
-      CitaAgilCreateModel citaCreate) async {
+  Future<Either<String, int>> createCitaAgil(CitaAgilCreateModel citaCreate) async {
     final response = await _dio.post<ApiModel>(
       "citas/cita_agil_create",
       data: citaCreate.toJson(),
@@ -92,11 +87,18 @@ class CitaApi {
     return ApiUtils.reponseHandler(response, (data) => (data as int));
   }
 
-  Future<Either<String, int>> updateCitaAgil(
-      CitaAgilUpdateModel citaUpdate) async {
+  Future<Either<String, int>> updateCitaAgil(CitaAgilUpdateModel citaUpdate) async {
     final response = await _dio.post<ApiModel>(
       "citas/cita_agil_update",
       data: citaUpdate.toJson(),
+    );
+    return ApiUtils.reponseHandler(response, (data) => (data as int));
+  }
+
+  Future<Either<String, int>> createCitaOcupado(CitaOcupadaCreateModel citaCreate) async {
+    final response = await _dio.post<ApiModel>(
+      "citas/cita_ocupado_create",
+      data: citaCreate.toJson(),
     );
     return ApiUtils.reponseHandler(response, (data) => (data as int));
   }
