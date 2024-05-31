@@ -4,7 +4,7 @@ import 'package:dio/dio.dart';
 class ApiClient {
   Dio createDioLocal() {
     var dio = Dio();
-    dio.options.baseUrl = 'http://192.168.65.2:8000/';
+    dio.options.baseUrl = 'http://192.168.100.192:8000/';
     dio.interceptors.add(AppInterceptor());
     dio.options.connectTimeout = const Duration(seconds: 5); // 5 seconds
     dio.interceptors.add(LogInterceptor(responseBody: true)); //para visualizar
