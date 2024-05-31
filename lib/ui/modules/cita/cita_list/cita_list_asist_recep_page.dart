@@ -3,7 +3,6 @@ import 'package:admin_clinica_front/ui/blocs/usuario_session/bloc/usuario_bloc.d
 import 'package:admin_clinica_front/ui/global_widget/app_box.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_loader.dart';
 import 'package:admin_clinica_front/ui/global_widget/date/app_date_picker_cupertino.dart';
-import 'package:admin_clinica_front/ui/global_widget/dialog/dialog_message/cubit/dialog_message_cubit.dart';
 import 'package:admin_clinica_front/ui/global_widget/page/mobile/app_header_mobile.dart';
 import 'package:admin_clinica_front/ui/global_widget/page/page_base_desktop.dart';
 import 'package:admin_clinica_front/ui/global_widget/page/page_base_phone.dart';
@@ -64,7 +63,7 @@ class CitaListAsistenteRecepcionPage extends StatelessWidget with ResponsiveWidg
     final doctorBloc = context.read<DoctorListBloc>();
     final usuarioBloc = context.read<UsuarioBloc>();
     final loaderCubit = context.read<LoaderCubit>();
-    final dialogCubit = context.read<DialogMessageCubit>();
+    // final dialogCubit = context.read<DialogMessageCubit>();
 
     return PageBasePhone(
       onReachedTop: () {
@@ -180,12 +179,17 @@ class CitaListAsistenteRecepcionPage extends StatelessWidget with ResponsiveWidg
                   Routes.base_asistenteRecepcion + Routes.cita_add,
                 );
               },
-              onBlock: (hora, horaString) {
-                dialogCubit.showErrorAlert(texto: "sin implementar");
+              onBlock: (hora) {
+                return CitaOcupadaCreateViewModel(doctorId: doctorSelected!.id, fechaHoraCita: dateSelected.copyWith(hour: hora));
+              },
+              onRelease: (citaId) {
+                // dialogCubit.showErrorAlert(texto: "sin implementar $citaId");
               },
             );
           },
           failure: (state) {
+            loaderCubit.hidden();
+
             return Text(state.error);
           },
         ),

@@ -119,7 +119,7 @@ class _CitaUpdateFormAgilState extends State<CitaUpdateFormAgil> {
                                 id: widget.cita.id,
                                 estado: widget.cita.estado,
                                 doctorId: widget.cita.doctorId,
-                                ubicacionId: widget.cita.ubicacionId,
+                                ubicacionId: widget.cita.ubicacionId!,
                                 fechaHoraCita: widget.cita.fechaHoraCita.copyWith(
                                   minute: int.parse(_minutoController.text),
                                   second: 0,

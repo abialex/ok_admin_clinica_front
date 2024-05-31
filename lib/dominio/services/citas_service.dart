@@ -1,4 +1,5 @@
 import 'package:admin_clinica_front/core/extensions/date_time_extensions.dart';
+import 'package:admin_clinica_front/data/models/cita/cita_ocupada/cita_ocupada_create.dart';
 import 'package:admin_clinica_front/data/models/request/request_model.dart';
 import 'package:admin_clinica_front/dominio/entities/estado_cita.dart';
 import 'package:admin_clinica_front/dominio/entities/tipo_cita.dart';
@@ -176,11 +177,13 @@ class CitasService {
         return _citaRepository.validarCita(idcita);
       case TipoAccionEnum.cancelar:
         return const Left("falta cancelar en la App");
-      case TipoAccionEnum.eliminar:
-        return _citaRepository.deleteCitaById(idcita);
       default:
         return const Left("tipo no definido en la App");
     }
+  }
+
+  Future<Either<String, bool>> deleteCitaById(int idcita) async {
+    return await _citaRepository.deleteCitaById(idcita);
   }
 
   Future<Either<String, CitaViewModel>> getCitaById(int citaId) async {
@@ -213,6 +216,15 @@ class CitasService {
     } catch (e) {
       return const Left("Error inesperado");
     }
+  }
+
+  Future<Either<String, int>> citaOcupadaCreate(CitaOcupadaCreateViewModel view) async {
+    CitaOcupadaCreateModel model = CitaOcupadaCreateModel(
+      doctor_id: view.doctorId,
+      fechaHoraCita: view.fechaHoraCita.toFormatyyyyMMddHHmmss(),
+      razonOcupado: view.razonOcupado,
+    );
+    return await _citaRepository.createCitaOcupada(model);
   }
 }
 

@@ -1,6 +1,7 @@
 import 'package:admin_clinica_front/data/models/cita/cita_agil/cita_agil_create.dart';
 import 'package:admin_clinica_front/data/models/cita/cita_agil/cita_agil_update.dart';
 import 'package:admin_clinica_front/data/models/cita/cita_dto.dart';
+import 'package:admin_clinica_front/data/models/cita/cita_ocupada/cita_ocupada_create.dart';
 import 'package:admin_clinica_front/data/models/cita/citas_dto.dart';
 import 'package:admin_clinica_front/data/models/request/request_model.dart';
 import 'package:admin_clinica_front/dominio/repositories/icita_repository.dart';
@@ -43,14 +44,12 @@ class CitaRepository implements ICitaRepository {
   }
 
   @override
-  Future<Either<String, List<CitasDTO>>> getCitasByFechaIdDoctorIdUbicacion(
-      CitaRequest citaRequest) {
+  Future<Either<String, List<CitasDTO>>> getCitasByFechaIdDoctorIdUbicacion(CitaRequest citaRequest) {
     return api.getCitasByFechaIdDoctorIdUbicacion(citaRequest);
   }
 
   @override
-  Future<Either<String, List<CitasDTO>>> getCitasFilterByIdDoctorParams(
-      params) {
+  Future<Either<String, List<CitasDTO>>> getCitasFilterByIdDoctorParams(params) {
     return api.getCitasFilterByIdDoctorParams(params);
   }
 
@@ -67,5 +66,10 @@ class CitaRepository implements ICitaRepository {
   @override
   Future<Either<String, bool>> validarCita(int id) {
     return api.validarCita(id);
+  }
+
+  @override
+  Future<Either<String, int>> createCitaOcupada(CitaOcupadaCreateModel citaCreate) {
+    return api.createCitaOcupado(citaCreate);
   }
 }

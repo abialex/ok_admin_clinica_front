@@ -1,5 +1,6 @@
 import 'package:admin_clinica_front/core/utils/app_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 class _BaseText {
   static Text lightText({
@@ -9,6 +10,7 @@ class _BaseText {
     FontWeight? fontWeight,
     TextAlign? textAlign,
     int? maxLines,
+    TextOverflow? textOverflow,
   }) {
     return Text(
       text,
@@ -20,7 +22,7 @@ class _BaseText {
         color: color,
         fontWeight: fontWeight,
       ),
-      overflow: TextOverflow.ellipsis,
+      overflow: textOverflow ?? TextOverflow.ellipsis,
     );
   }
 
@@ -87,6 +89,8 @@ class AppTextGlobal {
     double? fontSize,
     Color colorText = AppColors.dark,
     TextAlign? textAlign,
+    TextOverflow textOverflow = TextOverflow.ellipsis,
+    int maxLines = 1,
   }) =>
       _BaseText.lightText(
         text: text,
@@ -94,6 +98,8 @@ class AppTextGlobal {
         color: colorText,
         fontSize: fontSize,
         textAlign: textAlign,
+        textOverflow: textOverflow,
+        maxLines: maxLines,
       );
 
   static Text labelSmallText({required String text, FontWeight fontWeight = FontWeight.bold, Color colorText = AppColors.blueSecondary}) => _BaseText.lightText(
