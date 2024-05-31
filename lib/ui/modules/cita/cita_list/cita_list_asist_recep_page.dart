@@ -183,6 +183,9 @@ class CitaListAsistenteRecepcionPage extends StatelessWidget with ResponsiveWidg
               onBlock: (hora, horaString) {
                 dialogCubit.showErrorAlert(texto: "sin implementar");
               },
+              onRelease: (citaId) {
+                dialogCubit.showErrorAlert(texto: "sin implementar $citaId");
+              },
             );
           },
           failure: (state) {

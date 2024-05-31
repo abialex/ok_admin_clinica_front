@@ -11,6 +11,7 @@ import 'package:admin_clinica_front/ui/global_widget/button_base/button_base.dar
 import 'package:admin_clinica_front/ui/global_widget/button_base/button_success.dart';
 import 'package:admin_clinica_front/ui/global_widget/dialog/dialog_message/cubit/dialog_message_cubit.dart';
 import 'package:admin_clinica_front/ui/global_widget/modal/bottomModal/app_bottom_modal.dart';
+import 'package:admin_clinica_front/ui/modules/cita/bloc/cita_hora_bloc/cita_hora_bloc.dart';
 import 'package:admin_clinica_front/ui/modules/cita/bloc/cita_index_bloc/cita_index_bloc.dart';
 import 'package:admin_clinica_front/ui/modules/cita/bloc/cita_update_bloc/cita_update_bloc.dart';
 import 'package:admin_clinica_front/ui/modules/cita/bloc/cita_update_bloc/cita_update_event.dart';
@@ -329,6 +330,7 @@ class CitasCard extends StatelessWidget {
                           }
                         }(),
                       ),
+                      // *hora
                       Positioned(
                         left: -0,
                         top: -15,
@@ -718,12 +720,14 @@ class CitasGroupedByHour extends StatelessWidget {
   final List<CitasViewModel> citas;
   final Function(int, String)? onAdd;
   final Function(int, String)? onBlock;
+  final Function(int)? onRelease;
 
   const CitasGroupedByHour({
     super.key,
     required this.citas,
     this.onAdd,
     this.onBlock,
+    this.onRelease,
   });
 
   @override
@@ -737,67 +741,128 @@ class CitasGroupedByHour extends StatelessWidget {
       physics: const NeverScrollableScrollPhysics(),
       shrinkWrap: true,
       children: CitaConfig.horaList.map((hora) {
-        return Container(
-          decoration: const BoxDecoration(
-            color: AppColors.lightBackgroundColor,
-            borderRadius: BorderRadius.all(
-              Radius.circular(10),
-            ),
-          ),
-          margin: const EdgeInsets.symmetric(
-            vertical: 5,
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      hora.horaString2,
-                      style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0),
+        return BlocProvider(
+          create: (context) => CitaHoraBloc(),
+          child: BlocBuilder<CitaHoraBloc, CitaHoraState>(
+            builder: (context, state) {
+              return state.map(
+                initial: (stt) {
+                  context.read<CitaHoraBloc>().add(CitaHoraEvent.initial(hora.listItems));
+                  return const SizedBox.shrink();
+                },
+                loading: (stt) {
+                  return const SizedBox.shrink();
+                },
+                citaBloqueada: (stt) {
+                  return Container(
+                    decoration: const BoxDecoration(
+                      color: AppColors.redSunat,
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(10),
+                      ),
                     ),
-                    // AppTextGlobal.labelLightText(text: hora.listItems.length.toString(), colorText: AppColors.lightGray),
-                    Row(
+                    margin: const EdgeInsets.symmetric(
+                      vertical: 5,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Visibility(
-                          visible: hora.listItems.isEmpty,
-                          child: GestureDetector(
-                            onTap: () {
-                              onBlock?.call(hora.hora, hora.horaString);
-                            },
-                            child: const CircleAvatar(
-                              minRadius: 2.5,
-                              backgroundColor: AppColors.redSunat,
-                              foregroundColor: AppColors.white,
-                              child: Icon(Icons.block),
-                            ),
+                        Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              AppTextGlobal.labelMediumText(text: hora.horaString2, colorText: AppColors.white),
+                              GestureDetector(
+                                onTap: () {
+                                  onRelease?.call(stt.citaId);
+                                },
+                                child: const Icon(
+                                  Icons.lock_open_sharp,
+                                  color: AppColors.white,
+                                ),
+                              )
+                            ],
                           ),
                         ),
-                        AppBox.w8,
-                        GestureDetector(
-                          onTap: () {
-                            onAdd?.call(hora.hora, hora.horaString);
-                          },
-                          child: const CircleAvatar(
-                            minRadius: 2.5,
-                            backgroundColor: AppColors.slg01,
-                            foregroundColor: AppColors.white,
-                            child: Icon(Icons.add),
-                          ),
-                        )
+                        // Column(
+                        //   crossAxisAlignment: CrossAxisAlignment.stretch,
+                        //   children: hora.listItems.map((cita) => CitasCard(cita: cita)).toList(),
+                        // ),
                       ],
-                    )
-                  ],
-                ),
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: hora.listItems.map((cita) => CitasCard(cita: cita)).toList(),
-              ),
-            ],
+                    ),
+                  );
+                },
+                citaLibre: (stt) {
+                  return Container(
+                    decoration: const BoxDecoration(
+                      color: AppColors.lightBackgroundColor,
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(10),
+                      ),
+                    ),
+                    margin: const EdgeInsets.symmetric(
+                      vertical: 5,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                hora.horaString2,
+                                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0),
+                              ),
+                              AppTextGlobal.labelLightText(text: hora.listItems.length.toString(), colorText: AppColors.lightGray),
+                              Row(
+                                children: [
+                                  Visibility(
+                                    visible: hora.listItems.isEmpty,
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        onBlock?.call(hora.hora, hora.horaString);
+                                      },
+                                      child: const CircleAvatar(
+                                        minRadius: 2.5,
+                                        backgroundColor: AppColors.redSunat,
+                                        foregroundColor: AppColors.white,
+                                        child: Icon(Icons.block),
+                                      ),
+                                    ),
+                                  ),
+                                  AppBox.w8,
+                                  GestureDetector(
+                                    onTap: () {
+                                      onAdd?.call(hora.hora, hora.horaString);
+                                    },
+                                    child: const CircleAvatar(
+                                      minRadius: 2.5,
+                                      backgroundColor: AppColors.slg01,
+                                      foregroundColor: AppColors.white,
+                                      child: Icon(Icons.add),
+                                    ),
+                                  )
+                                ],
+                              )
+                            ],
+                          ),
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: hora.listItems.map((cita) => CitasCard(cita: cita)).toList(),
+                        ),
+                      ],
+                    ),
+                  );
+                },
+                failure: (stt) {
+                  return const SizedBox.shrink();
+                },
+              );
+            },
           ),
         );
       }).toList(),
