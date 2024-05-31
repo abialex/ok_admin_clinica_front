@@ -17,7 +17,6 @@ import 'package:admin_clinica_front/ui/modules/cita/bloc/cita_update_bloc/cita_u
 import 'package:admin_clinica_front/ui/modules/cita/bloc/cita_update_bloc/cita_update_event.dart';
 import 'package:admin_clinica_front/ui/view_models/cita_view/cita_view_models.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
@@ -840,7 +839,6 @@ class CitasGroupedByHour extends StatelessWidget {
                           ),
                           // Column(
                           //   crossAxisAlignment: CrossAxisAlignment.stretch,
-                          //   children: hora.listItems.map((cita) => CitasCard(cita: cita)).toList(),
                           // ),
                         ],
                       ),
@@ -867,11 +865,11 @@ class CitasGroupedByHour extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 AppTextGlobal.labelMediumText(text: hora.horaString2, colorText: AppColors.slg01),
-                                AppTextGlobal.labelLightText(text: hora.listItems.length.toString(), colorText: AppColors.lightGray),
+                                AppTextGlobal.labelLightText(text: stt.cita.length.toString(), colorText: AppColors.lightGray),
                                 Row(
                                   children: [
                                     Visibility(
-                                      visible: hora.listItems.isEmpty,
+                                      visible: stt.cita.isEmpty,
                                       child: GestureDetector(
                                         onTap: () {
                                           context.read<CitaHoraBloc>().add(CitaHoraEvent.blockCita(onBlock(hora.hora)));
@@ -903,7 +901,7 @@ class CitasGroupedByHour extends StatelessWidget {
                           ),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.stretch,
-                            children: hora.listItems.map((cita) => CitasCard(cita: cita)).toList(),
+                            children: stt.cita.map((cita) => CitasCard(cita: cita)).toList(),
                           ),
                         ],
                       ),

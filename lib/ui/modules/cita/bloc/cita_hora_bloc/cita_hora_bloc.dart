@@ -50,7 +50,11 @@ class CitaHoraBloc extends Bloc<CitaHoraEvent, CitaHoraState> {
 
   Future<void> releaseCita(ReleaseCitaEvent event, Emitter<CitaHoraState> emit) async {
     emit(LoadingState());
-    await Future.delayed(const Duration(seconds: 1));
-    emit(CitaHoraState.citaLibre([]));
+    final result = await citaService.deleteCitaById(event.citaId);
+    if (result.isRight) {
+      emit(CitaHoraState.citaLibre([]));
+    } else {
+      emit(CitaHoraState.failure(result.left));
+    }
   }
 }
