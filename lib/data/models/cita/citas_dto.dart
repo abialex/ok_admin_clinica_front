@@ -1,7 +1,6 @@
 // ignore_for_file: non_constant_identifier_names
 
 import 'package:admin_clinica_front/data/models/paciente/paciente_dto.dart';
-import 'package:admin_clinica_front/dominio/entities/cita.dart';
 import 'package:json_annotation/json_annotation.dart';
 part 'citas_dto.g.dart';
 
@@ -16,8 +15,8 @@ class CitasDTO {
   final String? razon;
   final String? razonOcupado;
   final String? datosPaciente;
-  final String? estado_string;
-  final String? tipo_string;
+  final String estado_string;
+  final String tipo_string;
   final String? fechaConfirmacion;
   final String? fechaValidacion;
   final String? fechaInicio;
@@ -33,16 +32,15 @@ class CitasDTO {
     this.razon,
     this.razonOcupado,
     this.datosPaciente,
-    this.estado_string,
-    this.tipo_string,
+    required this.estado_string,
+    required this.tipo_string,
     this.fechaConfirmacion,
     this.fechaValidacion,
     this.fechaInicio,
     this.fechaFin,
   });
   //fromJson
-  factory CitasDTO.fromJson(Map<String, dynamic> map) =>
-      _$CitasDTOFromJson(map);
+  factory CitasDTO.fromJson(Map<String, dynamic> map) => _$CitasDTOFromJson(map);
 
   //ToJson
   Map<String, dynamic> toJson() => _$CitasDTOToJson(this);

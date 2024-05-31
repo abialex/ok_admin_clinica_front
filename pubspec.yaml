@@ -42,6 +42,7 @@ dependencies:
     path: package/window_size
   flutter_animate: ^4.4.1
   flutter_svg:
+  flutter_phone_direct_caller: ^2.1.1
 
   flutter:
     sdk: flutter

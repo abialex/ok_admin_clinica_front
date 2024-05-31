@@ -26,6 +26,7 @@ class UsuarioService {
             rol: right.rol,
             username: right.username,
             tipo: right.tipo,
+            ubicaciones: right.ubicaciones,
           ),
         ),
       );

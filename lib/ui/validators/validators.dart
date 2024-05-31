@@ -7,6 +7,13 @@ class Validators {
     return null;
   }
 
+  static String? validateNoExceds(String? value, int num) {
+    if (int.parse(value ?? "0") > num) {
+      return 'No puede exceder de $value';
+    }
+    return null;
+  }
+
   // Validador de longitud mínima
   static String? validateMinLength(String? value, int minLength) {
     if (value != null && value.length < minLength) {

@@ -1,7 +1,10 @@
 // ignore_for_file: constant_identifier_names
 
+import 'package:admin_clinica_front/ui/modules/cita/cita_update/cita_update_page.dart';
 import 'package:admin_clinica_front/ui/modules/doctor/doctor_list/doctor_list_adm_page.dart';
 import 'package:admin_clinica_front/ui/modules/login/page.dart';
+import 'package:admin_clinica_front/ui/modules/otros/page.dart';
+import 'package:admin_clinica_front/ui/modules/paciente/paciente_list/paciente_list_asist_recep_page.dart';
 import 'package:flutter/material.dart';
 
 import '../modules/cita/cita_add/cita_add_asist_recep_page.dart';
@@ -25,7 +28,12 @@ class Routes {
 
   static const String cita_list = '/cita_list';
   static const String cita_add = '/cita_add';
+  static const String cita_update = '/cita_update';
   static const String citaDetails = '/products/details';
+
+  static const String paciente_list = '/paciente_list';
+
+  static const String otros = '/otros';
 
   static const String login = '/';
 }
@@ -50,21 +58,26 @@ class AppRouter {
         );
       case Routes.base_admin + Routes.cita_list:
         return PageRouteBuilder(
-          pageBuilder: (_, __, ___) => const CitaListAsistenteRecepcionPage(),
+          pageBuilder: (_, __, ___) => CitaListAsistenteRecepcionPage(),
           // transitionsBuilder: _createTransition,
         );
 
       // return MaterialPageRoute(builder: (_) => const CitaPage());
       case Routes.base_asistenteRecepcion + Routes.cita_list:
         return PageRouteBuilder(
-          pageBuilder: (_, __, ___) => const CitaListAsistenteRecepcionPage(),
+          pageBuilder: (_, __, ___) => CitaListAsistenteRecepcionPage(),
           //  transitionsBuilder: _createScaleTransition,
         );
 
       // return MaterialPageRoute(builder: (_) => const CitaListPage());
-      case Routes.cita_add:
+      case Routes.base_asistenteRecepcion + Routes.cita_add:
         return PageRouteBuilder(
-          pageBuilder: (_, __, ___) => const CitaAddPage(),
+          pageBuilder: (_, __, ___) => CitaAddPage(),
+          //   transitionsBuilder: _createSlideFadeTransition,
+        );
+      case Routes.base_asistenteRecepcion + Routes.cita_update:
+        return PageRouteBuilder(
+          pageBuilder: (_, __, ___) => CitaUpdateAsistenteRecepcionPage(),
           //   transitionsBuilder: _createSlideFadeTransition,
         );
 
@@ -92,6 +105,18 @@ class AppRouter {
       case Routes.base_asistenteRecepcion + Routes.doctor_update:
         return PageRouteBuilder(
           pageBuilder: (_, __, ___) => DoctorUpdateAsistenteRecepcionPage(),
+          //   transitionsBuilder: _createSlideFadeTransition,
+        );
+
+      case Routes.base_asistenteRecepcion + Routes.paciente_list:
+        return PageRouteBuilder(
+          pageBuilder: (_, __, ___) => const PacienteListAsistenteRecepcionPage(),
+          //   transitionsBuilder: _createSlideFadeTransition,
+        );
+
+      case Routes.base_asistenteRecepcion + Routes.otros:
+        return PageRouteBuilder(
+          pageBuilder: (_, __, ___) => const OtrosPage(),
           //   transitionsBuilder: _createSlideFadeTransition,
         );
 
@@ -186,7 +211,10 @@ class NotFoundPage extends StatelessWidget {
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                Navigator.pushNamed(context, Routes.home); // O navegar a una ruta específica
+                // !falta validar para que se redirija al home
+                // final navbarCubit = context.read<NavigatorCubit>();
+                // navbarCubit.updateIndexDelay(1);
+                Navigator.pop(context);
               },
               child: const Text('Go Back'),
             ),

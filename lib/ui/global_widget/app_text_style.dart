@@ -1,5 +1,6 @@
 import 'package:admin_clinica_front/core/utils/app_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 class _BaseText {
   static Text lightText({
@@ -8,18 +9,20 @@ class _BaseText {
     Color? color,
     FontWeight? fontWeight,
     TextAlign? textAlign,
+    int? maxLines,
+    TextOverflow? textOverflow,
   }) {
     return Text(
       text,
       softWrap: true,
-      maxLines: 1,
+      maxLines: maxLines ?? 1,
       textAlign: textAlign,
       style: TextStyle(
         fontSize: fontSize ?? 16,
         color: color,
         fontWeight: fontWeight,
       ),
-      overflow: TextOverflow.ellipsis,
+      overflow: textOverflow ?? TextOverflow.ellipsis,
     );
   }
 
@@ -65,9 +68,11 @@ class _BaseText {
 
 class AppTextGlobal {
   // *: BASE PARA EL APP
-  static Text lightText({required String text}) => _BaseText.lightText(
+  static Text lightText({required String text, int? maxLines, double? fontSize, Color colorText = AppColors.dark}) => _BaseText.lightText(
         text: text,
-        color: AppColors.blueSecondary,
+        color: colorText,
+        maxLines: maxLines,
+        fontSize: fontSize,
       );
   static Text mediumText({required String text}) => _BaseText.mediumText(
         text: text,
@@ -79,11 +84,22 @@ class AppTextGlobal {
         color: AppColors.blueSecondary,
       );
 
-  static Text labelLightText({required String text, double? fontSize, Color colorText = AppColors.blueSecondary}) => _BaseText.lightText(
+  static Text labelLightText({
+    required String text,
+    double? fontSize,
+    Color colorText = AppColors.dark,
+    TextAlign? textAlign,
+    TextOverflow textOverflow = TextOverflow.ellipsis,
+    int maxLines = 1,
+  }) =>
+      _BaseText.lightText(
         text: text,
         fontWeight: FontWeight.bold,
         color: colorText,
         fontSize: fontSize,
+        textAlign: textAlign,
+        textOverflow: textOverflow,
+        maxLines: maxLines,
       );
 
   static Text labelSmallText({required String text, FontWeight fontWeight = FontWeight.bold, Color colorText = AppColors.blueSecondary}) => _BaseText.lightText(
@@ -99,10 +115,10 @@ class AppTextGlobal {
         color: colorText,
       );
 
-  static Text labelLargeText({required String text}) => _BaseText.largeText(
+  static Text labelLargeText({required String text, Color colorText = AppColors.dark}) => _BaseText.largeText(
         text: text,
         fontWeight: FontWeight.bold,
-        color: AppColors.blueSecondary,
+        color: colorText,
       );
 
   static Text titleText({required String text}) => _BaseText.mediumText(
@@ -111,10 +127,11 @@ class AppTextGlobal {
         color: AppColors.blueSecondary,
       );
 
-  static Text errorlightText({required String text}) => _BaseText.lightText(
+  static Text errorlightText({required String text, int maxLines = 1}) => _BaseText.lightText(
         text: text,
         color: AppColors.redAccent,
         fontSize: 13,
+        maxLines: maxLines,
       );
   // *: ESPECIALIZADO PARA EL APP
   static Text nameText({required String text}) => _BaseText.mediumText(

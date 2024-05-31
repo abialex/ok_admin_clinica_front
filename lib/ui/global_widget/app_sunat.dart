@@ -1,5 +1,6 @@
 import 'package:admin_clinica_front/core/constants/app_const_icons.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_box.dart';
+import 'package:admin_clinica_front/ui/global_widget/app_loader.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_text_style.dart';
 import 'package:admin_clinica_front/ui/global_widget/blocs/sunat/sunat_cubit.dart';
 import 'package:admin_clinica_front/ui/global_widget/input_text/input_form_02/input_text_action_base.dart';
@@ -17,6 +18,7 @@ class AppSunatWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final formKey = GlobalKey<FormState>(); // Clave global para el formulario
+    final loaderCubit = context.read<LoaderCubit>();
 
     return BlocProvider(
       create: (context) => SunatCubit(),
@@ -49,9 +51,8 @@ class AppSunatWidget extends StatelessWidget {
                       },
                     ),
                     Positioned(
-                      right: 45,
-                      top: 30,
-                      bottom: 0,
+                      right: 55,
+                      top: 40,
                       child: SvgPicture.asset(
                         AppConstIcons.sunatLogo,
                         height: 25,
@@ -66,12 +67,16 @@ class AppSunatWidget extends StatelessWidget {
                         return const SizedBox.shrink();
                       },
                       loading: (stt) {
-                        return const Center(child: CircularProgressIndicator());
+                        loaderCubit.show();
+                        return const SizedBox.shrink();
                       },
                       sunatPersonaLoaded: (stt) {
+                        loaderCubit.hidden();
                         return AppTextGlobal.labelLightText(text: "SUNAT: ${stt.sunatPersona.nombres.isEmpty ? "Sin datos" : stt.sunatPersona.toString()} ").animate().fade();
                       },
                       failure: (stt) {
+                        loaderCubit.hidden();
+
                         return AppTextGlobal.errorlightText(text: stt.error).animate().flip();
                       },
                     )

@@ -1,5 +1,11 @@
 import 'package:admin_clinica_front/core/utils/app_colors.dart';
+import 'package:admin_clinica_front/ui/global_widget/app_box.dart';
+import 'package:admin_clinica_front/ui/global_widget/app_text_style.dart';
+import 'package:admin_clinica_front/ui/global_widget/button_base/button_base.dart';
+import 'package:admin_clinica_front/ui/global_widget/button_base/button_cancel.dart';
+import 'package:admin_clinica_front/ui/global_widget/button_base/button_success.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'cubit/dialog_message_cubit.dart';
 
@@ -39,7 +45,7 @@ class DialogCubitPage extends StatelessWidget {
                     alignment: Alignment.center,
                     children: [
                       Container(
-                        decoration: const BoxDecoration(color: AppColors.blueAccent, borderRadius: BorderRadius.all(Radius.circular(10))),
+                        decoration: const BoxDecoration(color: AppColors.white, borderRadius: BorderRadius.all(Radius.circular(10))),
                         height: 270,
                         child: Padding(
                           padding: const EdgeInsets.fromLTRB(10, 50, 10, 10),
@@ -69,14 +75,10 @@ class DialogCubitPage extends StatelessWidget {
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
                                       Expanded(
-                                        child: Text(
-                                          state.texto,
-                                          overflow: TextOverflow.ellipsis,
-                                          maxLines: 4,
-                                          textAlign: textAlign,
-                                          style: TextStyle(color: colorMensaje),
-                                        ),
-                                      ),
+                                          child: AppTextGlobal.lightText(
+                                        text: state.texto,
+                                        maxLines: 4,
+                                      )),
                                     ],
                                   ),
                                 ],
@@ -87,78 +89,43 @@ class DialogCubitPage extends StatelessWidget {
                                 child: state.onlyOptions
                                     ? Row(
                                         children: [
-                                          Expanded(child: ElevatedButton(onPressed: () {}, child: const Text("press"))
-
-                                              //     ButtonCustom001WihoutAnimated(
-                                              //   colorBackground:
-                                              //       state.colorBackground,
-                                              //   padding: const EdgeInsets
-                                              //       .symmetric(
-                                              //       horizontal: 20,
-                                              //       vertical: 12.5),
-                                              //   text: textAceptarCustom,
-                                              //   onPressed: () {
-                                              //     dialogCubit
-                                              //         .disguiseDialog();
-
-                                              //     if (state.onAceptar !=
-                                              //         null) {
-                                              //       state.onAceptar!();
-                                              //     }
-                                              //   },
-                                              // ),
-                                              ),
+                                          Expanded(
+                                            child: ButtonCustomBase(
+                                              textColor: AppColors.white,
+                                              backgroundColor: state.colorBackground,
+                                              onClick: () {
+                                                dialogCubit.disguiseDialog();
+                                                state.onAceptar?.call();
+                                              },
+                                              text: "Aceptar",
+                                            ),
+                                          ),
                                         ],
                                       )
                                     : Row(
                                         // textDirection: TextDirection.rtl,
                                         children: [
                                           Expanded(
-                                              child: ElevatedButton(
-                                                  onPressed: () {
-                                                    dialogCubit.disguiseDialog();
-                                                  },
-                                                  child: const Text("press"))
-
-                                              //     ButtonCustom001WihoutAnimated(
-                                              //   padding: const EdgeInsets
-                                              //       .symmetric(
-                                              //       horizontal: 20,
-                                              //       vertical: 12.5),
-                                              //   colorBackground:
-                                              //       AppColors.greyLight,
-                                              //   text: textCancelarCustom,
-                                              //   onPressed: () {
-                                              //     dialogCubit
-                                              //         .disguiseDialog();
-
-                                              //     if (state.onCancelar !=
-                                              //         null) {
-                                              //       state.onCancelar!();
-                                              //     }
-                                              //   },
-                                              // ),
-                                              ),
-                                          Expanded(child: ElevatedButton(onPressed: () {}, child: const Text("press"))
-                                              //     ButtonCustom001WihoutAnimated(
-                                              //   colorBackground:
-                                              //       state.colorBackground,
-                                              //   padding: const EdgeInsets
-                                              //       .symmetric(
-                                              //       horizontal: 20,
-                                              //       vertical: 12.5),
-                                              //   text: textAceptarCustom,
-                                              //   onPressed: () {
-                                              //     dialogCubit
-                                              //         .disguiseDialog();
-
-                                              //     if (state.onAceptar !=
-                                              //         null) {
-                                              //       state.onAceptar!();
-                                              //     }
-                                              //   },
-                                              // ),
-                                              ),
+                                            child: ButtonCancel(
+                                              onClick: () {
+                                                dialogCubit.disguiseDialog();
+                                                state.onCancelar?.call();
+                                              },
+                                              text: "Cancelar",
+                                            ),
+                                          ),
+                                          AppBox.w10,
+                                          Expanded(
+                                            child: ButtonCustomBase(
+                                              textColor: AppColors.white,
+                                              backgroundColor: state.colorBackground,
+                                              onClick: () {
+                                                dialogCubit.disguiseDialog();
+                                                state.onAceptar?.call();
+                                              },
+                                              text: "Aceptar",
+                                            ),
+                                          ),
                                         ],
                                       )),
                           ]),
@@ -169,10 +136,21 @@ class DialogCubitPage extends StatelessWidget {
                         child: CircleAvatar(
                           backgroundColor: state.colorBackground,
                           radius: 40,
-                          child: Icon(
-                            state.icon,
-                            color: AppColors.white,
-                          ),
+                          child: FittedBox(
+                              fit: BoxFit.cover,
+                              child: Icon(
+                                state.icon,
+                                color: AppColors.white,
+                                size: 60,
+                              )
+                                  .animate(
+                                    onPlay: (controller) => controller.loop(reverse: true),
+                                  )
+                                  .rotate(
+                                    begin: -0.01,
+                                    end: 0.01,
+                                    duration: 0.7.seconds,
+                                  )),
                         ),
                       )
                     ],
