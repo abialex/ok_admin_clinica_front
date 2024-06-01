@@ -4,4 +4,5 @@ part of 'cita_bloc.dart';
 class CitaEvent with _$CitaEvent {
   const CitaEvent._();
   factory CitaEvent.getCitas(CitaRequestViewModel citaRequestViewModel) = GetCitas;
+  factory CitaEvent.invalidCita(String message) = InvalidCitaEvent;
 }

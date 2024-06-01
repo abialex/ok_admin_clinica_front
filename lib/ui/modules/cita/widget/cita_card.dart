@@ -746,7 +746,7 @@ class CitasGroupedByHour extends StatelessWidget {
           child: BlocBuilder<CitaHoraBloc, CitaHoraState>(
             builder: (context, state) {
               return AnimatedSwitcher(
-                duration: 0.5.seconds,
+                duration: 0.75.seconds,
                 child: state.map(
                   initial: (stt) {
                     context.read<CitaHoraBloc>().add(CitaHoraEvent.initial(hora.listItems));

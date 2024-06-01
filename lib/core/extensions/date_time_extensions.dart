@@ -15,6 +15,10 @@ extension DateFormatting on DateTime {
     return formatter.format(this);
   }
 
+  String toFormaMMddSlash() {
+    return '${DateFormat('MMMM', 'es-ES').format(this)} - ${DateFormat('dd EEEE', 'es-ES').format(copyWith(year: DateTime.now().year))}';
+  }
+
   String toFormatHHmm() {
     final DateFormat formatter = DateFormat('HH:mm a');
     minute;

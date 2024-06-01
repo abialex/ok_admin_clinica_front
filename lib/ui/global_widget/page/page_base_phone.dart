@@ -1,13 +1,8 @@
 // ignore_for_file: must_be_immutable
-
-import 'dart:async';
-
 import 'package:admin_clinica_front/core/utils/app_colors.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_box.dart';
 import 'package:admin_clinica_front/ui/global_widget/custom_navbar_navigation/cubit/navigator_cubit.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../custom_navbar_navigation/design_nav_bar_navigation.dart';
 
@@ -21,10 +16,9 @@ class PageBasePhone extends StatelessWidget {
   final double heightExpand;
   final double maxEntend;
   final double minEntend;
-  final void Function()? onReachedTop;
   final void Function()? onReachedBottom;
 
-  PageBasePhone({
+  const PageBasePhone({
     super.key,
     required this.bodySliver,
     this.floatingWidget = const SizedBox.shrink(),
@@ -33,88 +27,49 @@ class PageBasePhone extends StatelessWidget {
     this.heightExpand = 200,
     this.maxEntend = 90,
     this.minEntend = 90,
-    this.onReachedTop,
     this.onReachedBottom,
     this.showNavbar = true,
   });
-  late ScrollController _scrollController;
-  Timer? _timer;
-
-  void _onReachedTop() {
-    if (_timer != null) {
-      _timer!.cancel();
-    }
-
-    _timer = Timer(Duration(milliseconds: 600), () {
-      onReachedTop?.call();
-
-      // Realiza aquí la acción que deseas ejecutar después del tiempo
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
-    _scrollController = ScrollController()
-      ..addListener(() {
-        if (_scrollController.position.atEdge) {
-          bool isTop = _scrollController.position.pixels == 0;
-          if (isTop) {
-            // onReachedTop?.call();
-          } else {
-            onReachedBottom?.call();
-          }
-        }
-      });
     return Scaffold(
       body: Column(
         children: [
           Expanded(
             child: Stack(
               children: [
-                NotificationListener<ScrollNotification>(
-                  onNotification: (ScrollNotification notification) {
-                    if (notification is OverscrollNotification) {
-                      if (_scrollController.position.pixels <= -0) {
-                        // print(_scrollController.position.pixels.toString());
-                        // _onReachedTop();
-                      }
-                    }
-                    return true;
-                  },
-                  child: CustomScrollView(
-                    controller: _scrollController,
-                    slivers: <Widget>[
-                      // Header
-                      SliverPersistentHeader(
-                        delegate: MySliverHeaderDelegate(
-                          expandedHeight: heightExpand,
-                          widgetHeader: headerWidget,
-                          maxExtend: maxEntend,
-                          minExtend: minEntend,
-                        ),
-                        pinned: true,
-                        // floating: false,
+                CustomScrollView(
+                  slivers: <Widget>[
+                    // Header
+                    SliverPersistentHeader(
+                      delegate: MySliverHeaderDelegate(
+                        expandedHeight: heightExpand,
+                        widgetHeader: headerWidget,
+                        maxExtend: maxEntend,
+                        minExtend: minEntend,
                       ),
-
-                      // Body
-                      SliverToBoxAdapter(
-                        child: AppBox.h20,
+                      pinned: true,
+                      // floating: false,
+                    ),
+                    // Body
+                    SliverToBoxAdapter(
+                      child: AppBox.h20,
+                    ),
+                    SliverPadding(padding: const EdgeInsets.symmetric(horizontal: 15), sliver: bodySliver),
+                    SliverToBoxAdapter(
+                      child: AppBox.h10,
+                    ),
+                    // Footer
+                    SliverFillRemaining(
+                      hasScrollBody: false, // el contenido ocupa todo el espacio que sliverList ocupa
+                      fillOverscroll: false,
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                        child: footerSliver,
                       ),
-                      SliverPadding(padding: const EdgeInsets.symmetric(horizontal: 15), sliver: bodySliver),
-                      SliverToBoxAdapter(
-                        child: AppBox.h10,
-                      ),
-                      // Footer
-                      SliverFillRemaining(
-                        hasScrollBody: false, // el contenido ocupa todo el espacio que sliverList ocupa
-                        fillOverscroll: false,
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                          child: footerSliver,
-                        ),
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
                 Positioned(
                   bottom: 16,

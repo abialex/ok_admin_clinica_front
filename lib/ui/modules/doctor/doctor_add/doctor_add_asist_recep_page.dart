@@ -64,6 +64,7 @@ class DoctorAddAsistenteRecepcionPage extends StatelessWidget with ResponsiveWid
     final doctorListBloc = context.read<DoctorListBloc>();
 
     return PageBasePhone(
+      showNavbar: false,
       headerWidget: const HeaderMobile(
         subTitle: "Doctor",
         title: "CREAR DOCTOR",
@@ -211,7 +212,7 @@ class DoctorAddAsistenteRecepcionPage extends StatelessWidget with ResponsiveWid
               children: [
                 Expanded(
                   child: ButtonCancel(
-                    text: "Cancelar",
+                    text: "CANCELAR",
                     onClick: () {
                       Navigator.pop(context);
                     },
@@ -220,7 +221,7 @@ class DoctorAddAsistenteRecepcionPage extends StatelessWidget with ResponsiveWid
                 AppBox.w10,
                 Expanded(
                   child: ButtonSuccess(
-                    text: "Agregar",
+                    text: "CREAR",
                     onClick: () async {
                       if (formKey.currentState!.validate()) {
                         // Si el formulario es válido, muestra un Snackbar

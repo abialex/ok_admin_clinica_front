@@ -8,11 +8,14 @@ class DoctorCredentialsViewModel {
 }
 
 class DoctorsViewModel {
+  final int id;
   final int usuarioId;
   final String username;
-  final int id;
   final String nombres;
   final String apellidos;
+  final bool isActive;
+  final DateTime fechaNacimiento;
+  final String celular;
 
   DoctorsViewModel({
     required this.usuarioId,
@@ -20,6 +23,9 @@ class DoctorsViewModel {
     required this.id,
     required this.nombres,
     required this.apellidos,
+    required this.isActive,
+    required this.fechaNacimiento,
+    required this.celular,
   });
 
   @override
@@ -37,10 +43,11 @@ class DoctorViewModel {
   final String nombres;
   final String apellidos;
   final List<int> ubicacionesId;
-  final String? celular;
+  final String celular;
   final String? domicilio;
-  final DateTime? fechaNacimiento;
+  final DateTime fechaNacimiento;
   final String? especialidad;
+  final bool isActive;
 
   DoctorViewModel({
     required this.usuarioId,
@@ -50,10 +57,11 @@ class DoctorViewModel {
     required this.apellidos,
     required this.dni,
     required this.ubicacionesId,
-    this.celular,
+    required this.celular,
     this.domicilio,
-    this.fechaNacimiento,
+    required this.fechaNacimiento,
     this.especialidad,
+    required this.isActive,
   });
 }
 
