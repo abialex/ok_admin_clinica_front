@@ -35,8 +35,13 @@ class FlutterStorageLocal {
   }
 
   Future<DoctorDto?> getDoctorSelected() async {
-    final result = await _secureStorage.read(key: KeyStorage.DOCTOR);
-    return result != null ? DoctorDto.fromJson(jsonDecode(result)) : null;
+    try {
+      final result = await _secureStorage.read(key: KeyStorage.DOCTOR);
+      return result != null ? DoctorDto.fromJson(jsonDecode(result)) : null;
+    } catch (e) {
+      _secureStorage.deleteAll();
+      return null;
+    }
   }
 
   Future<void> saveDoctorSelected(DoctorDto doctorIdSelected) async {
