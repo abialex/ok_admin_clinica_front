@@ -13,12 +13,13 @@ class DoctorIndexBloc extends Bloc<DoctorIndexEvent, DoctorIndexState> {
     on<InitialEvent>(initial);
     on<NextCitaEvent>(doctorAction);
     on<GetDoctorEvent>(getDoctorById);
+    on<ResetPasswordEvent>(resetPassword);
   }
 
   final doctorService = locator<DoctorService>();
 
   Future<void> initial(InitialEvent event, Emitter<DoctorIndexState> emit) async {
-    // emit(Loading());
+    emit(LoadingState());
     emit(DoctorIndexState.doctorLoaded(event.doctorsViewModel));
   }
 
@@ -29,6 +30,18 @@ class DoctorIndexBloc extends Bloc<DoctorIndexEvent, DoctorIndexState> {
     final result = await doctorService.doctorAction(event.doctorAction, doctor.id);
     if (result.isRight) {
       add(DoctorIndexEvent.getDoctor(doctor.id));
+    } else {
+      emit(FailureState(result.left));
+    }
+  }
+
+  Future<void> resetPassword(ResetPasswordEvent event, Emitter<DoctorIndexState> emit) async {
+    emit(LoadingState());
+    final doctor = event.doctorsViewModel;
+
+    final result = await doctorService.resetPassword(doctor.id);
+    if (result.isRight) {
+      emit(SuccessState(result.right));
     } else {
       emit(FailureState(result.left));
     }

@@ -69,4 +69,12 @@ class DoctorApi implements BaseApi {
     );
     return ApiUtils.reponseHandler(response, (data) => (data as bool));
   }
+
+  Future<Either<String, String>> resetPassword(int doctorId) async {
+    final response = await _dio.get<ApiModel>(
+      "${url}reset-password/by-id",
+      queryParameters: {"id": doctorId},
+    );
+    return ApiUtils.reponseHandler(response, (data) => (data as String));
+  }
 }

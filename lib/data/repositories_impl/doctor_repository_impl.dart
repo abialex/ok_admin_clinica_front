@@ -50,4 +50,9 @@ class DoctorRepository implements IDoctorRepository {
   Future<Either<String, bool>> inactivarDoctor(int doctorId) {
     return api.inactivarDoctor(doctorId);
   }
+
+  @override
+  Future<Either<String, String>> resetPassword(int doctorId) {
+    return api.resetPassword(doctorId);
+  }
 }

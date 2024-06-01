@@ -1,5 +1,4 @@
 import 'package:admin_clinica_front/core/di/injections.dart';
-import 'package:admin_clinica_front/data/datasources/local/flutter_storage_local.dart';
 import 'package:admin_clinica_front/data/models/api_model/api_model.dart';
 import 'package:admin_clinica_front/infraestructura/network/http_status_codes.dart';
 import 'package:dio/dio.dart';
@@ -34,6 +33,17 @@ class AppInterceptor extends Interceptor {
         statusCode: HttpStatusCodesApp.serverConnectionError,
         data: null,
         statusMessage: "No hay conexion al servidor",
+      );
+
+      return handler.resolve(responseNoConecctionn);
+    }
+
+    if (error.response?.statusCode == 404) {
+      final responseNoConecctionn = Response<dynamic>(
+        requestOptions: error.requestOptions,
+        statusCode: HttpStatusCodesApp.serverConnectionError,
+        data: null,
+        statusMessage: "Solicitud sin implementar",
       );
       return handler.resolve(responseNoConecctionn);
     }
