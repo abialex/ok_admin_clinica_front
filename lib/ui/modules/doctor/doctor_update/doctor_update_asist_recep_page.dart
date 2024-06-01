@@ -1,5 +1,6 @@
 // ignore_for_file: must_be_immutable
 
+import 'package:admin_clinica_front/core/extensions/date_time_extensions.dart';
 import 'package:admin_clinica_front/core/extensions/string_extensions.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_box.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_text_style.dart';
@@ -64,6 +65,7 @@ class DoctorUpdateAsistenteRecepcionPage extends StatelessWidget with Responsive
     final doctorUpdateBloc = context.read<DoctorUpdateBloc>();
     final doctorListBloc = context.read<DoctorListBloc>();
     return PageBasePhone(
+      showNavbar: false,
       headerWidget: const HeaderMobile(
         subTitle: "Doctor",
         title: "MODIFICAR DOCTOR",
@@ -87,7 +89,6 @@ class DoctorUpdateAsistenteRecepcionPage extends StatelessWidget with Responsive
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 AppBox.h10,
-                AppBox.h20,
                 InputTextBase(
                   initialText: doctorView.nombres,
                   inputFormatDeskptop: InputFormatDesktopEnum.letras,
@@ -133,7 +134,8 @@ class DoctorUpdateAsistenteRecepcionPage extends StatelessWidget with Responsive
                 InputTextDate(
                   label: "FECHA NACIMIENTO",
                   hintText: "Fecha nacimiento",
-                  initialText: doctorView.fechaNacimiento?.toIso8601String(),
+                  initialText: doctorView.fechaNacimiento.toFormatddMMyyyySlash(),
+                  initialDate: doctorView.fechaNacimiento,
                   helper: "Ingrese la fecha de nacimiento del Doctor",
                   maxDate: DateTime.now(),
                   minDate: DateTime(1940),
@@ -227,7 +229,7 @@ class DoctorUpdateAsistenteRecepcionPage extends StatelessWidget with Responsive
               children: [
                 Expanded(
                   child: ButtonCancel(
-                    text: "Cancelar",
+                    text: "CANCELAR",
                     onClick: () {
                       Navigator.pop(context);
                     },
@@ -236,7 +238,7 @@ class DoctorUpdateAsistenteRecepcionPage extends StatelessWidget with Responsive
                 AppBox.w10,
                 Expanded(
                   child: ButtonSuccess(
-                    text: "Agregar",
+                    text: "MODIFICAR",
                     onClick: () async {
                       if (formKey.currentState!.validate()) {
                         // Si el formulario es válido, muestra un Snackbar

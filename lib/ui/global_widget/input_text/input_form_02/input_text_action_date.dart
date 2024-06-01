@@ -10,6 +10,7 @@ class InputTextDate extends StatefulWidget {
     required this.label,
     required this.minDate,
     required this.maxDate,
+    this.initialDate,
     super.key,
     this.paddingVertical,
     this.changeDate,
@@ -28,13 +29,20 @@ class InputTextDate extends StatefulWidget {
   final String label;
   final String? Function(String?)? validator;
   final TextEditingController? controller;
+  final DateTime? initialDate;
 
   @override
   State<InputTextDate> createState() => _InputTextDateState();
 }
 
 class _InputTextDateState extends State<InputTextDate> {
-  DateTime selectedDate = DateTime.now();
+  late DateTime selectedDate;
+  @override
+  void initState() {
+    super.initState();
+    selectedDate = widget.initialDate ?? DateTime.now();
+  }
+
   Future<DateTime> _selectDate(BuildContext context) async {
     final picked = await showDatePicker(
       locale: const Locale('es', 'ES'),

@@ -14,10 +14,11 @@ class DoctorDto {
   final String nombres;
   final String apellidos;
   final List<UbicacionDto> ubicaciones;
-  final String? celular;
+  final String celular;
   final String? domicilio;
-  final DateTime? fechaNacimiento;
+  final String fechaNacimiento;
   final String? especialidad;
+  final bool is_active;
 
   DoctorDto({
     required this.id,
@@ -27,14 +28,14 @@ class DoctorDto {
     required this.dni,
     required this.nombres,
     required this.apellidos,
-    this.celular,
+    required this.celular,
     this.domicilio,
-    this.fechaNacimiento,
+    required this.fechaNacimiento,
     this.especialidad,
+    required this.is_active,
   });
   //fromJson
-  factory DoctorDto.fromJson(Map<String, dynamic> map) =>
-      _$DoctorDtoFromJson(map);
+  factory DoctorDto.fromJson(Map<String, dynamic> map) => _$DoctorDtoFromJson(map);
 
   //ToJson
   Map<String, dynamic> toJson() => _$DoctorDtoToJson(this);

@@ -24,7 +24,6 @@ class CitaIndexBloc extends Bloc<CitaIndexEvent, CitaIndexState> {
 
   Future<void> nextCita(NextCitaEvent event, Emitter<CitaIndexState> emit) async {
     emit(Loading());
-    await Future.delayed(const Duration(seconds: 1));
     final cita = event.citaViewModel;
 
     final result = await citaService.nextPaso(event.tipoAccion, cita.id);
