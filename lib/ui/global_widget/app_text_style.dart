@@ -74,9 +74,9 @@ class AppTextGlobal {
         maxLines: maxLines,
         fontSize: fontSize,
       );
-  static Text mediumText({required String text}) => _BaseText.mediumText(
+  static Text mediumText({required String text, Color colorText = AppColors.dark}) => _BaseText.mediumText(
         text: text,
-        color: AppColors.blueSecondary,
+        color: colorText,
       );
 
   static Text largeText({required String text}) => _BaseText.largeText(
@@ -109,7 +109,7 @@ class AppTextGlobal {
         fontSize: 12,
       );
 
-  static Text labelMediumText({required String text, Color colorText = AppColors.blueSecondary}) => _BaseText.mediumText(
+  static Text labelMediumText({required String text, Color colorText = AppColors.dark}) => _BaseText.mediumText(
         text: text,
         fontWeight: FontWeight.bold,
         color: colorText,

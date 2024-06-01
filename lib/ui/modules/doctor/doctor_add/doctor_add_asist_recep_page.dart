@@ -1,4 +1,6 @@
 // ignore_for_file: must_be_immutable
+import 'package:admin_clinica_front/core/extensions/date_time_extensions.dart';
+import 'package:admin_clinica_front/core/extensions/list_string_extensions.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_box.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_sunat.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_text_style.dart';
@@ -234,12 +236,14 @@ class DoctorAddAsistenteRecepcionPage extends StatelessWidget with ResponsiveWid
                           ubicacionesId: _ubicacionesList.map((e) => e.id).toList(),
                         );
                         doctorCreateBloc.add(DoctorCreateEvent.createDoctor(model));
+                        Navigator.pop(context);
                         await showDialog(
                           context: context,
                           builder: (context) {
                             return BlocBuilder<DoctorCreateBloc, DoctorCreateState>(
                               builder: (context, state) {
                                 return Dialog(
+                                  insetPadding: const EdgeInsets.symmetric(vertical: 155, horizontal: 50),
                                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                                   child: Stack(
                                     clipBehavior: Clip.none,
@@ -247,7 +251,7 @@ class DoctorAddAsistenteRecepcionPage extends StatelessWidget with ResponsiveWid
                                     children: [
                                       Container(
                                         constraints: const BoxConstraints.expand(),
-                                        decoration: const BoxDecoration(color: AppColors.blueAccent, borderRadius: BorderRadius.all(Radius.circular(10))),
+                                        decoration: const BoxDecoration(color: AppColors.white, borderRadius: BorderRadius.all(Radius.circular(10))),
                                         child: doctorCreateBloc.state.map(
                                           initial: (stt) {
                                             return const SizedBox.shrink();
@@ -256,8 +260,76 @@ class DoctorAddAsistenteRecepcionPage extends StatelessWidget with ResponsiveWid
                                             return const CircularProgressIndicator();
                                           },
                                           doctorsLoaded: (stt) {
-                                            return Column(
-                                              children: [Text(stt.doctorCredential.username), Text(stt.doctorCredential.password)],
+                                            return Container(
+                                              padding: const EdgeInsets.symmetric(
+                                                horizontal: 10,
+                                                vertical: 15,
+                                              ),
+                                              child: Column(
+                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                children: [
+                                                  RichText(
+                                                    textAlign: TextAlign.justify,
+                                                    text: TextSpan(
+                                                      style: AppTextGlobal.lightText(text: "").style,
+                                                      children: [
+                                                        const TextSpan(
+                                                          text: 'Se creó el doctor ',
+                                                        ),
+                                                        TextSpan(
+                                                          text: "${model.nombres.toUpperCase()} ${model.apellidos.toUpperCase()}",
+                                                          style: AppTextGlobal.labelLightText(text: "").style,
+                                                        ),
+                                                        const TextSpan(
+                                                          text: ' con fecha de nacimiento ',
+                                                        ),
+                                                        TextSpan(
+                                                          text: model.fechaNacimiento.toFormatddMMyyyySlash(),
+                                                          style: AppTextGlobal.labelLightText(text: "").style,
+                                                        ),
+                                                        const TextSpan(
+                                                          text: ' con ubicaciones en ',
+                                                        ),
+                                                        TextSpan(
+                                                          text: _ubicacionesList.map((e) => e.nombre).toList().toStringByMidFijo("y"),
+                                                          style: AppTextGlobal.labelLightText(text: "").style,
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                  Row(
+                                                    children: [
+                                                      AppTextGlobal.labelLightText(text: "Sus credenciales son:", fontSize: 18, textAlign: TextAlign.left),
+                                                    ],
+                                                  ),
+                                                  Column(
+                                                    children: [
+                                                      Row(
+                                                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                                        children: [
+                                                          Expanded(child: AppTextGlobal.labelLightText(text: "Username:", fontSize: 18, textAlign: TextAlign.end)),
+                                                          AppBox.w10,
+                                                          Expanded(child: AppTextGlobal.lightText(text: "slg_01", fontSize: 18)),
+                                                        ],
+                                                      ),
+                                                      Row(
+                                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                        children: [
+                                                          Expanded(child: AppTextGlobal.labelLightText(text: "Contraseña:", fontSize: 18, textAlign: TextAlign.end)),
+                                                          AppBox.w10,
+                                                          Expanded(child: AppTextGlobal.lightText(text: "12343556", fontSize: 18)),
+                                                        ],
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  ButtonSuccess(
+                                                    text: "OK",
+                                                    onClick: () {
+                                                      Navigator.pop(context);
+                                                    },
+                                                  ),
+                                                ],
+                                              ),
                                             );
                                           },
                                           failure: (stt) {
@@ -273,7 +345,6 @@ class DoctorAddAsistenteRecepcionPage extends StatelessWidget with ResponsiveWid
                           },
                         );
                         doctorListBloc.add(DoctorListEvent.getDoctors());
-                        Navigator.pop(context);
                       }
                     },
                   ),

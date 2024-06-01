@@ -30,7 +30,7 @@ class DoctorListBloc extends Bloc<DoctorListEvent, DoctorListState> {
         result = await _doctorService.getDoctors();
         break;
       default:
-        DoctorListState.failure("No se ha detecto rol definido");
+        emit(DoctorListState.failure("No se ha detecto rol definido"));
       // result = await _doctorService.getDoctorsByIdUbicacionFromAsistente();
     }
     result.fold((left) => emit(DoctorListState.failure(left)), (right) => emit(DoctorListState.doctorsLoaded(right)));
