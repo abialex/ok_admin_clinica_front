@@ -17,8 +17,7 @@ class DoctorRepository implements IDoctorRepository {
   DoctorRepository(this.api);
 
   @override
-  Future<Either<String, DoctorCredentialsDto>> createDoctor(
-      DoctorCreateModel doctorCreateModel) async {
+  Future<Either<String, DoctorCredentialsDto>> createDoctor(DoctorCreateModel doctorCreateModel) async {
     return api.createDoctor(doctorCreateModel);
   }
 
@@ -33,14 +32,22 @@ class DoctorRepository implements IDoctorRepository {
   }
 
   @override
-  Future<Either<String, List<DoctorsDto>>>
-      getDoctorsByIdUbicacionFromAsistente() async {
+  Future<Either<String, List<DoctorsDto>>> getDoctorsByIdUbicacionFromAsistente() async {
     return api.getDoctorsByIdUbicacionFromAsistente();
   }
 
   @override
-  Future<Either<String, int>> updateDoctor(
-      DoctorUpdateModel doctorUpdateModel) async {
+  Future<Either<String, int>> updateDoctor(DoctorUpdateModel doctorUpdateModel) async {
     return api.updateDoctor(doctorUpdateModel);
+  }
+
+  @override
+  Future<Either<String, bool>> activarDoctor(int doctorId) {
+    return api.activarDoctor(doctorId);
+  }
+
+  @override
+  Future<Either<String, bool>> inactivarDoctor(int doctorId) {
+    return api.inactivarDoctor(doctorId);
   }
 }

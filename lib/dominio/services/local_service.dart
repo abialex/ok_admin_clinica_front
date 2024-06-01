@@ -1,7 +1,7 @@
+import 'package:admin_clinica_front/core/extensions/date_time_extensions.dart';
 import 'package:admin_clinica_front/data/models/doctor/doctor_dto.dart';
 import 'package:admin_clinica_front/data/models/usuario/user_dto.dart';
 import 'package:admin_clinica_front/ui/view_models/doctor_view/doctor_view_models.dart';
-
 import '../../ui/view_models/usuario_view/usuario_view_models.dart';
 import '../repositories/ilocal_repository.dart';
 
@@ -29,7 +29,7 @@ class LocalService {
       return null;
     }
     return UsuarioLoginResponseViewModel(
-      userId: model!.user_id,
+      userId: model.user_id,
       username: model.username,
       nombres: model.nombres,
       token: model.token,
@@ -54,6 +54,9 @@ class LocalService {
       dni: "",
       nombres: doctor.nombres,
       apellidos: doctor.apellidos,
+      fechaNacimiento: doctor.fechaNacimiento.toFormatyyyyMMdd(),
+      celular: doctor.celular,
+      is_active: doctor.isActive,
     );
     return await _localRepository.saveDoctorSelected(modelDto);
   }
@@ -67,6 +70,9 @@ class LocalService {
       usuarioId: dto.usuario_id,
       username: dto.usuario_username,
       nombres: dto.nombres,
+      isActive: true,
+      fechaNacimiento: DateTime.parse(dto.fechaNacimiento),
+      celular: dto.celular,
     );
   }
 }
