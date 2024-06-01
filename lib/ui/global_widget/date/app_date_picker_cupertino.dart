@@ -1,4 +1,5 @@
 import 'package:admin_clinica_front/core/utils/app_colors.dart';
+import 'package:admin_clinica_front/ui/global_widget/app_box.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -6,10 +7,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class AppDatePickerCupertino extends StatelessWidget {
   final DateTime initialDateTime;
   final void Function(DateTime) onDateTimeChanged;
+  final bool paddingLeftActivate;
   const AppDatePickerCupertino({
     super.key,
     required this.initialDateTime,
     required this.onDateTimeChanged,
+    this.paddingLeftActivate = false,
   });
 
   @override
@@ -21,6 +24,7 @@ class AppDatePickerCupertino extends StatelessWidget {
         builder: (context, state) {
           return Row(
             children: [
+              if (paddingLeftActivate) AppBox.w16,
               Expanded(
                 child: CupertinoDatePicker(
                   key: keys,

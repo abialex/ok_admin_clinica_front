@@ -1,7 +1,10 @@
 // ignore_for_file: must_be_immutable
 import 'dart:async';
+import 'package:admin_clinica_front/core/utils/app_colors.dart';
 import 'package:admin_clinica_front/ui/blocs/usuario_session/bloc/usuario_bloc.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_box.dart';
+import 'package:admin_clinica_front/ui/global_widget/app_text_style.dart';
+import 'package:admin_clinica_front/ui/global_widget/cubits/count_isolate_cubit.dart';
 import 'package:admin_clinica_front/ui/global_widget/date/app_date_picker_cupertino.dart';
 import 'package:admin_clinica_front/ui/global_widget/page/mobile/app_header_mobile.dart';
 import 'package:admin_clinica_front/ui/global_widget/page/page_base_desktop.dart';
@@ -28,7 +31,10 @@ class CitaListAsistenteRecepcionPage extends StatelessWidget with ResponsiveWidg
   DoctorsViewModel? doctorSelected;
   @override
   Widget build(BuildContext context) {
-    return whatIs(context);
+    return BlocProvider(
+      create: (context) => CountIsolateCubit(intervalAction: 60),
+      child: whatIs(context),
+    );
   }
 
   @override
@@ -67,7 +73,6 @@ class CitaListAsistenteRecepcionPage extends StatelessWidget with ResponsiveWidg
         create: (context) => TimerCubit(),
         child: Builder(builder: (context) {
           final timerCubit = context.read<TimerCubit>();
-
           return Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -115,26 +120,57 @@ class CitaListAsistenteRecepcionPage extends StatelessWidget with ResponsiveWidg
                               }
                             }
                           }
-                          return DoctorCarousel(
-                            doctorIdInitialSelected: doctorSelected?.id,
-                            doctors: stt.doctors,
-                            onChanged: (doctor) {
-                              timerStart(timerCubit, () {
-                                doctorSelected = doctor;
-                                usuarioBloc.setDoctorSelected(doctor);
-                                if (!doctor.isActive) {
-                                  context.read<CitaBloc>().add(CitaEvent.invalidCita("Este doctor(a) está inactivo"));
-                                  return;
-                                }
-                                context.read<CitaBloc>().add(CitaEvent.getCitas(
-                                      CitaRequestViewModel(
-                                        doctorId: doctor.id,
-                                        ubicacionesId: usuarioBloc.state.usuario?.ubicaciones ?? [],
-                                        fechaHoraCita: dateSelected,
-                                      ),
-                                    ));
-                              });
+
+                          doctorSelected = usuarioBloc.state.doctorIdSelected;
+                          return BlocListener<CountIsolateCubit, int>(
+                            listener: (context, state) {
+                              if (state % context.read<CountIsolateCubit>().intervalAction == 0) {
+                                timerStart(timerCubit, () {
+                                  if (doctorSelected != null) {
+                                    if (stt.doctors.any(
+                                      (element) => doctorSelected!.id == element.id,
+                                    )) {
+                                      doctorSelected = stt.doctors.firstWhere((element) => doctorSelected!.id == element.id);
+                                      if (doctorSelected!.isActive) {
+                                        context.read<CitaBloc>().add(
+                                              CitaEvent.getCitas(
+                                                CitaRequestViewModel(
+                                                  doctorId: doctorSelected!.id,
+                                                  ubicacionesId: usuarioBloc.state.usuario?.ubicaciones ?? [],
+                                                  fechaHoraCita: DateTime.now(),
+                                                ),
+                                              ),
+                                            );
+                                      } else {
+                                        context.read<CitaBloc>().add(CitaEvent.invalidCita("Este doctor(a) está inactivo"));
+                                      }
+                                    }
+                                  }
+                                });
+                              }
                             },
+                            child: DoctorCarousel(
+                              doctorIdInitialSelected: doctorSelected?.id,
+                              doctors: stt.doctors,
+                              onChanged: (doctor) {
+                                timerStart(timerCubit, () {
+                                  doctorSelected = doctor;
+                                  usuarioBloc.setDoctorSelected(doctor);
+                                  if (!doctor.isActive) {
+                                    context.read<CitaBloc>().add(CitaEvent.invalidCita("Este doctor(a) está inactivo"));
+                                    return;
+                                  }
+                                  context.read<CitaBloc>().add(CitaEvent.getCitas(
+                                        CitaRequestViewModel(
+                                          doctorId: doctor.id,
+                                          ubicacionesId: usuarioBloc.state.usuario?.ubicaciones ?? [],
+                                          fechaHoraCita: dateSelected,
+                                        ),
+                                      ));
+                                  context.read<CountIsolateCubit>().resetExternal();
+                                });
+                              },
+                            ),
                           );
                         },
                         failure: (stt) {
@@ -147,27 +183,61 @@ class CitaListAsistenteRecepcionPage extends StatelessWidget with ResponsiveWidg
               ),
               SizedBox(
                 height: 35,
-                child: Transform.scale(
-                  scale: 0.95,
-                  child: AppDatePickerCupertino(
-                    initialDateTime: DateTime.now(),
-                    onDateTimeChanged: (value) {
-                      dateSelected = value;
-                      if (doctorSelected != null) {
-                        if (doctorSelected!.isActive) {
-                          timerStart(timerCubit, () {
-                            citaBloc.add(CitaEvent.getCitas(
-                              CitaRequestViewModel(
-                                doctorId: doctorSelected!.id,
-                                ubicacionesId: usuarioBloc.state.usuario?.ubicaciones ?? [],
-                                fechaHoraCita: value,
+                child: Stack(
+                  children: [
+                    Transform.scale(
+                      scale: 0.95,
+                      child: AppDatePickerCupertino(
+                        paddingLeftActivate: true,
+                        initialDateTime: DateTime.now(),
+                        onDateTimeChanged: (value) {
+                          dateSelected = value;
+                          if (doctorSelected != null) {
+                            if (doctorSelected!.isActive) {
+                              timerStart(timerCubit, () {
+                                citaBloc.add(CitaEvent.getCitas(
+                                  CitaRequestViewModel(
+                                    doctorId: doctorSelected!.id,
+                                    ubicacionesId: usuarioBloc.state.usuario?.ubicaciones ?? [],
+                                    fechaHoraCita: value,
+                                  ),
+                                ));
+                                context.read<CountIsolateCubit>().resetExternal();
+                              });
+                            }
+                          }
+                        },
+                      ),
+                    ),
+                    Positioned(
+                      left: 0,
+                      bottom: 0,
+                      top: 0,
+                      child: BlocBuilder<CountIsolateCubit, int>(
+                        builder: (context, state) {
+                          return Stack(
+                            children: [
+                              const Icon(
+                                Icons.restart_alt,
+                                size: 32,
+                                color: AppColors.grey,
                               ),
-                            ));
-                          });
-                        }
-                      }
-                    },
-                  ),
+                              Positioned.fill(
+                                child: Container(
+                                  alignment: Alignment.center,
+                                  child: AppTextGlobal.lightText(
+                                    text: "$state",
+                                    fontSize: 10,
+                                    colorText: AppColors.grey,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          );
+                        },
+                      ),
+                    )
+                  ],
                 ),
               ),
               AppBox.h6,
@@ -177,7 +247,7 @@ class CitaListAsistenteRecepcionPage extends StatelessWidget with ResponsiveWidg
                     value: state,
                   );
                 },
-              )
+              ),
             ],
           );
         }),
