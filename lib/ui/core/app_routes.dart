@@ -93,8 +93,8 @@ List<ModulesRouter> modulesRouterList = [
     modulesList: [
       RutasNav(
         icon: Icons.personal_injury_outlined,
-        titulo: "Doctor",
-        routePage: Routes.base_admin + Routes.doctor_list,
+        titulo: "Atención",
+        routePage: Routes.base_doctor + Routes.atencion,
       ),
       RutasNav(
         icon: Icons.home,
@@ -102,9 +102,9 @@ List<ModulesRouter> modulesRouterList = [
         routePage: Routes.home,
       ),
       RutasNav(
-        icon: Icons.message,
+        icon: Icons.notifications_active,
         titulo: "Citas",
-        routePage: Routes.citaDetails,
+        routePage: Routes.base_doctor + Routes.cita_list,
       ),
     ],
   )
