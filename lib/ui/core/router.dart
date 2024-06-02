@@ -1,5 +1,7 @@
 // ignore_for_file: constant_identifier_names
 
+import 'package:admin_clinica_front/ui/modules/atencion/page.dart';
+import 'package:admin_clinica_front/ui/modules/cita/cita_list/cita_list_doctor_page.dart';
 import 'package:admin_clinica_front/ui/modules/cita/cita_update/cita_update_page.dart';
 import 'package:admin_clinica_front/ui/modules/doctor/doctor_list/doctor_list_adm_page.dart';
 import 'package:admin_clinica_front/ui/modules/login/page.dart';
@@ -34,6 +36,7 @@ class Routes {
   static const String paciente_list = '/paciente_list';
 
   static const String otros = '/otros';
+  static const String atencion = '/atencion';
 
   static const String login = '/';
 }
@@ -48,7 +51,6 @@ class AppRouter {
       case Routes.login:
         return PageRouteBuilder(
           pageBuilder: (_, __, ___) => const LoginPage(),
-
           // transitionsBuilder: _createTransition,
         );
       case Routes.home:
@@ -61,7 +63,7 @@ class AppRouter {
           pageBuilder: (_, __, ___) => CitaListAsistenteRecepcionPage(),
           // transitionsBuilder: _createTransition,
         );
-
+      //? Asistente-recepcion
       // return MaterialPageRoute(builder: (_) => const CitaPage());
       case Routes.base_asistenteRecepcion + Routes.cita_list:
         return PageRouteBuilder(
@@ -119,8 +121,20 @@ class AppRouter {
           pageBuilder: (_, __, ___) => const OtrosPage(),
           //   transitionsBuilder: _createSlideFadeTransition,
         );
+      //? Asistente-asistente
+      //? Doctor
+      case Routes.base_doctor + Routes.cita_list:
+        return PageRouteBuilder(
+          pageBuilder: (_, __, ___) => CitaListDoctorPage(),
+          //   transitionsBuilder: _createSlideFadeTransition,
+        );
+      case Routes.base_doctor + Routes.atencion:
+        return PageRouteBuilder(
+          pageBuilder: (_, __, ___) => AtencionPage(),
+          //   transitionsBuilder: _createSlideFadeTransition,
+        );
+      //? Administrador
 
-      // return MaterialPageRoute(builder: (_) => const CitaAddPage());
       default:
         return MaterialPageRoute(builder: (_) => const NotFoundPage());
     }

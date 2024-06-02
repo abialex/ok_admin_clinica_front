@@ -11,7 +11,7 @@ import 'package:admin_clinica_front/ui/global_widget/page/page_base_desktop.dart
 import 'package:admin_clinica_front/ui/global_widget/page/page_base_phone.dart';
 import 'package:admin_clinica_front/ui/modules/cita/bloc/cita_crear_bloc/cita_create_bloc.dart';
 import 'package:admin_clinica_front/ui/modules/cita/bloc/cita_crear_bloc/cita_create_event.dart';
-import 'package:admin_clinica_front/ui/modules/cita/widget/cita_card_asist_recep.dart';
+import 'package:admin_clinica_front/ui/modules/cita/widget/cita_card_doctor.dart';
 import 'package:admin_clinica_front/ui/modules/cita/widget/doctor_carrusel_card.dart';
 import 'package:admin_clinica_front/ui/modules/doctor/bloc/doctor_list_bloc.dart';
 import 'package:admin_clinica_front/ui/view_models/cita_view/cita_view_models.dart';
@@ -25,16 +25,13 @@ import '../../../core/router.dart';
 import '../../../global_widget/page/page_mixin_base.dart';
 import '../bloc/cita_bloc.dart';
 
-class CitaListAsistenteRecepcionPage extends StatelessWidget with ResponsiveWidgetMixin {
-  CitaListAsistenteRecepcionPage({super.key});
+class CitaListDoctorPage extends StatelessWidget with ResponsiveWidgetMixin {
+  CitaListDoctorPage({super.key});
   DateTime dateSelected = DateTime.now();
   DoctorsViewModel? doctorSelected;
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => CountIsolateCubit(intervalAction: 60),
-      child: whatIs(context),
-    );
+    return whatIs(context);
   }
 
   @override
@@ -99,78 +96,29 @@ class CitaListAsistenteRecepcionPage extends StatelessWidget with ResponsiveWidg
                           return const Center(child: CircularProgressIndicator());
                         },
                         doctorsLoaded: (stt) {
+                          usuarioBloc.setDoctorSelected(stt.doctors[0]);
                           doctorSelected = usuarioBloc.state.doctorIdSelected;
                           if (doctorSelected != null) {
-                            if (stt.doctors.any(
-                              (element) => doctorSelected!.id == element.id,
-                            )) {
-                              doctorSelected = stt.doctors.firstWhere((element) => doctorSelected!.id == element.id);
-                              if (doctorSelected!.isActive) {
-                                context.read<CitaBloc>().add(
-                                      CitaEvent.getCitas(
-                                        CitaRequestViewModel(
-                                          doctorId: doctorSelected!.id,
-                                          ubicacionesId: usuarioBloc.state.usuario?.ubicaciones ?? [],
-                                          fechaHoraCita: DateTime.now(),
-                                        ),
+                            if (doctorSelected!.isActive) {
+                              context.read<CitaBloc>().add(
+                                    CitaEvent.getCitas(
+                                      CitaRequestViewModel(
+                                        doctorId: doctorSelected!.id,
+                                        ubicacionesId: usuarioBloc.state.usuario?.ubicaciones ?? [],
+                                        fechaHoraCita: DateTime.now(),
                                       ),
-                                    );
-                              } else {
-                                context.read<CitaBloc>().add(CitaEvent.invalidCita("Este doctor(a) está inactivo"));
-                              }
+                                    ),
+                                  );
+                            } else {
+                              context.read<CitaBloc>().add(CitaEvent.invalidCita("Este doctor(a) está inactivo"));
                             }
                           }
 
                           doctorSelected = usuarioBloc.state.doctorIdSelected;
-                          return BlocListener<CountIsolateCubit, int>(
-                            listener: (context, state) {
-                              if (state % context.read<CountIsolateCubit>().intervalAction == 0) {
-                                timerStart(timerCubit, () {
-                                  if (doctorSelected != null) {
-                                    if (stt.doctors.any(
-                                      (element) => doctorSelected!.id == element.id,
-                                    )) {
-                                      doctorSelected = stt.doctors.firstWhere((element) => doctorSelected!.id == element.id);
-                                      if (doctorSelected!.isActive) {
-                                        context.read<CitaBloc>().add(
-                                              CitaEvent.getCitas(
-                                                CitaRequestViewModel(
-                                                  doctorId: doctorSelected!.id,
-                                                  ubicacionesId: usuarioBloc.state.usuario?.ubicaciones ?? [],
-                                                  fechaHoraCita: DateTime.now(),
-                                                ),
-                                              ),
-                                            );
-                                      } else {
-                                        context.read<CitaBloc>().add(CitaEvent.invalidCita("Este doctor(a) está inactivo"));
-                                      }
-                                    }
-                                  }
-                                });
-                              }
-                            },
-                            child: DoctorCarousel(
-                              doctorIdInitialSelected: doctorSelected?.id,
-                              doctors: stt.doctors,
-                              onChanged: (doctor) {
-                                timerStart(timerCubit, () {
-                                  doctorSelected = doctor;
-                                  usuarioBloc.setDoctorSelected(doctor);
-                                  if (!doctor.isActive) {
-                                    context.read<CitaBloc>().add(CitaEvent.invalidCita("Este doctor(a) está inactivo"));
-                                    return;
-                                  }
-                                  context.read<CitaBloc>().add(CitaEvent.getCitas(
-                                        CitaRequestViewModel(
-                                          doctorId: doctor.id,
-                                          ubicacionesId: usuarioBloc.state.usuario?.ubicaciones ?? [],
-                                          fechaHoraCita: dateSelected,
-                                        ),
-                                      ));
-                                  context.read<CountIsolateCubit>().resetExternal();
-                                });
-                              },
-                            ),
+                          return DoctorCarousel(
+                            doctorIdInitialSelected: doctorSelected?.id,
+                            doctors: stt.doctors,
+                            onChanged: (doctor) {},
                           );
                         },
                         failure: (stt) {
@@ -202,41 +150,36 @@ class CitaListAsistenteRecepcionPage extends StatelessWidget with ResponsiveWidg
                                     fechaHoraCita: value,
                                   ),
                                 ));
-                                context.read<CountIsolateCubit>().resetExternal();
                               });
                             }
                           }
                         },
                       ),
                     ),
-                    Positioned(
-                      left: 0,
-                      bottom: 0,
-                      top: 0,
-                      child: BlocBuilder<CountIsolateCubit, int>(
-                        builder: (context, state) {
-                          return Stack(
-                            children: [
-                              const Icon(
-                                Icons.restart_alt,
-                                size: 32,
-                                color: AppColors.grey,
-                              ),
-                              Positioned.fill(
-                                child: Container(
-                                  alignment: Alignment.center,
-                                  child: AppTextGlobal.lightText(
-                                    text: "$state",
-                                    fontSize: 10,
-                                    colorText: AppColors.grey,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          );
-                        },
-                      ),
-                    )
+                    // Positioned(
+                    //   left: 0,
+                    //   bottom: 0,
+                    //   top: 0,
+                    //   child: Stack(
+                    //     children: [
+                    //       const Icon(
+                    //         Icons.restart_alt,
+                    //         size: 32,
+                    //         color: AppColors.grey,
+                    //       ),
+                    //       Positioned.fill(
+                    //         child: Container(
+                    //           alignment: Alignment.center,
+                    //           child: AppTextGlobal.lightText(
+                    //             text: "$state",
+                    //             fontSize: 10,
+                    //             colorText: AppColors.grey,
+                    //           ),
+                    //         ),
+                    //       ),
+                    //     ],
+                    //   ),
+                    // )
                   ],
                 ),
               ),
@@ -278,7 +221,7 @@ class CitaListAsistenteRecepcionPage extends StatelessWidget with ResponsiveWidg
               },
               citaLoaded: (state) {
                 // loaderCubit.hidden();
-                return CitasGroupedByHourAsistRecep(
+                return CitasGroupedByHourDoctor(
                   citas: state.citas,
                   onAdd: (hora, horaString) {
                     context.read<CitaCreateBloc>().add(CitaCreateEvent.citaPreCreateLocal(doctorSelected, dateSelected, hora, horaString));

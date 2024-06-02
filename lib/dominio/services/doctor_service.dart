@@ -37,6 +37,33 @@ class DoctorService {
     }
   }
 
+  Future<Either<String, List<DoctorsViewModel>>> getDoctorByUserDoctor() async {
+    try {
+      final result = await _doctorRepository.getDoctorByUserDoctor();
+      return result.fold(
+        (error) => Left(error),
+        (right) => Right(
+          right
+              .map(
+                (e) => DoctorsViewModel(
+                  usuarioId: e.usuario_id,
+                  username: e.username,
+                  id: e.id,
+                  nombres: e.nombres,
+                  apellidos: e.apellidos,
+                  isActive: e.is_active,
+                  fechaNacimiento: DateTime.parse(e.fechaNacimiento),
+                  celular: e.celular,
+                ),
+              )
+              .toList(),
+        ),
+      );
+    } catch (e) {
+      return const Left("Error inesperado");
+    }
+  }
+
   Future<Either<String, List<DoctorsViewModel>>> getDoctors() async {
     try {
       final result = await _doctorRepository.getDoctors();

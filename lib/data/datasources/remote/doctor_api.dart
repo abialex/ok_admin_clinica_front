@@ -76,5 +76,12 @@ class DoctorApi implements BaseApi {
       queryParameters: {"id": doctorId},
     );
     return ApiUtils.reponseHandler(response, (data) => (data as String));
+
+  Future<Either<String, List<DoctorsDto>>> getDoctorByUserDoctor() async {
+    final response = await _dio.get<ApiModel>(
+      "${url}by-doctor_user",
+    );
+    return ApiUtils.reponseHandler(response, (data) => (data as List).map((e) => DoctorsDto.fromJson(e)).toList());
+
   }
 }

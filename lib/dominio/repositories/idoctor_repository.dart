@@ -15,4 +15,5 @@ abstract class IDoctorRepository {
   Future<Either<String, bool>> activarDoctor(int doctorId);
   Future<Either<String, bool>> inactivarDoctor(int doctorId);
   Future<Either<String, String>> resetPassword(int doctorId);
+  Future<Either<String, List<DoctorsDto>>> getDoctorByUserDoctor();
 }
