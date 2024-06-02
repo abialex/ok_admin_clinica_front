@@ -138,6 +138,13 @@ class AppTextGlobal {
         fontSize: 13,
         maxLines: maxLines,
       );
+
+  static Text successlightText({required String text, int maxLines = 1}) => _BaseText.lightText(
+        text: text,
+        color: AppColors.greenAccent,
+        fontSize: 13,
+        maxLines: maxLines,
+      );
   // *: ESPECIALIZADO PARA EL APP
   static Text nameText({required String text}) => _BaseText.mediumText(
         text: text,

@@ -7,4 +7,5 @@ class DoctorIndexState with _$DoctorIndexState {
   factory DoctorIndexState.loading() = LoadingState;
   factory DoctorIndexState.doctorLoaded(DoctorsViewModel doctor) = DoctorLoadedState;
   factory DoctorIndexState.failure(String error) = FailureState;
+  factory DoctorIndexState.success(String success) = SuccessState;
 }

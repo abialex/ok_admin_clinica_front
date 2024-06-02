@@ -163,16 +163,20 @@ class DoctorService {
         return _doctorRepository.activarDoctor(doctorId);
       case DoctorActionEnum.inactivar:
         return _doctorRepository.inactivarDoctor(doctorId);
+
       default:
         return const Left("tipo de acción no definido en la App");
     }
+  }
+
+  Future<Either<String, String>> resetPassword(int doctorId) async {
+    return _doctorRepository.resetPassword(doctorId);
   }
 }
 
 enum DoctorActionEnum {
   activar,
   inactivar,
-  // finalizar,
   // validar,
   // cancelar,
   // eliminar,

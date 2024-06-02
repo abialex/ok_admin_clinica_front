@@ -12,6 +12,7 @@ import 'package:admin_clinica_front/ui/modules/doctor/bloc/doctor_list_bloc.dart
 import 'package:admin_clinica_front/ui/modules/doctor/bloc/doctor_update_bloc.dart';
 import 'package:admin_clinica_front/ui/modules/doctor/widget/doctor_card.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class DoctorListAsistenteRecepcionPage extends StatelessWidget with ResponsiveWidgetMixin {
@@ -31,6 +32,8 @@ class DoctorListAsistenteRecepcionPage extends StatelessWidget with ResponsiveWi
 
   @override
   PageBasePhone buildMobile(BuildContext context) {
+    context.read<DoctorListBloc>().add(GetDoctors());
+
     return PageBasePhone(
       floatingWidget: FloatingActionButton(
         backgroundColor: AppColors.slg01,
@@ -48,40 +51,43 @@ class DoctorListAsistenteRecepcionPage extends StatelessWidget with ResponsiveWi
         subTitle: "Doctor",
         title: "DOCTORES",
       ),
-      bodySliver: BlocBuilder<DoctorListBloc, DoctorListState>(
-        builder: (context, state) {
-          final doctorbloc = context.read<DoctorListBloc>();
-          return state.map(
-            initial: (sst) {
-              doctorbloc.add(GetDoctors());
-              return const SliverToBoxAdapter(child: SizedBox.shrink());
-            },
-            loading: (sst) {
-              return const SliverToBoxAdapter(child: Text("cargando"));
-            },
-            doctorsLoaded: (stt) {
-              return SliverList(
-                delegate: SliverChildBuilderDelegate(
-                  (context, index) {
-                    final item = stt.doctors[index];
-                    return DoctorsCard(
-                        onUpdate: (doctorId) {
-                          Navigator.pop(context);
-                          final doctorUpdateBloc = context.read<DoctorUpdateBloc>();
-                          doctorUpdateBloc.add(DoctorUpdateEvent.getDoctor(doctorId));
-                          Navigator.pushNamed(context, Routes.base_asistenteRecepcion + Routes.doctor_update);
-                        },
-                        doctor: item);
-                  },
-                  childCount: stt.doctors.length,
-                ),
-              );
-            },
-            failure: (stt) {
-              return SliverToBoxAdapter(child: Text(stt.error));
-            },
-          );
-        },
+      bodySliver: SliverToBoxAdapter(
+        child: BlocBuilder<DoctorListBloc, DoctorListState>(
+          builder: (context, state) {
+            return AnimatedSwitcher(
+              duration: 0.5.seconds,
+              child: state.map(
+                initial: (sst) {
+                  return const SizedBox.shrink();
+                },
+                loading: (sst) {
+                  return const Text("cargando");
+                },
+                doctorsLoaded: (stt) {
+                  return ListView.builder(
+                    physics: const NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    itemCount: stt.doctors.length,
+                    itemBuilder: (context, index) {
+                      final item = stt.doctors[index];
+                      return DoctorsCard(
+                          onUpdate: (doctorId) {
+                            Navigator.pop(context);
+                            final doctorUpdateBloc = context.read<DoctorUpdateBloc>();
+                            doctorUpdateBloc.add(DoctorUpdateEvent.getDoctor(doctorId));
+                            Navigator.pushNamed(context, Routes.base_asistenteRecepcion + Routes.doctor_update);
+                          },
+                          doctor: item);
+                    },
+                  );
+                },
+                failure: (stt) {
+                  return SliverToBoxAdapter(child: Text(stt.error));
+                },
+              ),
+            );
+          },
+        ),
       ),
     );
   }

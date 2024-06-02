@@ -5,6 +5,7 @@ import 'package:admin_clinica_front/dominio/services/citas_service.dart';
 import 'package:admin_clinica_front/dominio/services/doctor_service.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_box.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_text_style.dart';
+import 'package:admin_clinica_front/ui/global_widget/button_base/button_success.dart';
 import 'package:admin_clinica_front/ui/global_widget/dialog/dialog_message/cubit/dialog_message_cubit.dart';
 import 'package:admin_clinica_front/ui/global_widget/modal/bottomModal/app_bottom_modal.dart';
 import 'package:admin_clinica_front/ui/modules/cita/bloc/cita_index_bloc/cita_index_bloc.dart';
@@ -57,8 +58,7 @@ class DoctorsCard extends StatelessWidget {
             child: state.map(
               initial: (stt) {
                 context.read<DoctorIndexBloc>().add(DoctorIndexEvent.initial(doctor));
-
-                return Container();
+                return const SizedBox.shrink();
               },
               loading: (stt) {
                 return const Padding(
@@ -326,12 +326,12 @@ class DoctorsCard extends StatelessWidget {
                                 ),
                                 _buildOptionsBottomModal(
                                   onTap: () {
-                                    dialogCubit.showInfoAlert(
-                                      // titulo: "CANCELAR",
-                                      texto: "SIN IMPLEMENTAR",
-                                      // icon: Icons.cancel,
-                                      // colorBackground: AppColors.red,
-                                    );
+                                    dialogCubit.showConfirmationAlert(
+                                        texto: "¿Seguro(a) de reiniciar la contraseñad del doctor ${stt.doctor.nombres.toUpperCase()} ${stt.doctor.apellidos.toUpperCase()}?",
+                                        onAceptar: () {
+                                          Navigator.pop(context);
+                                          context.read<DoctorIndexBloc>().add(DoctorIndexEvent.resetPassword(stt.doctor));
+                                        });
                                   },
                                   text: "REINICIAR CONTRASEÑA",
                                 ),
@@ -387,8 +387,39 @@ class DoctorsCard extends StatelessWidget {
                   ],
                 );
               },
+              success: (stt) {
+                return Padding(
+                  padding: const EdgeInsets.all(12),
+                  child: Column(
+                    children: [
+                      AppTextGlobal.successlightText(text: stt.success),
+                      AppBox.h10,
+                      ButtonSuccess(
+                        text: "OK",
+                        onClick: () {
+                          context.read<DoctorIndexBloc>().add(DoctorIndexEvent.initial(doctor));
+                        },
+                      ),
+                    ],
+                  ),
+                );
+              },
               failure: (stt) {
-                return Container();
+                return Padding(
+                  padding: const EdgeInsets.all(12),
+                  child: Column(
+                    children: [
+                      AppTextGlobal.errorlightText(text: stt.error),
+                      AppBox.h10,
+                      ButtonSuccess(
+                        text: "OK",
+                        onClick: () {
+                          context.read<DoctorIndexBloc>().add(DoctorIndexEvent.initial(doctor));
+                        },
+                      ),
+                    ],
+                  ),
+                );
               },
             ),
           );

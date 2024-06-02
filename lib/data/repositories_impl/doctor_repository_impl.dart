@@ -52,6 +52,10 @@ class DoctorRepository implements IDoctorRepository {
   }
 
   @override
+  Future<Either<String, String>> resetPassword(int doctorId) {
+    return api.resetPassword(doctorId);
+    
+  @override
   Future<Either<String, List<DoctorsDto>>> getDoctorByUserDoctor() {
     return api.getDoctorByUserDoctor();
   }
