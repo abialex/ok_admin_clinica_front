@@ -69,4 +69,11 @@ class DoctorApi implements BaseApi {
     );
     return ApiUtils.reponseHandler(response, (data) => (data as bool));
   }
+
+  Future<Either<String, List<DoctorsDto>>> getDoctorByUserDoctor() async {
+    final response = await _dio.get<ApiModel>(
+      "${url}by-doctor_user",
+    );
+    return ApiUtils.reponseHandler(response, (data) => (data as List).map((e) => DoctorsDto.fromJson(e)).toList());
+  }
 }

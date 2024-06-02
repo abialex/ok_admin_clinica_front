@@ -32,11 +32,13 @@ class _BaseText {
     Color? color,
     FontWeight? fontWeight,
     TextAlign? textAlign,
+    int? maxLines,
   }) {
     return Text(
       text,
       textAlign: textAlign,
       softWrap: true,
+      maxLines: maxLines ?? 1,
       style: TextStyle(
         fontSize: fontSize ?? 21,
         color: color,
@@ -74,9 +76,11 @@ class AppTextGlobal {
         maxLines: maxLines,
         fontSize: fontSize,
       );
-  static Text mediumText({required String text, Color colorText = AppColors.dark}) => _BaseText.mediumText(
+  static Text mediumText({required String text, Color colorText = AppColors.dark, int maxLines = 1, TextAlign? textAlign}) => _BaseText.mediumText(
         text: text,
         color: colorText,
+        maxLines: maxLines,
+        textAlign: textAlign,
       );
 
   static Text largeText({required String text}) => _BaseText.largeText(
@@ -109,10 +113,11 @@ class AppTextGlobal {
         fontSize: 12,
       );
 
-  static Text labelMediumText({required String text, Color colorText = AppColors.dark}) => _BaseText.mediumText(
+  static Text labelMediumText({required String text, Color colorText = AppColors.dark, int maxLines = 1, TextAlign? textAlign}) => _BaseText.mediumText(
         text: text,
         fontWeight: FontWeight.bold,
         color: colorText,
+        textAlign: textAlign,
       );
 
   static Text labelLargeText({required String text, Color colorText = AppColors.dark}) => _BaseText.largeText(
