@@ -17,9 +17,10 @@ class ApiClient {
 
   Dio createDioExternal() {
     var dio = Dio();
-    dio.options.baseUrl = 'http://alex-ya.me:8000';
-    dio.options.connectTimeout = const Duration(seconds: 10); // 5 seconds
-    dio.interceptors.add(LogInterceptor(responseBody: true));
+    dio.options.baseUrl = 'http://alex-ya.me:4500/';
+    dio.options.connectTimeout = const Duration(seconds: 7); // 5 seconds
+    dio.interceptors.add(AppInterceptor());
+    // dio.interceptors.add(LogInterceptor(responseBody: true));
     return dio;
   }
 }

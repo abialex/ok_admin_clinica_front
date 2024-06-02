@@ -118,6 +118,8 @@ class CitaListAsistenteRecepcionPage extends StatelessWidget with ResponsiveWidg
                               } else {
                                 context.read<CitaBloc>().add(CitaEvent.invalidCita("Este doctor(a) está inactivo"));
                               }
+                            } else {
+                              if (stt.doctors.isNotEmpty) usuarioBloc.setDoctorSelected(stt.doctors[0]);
                             }
                           }
 
