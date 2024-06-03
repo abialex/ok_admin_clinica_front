@@ -56,7 +56,7 @@ class _InputTextDateState extends State<InputTextDate> {
       lastDate: widget.maxDate, // Fecha máxima disponible para selección
       builder: (context, child) {
         return Theme(
-          data: AppTheme().theme(),
+          data: AppTheme().themeLight(),
           child: child!,
         );
       },

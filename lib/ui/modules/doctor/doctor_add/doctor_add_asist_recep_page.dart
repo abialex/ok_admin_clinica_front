@@ -53,8 +53,8 @@ class DoctorAddAsistenteRecepcionPage extends StatelessWidget with ResponsiveWid
 
   @override
   PageBaseDesktop buildDesktop(BuildContext context) {
-    return const PageBaseDesktop(
-      headerWidget: Text("Sin implementar"),
+    return PageBaseDesktop(
+      title: "CREAR DOCTOR",
     );
   }
 

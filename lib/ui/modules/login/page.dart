@@ -53,8 +53,8 @@ class _LoginPageState extends State<LoginPage> {
                     initial: (state) {
                       return ElevatedButton(
                         onPressed: () async {
-                          _usernameController.text = "slg_7586";
-                          _passwordController.text = "75865444";
+                          _usernameController.text = "slg_test";
+                          _passwordController.text = "test0102";
                           context.read<LoginBloc>().add(LoginEvent.loginUsuario(_usernameController.text, _passwordController.text));
                         },
                         child: const Text('Login'),

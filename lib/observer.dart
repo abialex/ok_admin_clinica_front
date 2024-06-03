@@ -36,7 +36,7 @@ Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
   await setupLocator();
   if (TargetPlatform.windows == defaultTargetPlatform || TargetPlatform.macOS == defaultTargetPlatform || TargetPlatform.linux == defaultTargetPlatform) {
     //setWindowTitle('WS');
-    setWindowMinSize(const Size(500, 360));
+    setWindowMinSize(const Size(550, 550));
     setWindowMaxSize(Size.infinite);
   }
   //await Firebase.initializeApp(options: options);

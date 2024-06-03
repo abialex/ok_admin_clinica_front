@@ -13,7 +13,7 @@ mixin ResponsiveWidgetMixin on StatelessWidget {
             if (constraints.maxWidth < 600) {
               return buildMobile(context);
             } else if (constraints.maxWidth < 1200) {
-              return buildTablet(context);
+              return buildDesktop(context);
             } else {
               return buildDesktop(context);
             }

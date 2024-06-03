@@ -54,8 +54,8 @@ class DoctorUpdateAsistenteRecepcionPage extends StatelessWidget with Responsive
 
   @override
   PageBaseDesktop buildDesktop(BuildContext context) {
-    return const PageBaseDesktop(
-      headerWidget: Text("Sin implementar"),
+    return PageBaseDesktop(
+      title: "MODIFICAR DOCTOR ",
     );
   }
 

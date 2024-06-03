@@ -28,8 +28,8 @@ class DoctorListAsistenteAsistentePage extends StatelessWidget with ResponsiveWi
 
   @override
   PageBaseDesktop buildDesktop(BuildContext context) {
-    return const PageBaseDesktop(
-      headerWidget: Text("Sin implementar"),
+    return PageBaseDesktop(
+      title: "DOCTORES",
     );
   }
 

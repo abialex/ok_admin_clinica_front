@@ -32,7 +32,7 @@ class HomePage extends StatelessWidget with ResponsiveWidgetMixin {
   @override
   PageBaseDesktop buildDesktop(BuildContext context) {
     return PageBaseDesktop(
-      headerWidget: Text("dESKPTOP"),
+      title: "HOME",
     );
   }
 
