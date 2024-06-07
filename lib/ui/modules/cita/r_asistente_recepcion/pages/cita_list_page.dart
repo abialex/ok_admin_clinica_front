@@ -46,7 +46,7 @@ class CitaListAsistenteRecepcionPage extends StatelessWidget with ResponsiveWidg
 
   void timer() {}
   @override
-  PageBasePhone buildMobile(BuildContext context) {
+  PageBasePhoneBeta buildMobile(BuildContext context) {
     final citaBloc = context.read<CitaBloc>();
     final usuarioBloc = context.read<UsuarioBloc>();
     Timer? timer;
@@ -66,246 +66,255 @@ class CitaListAsistenteRecepcionPage extends StatelessWidget with ResponsiveWidg
       timer = Timer(const Duration(milliseconds: 850), func);
     }
 
-    return PageBasePhone(
-      maxEntend: 195,
-      minEntend: 195,
-      headerWidget: BlocProvider(
-        create: (context) => TimerCubit(),
-        child: Builder(builder: (context) {
-          final timerCubit = context.read<TimerCubit>();
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              const Expanded(
-                child: HeaderMobile(
-                  subTitle: "Doctor",
-                  title: "CITAS",
-                ),
-              ),
-              // AppBox.h2,
-              BlocProvider(
-                create: (context) => DoctorListBloc(),
-                child: BlocBuilder<DoctorListBloc, DoctorListState>(
-                  builder: (context, state) {
-                    final doctorBloc = context.read<DoctorListBloc>();
-                    return SizedBox(
-                      height: 60,
-                      child: state.map(
-                        initial: (stt) {
-                          doctorBloc.add(GetDoctors());
-                          return const SizedBox.shrink();
-                        },
-                        loading: (stt) {
-                          return const Center(child: CircularProgressIndicator());
-                        },
-                        doctorsLoaded: (stt) {
-                          doctorSelected = usuarioBloc.state.doctorIdSelected;
-                          if (doctorSelected != null) {
-                            if (stt.doctors.any(
-                              (element) => doctorSelected!.id == element.id,
-                            )) {
-                              doctorSelected = stt.doctors.firstWhere((element) => doctorSelected!.id == element.id);
-                              if (doctorSelected!.isActive) {
-                                context.read<CitaBloc>().add(
-                                      CitaEvent.getCitas(
-                                        CitaRequestViewModel(
-                                          doctorId: doctorSelected!.id,
-                                          ubicacionesId: usuarioBloc.state.usuario?.ubicaciones ?? [],
-                                          fechaHoraCita: DateTime.now(),
-                                        ),
-                                      ),
-                                    );
-                              } else {
-                                context.read<CitaBloc>().add(CitaEvent.invalidCita("Este doctor(a) está inactivo"));
-                              }
-                            } else {
-                              if (stt.doctors.isNotEmpty) usuarioBloc.setDoctorSelected(stt.doctors[0]);
-                            }
-                          }
-
-                          doctorSelected = usuarioBloc.state.doctorIdSelected;
-                          return BlocListener<CountIsolateCubit, int>(
-                            listener: (context, state) {
-                              if (state % context.read<CountIsolateCubit>().intervalAction == 0) {
-                                timerStart(timerCubit, () {
-                                  if (doctorSelected != null) {
-                                    if (stt.doctors.any(
-                                      (element) => doctorSelected!.id == element.id,
-                                    )) {
-                                      doctorSelected = stt.doctors.firstWhere((element) => doctorSelected!.id == element.id);
-                                      if (doctorSelected!.isActive) {
-                                        context.read<CitaBloc>().add(
-                                              CitaEvent.getCitas(
-                                                CitaRequestViewModel(
-                                                  doctorId: doctorSelected!.id,
-                                                  ubicacionesId: usuarioBloc.state.usuario?.ubicaciones ?? [],
-                                                  fechaHoraCita: DateTime.now(),
-                                                ),
+    return PageBasePhoneBeta(
+      headerWidget: const HeaderMobile(
+        subTitle: "Doctor",
+        title: "CITAS",
+      ),
+      bodySliver: [
+        SliverAppBar(
+          expandedHeight: 110,
+          collapsedHeight: 110,
+          pinned: true,
+          floating: false,
+          shadowColor: AppColors.white,
+          surfaceTintColor: AppColors.white,
+          flexibleSpace: FlexibleSpaceBar(
+            collapseMode: CollapseMode.parallax,
+            background: BlocProvider(
+              create: (context) => TimerCubit(),
+              child: Builder(builder: (context) {
+                final timerCubit = context.read<TimerCubit>();
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    // AppBox.h2,
+                    BlocProvider(
+                      create: (context) => DoctorListBloc(),
+                      child: BlocBuilder<DoctorListBloc, DoctorListState>(
+                        builder: (context, state) {
+                          final doctorBloc = context.read<DoctorListBloc>();
+                          return SizedBox(
+                            height: 60,
+                            child: state.map(
+                              initial: (stt) {
+                                doctorBloc.add(GetDoctors());
+                                return const SizedBox.shrink();
+                              },
+                              loading: (stt) {
+                                return const Center(child: CircularProgressIndicator());
+                              },
+                              doctorsLoaded: (stt) {
+                                doctorSelected = usuarioBloc.state.doctorIdSelected;
+                                if (doctorSelected != null) {
+                                  if (stt.doctors.any(
+                                    (element) => doctorSelected!.id == element.id,
+                                  )) {
+                                    doctorSelected = stt.doctors.firstWhere((element) => doctorSelected!.id == element.id);
+                                    if (doctorSelected!.isActive) {
+                                      context.read<CitaBloc>().add(
+                                            CitaEvent.getCitas(
+                                              CitaRequestViewModel(
+                                                doctorId: doctorSelected!.id,
+                                                ubicacionesId: usuarioBloc.state.usuario?.ubicaciones ?? [],
+                                                fechaHoraCita: DateTime.now(),
                                               ),
-                                            );
-                                      } else {
-                                        context.read<CitaBloc>().add(CitaEvent.invalidCita("Este doctor(a) está inactivo"));
-                                      }
+                                            ),
+                                          );
+                                    } else {
+                                      context.read<CitaBloc>().add(CitaEvent.invalidCita("Este doctor(a) está inactivo"));
                                     }
+                                  } else {
+                                    if (stt.doctors.isNotEmpty) usuarioBloc.setDoctorSelected(stt.doctors[0]);
                                   }
-                                });
-                              }
-                            },
-                            child: DoctorCarousel(
-                              doctorIdInitialSelected: doctorSelected?.id,
-                              doctors: stt.doctors,
-                              onChanged: (doctor) {
-                                timerStart(timerCubit, () {
-                                  doctorSelected = doctor;
-                                  usuarioBloc.setDoctorSelected(doctor);
-                                  if (!doctor.isActive) {
-                                    context.read<CitaBloc>().add(CitaEvent.invalidCita("Este doctor(a) está inactivo"));
-                                    return;
-                                  }
-                                  context.read<CitaBloc>().add(CitaEvent.getCitas(
-                                        CitaRequestViewModel(
-                                          doctorId: doctor.id,
-                                          ubicacionesId: usuarioBloc.state.usuario?.ubicaciones ?? [],
-                                          fechaHoraCita: dateSelected,
-                                        ),
-                                      ));
-                                  context.read<CountIsolateCubit>().resetExternal();
-                                });
+                                }
+
+                                doctorSelected = usuarioBloc.state.doctorIdSelected;
+                                return BlocListener<CountIsolateCubit, int>(
+                                  listener: (context, state) {
+                                    if (state % context.read<CountIsolateCubit>().intervalAction == 0) {
+                                      timerStart(timerCubit, () {
+                                        if (doctorSelected != null) {
+                                          if (stt.doctors.any(
+                                            (element) => doctorSelected!.id == element.id,
+                                          )) {
+                                            doctorSelected = stt.doctors.firstWhere((element) => doctorSelected!.id == element.id);
+                                            if (doctorSelected!.isActive) {
+                                              context.read<CitaBloc>().add(
+                                                    CitaEvent.getCitas(
+                                                      CitaRequestViewModel(
+                                                        doctorId: doctorSelected!.id,
+                                                        ubicacionesId: usuarioBloc.state.usuario?.ubicaciones ?? [],
+                                                        fechaHoraCita: DateTime.now(),
+                                                      ),
+                                                    ),
+                                                  );
+                                            } else {
+                                              context.read<CitaBloc>().add(CitaEvent.invalidCita("Este doctor(a) está inactivo"));
+                                            }
+                                          }
+                                        }
+                                      });
+                                    }
+                                  },
+                                  child: DoctorCarousel(
+                                    doctorIdInitialSelected: doctorSelected?.id,
+                                    doctors: stt.doctors,
+                                    onChanged: (doctor) {
+                                      timerStart(timerCubit, () {
+                                        doctorSelected = doctor;
+                                        usuarioBloc.setDoctorSelected(doctor);
+                                        if (!doctor.isActive) {
+                                          context.read<CitaBloc>().add(CitaEvent.invalidCita("Este doctor(a) está inactivo"));
+                                          return;
+                                        }
+                                        context.read<CitaBloc>().add(CitaEvent.getCitas(
+                                              CitaRequestViewModel(
+                                                doctorId: doctor.id,
+                                                ubicacionesId: usuarioBloc.state.usuario?.ubicaciones ?? [],
+                                                fechaHoraCita: dateSelected,
+                                              ),
+                                            ));
+                                        context.read<CountIsolateCubit>().resetExternal();
+                                      });
+                                    },
+                                  ),
+                                );
+                              },
+                              failure: (stt) {
+                                return Text(stt.error);
                               },
                             ),
                           );
                         },
-                        failure: (stt) {
-                          return Text(stt.error);
-                        },
-                      ),
-                    );
-                  },
-                ),
-              ),
-              SizedBox(
-                height: 35,
-                child: Stack(
-                  children: [
-                    Transform.scale(
-                      scale: 0.95,
-                      child: AppDatePickerCupertino(
-                        paddingLeftActivate: true,
-                        initialDateTime: DateTime.now(),
-                        onDateTimeChanged: (value) {
-                          dateSelected = value;
-                          if (doctorSelected != null) {
-                            if (doctorSelected!.isActive) {
-                              timerStart(timerCubit, () {
-                                citaBloc.add(CitaEvent.getCitas(
-                                  CitaRequestViewModel(
-                                    doctorId: doctorSelected!.id,
-                                    ubicacionesId: usuarioBloc.state.usuario?.ubicaciones ?? [],
-                                    fechaHoraCita: value,
-                                  ),
-                                ));
-                                context.read<CountIsolateCubit>().resetExternal();
-                              });
-                            }
-                          }
-                        },
                       ),
                     ),
-                    Positioned(
-                      left: 0,
-                      bottom: 0,
-                      top: 0,
-                      child: BlocBuilder<CountIsolateCubit, int>(
-                        builder: (context, state) {
-                          return Stack(
-                            children: [
-                              const Icon(
-                                Icons.restart_alt,
-                                size: 32,
-                                color: AppColors.grey,
-                              ),
-                              Positioned.fill(
-                                child: Container(
-                                  alignment: Alignment.center,
-                                  child: AppTextGlobal.lightText(
-                                    text: "$state",
-                                    fontSize: 10,
-                                    colorText: AppColors.grey,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          );
-                        },
+                    SizedBox(
+                      height: 35,
+                      child: Stack(
+                        children: [
+                          Transform.scale(
+                            scale: 0.95,
+                            child: AppDatePickerCupertino(
+                              paddingLeftActivate: true,
+                              initialDateTime: DateTime.now(),
+                              onDateTimeChanged: (value) {
+                                dateSelected = value;
+                                if (doctorSelected != null) {
+                                  if (doctorSelected!.isActive) {
+                                    timerStart(timerCubit, () {
+                                      citaBloc.add(CitaEvent.getCitas(
+                                        CitaRequestViewModel(
+                                          doctorId: doctorSelected!.id,
+                                          ubicacionesId: usuarioBloc.state.usuario?.ubicaciones ?? [],
+                                          fechaHoraCita: value,
+                                        ),
+                                      ));
+                                      context.read<CountIsolateCubit>().resetExternal();
+                                    });
+                                  }
+                                }
+                              },
+                            ),
+                          ),
+                          Positioned(
+                            left: 0,
+                            bottom: 0,
+                            top: 0,
+                            child: BlocBuilder<CountIsolateCubit, int>(
+                              builder: (context, state) {
+                                return Stack(
+                                  children: [
+                                    const Icon(
+                                      Icons.restart_alt,
+                                      size: 32,
+                                      color: AppColors.grey,
+                                    ),
+                                    Positioned.fill(
+                                      child: Container(
+                                        alignment: Alignment.center,
+                                        child: AppTextGlobal.lightText(
+                                          text: "$state",
+                                          fontSize: 10,
+                                          colorText: AppColors.grey,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                );
+                              },
+                            ),
+                          )
+                        ],
                       ),
-                    )
+                    ),
+                    AppBox.h6,
+                    BlocBuilder<TimerCubit, double>(
+                      builder: (context, state) {
+                        return LinearProgressIndicator(
+                          value: state,
+                        );
+                      },
+                    ),
                   ],
-                ),
-              ),
-              AppBox.h6,
-              BlocBuilder<TimerCubit, double>(
-                builder: (context, state) {
-                  return LinearProgressIndicator(
-                    value: state,
+                );
+              }),
+            ),
+          ),
+        ),
+        SliverToBoxAdapter(
+          child: BlocBuilder<CitaBloc, CitaState>(
+            builder: (context, state) {
+              return state.map(
+                initial: (state) {
+                  return GestureDetector(
+                    onTap: () {
+                      citaBloc.add(
+                        CitaEvent.getCitas(
+                          CitaRequestViewModel(
+                            doctorId: doctorSelected?.id ?? 0,
+                            ubicacionesId: usuarioBloc.state.usuario?.ubicaciones ?? [],
+                            fechaHoraCita: DateTime.now(),
+                          ),
+                        ),
+                      );
+                    },
+                    child: const SizedBox.shrink(),
                   );
                 },
-              ),
-            ],
-          );
-        }),
-      ),
-      bodySliver: SliverToBoxAdapter(
-        child: BlocBuilder<CitaBloc, CitaState>(
-          builder: (context, state) {
-            return state.map(
-              initial: (state) {
-                return GestureDetector(
-                  onTap: () {
-                    citaBloc.add(
-                      CitaEvent.getCitas(
-                        CitaRequestViewModel(
-                          doctorId: doctorSelected?.id ?? 0,
-                          ubicacionesId: usuarioBloc.state.usuario?.ubicaciones ?? [],
-                          fechaHoraCita: DateTime.now(),
-                        ),
-                      ),
-                    );
-                  },
-                  child: const SizedBox.shrink(),
-                );
-              },
-              loading: (state) {
-                // loaderCubit.show();
-                return const Center(child: CircularProgressIndicator());
-              },
-              citaLoaded: (state) {
-                // loaderCubit.hidden();
-                return CitasGroupedByHourAsistRecep(
-                  citas: state.citas,
-                  onAdd: (hora, horaString) {
-                    context.read<CitaCreateBloc>().add(CitaCreateEvent.citaPreCreateLocal(doctorSelected, dateSelected, hora, horaString));
-                    Navigator.pushNamed(
-                      context,
-                      Routes.base_asistenteRecepcion + Routes.cita_add,
-                    );
-                  },
-                  onBlock: (hora) {
-                    return CitaOcupadaCreateViewModel(doctorId: doctorSelected!.id, fechaHoraCita: dateSelected.copyWith(hour: hora));
-                  },
-                  onRelease: (citaId) {
-                    // dialogCubit.showErrorAlert(texto: "sin implementar $citaId");
-                  },
-                );
-              },
-              failure: (state) {
-                // loaderCubit.hidden();
+                loading: (state) {
+                  // loaderCubit.show();
+                  return const Center(child: CircularProgressIndicator());
+                },
+                citaLoaded: (state) {
+                  // loaderCubit.hidden();
+                  return CitasGroupedByHourAsistRecep(
+                    citas: state.citas,
+                    onAdd: (hora, horaString) {
+                      context.read<CitaCreateBloc>().add(CitaCreateEvent.citaPreCreateLocal(doctorSelected, dateSelected, hora, horaString));
+                      Navigator.pushNamed(
+                        context,
+                        Routes.base_asistenteRecepcion + Routes.cita_add,
+                      );
+                    },
+                    onBlock: (hora) {
+                      return CitaOcupadaCreateViewModel(doctorId: doctorSelected!.id, fechaHoraCita: dateSelected.copyWith(hour: hora));
+                    },
+                    onRelease: (citaId) {
+                      // dialogCubit.showErrorAlert(texto: "sin implementar $citaId");
+                    },
+                  );
+                },
+                failure: (state) {
+                  // loaderCubit.hidden();
 
-                return Text(state.error);
-              },
-            );
-          },
+                  return Text(state.error);
+                },
+              );
+            },
+          ),
         ),
-      ),
+      ],
     );
   }
 

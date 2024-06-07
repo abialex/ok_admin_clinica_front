@@ -104,6 +104,110 @@ class PageBasePhone extends StatelessWidget {
   }
 }
 
+class PageBasePhoneBeta extends StatelessWidget {
+  final List<Widget> bodySliver;
+  final Widget footerSliver;
+  final Widget headerWidget;
+  final bool showNavbar;
+
+  final Widget floatingWidget;
+  final double heightExpand;
+  final double maxEntend;
+  final double minEntend;
+  final void Function()? onReachedBottom;
+
+  const PageBasePhoneBeta({
+    super.key,
+    required this.bodySliver,
+    this.floatingWidget = const SizedBox.shrink(),
+    this.footerSliver = const SizedBox.shrink(),
+    this.headerWidget = const SizedBox.shrink(),
+    this.heightExpand = 200,
+    this.maxEntend = 90,
+    this.minEntend = 90,
+    this.onReachedBottom,
+    this.showNavbar = true,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Column(
+        children: [
+          Expanded(
+            child: Stack(
+              children: [
+                CustomScrollView(
+                  slivers: <Widget>[
+                    // Header
+                    SliverPersistentHeader(
+                      delegate: MySliverHeaderDelegate(
+                        expandedHeight: heightExpand,
+                        widgetHeader: headerWidget,
+                        maxExtend: maxEntend,
+                        minExtend: minEntend,
+                      ),
+                      pinned: true,
+                      // floating: false,
+                    ),
+                    // Body
+                    ...bodySliver.map((e) {
+                      if (e is SliverAppBar) {
+                        return e;
+                      }
+                      return SliverPadding(
+                        padding: const EdgeInsets.symmetric(horizontal: 15),
+                        sliver: e,
+                      );
+                    }),
+
+                    SliverToBoxAdapter(
+                      child: AppBox.h10,
+                    ),
+                    // Footer
+                    SliverFillRemaining(
+                      hasScrollBody: false, // el contenido ocupa todo el espacio que sliverList ocupa
+                      fillOverscroll: false,
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                        child: footerSliver,
+                      ),
+                    ),
+                  ],
+                ),
+                Positioned(
+                  bottom: 16,
+                  right: 16,
+                  child: floatingWidget,
+                ),
+              ],
+            ),
+          ),
+          Visibility(
+            visible: showNavbar,
+            child: Container(
+                height: 70,
+                alignment: Alignment.center,
+                child: DesignNavCustom(
+                  heightNavBar: 70,
+                  initialIndex: 2,
+                  backgroundColor: AppColors.slgPrincipal,
+                  iconBackgroundColorNoSelected: AppColors.slgPrincipal,
+                  iconBackgroundColorSelected: AppColors.white,
+                  onDestinationSelected: (p0) async {
+                    context.read<NavigatorCubit>().updateIndexDelay(p0);
+                    Navigator.pushReplacementNamed(context, context.read<NavigatorCubit>().state.modulesList[p0].routePage);
+                  },
+                  items: context.read<NavigatorCubit>().state.modulesList,
+                  currentIndex: context.read<NavigatorCubit>().state.delayIndex,
+                )),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
 class MySliverHeaderDelegate extends SliverPersistentHeaderDelegate {
   final Widget widgetHeader;
   final Widget widgetHeaderBody;
