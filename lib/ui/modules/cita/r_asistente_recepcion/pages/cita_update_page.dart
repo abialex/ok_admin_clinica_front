@@ -15,13 +15,13 @@ import 'package:admin_clinica_front/ui/modules/cita/bloc/cita_bloc.dart';
 import 'package:admin_clinica_front/ui/modules/cita/bloc/cita_update_bloc/cita_update_bloc.dart';
 import 'package:admin_clinica_front/ui/modules/cita/bloc/cita_update_bloc/cita_update_event.dart';
 import 'package:admin_clinica_front/ui/modules/cita/bloc/cita_update_bloc/cita_update_state.dart';
-import 'package:admin_clinica_front/ui/modules/cita/cita_update/forms/cita_update_agil.dart';
+import 'package:admin_clinica_front/ui/modules/cita/r_asistente_recepcion/forms/cita_update_agil.dart';
 import 'package:admin_clinica_front/ui/view_models/cita_view/cita_view_models.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-import '../../../global_widget/page/page_mixin_base.dart';
+import '../../../../global_widget/page/page_mixin_base.dart';
 
 class CitaUpdateAsistenteRecepcionPage extends StatelessWidget with ResponsiveWidgetMixin {
   CitaUpdateAsistenteRecepcionPage({super.key});

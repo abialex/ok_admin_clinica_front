@@ -1,16 +1,16 @@
 // ignore_for_file: constant_identifier_names
 
 import 'package:admin_clinica_front/ui/modules/atencion/page.dart';
-import 'package:admin_clinica_front/ui/modules/cita/cita_list/cita_list_doctor_page.dart';
-import 'package:admin_clinica_front/ui/modules/cita/cita_update/cita_update_page.dart';
+import 'package:admin_clinica_front/ui/modules/cita/r_doctor/pages/cita_list_doctor_page.dart';
+import 'package:admin_clinica_front/ui/modules/cita/r_asistente_recepcion/pages/cita_update_page.dart';
 import 'package:admin_clinica_front/ui/modules/doctor/doctor_list/doctor_list_adm_page.dart';
 import 'package:admin_clinica_front/ui/modules/login/page.dart';
 import 'package:admin_clinica_front/ui/modules/otros/page.dart';
 import 'package:admin_clinica_front/ui/modules/paciente/paciente_list/paciente_list_asist_recep_page.dart';
 import 'package:flutter/material.dart';
 
-import '../modules/cita/cita_add/cita_add_asist_recep_page.dart';
-import '../modules/cita/cita_list/cita_list_asist_recep_page.dart';
+import '../modules/cita/r_asistente_recepcion/pages/cita_add_page.dart';
+import '../modules/cita/r_asistente_recepcion/pages/cita_list_page.dart';
 import '../modules/doctor/doctor_add/doctor_add_asist_recep_page.dart';
 import '../modules/doctor/doctor_list/doctor_list_asist_recep_page.dart';
 import '../modules/doctor/doctor_list/doctor_list_asist_asist_page.dart';
