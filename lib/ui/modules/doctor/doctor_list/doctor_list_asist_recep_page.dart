@@ -3,6 +3,7 @@ import 'package:admin_clinica_front/core/utils/app_colors.dart';
 import 'package:admin_clinica_front/data/datasources/remote/doctor_api.dart';
 import 'package:admin_clinica_front/dominio/repositories/ilocal_repository.dart';
 import 'package:admin_clinica_front/ui/core/router.dart';
+import 'package:admin_clinica_front/ui/global_widget/app_loader_mini.dart';
 import 'package:admin_clinica_front/ui/global_widget/dialog/dialog_message/cubit/dialog_message_cubit.dart';
 import 'package:admin_clinica_front/ui/global_widget/page/mobile/app_header_mobile.dart';
 import 'package:admin_clinica_front/ui/global_widget/page/page_base_desktop.dart';
@@ -45,7 +46,11 @@ class DoctorListAsistenteRecepcionPage extends StatelessWidget with ResponsiveWi
                 return const SizedBox.shrink();
               },
               loading: (sst) {
-                return const Text("cargando");
+                return const Center(
+                  child: AppLoaderMini(
+                    height: 50,
+                  ),
+                );
               },
               doctorsLoaded: (stt) {
                 return Column(
@@ -122,7 +127,11 @@ class DoctorListAsistenteRecepcionPage extends StatelessWidget with ResponsiveWi
                   return const SizedBox.shrink();
                 },
                 loading: (sst) {
-                  return const Text("cargando");
+                  return const Center(
+                    child: AppLoaderMini(
+                      height: 50,
+                    ),
+                  );
                 },
                 doctorsLoaded: (stt) {
                   return ListView.builder(

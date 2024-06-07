@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:admin_clinica_front/core/utils/app_colors.dart';
 import 'package:admin_clinica_front/ui/blocs/usuario_session/bloc/usuario_bloc.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_box.dart';
+import 'package:admin_clinica_front/ui/global_widget/app_loader_mini.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_text_style.dart';
 import 'package:admin_clinica_front/ui/global_widget/cubits/count_isolate_cubit.dart';
 import 'package:admin_clinica_front/ui/global_widget/date/app_date_picker_cupertino.dart';
@@ -17,6 +18,7 @@ import 'package:admin_clinica_front/ui/modules/doctor/bloc/doctor_list_bloc.dart
 import 'package:admin_clinica_front/ui/view_models/cita_view/cita_view_models.dart';
 import 'package:admin_clinica_front/ui/view_models/doctor_view/doctor_view_models.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../core/di/injections.dart';
 import '../../../../../data/datasources/remote/doctor_api.dart';
@@ -39,7 +41,7 @@ class CitaListAsistenteRecepcionPage extends StatelessWidget with ResponsiveWidg
 
   @override
   PageBaseDesktop buildDesktop(BuildContext context) {
-    return PageBaseDesktop(
+    return const PageBaseDesktop(
       title: "CITAS",
     );
   }
@@ -102,7 +104,9 @@ class CitaListAsistenteRecepcionPage extends StatelessWidget with ResponsiveWidg
                                 return const SizedBox.shrink();
                               },
                               loading: (stt) {
-                                return const Center(child: CircularProgressIndicator());
+                                return const Center(
+                                  child: AppLoaderMini(),
+                                );
                               },
                               doctorsLoaded: (stt) {
                                 doctorSelected = usuarioBloc.state.doctorIdSelected;
@@ -265,51 +269,58 @@ class CitaListAsistenteRecepcionPage extends StatelessWidget with ResponsiveWidg
         SliverToBoxAdapter(
           child: BlocBuilder<CitaBloc, CitaState>(
             builder: (context, state) {
-              return state.map(
-                initial: (state) {
-                  return GestureDetector(
-                    onTap: () {
-                      citaBloc.add(
-                        CitaEvent.getCitas(
-                          CitaRequestViewModel(
-                            doctorId: doctorSelected?.id ?? 0,
-                            ubicacionesId: usuarioBloc.state.usuario?.ubicaciones ?? [],
-                            fechaHoraCita: DateTime.now(),
+              return AnimatedSwitcher(
+                duration: 0.5.seconds,
+                child: state.map(
+                  initial: (state) {
+                    return GestureDetector(
+                      onTap: () {
+                        citaBloc.add(
+                          CitaEvent.getCitas(
+                            CitaRequestViewModel(
+                              doctorId: doctorSelected?.id ?? 0,
+                              ubicacionesId: usuarioBloc.state.usuario?.ubicaciones ?? [],
+                              fechaHoraCita: DateTime.now(),
+                            ),
                           ),
-                        ),
-                      );
-                    },
-                    child: const SizedBox.shrink(),
-                  );
-                },
-                loading: (state) {
-                  // loaderCubit.show();
-                  return const Center(child: CircularProgressIndicator());
-                },
-                citaLoaded: (state) {
-                  // loaderCubit.hidden();
-                  return CitasGroupedByHourAsistRecep(
-                    citas: state.citas,
-                    onAdd: (hora, horaString) {
-                      context.read<CitaCreateBloc>().add(CitaCreateEvent.citaPreCreateLocal(doctorSelected, dateSelected, hora, horaString));
-                      Navigator.pushNamed(
-                        context,
-                        Routes.base_asistenteRecepcion + Routes.cita_add,
-                      );
-                    },
-                    onBlock: (hora) {
-                      return CitaOcupadaCreateViewModel(doctorId: doctorSelected!.id, fechaHoraCita: dateSelected.copyWith(hour: hora));
-                    },
-                    onRelease: (citaId) {
-                      // dialogCubit.showErrorAlert(texto: "sin implementar $citaId");
-                    },
-                  );
-                },
-                failure: (state) {
-                  // loaderCubit.hidden();
+                        );
+                      },
+                      child: const SizedBox.shrink(),
+                    );
+                  },
+                  loading: (state) {
+                    // loaderCubit.show();
+                    return const Center(
+                      child: AppLoaderMini(
+                        height: 70,
+                      ),
+                    );
+                  },
+                  citaLoaded: (state) {
+                    // loaderCubit.hidden();
+                    return CitasGroupedByHourAsistRecep(
+                      citas: state.citas,
+                      onAdd: (hora, horaString) {
+                        context.read<CitaCreateBloc>().add(CitaCreateEvent.citaPreCreateLocal(doctorSelected, dateSelected, hora, horaString));
+                        Navigator.pushNamed(
+                          context,
+                          Routes.base_asistenteRecepcion + Routes.cita_add,
+                        );
+                      },
+                      onBlock: (hora) {
+                        return CitaOcupadaCreateViewModel(doctorId: doctorSelected!.id, fechaHoraCita: dateSelected.copyWith(hour: hora));
+                      },
+                      onRelease: (citaId) {
+                        // dialogCubit.showErrorAlert(texto: "sin implementar $citaId");
+                      },
+                    );
+                  },
+                  failure: (state) {
+                    // loaderCubit.hidden();
 
-                  return Text(state.error);
-                },
+                    return Text(state.error);
+                  },
+                ),
               );
             },
           ),
