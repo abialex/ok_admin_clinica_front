@@ -1,5 +1,7 @@
 import 'package:admin_clinica_front/infraestructura/network/inteceptor.dart';
 import 'package:dio/dio.dart';
+import 'package:talker_dio_logger/talker_dio_logger_interceptor.dart';
+import 'package:talker_dio_logger/talker_dio_logger_settings.dart';
 
 class ApiClient {
   Dio createDioLocal() {
@@ -19,7 +21,16 @@ class ApiClient {
     var dio = Dio();
     dio.options.baseUrl = 'http://alex-ya.me:4500/';
     dio.options.connectTimeout = const Duration(seconds: 7); // 5 seconds
+    dio.interceptors.add(
+      TalkerDioLogger(
+        settings: const TalkerDioLoggerSettings(
+          printRequestHeaders: true,
+          printResponseHeaders: true,
+        ),
+      ),
+    );
     dio.interceptors.add(AppInterceptor());
+
     // dio.interceptors.add(LogInterceptor(responseBody: true));
     return dio;
   }

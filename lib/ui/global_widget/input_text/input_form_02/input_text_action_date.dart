@@ -36,14 +36,14 @@ class InputTextDate extends StatefulWidget {
 }
 
 class _InputTextDateState extends State<InputTextDate> {
-  late DateTime selectedDate;
+  late DateTime? selectedDate;
   @override
   void initState() {
     super.initState();
-    selectedDate = widget.initialDate ?? DateTime.now();
+    selectedDate = widget.initialDate;
   }
 
-  Future<DateTime> _selectDate(BuildContext context) async {
+  Future<DateTime?> _selectDate(BuildContext context) async {
     final picked = await showDatePicker(
       locale: const Locale('es', 'ES'),
       initialEntryMode: DatePickerEntryMode.inputOnly,
@@ -61,12 +61,16 @@ class _InputTextDateState extends State<InputTextDate> {
         );
       },
     );
-    if (picked != null && picked != selectedDate) {
+    if (picked != null) {
       setState(() {
         selectedDate = picked;
       });
+      return picked;
     }
-    return selectedDate;
+    if (selectedDate != null) {
+      return selectedDate;
+    }
+    return null;
   }
 
   @override
@@ -77,14 +81,18 @@ class _InputTextDateState extends State<InputTextDate> {
       label: widget.label,
       paddingVertical: widget.paddingVertical,
       iconData: Icons.date_range,
-      initialText: widget.initialText ?? selectedDate.toFormatddMMyyyySlash(),
+      initialText: widget.initialText ?? selectedDate?.toFormatddMMyyyySlash(),
       hintText: widget.hintText,
       isOnTap: true,
       function: (value) async {
         final dateSelect = await _selectDate(context);
-        final dateSelectString = dateSelect.toFormatddMMyyyySlash();
-        widget.changeDate?.call(dateSelectString, dateSelect);
-        return dateSelectString;
+        if (dateSelect != null) {
+          final dateSelectString = dateSelect.toFormatddMMyyyySlash();
+          widget.changeDate?.call(dateSelectString, dateSelect);
+          return dateSelectString;
+        } else {
+          return "";
+        }
       },
       textInputColor: AppTextGlobal.labelLightText(text: '').style,
     );

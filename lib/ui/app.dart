@@ -2,6 +2,8 @@ import 'package:admin_clinica_front/core/theme/app_theme.dart';
 import 'package:admin_clinica_front/ui/core/router.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_loader.dart';
 import 'package:admin_clinica_front/ui/global_widget/cubits/theme_cubit.dart';
+import 'package:admin_clinica_front/ui/global_widget/dialog/desk_dialog/cubit/desk_dialog_cubit.dart';
+import 'package:admin_clinica_front/ui/global_widget/dialog/desk_dialog/desk_dialog.dart';
 import 'package:admin_clinica_front/ui/global_widget/dialog/dialog_message/dialog_message.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -52,6 +54,15 @@ class App extends StatelessWidget {
               builder: (context, state) {
                 if (state.show) {
                   return const DialogCubitPage();
+                } else {
+                  return const SizedBox.shrink();
+                }
+              },
+            ),
+            BlocBuilder<DeskDialogCubit, DeskDialogState>(
+              builder: (context, state) {
+                if (state.show) {
+                  return const DeskDialogPage();
                 } else {
                   return const SizedBox.shrink();
                 }

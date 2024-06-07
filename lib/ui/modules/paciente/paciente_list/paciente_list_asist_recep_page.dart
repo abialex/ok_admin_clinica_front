@@ -17,6 +17,7 @@ class PacienteListAsistenteRecepcionPage extends StatelessWidget with Responsive
   PageBaseDesktop buildDesktop(BuildContext context) {
     return PageBaseDesktop(
       title: "PACIENTES",
+      bodyWidget: Center(child: ConstruccionAnimated()),
     );
   }
 

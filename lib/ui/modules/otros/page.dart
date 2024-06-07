@@ -17,6 +17,7 @@ class OtrosPage extends StatelessWidget with ResponsiveWidgetMixin {
   PageBaseDesktop buildDesktop(BuildContext context) {
     return PageBaseDesktop(
       title: "OTROS",
+      bodyWidget: Center(child: ConstruccionAnimated()),
     );
   }
 
