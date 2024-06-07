@@ -15,8 +15,10 @@ class OtrosPage extends StatelessWidget with ResponsiveWidgetMixin {
 
   @override
   PageBaseDesktop buildDesktop(BuildContext context) {
-    // TODO: implement buildDesktop
-    throw UnimplementedError();
+    return PageBaseDesktop(
+      title: "OTROS",
+      bodyWidget: Center(child: ConstruccionAnimated()),
+    );
   }
 
   @override

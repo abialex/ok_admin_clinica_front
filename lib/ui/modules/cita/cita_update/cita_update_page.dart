@@ -33,8 +33,8 @@ class CitaUpdateAsistenteRecepcionPage extends StatelessWidget with ResponsiveWi
 
   @override
   PageBaseDesktop buildDesktop(BuildContext context) {
-    return const PageBaseDesktop(
-      headerWidget: Text("dESKPTOP"),
+    return PageBaseDesktop(
+      title: "MODIFICAR CITA",
     );
   }
 

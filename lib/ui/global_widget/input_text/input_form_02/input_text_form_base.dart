@@ -20,7 +20,7 @@ class InputTextBase extends StatefulWidget {
     this.textInputType,
     this.textInputColor,
     required this.label,
-    required this.controller,
+    this.controller,
   });
   // Atributos Obligatorios
   // Atributos Opcionales
@@ -35,7 +35,7 @@ class InputTextBase extends StatefulWidget {
   final TextInputType? textInputType;
   final TextStyle? textInputColor;
   final String label;
-  final TextEditingController controller;
+  final TextEditingController? controller;
 
   @override
   State<InputTextBase> createState() => _InputTextBaseState();
@@ -47,7 +47,7 @@ class _InputTextBaseState extends State<InputTextBase> {
   @override
   void initState() {
     super.initState();
-    valueController = widget.controller;
+    valueController = widget.controller ?? TextEditingController();
     valueController.text = widget.initialText ?? '';
   }
 

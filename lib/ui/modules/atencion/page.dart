@@ -38,8 +38,8 @@ class AtencionPage extends StatelessWidget with ResponsiveWidgetMixin {
 
   @override
   PageBaseDesktop buildDesktop(BuildContext context) {
-    return const PageBaseDesktop(
-      headerWidget: Text("dESKPTOP"),
+    return PageBaseDesktop(
+      title: "ATENCIÓN",
     );
   }
 

@@ -66,12 +66,12 @@ class DoctorViewModel {
 }
 
 class DoctorCreateViewModel {
-  final String dni;
-  final String nombres;
-  final String apellidos;
-  final String celular;
-  final DateTime fechaNacimiento;
-  final List<int> ubicacionesId;
+  String dni;
+  String nombres;
+  String apellidos;
+  String celular;
+  DateTime fechaNacimiento;
+  List<int> ubicacionesId;
 
   DoctorCreateViewModel({
     required this.dni,

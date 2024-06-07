@@ -15,7 +15,10 @@ class PacienteListAsistenteRecepcionPage extends StatelessWidget with Responsive
 
   @override
   PageBaseDesktop buildDesktop(BuildContext context) {
-    throw UnimplementedError();
+    return PageBaseDesktop(
+      title: "PACIENTES",
+      bodyWidget: Center(child: ConstruccionAnimated()),
+    );
   }
 
   @override

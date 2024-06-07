@@ -10,6 +10,7 @@ import 'package:admin_clinica_front/ui/global_widget/page/page_base_phone.dart';
 import 'package:admin_clinica_front/ui/global_widget/page/page_mixin_base.dart';
 import 'package:admin_clinica_front/ui/modules/doctor/bloc/doctor_list_bloc.dart';
 import 'package:admin_clinica_front/ui/modules/doctor/bloc/doctor_update_bloc.dart';
+import 'package:admin_clinica_front/ui/modules/doctor/widget/desktop/desk_doctor_card.dart';
 import 'package:admin_clinica_front/ui/modules/doctor/widget/doctor_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -25,8 +26,68 @@ class DoctorListAsistenteRecepcionPage extends StatelessWidget with ResponsiveWi
 
   @override
   PageBaseDesktop buildDesktop(BuildContext context) {
-    return const PageBaseDesktop(
-      headerWidget: Text("Sin implementar"),
+    context.read<DoctorListBloc>().add(GetDoctors());
+
+    return PageBaseDesktop(
+      onTapFloating: () {
+        Navigator.pushNamed(
+          context,
+          Routes.base_asistenteRecepcion + Routes.doctor_add,
+        );
+      },
+      title: "DOCTORES",
+      bodyWidget: BlocBuilder<DoctorListBloc, DoctorListState>(
+        builder: (context, state) {
+          return AnimatedSwitcher(
+            duration: 0.5.seconds,
+            child: state.map(
+              initial: (sst) {
+                return const SizedBox.shrink();
+              },
+              loading: (sst) {
+                return const Text("cargando");
+              },
+              doctorsLoaded: (stt) {
+                return Column(
+                  children: [
+                    Expanded(
+                      child: SingleChildScrollView(
+                        child: Container(
+                          alignment: Alignment.center,
+                          child: Wrap(
+                              spacing: 10,
+                              // crossAxisAlignment: WrapCrossAlignment.end,
+                              // runAlignment: WrapAlignment.start,
+                              runSpacing: 10,
+                              children: List.generate(
+                                stt.doctors.length,
+                                (index) {
+                                  final item = stt.doctors[index];
+                                  return SizedBox(
+                                    width: 500,
+                                    child: DeskDoctorsCard(
+                                        onUpdate: (doctorId) {
+                                          final doctorUpdateBloc = context.read<DoctorUpdateBloc>();
+                                          doctorUpdateBloc.add(DoctorUpdateEvent.getDoctor(doctorId));
+                                          Navigator.pushNamed(context, Routes.base_asistenteRecepcion + Routes.doctor_update);
+                                        },
+                                        doctor: item),
+                                  );
+                                },
+                              )),
+                        ),
+                      ),
+                    ),
+                  ],
+                );
+              },
+              failure: (stt) {
+                return SliverToBoxAdapter(child: Text(stt.error));
+              },
+            ),
+          );
+        },
+      ),
     );
   }
 

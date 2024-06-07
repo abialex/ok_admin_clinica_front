@@ -43,6 +43,9 @@ dependencies:
   flutter_animate: ^4.4.1
   flutter_svg:
   flutter_phone_direct_caller: ^2.1.1
+  talker_dio_logger: ^4.1.0
+  date_picker_timeline: ^1.2.5
+
 
   flutter:
     sdk: flutter

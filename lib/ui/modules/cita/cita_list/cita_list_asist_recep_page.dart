@@ -39,8 +39,8 @@ class CitaListAsistenteRecepcionPage extends StatelessWidget with ResponsiveWidg
 
   @override
   PageBaseDesktop buildDesktop(BuildContext context) {
-    return const PageBaseDesktop(
-      headerWidget: Text("dESKPTOP"),
+    return PageBaseDesktop(
+      title: "CITAS",
     );
   }
 

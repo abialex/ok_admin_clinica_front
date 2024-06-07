@@ -1,4 +1,5 @@
 import 'package:admin_clinica_front/ui/global_widget/app_box.dart';
+import 'package:admin_clinica_front/ui/global_widget/app_construccion.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_text_style.dart';
 import 'package:admin_clinica_front/ui/global_widget/custom_navbar_navigation/cubit/navigator_cubit.dart';
 import 'package:admin_clinica_front/ui/global_widget/page/mobile/app_header_mobile.dart';
@@ -32,7 +33,8 @@ class HomePage extends StatelessWidget with ResponsiveWidgetMixin {
   @override
   PageBaseDesktop buildDesktop(BuildContext context) {
     return PageBaseDesktop(
-      headerWidget: Text("dESKPTOP"),
+      title: "HOME",
+      bodyWidget: Center(child: ConstruccionAnimated()),
     );
   }
 
