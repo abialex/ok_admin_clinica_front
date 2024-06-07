@@ -318,6 +318,9 @@ class CitasCardAsistRecep extends StatelessWidget {
                                 },
                               );
 
+                            case EstadoCita.cancelado:
+                              return const SizedBox.shrink();
+
                             default:
                               return ButtonCustomBase(
                                 backgroundColor: stt.cita.estado.color,
@@ -524,10 +527,15 @@ class CitasCardAsistRecep extends StatelessWidget {
                                     _buildOptionsBottomModal(
                                       onTap: () {
                                         dialogCubit.showCustomAlert(
-                                          titulo: "CANCELAR",
-                                          texto: "SIN IMPLEMENTAR",
+                                          titulo: "Cancelar",
+                                          texto: "Seguro que quiere cancelar la cita de ${stt.cita.datosPaciente ?? (stt.cita.pacienteDatos ?? "No tiene nombre")}",
                                           icon: Icons.cancel,
-                                          colorBackground: AppColors.red,
+                                          colorBackground: AppColors.redSunat,
+                                          onAceptar: () {
+                                            Navigator.pop(context);
+
+                                            bloc.add(CitaIndexEvent.nextCita(cita, TipoAccionEnum.cancelar));
+                                          },
                                         );
                                       },
                                       text: "CANCELAR",

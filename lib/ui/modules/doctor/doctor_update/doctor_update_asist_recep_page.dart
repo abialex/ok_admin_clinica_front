@@ -319,7 +319,7 @@ class DoctorUpdateAsistenteRecepcionPage extends StatelessWidget with Responsive
     return PageBasePhone(
       showNavbar: false,
       headerWidget: const HeaderMobile(
-        subTitle: "Doctor",
+        logoutActive: false,
         title: "MODIFICAR DOCTOR",
       ),
       bodySliver: SliverToBoxAdapter(

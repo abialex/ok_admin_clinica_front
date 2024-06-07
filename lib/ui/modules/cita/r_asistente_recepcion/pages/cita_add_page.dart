@@ -55,7 +55,10 @@ class CitaAddPage extends StatelessWidget with ResponsiveWidgetMixin {
 
     return PageBasePhone(
       showNavbar: false,
-      headerWidget: const HeaderMobile(title: "CREAR CITA"),
+      headerWidget: const HeaderMobile(
+        title: "CREAR CITA",
+        logoutActive: false,
+      ),
       bodySliver: SliverToBoxAdapter(
         child: BlocBuilder<CitaCreateBloc, CitaCreateState>(
           builder: (context, state) {

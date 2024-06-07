@@ -51,7 +51,10 @@ class CitaUpdateAsistenteRecepcionPage extends StatelessWidget with ResponsiveWi
     }
 
     return PageBasePhone(
-      headerWidget: const HeaderMobile(title: "MODIFICAR CITA"),
+      headerWidget: const HeaderMobile(
+        title: "MODIFICAR CITA",
+        logoutActive: false,
+      ),
       showNavbar: false,
       bodySliver: SliverToBoxAdapter(
         child: BlocBuilder<CitaUpdateBloc, CitaUpdateState>(
