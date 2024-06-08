@@ -10,6 +10,7 @@ class AppConstSvgs {
   static const String logo_string_descripcion = '${_path}logo_string_descripcion.svg';
   static const String doctor = '${_path}doctor.svg';
   //ICONS
+  static const String icon_fb = '${_path}fb_icon.svg';
   static const String state_atendiendo = '${_path}state_atendiendo.svg';
   static const String state_cancelado = '${_path}state_cancelado.svg';
   static const String state_confirmado = '${_path}state_confirmado.svg';

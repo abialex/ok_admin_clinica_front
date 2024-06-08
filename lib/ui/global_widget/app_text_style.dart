@@ -76,11 +76,19 @@ class AppTextGlobal {
         maxLines: maxLines,
         fontSize: fontSize,
       );
-  static Text mediumText({required String text, Color colorText = AppColors.dark, int maxLines = 1, TextAlign? textAlign}) => _BaseText.mediumText(
+  static Text mediumText({
+    required String text,
+    Color colorText = AppColors.dark,
+    int maxLines = 1,
+    TextAlign? textAlign,
+    FontWeight? fontWeight,
+  }) =>
+      _BaseText.mediumText(
         text: text,
         color: colorText,
         maxLines: maxLines,
         textAlign: textAlign,
+        fontWeight: fontWeight,
       );
 
   static Text largeText({required String text}) => _BaseText.largeText(
@@ -106,11 +114,19 @@ class AppTextGlobal {
         maxLines: maxLines,
       );
 
-  static Text labelSmallText({required String text, FontWeight fontWeight = FontWeight.bold, Color colorText = AppColors.blueSecondary}) => _BaseText.lightText(
+  static Text labelSmallText({
+    required String text,
+    FontWeight fontWeight = FontWeight.bold,
+    Color colorText = AppColors.dark,
+    TextAlign? textAlign,
+    double? fontSize,
+  }) =>
+      _BaseText.lightText(
         text: text,
         fontWeight: fontWeight,
         color: colorText,
-        fontSize: 12,
+        fontSize: fontSize ?? 12,
+        textAlign: textAlign,
       );
 
   static Text labelMediumText({required String text, Color colorText = AppColors.dark, int maxLines = 1, TextAlign? textAlign}) => _BaseText.mediumText(
@@ -120,10 +136,16 @@ class AppTextGlobal {
         textAlign: textAlign,
       );
 
-  static Text labelLargeText({required String text, Color colorText = AppColors.dark}) => _BaseText.largeText(
+  static Text labelLargeText({
+    required String text,
+    Color colorText = AppColors.dark,
+    TextAlign? textAlign,
+  }) =>
+      _BaseText.largeText(
         text: text,
         fontWeight: FontWeight.bold,
         color: colorText,
+        textAlign: textAlign,
       );
 
   static Text titleText({required String text}) => _BaseText.mediumText(
@@ -132,11 +154,12 @@ class AppTextGlobal {
         color: AppColors.blueSecondary,
       );
 
-  static Text errorlightText({required String text, int maxLines = 1}) => _BaseText.lightText(
+  static Text errorlightText({required String text, int maxLines = 1, TextAlign? textAlign}) => _BaseText.lightText(
         text: text,
         color: AppColors.redAccent,
         fontSize: 13,
         maxLines: maxLines,
+        textAlign: textAlign,
       );
 
   static Text successlightText({required String text, int maxLines = 1}) => _BaseText.lightText(

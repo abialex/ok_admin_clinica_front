@@ -5,6 +5,7 @@ import 'package:admin_clinica_front/ui/global_widget/cubits/theme_cubit.dart';
 import 'package:admin_clinica_front/ui/global_widget/dialog/desk_dialog/cubit/desk_dialog_cubit.dart';
 import 'package:admin_clinica_front/ui/global_widget/dialog/desk_dialog/desk_dialog.dart';
 import 'package:admin_clinica_front/ui/global_widget/dialog/dialog_message/dialog_message.dart';
+import 'package:admin_clinica_front/ui/global_widget/loader/app_loader_imag.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
