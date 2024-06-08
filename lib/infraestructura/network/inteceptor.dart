@@ -32,7 +32,7 @@ class AppInterceptor extends Interceptor {
         requestOptions: error.requestOptions,
         statusCode: HttpStatusCodesApp.serverConnectionError,
         data: null,
-        statusMessage: "No hay conexion al servidor",
+        statusMessage: "No hay conexión al servidor",
       );
 
       return handler.resolve(responseNoConecctionn);
