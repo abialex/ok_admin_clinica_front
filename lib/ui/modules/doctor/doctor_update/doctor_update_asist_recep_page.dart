@@ -3,6 +3,7 @@
 import 'package:admin_clinica_front/core/extensions/date_time_extensions.dart';
 import 'package:admin_clinica_front/core/extensions/string_extensions.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_box.dart';
+import 'package:admin_clinica_front/ui/global_widget/app_loader_mini.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_text_style.dart';
 import 'package:admin_clinica_front/ui/global_widget/button_base/button_cancel.dart';
 import 'package:admin_clinica_front/ui/global_widget/button_base/button_success.dart';
@@ -70,7 +71,11 @@ class DoctorUpdateAsistenteRecepcionPage extends StatelessWidget with Responsive
             return Container();
           },
           loading: (stt) {
-            return const Text("cargando");
+            return const Center(
+              child: AppLoaderMini(
+                height: 50,
+              ),
+            );
           },
           doctorSetup: (stt) {
             final doctorView = stt.doctorViewModel;
@@ -314,7 +319,7 @@ class DoctorUpdateAsistenteRecepcionPage extends StatelessWidget with Responsive
     return PageBasePhone(
       showNavbar: false,
       headerWidget: const HeaderMobile(
-        subTitle: "Doctor",
+        logoutActive: false,
         title: "MODIFICAR DOCTOR",
       ),
       bodySliver: SliverToBoxAdapter(
@@ -323,7 +328,11 @@ class DoctorUpdateAsistenteRecepcionPage extends StatelessWidget with Responsive
           return Container();
         },
         loading: (stt) {
-          return const Text("cargando");
+          return const Center(
+            child: AppLoaderMini(
+              height: 50,
+            ),
+          );
         },
         doctorSetup: (stt) {
           final doctorView = stt.doctorViewModel;

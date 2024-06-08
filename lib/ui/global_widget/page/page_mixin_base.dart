@@ -23,7 +23,7 @@ mixin ResponsiveWidgetMixin on StatelessWidget {
     );
   }
 
-  PageBasePhone buildMobile(BuildContext context);
+  Widget buildMobile(BuildContext context);
 
   PageBaseDesktop buildDesktop(BuildContext context);
 

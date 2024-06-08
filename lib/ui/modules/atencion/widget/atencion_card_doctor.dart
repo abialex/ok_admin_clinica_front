@@ -325,11 +325,14 @@ class AtencionCardDoctor extends StatelessWidget {
                                 },
                               );
 
+                            case EstadoCita.cancelado:
+                              return const SizedBox.shrink();
+
                             default:
                               return ButtonCustomBase(
                                 backgroundColor: stt.cita.estado.color,
                                 textColor: AppColors.white,
-                                text: "default",
+                                text: "N.A",
                                 onClick: () {
                                   // nextCita(context, stt.cita);
                                 },

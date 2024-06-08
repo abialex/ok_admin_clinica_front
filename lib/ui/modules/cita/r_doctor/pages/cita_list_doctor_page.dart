@@ -1,29 +1,26 @@
 // ignore_for_file: must_be_immutable
 import 'dart:async';
-import 'package:admin_clinica_front/core/utils/app_colors.dart';
 import 'package:admin_clinica_front/ui/blocs/usuario_session/bloc/usuario_bloc.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_box.dart';
-import 'package:admin_clinica_front/ui/global_widget/app_text_style.dart';
-import 'package:admin_clinica_front/ui/global_widget/cubits/count_isolate_cubit.dart';
 import 'package:admin_clinica_front/ui/global_widget/date/app_date_picker_cupertino.dart';
 import 'package:admin_clinica_front/ui/global_widget/page/mobile/app_header_mobile.dart';
 import 'package:admin_clinica_front/ui/global_widget/page/page_base_desktop.dart';
 import 'package:admin_clinica_front/ui/global_widget/page/page_base_phone.dart';
 import 'package:admin_clinica_front/ui/modules/cita/bloc/cita_crear_bloc/cita_create_bloc.dart';
 import 'package:admin_clinica_front/ui/modules/cita/bloc/cita_crear_bloc/cita_create_event.dart';
-import 'package:admin_clinica_front/ui/modules/cita/widget/cita_card_doctor.dart';
-import 'package:admin_clinica_front/ui/modules/cita/widget/doctor_carrusel_card.dart';
+import 'package:admin_clinica_front/ui/modules/cita/r_doctor/widgets/cita_card_doctor.dart';
+import 'package:admin_clinica_front/ui/modules/cita/r_asistente_recepcion/widgets/doctor_carrusel_card.dart';
 import 'package:admin_clinica_front/ui/modules/doctor/bloc/doctor_list_bloc.dart';
 import 'package:admin_clinica_front/ui/view_models/cita_view/cita_view_models.dart';
 import 'package:admin_clinica_front/ui/view_models/doctor_view/doctor_view_models.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../../core/di/injections.dart';
-import '../../../../data/datasources/remote/doctor_api.dart';
-import '../../../../dominio/repositories/ilocal_repository.dart';
-import '../../../core/router.dart';
-import '../../../global_widget/page/page_mixin_base.dart';
-import '../bloc/cita_bloc.dart';
+import '../../../../../core/di/injections.dart';
+import '../../../../../data/datasources/remote/doctor_api.dart';
+import '../../../../../dominio/repositories/ilocal_repository.dart';
+import '../../../../core/router.dart';
+import '../../../../global_widget/page/page_mixin_base.dart';
+import '../../bloc/cita_bloc.dart';
 
 class CitaListDoctorPage extends StatelessWidget with ResponsiveWidgetMixin {
   CitaListDoctorPage({super.key});

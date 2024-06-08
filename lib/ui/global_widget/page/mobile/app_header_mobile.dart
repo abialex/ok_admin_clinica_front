@@ -16,10 +16,12 @@ import 'package:flutter_svg/svg.dart';
 class HeaderMobile extends StatelessWidget {
   final String? subTitle;
   final String title;
+  final bool logoutActive;
   const HeaderMobile({
     super.key,
     this.subTitle,
     required this.title,
+    this.logoutActive = true,
   });
 
   @override
@@ -78,13 +80,16 @@ class HeaderMobile extends StatelessWidget {
                   children: [
                     GestureDetector(
                       onTap: () {
-                        dialog.showConfirmationAlert(
+                        if (logoutActive) {
+                          dialog.showConfirmationAlert(
                             texto: "¿Seguro de cerrar sesión?",
                             onAceptar: () {
                               final navbarCubit = context.read<NavigatorCubit>();
                               navbarCubit.updateIndexDelay(1);
                               Navigator.pushReplacementNamed(context, Routes.login);
-                            });
+                            },
+                          );
+                        }
                       },
                       child: SvgPicture.asset(
                         AppConstSvgs.logo,

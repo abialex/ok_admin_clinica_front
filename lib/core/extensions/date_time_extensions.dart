@@ -31,4 +31,8 @@ extension DateFormatting on DateTime {
     final DateFormat formatter = DateFormat('dd/MM/yyyy');
     return formatter.format(this);
   }
+
+  bool isSameDate(DateTime dateTime) {
+    return year == dateTime.year && month == dateTime.month && day == dateTime.day;
+  }
 }

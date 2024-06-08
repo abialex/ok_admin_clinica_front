@@ -102,4 +102,12 @@ class CitaApi {
     );
     return ApiUtils.reponseHandler(response, (data) => (data as int));
   }
+
+  Future<Either<String, bool>> cancelarCita(int id) async {
+    final response = await _dio.get<ApiModel>(
+      "citas/cita_cancelar/by-id",
+      queryParameters: {"id": id},
+    );
+    return ApiUtils.reponseHandler(response, (data) => (data as bool));
+  }
 }

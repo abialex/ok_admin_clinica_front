@@ -1,6 +1,4 @@
 import 'package:admin_clinica_front/ui/global_widget/app_box.dart';
-import 'package:admin_clinica_front/ui/global_widget/app_text_style.dart';
-import 'package:admin_clinica_front/ui/global_widget/input_text/input_form_02/input_text_action_date.dart';
 import 'package:admin_clinica_front/ui/global_widget/input_text/input_form_02/input_text_form_base.dart';
 import 'package:admin_clinica_front/ui/validators/validators.dart';
 import 'package:flutter/cupertino.dart';
@@ -18,13 +16,13 @@ class _CitaAddFormOcupadaState extends State<CitaAddFormOcupada> {
 
   final _nombresController = TextEditingController();
 
-  final _apellidosController = TextEditingController();
+  // final _apellidosController = TextEditingController();
 
-  final _dniController = TextEditingController();
+  // final _dniController = TextEditingController();
 
-  final _celularController = TextEditingController();
+  // final _celularController = TextEditingController();
 
-  DateTime? _fechaNacimientoSelected;
+  // DateTime? _fechaNacimientoSelected;
 
   @override
   Widget build(BuildContext context) {
