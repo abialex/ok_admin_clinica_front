@@ -46,6 +46,7 @@ dependencies:
   talker_dio_logger: ^4.1.0
   date_picker_timeline: ^1.2.5
   carousel_slider: ^4.0.0
+  syncfusion_flutter_datepicker: ^24.2.9
 
   flutter:
     sdk: flutter

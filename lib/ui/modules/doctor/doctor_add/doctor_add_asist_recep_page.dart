@@ -382,8 +382,8 @@ class DoctorAddAsistenteRecepcionPage extends StatelessWidget with ResponsiveWid
     return PageBasePhone(
       showNavbar: false,
       headerWidget: const HeaderMobile(
-        subTitle: "Doctor",
         title: "CREAR DOCTOR",
+        logoutActive: false,
       ),
       bodySliver: SliverToBoxAdapter(
         child: Form(

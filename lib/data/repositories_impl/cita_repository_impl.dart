@@ -72,4 +72,9 @@ class CitaRepository implements ICitaRepository {
   Future<Either<String, int>> createCitaOcupada(CitaOcupadaCreateModel citaCreate) {
     return api.createCitaOcupado(citaCreate);
   }
+
+  @override
+  Future<Either<String, bool>> cancelarCita(int id) {
+    return api.cancelarCita(id);
+  }
 }

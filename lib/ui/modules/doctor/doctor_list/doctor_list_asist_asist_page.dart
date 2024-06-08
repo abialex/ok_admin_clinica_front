@@ -1,3 +1,4 @@
+import 'package:admin_clinica_front/ui/global_widget/app_loader_mini.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_text_style.dart';
 import 'package:admin_clinica_front/ui/global_widget/page/page_base_desktop.dart';
 import 'package:admin_clinica_front/ui/global_widget/page/page_base_phone.dart';
@@ -43,7 +44,12 @@ class DoctorListAsistenteAsistentePage extends StatelessWidget with ResponsiveWi
           return const SizedBox.shrink();
         },
         loading: (stt) {
-          return const SliverToBoxAdapter(child: Text("cargando"));
+          return const SliverToBoxAdapter(
+              child: Center(
+            child: AppLoaderMini(
+              height: 50,
+            ),
+          ));
         },
         doctorsLoaded: (stt) {
           return SliverList(

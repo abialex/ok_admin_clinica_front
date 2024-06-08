@@ -176,7 +176,7 @@ class CitasService {
       case TipoAccionEnum.validar:
         return _citaRepository.validarCita(idcita);
       case TipoAccionEnum.cancelar:
-        return const Left("falta cancelar en la App");
+        return _citaRepository.cancelarCita(idcita);
       default:
         return const Left("tipo no definido en la App");
     }

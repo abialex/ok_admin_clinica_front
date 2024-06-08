@@ -13,8 +13,8 @@ import 'package:admin_clinica_front/ui/modules/cita/bloc/cita_bloc.dart';
 import 'package:admin_clinica_front/ui/modules/cita/bloc/cita_crear_bloc/cita_create_bloc.dart';
 import 'package:admin_clinica_front/ui/modules/cita/bloc/cita_crear_bloc/cita_create_event.dart';
 import 'package:admin_clinica_front/ui/modules/cita/bloc/cita_crear_bloc/cita_create_state.dart';
-import 'package:admin_clinica_front/ui/modules/cita/cita_add/forms/cita_add_agil.dart';
-import 'package:admin_clinica_front/ui/modules/cita/cita_add/forms/cita_add_ocupada.dart';
+import 'package:admin_clinica_front/ui/modules/cita/r_asistente_recepcion/forms/cita_add_agil.dart';
+import 'package:admin_clinica_front/ui/modules/cita/r_asistente_recepcion/forms/cita_add_ocupada.dart';
 import 'package:admin_clinica_front/ui/modules/cita/widget/form_pages.dart';
 import 'package:admin_clinica_front/ui/view_models/cita_view/cita_view_models.dart';
 import 'package:flutter/cupertino.dart';
@@ -23,7 +23,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-import '../../../global_widget/page/page_mixin_base.dart';
+import '../../../../global_widget/page/page_mixin_base.dart';
 
 class CitaAddPage extends StatelessWidget with ResponsiveWidgetMixin {
   CitaAddPage({super.key});
@@ -55,7 +55,10 @@ class CitaAddPage extends StatelessWidget with ResponsiveWidgetMixin {
 
     return PageBasePhone(
       showNavbar: false,
-      headerWidget: const HeaderMobile(title: "CREAR CITA"),
+      headerWidget: const HeaderMobile(
+        title: "CREAR CITA",
+        logoutActive: false,
+      ),
       bodySliver: SliverToBoxAdapter(
         child: BlocBuilder<CitaCreateBloc, CitaCreateState>(
           builder: (context, state) {
