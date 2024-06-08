@@ -101,21 +101,21 @@ class _LoginPageState extends State<LoginPage> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     AppTextGlobal.labelLightText(
-                                      text: "Login",
+                                      text: "Acceso",
                                       textAlign: TextAlign.left,
                                       colorText: AppColors.grey,
                                       fontSize: 20,
                                     ),
                                     AppBox.h20,
                                     AppTextFormFieldBox(
-                                      hintText: "Username",
+                                      hintText: "Nombre de usuario",
                                       controller: _usernameController,
                                       validator: Validators.validateNotEmpty,
                                     ),
                                     AppBox.h20,
                                     AppTextFormFieldBox(
                                       isObscureText: true,
-                                      hintText: "Password",
+                                      hintText: "Contraseña",
                                       controller: _passwordController,
                                       validator: Validators.validateNotEmpty,
                                     ),
@@ -133,7 +133,7 @@ class _LoginPageState extends State<LoginPage> {
                               state.map(
                                 initial: (state) {
                                   return ButtonSuccess(
-                                    text: "Sign In",
+                                    text: "Ingresar",
                                     onClick: () {
                                       if (formKey.currentState!.validate()) {
                                         context.read<LoginBloc>().add(LoginEvent.loginUsuario(_usernameController.text, _passwordController.text));
@@ -199,7 +199,7 @@ class _LoginPageState extends State<LoginPage> {
                                   );
                                 },
                               ),
-                              AppBox.h20,
+                              const Spacer(),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
@@ -224,7 +224,7 @@ class _LoginPageState extends State<LoginPage> {
                                   "${dotenv.env[AppConstName.app_name] ?? '- -'} v${dotenv.env[AppConstName.version] ?? '- -'} ${dotenv.env[AppConstName.last_update_date] ?? '- -'} - ${dotenv.env[AppConstName.enviroment] ?? '- -'}",
                               colorText: AppColors.grey,
                               textAlign: TextAlign.left,
-                              fontSize: 7,
+                              fontSize: 6,
                             ),
                           ],
                         ),
@@ -331,58 +331,75 @@ class AppTextFormFieldBox extends StatelessWidget {
     required this.controller,
     required this.hintText,
     this.validator,
-    this.isObscureText = false,
+    this.isObscureText,
   });
 
   final TextEditingController controller;
   final String hintText;
-  final bool isObscureText;
+  final bool? isObscureText;
   final String? Function(String?)? validator;
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      cursorColor: AppColors.dark,
-      controller: controller,
-      obscureText: isObscureText,
-      style: const TextStyle(color: AppColors.dark),
-      validator: validator,
-      decoration: InputDecoration(
-        isDense: true,
-        filled: true,
-        isCollapsed: true,
-        hintText: hintText,
-        contentPadding: const EdgeInsets.all(10),
-        hintStyle: const TextStyle(
-          fontSize: 15,
-          color: AppColors.grey,
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(
-            color: AppColors.dark,
+    return BlocProvider(
+      create: (context) => ShowPasswordCubit(),
+      child: Builder(builder: (context) {
+        final showPassword = context.watch<ShowPasswordCubit>();
+        return TextFormField(
+          cursorColor: AppColors.dark,
+          controller: controller,
+          obscureText: isObscureText == true ? !showPassword.state : false,
+          style: const TextStyle(color: AppColors.dark),
+          validator: validator,
+          decoration: InputDecoration(
+            isDense: true,
+            filled: true,
+            isCollapsed: true,
+            hintText: hintText,
+            contentPadding: const EdgeInsets.all(10),
+            hintStyle: const TextStyle(
+              fontSize: 15,
+              color: AppColors.grey,
+            ),
+            suffixIcon: isObscureText != null
+                ? IconButton(
+                    icon: Icon(
+                      showPassword.state ? Icons.remove_red_eye : Icons.remove_red_eye_outlined,
+                      color: AppColors.slg01,
+                    ),
+                    onPressed: () {
+                      showPassword.toggle();
+                    },
+                  )
+                : const SizedBox.shrink(),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+              borderSide: const BorderSide(
+                color: AppColors.dark,
+              ),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+              borderSide: const BorderSide(
+                color: AppColors.darkAppBar,
+              ),
+            ),
+            errorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+              borderSide: const BorderSide(
+                color: AppColors.redSunat,
+              ),
+            ),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+              borderSide: const BorderSide(
+                color: AppColors.darkAppBar,
+              ),
+            ),
           ),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(
-            color: AppColors.darkAppBar,
-          ),
-        ),
-        errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(
-            color: AppColors.redSunat,
-          ),
-        ),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(
-            color: AppColors.darkAppBar,
-          ),
-        ),
-      ),
-      expands: false,
+          expands: false,
+        );
+      }),
     );
   }
 }
@@ -396,5 +413,21 @@ class ShowLoaderImagenCubit extends Cubit<bool> {
 
   void hidden() {
     emit(false);
+  }
+}
+
+class ShowPasswordCubit extends Cubit<bool> {
+  ShowPasswordCubit() : super(false);
+
+  void show() {
+    emit(true);
+  }
+
+  void hidden() {
+    emit(false);
+  }
+
+  void toggle() {
+    emit(!state);
   }
 }

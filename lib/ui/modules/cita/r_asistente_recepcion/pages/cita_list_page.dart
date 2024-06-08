@@ -110,6 +110,10 @@ class CitaListAsistenteRecepcionPage extends StatelessWidget with ResponsiveWidg
                               },
                               doctorsLoaded: (stt) {
                                 doctorSelected = usuarioBloc.state.doctorIdSelected;
+                                if (stt.doctors.isEmpty) {
+                                  context.read<CitaBloc>().add(CitaEvent.invalidCita('Seleccione opción "Doctor" para crear uno'));
+                                  return const Center(child: Text("No hay doctores activos"));
+                                }
                                 if (doctorSelected != null) {
                                   if (stt.doctors.any(
                                     (element) => doctorSelected!.id == element.id,
@@ -133,7 +137,6 @@ class CitaListAsistenteRecepcionPage extends StatelessWidget with ResponsiveWidg
                                   }
                                 }
 
-                                doctorSelected = usuarioBloc.state.doctorIdSelected;
                                 return BlocListener<CountIsolateCubit, int>(
                                   listener: (context, state) {
                                     if (state % context.read<CountIsolateCubit>().intervalAction == 0) {

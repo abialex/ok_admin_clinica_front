@@ -53,6 +53,11 @@ class DoctorListAsistenteRecepcionPage extends StatelessWidget with ResponsiveWi
                 );
               },
               doctorsLoaded: (stt) {
+                if (stt.doctors.isEmpty) {
+                  return const Center(
+                    child: Text("Agregue un doctor"),
+                  );
+                }
                 return Column(
                   children: [
                     Expanded(
@@ -134,6 +139,11 @@ class DoctorListAsistenteRecepcionPage extends StatelessWidget with ResponsiveWi
                   );
                 },
                 doctorsLoaded: (stt) {
+                  if (stt.doctors.isEmpty) {
+                    return const Center(
+                      child: Text("Agregue un doctor"),
+                    );
+                  }
                   return ListView.builder(
                     physics: const NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
