@@ -57,14 +57,14 @@ class HeaderMobile extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             AppTextGlobal.labelLightText(
-                              text: snapshot.data?.nombres ?? "- -",
+                              text: snapshot.data?.nombres.toUpperCase() ?? "- -",
                               fontSize: 14,
-                              colorText: AppColors.darkFillColor,
+                              colorText: AppColors.slg01,
                             ),
                             AppTextGlobal.labelSmallText(
                               text: "${snapshot.data?.rol ?? "- -"}  ${snapshot.data?.tipo ?? ""}",
                               fontWeight: FontWeight.w600,
-                              colorText: AppColors.darkFillColor,
+                              colorText: AppColors.slg01,
                             ),
                           ],
                         );

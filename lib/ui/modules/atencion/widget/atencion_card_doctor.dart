@@ -765,62 +765,7 @@ class CitasGroupedByHourAtencionDoctor extends StatelessWidget {
                     );
                   },
                   citaBloqueada: (stt) {
-                    return Container(
-                      key: UniqueKey(),
-                      decoration: const BoxDecoration(
-                        color: AppColors.redSunat,
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(10),
-                        ),
-                      ),
-                      margin: const EdgeInsets.symmetric(
-                        vertical: 5,
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                AppTextGlobal.labelMediumText(text: hora.horaString2, colorText: AppColors.white),
-                                AppBox.w8,
-                                Expanded(
-                                  child: stt.razonOcupado != null
-                                      ? AppTextGlobal.labelLightText(
-                                          text: stt.razonOcupado!,
-                                          colorText: AppColors.white,
-                                          textAlign: TextAlign.center,
-                                          fontSize: 11,
-                                          maxLines: 2,
-                                        )
-                                      : AppTextGlobal.labelLightText(
-                                          text: stt.razonOcupado ?? "OCUPADO",
-                                          colorText: AppColors.white,
-                                          textAlign: TextAlign.center,
-                                        ),
-                                ),
-                                AppBox.w8,
-                                GestureDetector(
-                                  onTap: () {
-                                    context.read<CitaHoraBloc>().add(CitaHoraEvent.releaseCita(stt.citaId));
-                                    onRelease?.call(stt.citaId);
-                                  },
-                                  child: const Icon(
-                                    Icons.lock_open_sharp,
-                                    color: AppColors.white,
-                                  ),
-                                )
-                              ],
-                            ),
-                          ),
-                          // Column(
-                          //   crossAxisAlignment: CrossAxisAlignment.stretch,
-                          // ),
-                        ],
-                      ),
-                    );
+                    return const SizedBox.shrink();
                   },
                   citaLibre: (stt) {
                     if (stt.cita.isEmpty) {

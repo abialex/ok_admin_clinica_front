@@ -4,22 +4,16 @@ import 'package:admin_clinica_front/core/utils/app_cita_config.dart';
 import 'package:admin_clinica_front/core/utils/app_colors.dart';
 import 'package:admin_clinica_front/dominio/entities/estado_cita.dart';
 import 'package:admin_clinica_front/dominio/services/citas_service.dart';
-import 'package:admin_clinica_front/ui/core/router.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_box.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_text_style.dart';
-import 'package:admin_clinica_front/ui/global_widget/button_base/button_base.dart';
 import 'package:admin_clinica_front/ui/global_widget/button_base/button_success.dart';
 import 'package:admin_clinica_front/ui/global_widget/dialog/dialog_message/cubit/dialog_message_cubit.dart';
-import 'package:admin_clinica_front/ui/global_widget/modal/bottomModal/app_bottom_modal.dart';
 import 'package:admin_clinica_front/ui/modules/cita/bloc/cita_hora_bloc/cita_hora_bloc.dart';
 import 'package:admin_clinica_front/ui/modules/cita/bloc/cita_index_bloc/cita_index_bloc.dart';
-import 'package:admin_clinica_front/ui/modules/cita/bloc/cita_update_bloc/cita_update_bloc.dart';
-import 'package:admin_clinica_front/ui/modules/cita/bloc/cita_update_bloc/cita_update_event.dart';
 import 'package:admin_clinica_front/ui/view_models/cita_view/cita_view_models.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -31,7 +25,6 @@ class CitasCardDoctor extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const sizeButtonLeft = 25.0;
-    final dialogCubit = context.read<DialogMessageCubit>();
     return BlocProvider(
       create: (context) => CitaIndexBloc(),
       child: BlocBuilder<CitaIndexBloc, CitaIndexState>(
@@ -825,16 +818,6 @@ class CitasGroupedByHourDoctor extends StatelessWidget {
                                         ),
                                 ),
                                 AppBox.w8,
-                                GestureDetector(
-                                  onTap: () {
-                                    context.read<CitaHoraBloc>().add(CitaHoraEvent.releaseCita(stt.citaId));
-                                    onRelease?.call(stt.citaId);
-                                  },
-                                  child: const Icon(
-                                    Icons.lock_open_sharp,
-                                    color: AppColors.white,
-                                  ),
-                                )
                               ],
                             ),
                           ),
