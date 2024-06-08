@@ -1,8 +1,10 @@
 import 'package:admin_clinica_front/config/app_flavor_config.dart';
 import 'package:admin_clinica_front/observer.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'ui/main.dart';
 
-void main() {
+void main() async {
+  await dotenv.load(fileName: "assets/env/production.env");
   AppFlavorConfig.appFlavor = Flavor.PROD;
 
   bootstrap(() => const Main());

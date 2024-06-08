@@ -1,3 +1,4 @@
+import 'package:admin_clinica_front/core/constants/app_const_name.dart';
 import 'package:admin_clinica_front/core/constants/app_const_svgs.dart';
 import 'package:admin_clinica_front/core/utils/app_colors.dart';
 import 'package:admin_clinica_front/ui/blocs/usuario_session/bloc/usuario_bloc.dart';
@@ -15,6 +16,7 @@ import 'package:admin_clinica_front/ui/validators/validators.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_svg/svg.dart';
 import '../../core/app_routes.dart';
 
@@ -122,10 +124,10 @@ class _LoginPageState extends State<LoginPage> {
                               ),
                               AppBox.h32,
                               AppTextGlobal.labelSmallText(
-                                text: "si no tiene una cuenta solicite a la Administración",
+                                text: "",
                                 textAlign: TextAlign.right,
                                 colorText: AppColors.grey,
-                                fontSize: 10,
+                                fontSize: 12,
                               ),
                               AppBox.h6,
                               state.map(
@@ -197,21 +199,36 @@ class _LoginPageState extends State<LoginPage> {
                                   );
                                 },
                               ),
+                              AppBox.h20,
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  SvgPicture.asset(
+                                    AppConstSvgs.icon_fb,
+                                    height: 12,
+                                  ),
+                                  AppBox.w4,
+                                  AppTextGlobal.labelSmallText(text: "/COEsanluisgeminis", colorText: AppColors.grey),
+                                ],
+                              ),
                             ],
                           ),
                         ),
+                        AppBox.h10,
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            SvgPicture.asset(
-                              AppConstSvgs.icon_fb,
-                              height: 12,
+                            AppTextGlobal.labelSmallText(
+                              text:
+                                  "${dotenv.env[AppConstName.app_name] ?? '- -'} v${dotenv.env[AppConstName.version] ?? '- -'} ${dotenv.env[AppConstName.last_update_date] ?? '- -'} - ${dotenv.env[AppConstName.enviroment] ?? '- -'}",
+                              colorText: AppColors.grey,
+                              textAlign: TextAlign.left,
+                              fontSize: 7,
                             ),
-                            AppBox.w4,
-                            AppTextGlobal.labelSmallText(text: "/COEsanluisgeminis", colorText: AppColors.grey),
                           ],
                         ),
-                        AppBox.h10,
+                        AppBox.h2,
                       ],
                     ),
                   ),
