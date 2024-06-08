@@ -131,7 +131,6 @@ class _CarruselImagState extends State<CarruselImag> with TickerProviderStateMix
     return AnimatedBuilder(
       animation: _controllerTextWait,
       builder: (context, child) {
-        print(_controllerTextWait.value);
         return AnimatedSwitcher(
           duration: 3.seconds,
           child: () {

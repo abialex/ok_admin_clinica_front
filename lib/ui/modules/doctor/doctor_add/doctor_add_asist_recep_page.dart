@@ -626,7 +626,7 @@ class DoctorAddAsistenteRecepcionPage extends StatelessWidget with ResponsiveWid
                                                         children: [
                                                           Expanded(child: AppTextGlobal.labelLightText(text: "Username:", fontSize: 18, textAlign: TextAlign.end)),
                                                           AppBox.w10,
-                                                          Expanded(child: AppTextGlobal.lightText(text: "slg_01", fontSize: 18)),
+                                                          Expanded(child: AppTextGlobal.lightText(text: stt.doctorCredential.username, fontSize: 18)),
                                                         ],
                                                       ),
                                                       Row(
@@ -634,7 +634,7 @@ class DoctorAddAsistenteRecepcionPage extends StatelessWidget with ResponsiveWid
                                                         children: [
                                                           Expanded(child: AppTextGlobal.labelLightText(text: "Contraseña:", fontSize: 18, textAlign: TextAlign.end)),
                                                           AppBox.w10,
-                                                          Expanded(child: AppTextGlobal.lightText(text: "12343556", fontSize: 18)),
+                                                          Expanded(child: AppTextGlobal.lightText(text: stt.doctorCredential.password, fontSize: 18)),
                                                         ],
                                                       ),
                                                     ],
