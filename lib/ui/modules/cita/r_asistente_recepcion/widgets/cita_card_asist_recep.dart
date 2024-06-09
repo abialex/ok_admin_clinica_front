@@ -201,11 +201,15 @@ class CitasCardAsistRecep extends StatelessWidget {
                                   return Row(
                                     crossAxisAlignment: CrossAxisAlignment.center,
                                     children: [
-                                      AppTextGlobal.labelLightText(text: "Confirmar", fontSize: 12),
+                                      AppTextGlobal.labelLightText(
+                                        text: "Confirmar",
+                                        fontSize: 18,
+                                        colorText: EstadoCita.confirmado.color,
+                                      ),
                                       AppBox.w2,
                                       SvgPicture.asset(
                                         AppConstSvgs.state_confirmado,
-                                        height: 15,
+                                        height: 18,
                                         color: EstadoCita.confirmado.color,
                                       )
                                           .animate(
@@ -232,12 +236,16 @@ class CitasCardAsistRecep extends StatelessWidget {
                                   return Row(
                                     crossAxisAlignment: CrossAxisAlignment.center,
                                     children: [
-                                      AppTextGlobal.labelLightText(text: "Validar", fontSize: 12),
+                                      AppTextGlobal.labelLightText(
+                                        text: "Validar",
+                                        fontSize: 18,
+                                        colorText: AppColors.yellow,
+                                      ),
                                       AppBox.w2,
                                       const Icon(
                                         Icons.warning,
                                         color: AppColors.yellow,
-                                        size: 16,
+                                        size: 18,
                                       )
                                           .animate(
                                             onPlay: (controller) => controller.loop(reverse: true),
@@ -257,7 +265,11 @@ class CitasCardAsistRecep extends StatelessWidget {
                                   return Row(
                                     crossAxisAlignment: CrossAxisAlignment.center,
                                     children: [
-                                      AppTextGlobal.labelLightText(text: "Finalizar", fontSize: 12),
+                                      AppTextGlobal.labelLightText(
+                                        text: "Finalizar",
+                                        fontSize: 18,
+                                        colorText: EstadoCita.finalizado.color,
+                                      ),
                                       AppBox.w2,
                                       SvgPicture.asset(
                                         AppConstSvgs.state_finalizado,
@@ -282,11 +294,11 @@ class CitasCardAsistRecep extends StatelessWidget {
                                   return Row(
                                     crossAxisAlignment: CrossAxisAlignment.center,
                                     children: [
-                                      AppTextGlobal.labelLightText(text: "Validar", fontSize: 12),
+                                      AppTextGlobal.labelLightText(text: "Validar", fontSize: 18, colorText: EstadoCita.validado.color),
                                       AppBox.w2,
                                       SvgPicture.asset(
                                         AppConstSvgs.state_validado,
-                                        height: 15,
+                                        height: 18,
                                         color: EstadoCita.validado.color,
                                       )
                                           .animate(

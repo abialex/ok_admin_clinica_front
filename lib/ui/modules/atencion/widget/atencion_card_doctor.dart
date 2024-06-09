@@ -249,12 +249,12 @@ class AtencionCardDoctor extends StatelessWidget {
                                   return Row(
                                     crossAxisAlignment: CrossAxisAlignment.center,
                                     children: [
-                                      AppTextGlobal.labelLightText(text: "Empezar", fontSize: 12),
+                                      AppTextGlobal.labelLightText(text: "Empezar", fontSize: 18, colorText: AppColors.yellow),
                                       AppBox.w2,
                                       const Icon(
                                         Icons.warning,
                                         color: AppColors.yellow,
-                                        size: 16,
+                                        size: 20,
                                       )
                                           .animate(
                                             onPlay: (controller) => controller.loop(reverse: true),
@@ -274,11 +274,11 @@ class AtencionCardDoctor extends StatelessWidget {
                                   return Row(
                                     crossAxisAlignment: CrossAxisAlignment.center,
                                     children: [
-                                      AppTextGlobal.labelLightText(text: "Finalizar", fontSize: 12),
+                                      AppTextGlobal.labelLightText(text: "Finalizar", fontSize: 18, colorText: EstadoCita.finalizado.color),
                                       AppBox.w2,
                                       SvgPicture.asset(
                                         AppConstSvgs.state_finalizado,
-                                        height: 15,
+                                        height: 20,
                                         color: EstadoCita.finalizado.color,
                                       )
                                           .animate(
@@ -712,7 +712,9 @@ class CitasGroupedByHourAtencionDoctor extends StatelessWidget {
   Widget build(BuildContext context) {
     for (var horaItem in CitaConfig.horaList) {
       horaItem.listItems.clear();
-      horaItem.listItems.addAll(citas.where((element) => element.fechaHoraCita.hour == horaItem.hora).toList());
+      if (horaItem.hora >= DateTime.now().hour) {
+        horaItem.listItems.addAll(citas.where((element) => element.fechaHoraCita.hour == horaItem.hora).toList());
+      }
     }
 
     return ListView(
@@ -771,6 +773,7 @@ class CitasGroupedByHourAtencionDoctor extends StatelessWidget {
                     if (stt.cita.isEmpty) {
                       return const SizedBox.shrink();
                     }
+
                     return Container(
                       key: UniqueKey(),
                       decoration: const BoxDecoration(
