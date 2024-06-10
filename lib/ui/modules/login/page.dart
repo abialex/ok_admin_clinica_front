@@ -315,13 +315,14 @@ class _LoginPageState extends State<LoginPage> {
                                           );
                                         },
                                         authenticatedFailure: (state) {
-                                          return ButtonSuccess(
-                                            text: "Ingresar",
-                                            onClick: () {
-                                              if (formKey.currentState!.validate()) {
+                                          return Padding(
+                                            padding: const EdgeInsets.symmetric(horizontal: 50),
+                                            child: ButtonSuccess(
+                                              text: "Login",
+                                              onClick: () {
                                                 context.read<ShowLoaderImagenCubit>().hidden();
-                                              }
-                                            },
+                                              },
+                                            ),
                                           );
                                         },
                                         failure: (state) {
