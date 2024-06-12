@@ -208,7 +208,7 @@ class CitaAddPage extends StatelessWidget with ResponsiveWidgetMixin {
                     Row(
                       children: [
                         AppTextGlobal.lightText(text: "Dr(a). : "),
-                        Expanded(child: AppTextGlobal.labelLightText(text: "ALEXIS JAMPIER YALLE ALARCON")),
+                        Expanded(child: AppTextGlobal.labelLightText(text: doctorDatos)),
                       ],
                     ),
                     AppBox.h20,
