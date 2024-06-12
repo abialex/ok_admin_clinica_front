@@ -36,4 +36,9 @@ class SharedPreferencesRepository implements ILocalRepository {
   Future<void> saveDoctorSelected(DoctorDto doctorIdSelected) {
     return _local.saveDoctorSelected(doctorIdSelected);
   }
+
+  @override
+  Future<void> clearSession() {
+    return _local.clearSession();
+  }
 }

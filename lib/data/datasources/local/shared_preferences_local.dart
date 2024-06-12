@@ -52,4 +52,8 @@ class SharedPreferencesLocal {
       return null;
     }
   }
+
+  Future<void> clearSession() async {
+    _sharedPreferences.remove(KeyStorage.USER);
+  }
 }

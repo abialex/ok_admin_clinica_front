@@ -83,10 +83,11 @@ class HeaderMobile extends StatelessWidget {
                         if (logoutActive) {
                           dialog.showConfirmationAlert(
                             texto: "¿Seguro de cerrar sesión?",
-                            onAceptar: () {
+                            onAceptar: () async {
                               final navbarCubit = context.read<NavigatorCubit>();
                               navbarCubit.updateIndexDelay(1);
                               Navigator.pushReplacementNamed(context, Routes.login);
+                              await auth.clearSession();
                             },
                           );
                         }

@@ -47,4 +47,8 @@ class FlutterStorageLocal {
   Future<void> saveDoctorSelected(DoctorDto doctorIdSelected) async {
     await _secureStorage.write(key: KeyStorage.DOCTOR, value: jsonEncode(doctorIdSelected.toJson()));
   }
+
+  Future<void> clearSession() async {
+    return await _secureStorage.delete(key: KeyStorage.USER);
+  }
 }

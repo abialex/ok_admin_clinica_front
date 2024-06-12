@@ -8,4 +8,5 @@ abstract class ILocalRepository {
   Future<UserLoginDTO?> getUsuario();
   Future<void> saveDoctorSelected(DoctorDto doctorSelected);
   Future<DoctorDto?> getDoctorSelected();
+  Future<void> clearSession();
 }
