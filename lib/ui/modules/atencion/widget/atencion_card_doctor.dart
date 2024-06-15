@@ -712,9 +712,7 @@ class CitasGroupedByHourAtencionDoctor extends StatelessWidget {
   Widget build(BuildContext context) {
     for (var horaItem in CitaConfig.horaList) {
       horaItem.listItems.clear();
-      if (horaItem.hora >= (DateTime.now().hour - 2)) {
-        horaItem.listItems.addAll(citas.where((element) => element.estado != EstadoCita.validado && element.estado != EstadoCita.cancelado).toList());
-      }
+      horaItem.listItems.addAll(citas.where((element) => element.estado != EstadoCita.validado && element.estado != EstadoCita.cancelado && element.fechaHoraCita.hour == horaItem.hora).toList());
     }
 
     return ListView(
