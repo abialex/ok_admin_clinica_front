@@ -136,49 +136,49 @@ class CitasCardAsistRecep extends StatelessWidget {
                                     const SizedBox(height: 5.0),
                                     Text('Razón Ocupado: ${stt.cita.razonOcupado}'),
                                   ],
-                                  AppBox.h4,
-
-                                  // Row(
-                                  //   mainAxisSize: MainAxisSize.min,
-                                  //   children: [
-                                  //     // AppTextGlobal.labelLightText(text: "Estado:"),
-                                  //     Container(
-                                  //         alignment: Alignment.center,
-                                  //         width: 110,
-                                  //         padding: const EdgeInsets.symmetric(
-                                  //           vertical: 2.5,
-                                  //           horizontal: 5,
-                                  //         ),
-                                  //         decoration: BoxDecoration(
-                                  //           color: stt.cita.estado.color,
-                                  //           borderRadius: const BorderRadius.all(
-                                  //             Radius.circular(
-                                  //               10,
-                                  //             ),
-                                  //           ),
-                                  //         ),
-                                  //         child: AppTextGlobal.labelLightText(
-                                  //           text: stt.cita.estadoString,
-                                  //           colorText: AppColors.white,
-                                  //           fontSize: 14,
-                                  //         ).animate().flip()),
-                                  //   ],
-                                  // ),
                                   AppBox.h10,
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                                    child: AppTimeLine(
-                                      itemList: const [
-                                        EstadoCita.pendiente,
-                                        EstadoCita.confirmado,
-                                        EstadoCita.atendiendo,
-                                        EstadoCita.finalizado,
-                                        EstadoCita.validado,
-                                      ],
-                                      itemSelected: stt.cita.estado,
-                                      estadoPercent: stt.cita.estado.percent,
-                                    ),
-                                  ),
+
+                                  stt.cita.estado == EstadoCita.cancelado
+                                      ? Row(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            // AppTextGlobal.labelLightText(text: "Estado:"),
+                                            Container(
+                                                alignment: Alignment.center,
+                                                width: 110,
+                                                padding: const EdgeInsets.symmetric(
+                                                  vertical: 2.5,
+                                                  horizontal: 5,
+                                                ),
+                                                decoration: BoxDecoration(
+                                                  color: stt.cita.estado.color,
+                                                  borderRadius: const BorderRadius.all(
+                                                    Radius.circular(
+                                                      10,
+                                                    ),
+                                                  ),
+                                                ),
+                                                child: AppTextGlobal.labelLightText(
+                                                  text: stt.cita.estadoString,
+                                                  colorText: AppColors.white,
+                                                  fontSize: 14,
+                                                ).animate().flip()),
+                                          ],
+                                        )
+                                      : Padding(
+                                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                                          child: AppTimeLine(
+                                            itemList: const [
+                                              EstadoCita.pendiente,
+                                              EstadoCita.confirmado,
+                                              EstadoCita.atendiendo,
+                                              EstadoCita.finalizado,
+                                              EstadoCita.validado,
+                                            ],
+                                            itemSelected: stt.cita.estado,
+                                            estadoPercent: stt.cita.estado.percent,
+                                          ),
+                                        ),
 
                                   // if (cita.fechaConfirmacion != null) ...[
                                   //   const SizedBox(height: 5.0),
@@ -237,17 +237,18 @@ class CitasCardAsistRecep extends StatelessWidget {
                               );
 
                             case EstadoCita.atendiendo:
-                              return _buildActionState(
-                                onTap: () {
-                                  nextCita(context, stt.cita);
-                                },
-                                builder: () {
-                                  return const ActionWidget(
-                                    text: "Finalizar",
-                                    icon: Icons.warning,
-                                  );
-                                },
-                              );
+                              return const SizedBox.shrink();
+                            // return _buildActionState(
+                            //   onTap: () {
+                            //     nextCita(context, stt.cita);
+                            //   },
+                            //   builder: () {
+                            //     return const ActionWidget(
+                            //       text: "Finalizar",
+                            //       icon: Icons.warning,
+                            //     );
+                            //   },
+                            // );
 
                             case EstadoCita.finalizado:
                               return _buildActionState(
@@ -262,25 +263,7 @@ class CitasCardAsistRecep extends StatelessWidget {
                                 },
                               );
                             case EstadoCita.validado:
-                              return _buildActionState(
-                                onTap: () {
-                                  // nextCita(context, stt.cita);
-                                },
-                                builder: () {
-                                  return Row(
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    children: [
-                                      // AppTextGlobal.labelLightText(text: "Concluido", fontSize: 12),
-                                      // AppBox.w2,
-                                      SvgPicture.asset(
-                                        AppConstSvgs.state_validado,
-                                        height: 15,
-                                        color: EstadoCita.validado.color,
-                                      ),
-                                    ],
-                                  );
-                                },
-                              );
+                              return const SizedBox.shrink();
 
                             case EstadoCita.cancelado:
                               return const SizedBox.shrink();
