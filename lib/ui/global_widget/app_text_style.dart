@@ -70,11 +70,19 @@ class _BaseText {
 
 class AppTextGlobal {
   // *: BASE PARA EL APP
-  static Text lightText({required String text, int? maxLines, double? fontSize, Color colorText = AppColors.dark}) => _BaseText.lightText(
+  static Text lightText({
+    required String text,
+    int? maxLines,
+    double? fontSize,
+    Color colorText = AppColors.dark,
+    TextAlign? textAlign,
+  }) =>
+      _BaseText.lightText(
         text: text,
         color: colorText,
         maxLines: maxLines,
         fontSize: fontSize,
+        textAlign: textAlign,
       );
   static Text mediumText({
     required String text,
