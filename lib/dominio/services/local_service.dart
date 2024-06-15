@@ -75,4 +75,8 @@ class LocalService {
       celular: dto.celular,
     );
   }
+
+  Future<void> clearSession() async {
+    return await _localRepository.clearSession();
+  }
 }

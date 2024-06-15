@@ -132,6 +132,9 @@ class _LoginPageState extends State<LoginPage> {
                               AppBox.h6,
                               state.map(
                                 initial: (state) {
+                                  context.read<LoginBloc>().add(const LoginEvent.authenticated());
+                                  context.read<ShowLoaderImagenCubit>().show();
+
                                   return ButtonSuccess(
                                     text: "Ingresar",
                                     onClick: () {
@@ -172,13 +175,24 @@ class _LoginPageState extends State<LoginPage> {
                                   // );
                                   return const SizedBox.shrink();
                                 },
+                                authenticatedFailure: (state) {
+                                  return ButtonSuccess(
+                                    text: "Ingresar",
+                                    onClick: () {
+                                      if (formKey.currentState!.validate()) {
+                                        context.read<LoginBloc>().add(LoginEvent.loginUsuario(_usernameController.text, _passwordController.text));
+                                        context.read<ShowLoaderImagenCubit>().show();
+                                      }
+                                    },
+                                  );
+                                },
                                 failure: (state) {
                                   context.read<ShowLoaderImagenCubit>().hidden();
                                   return Stack(
                                     clipBehavior: Clip.none,
                                     children: [
                                       ButtonSuccess(
-                                        text: "Reintentar",
+                                        text: "Ingresar",
                                         onClick: () {
                                           if (formKey.currentState!.validate()) {
                                             context.read<LoginBloc>().add(LoginEvent.loginUsuario(_usernameController.text, _passwordController.text));
@@ -297,6 +311,17 @@ class _LoginPageState extends State<LoginPage> {
                                                   },
                                                 ),
                                               ],
+                                            ),
+                                          );
+                                        },
+                                        authenticatedFailure: (state) {
+                                          return Padding(
+                                            padding: const EdgeInsets.symmetric(horizontal: 50),
+                                            child: ButtonSuccess(
+                                              text: "Login",
+                                              onClick: () {
+                                                context.read<ShowLoaderImagenCubit>().hidden();
+                                              },
                                             ),
                                           );
                                         },
