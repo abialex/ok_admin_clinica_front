@@ -14,6 +14,7 @@ interface class MultiSelectItem<T> {
 class MultiSelect<T> extends StatefulWidget {
   final List<MultiSelectItem<T>> items;
   final List<MultiSelectItem<T>>? itemsSelected;
+  final bool isMultiSelect;
   final Widget Function(
     BuildContext context,
     T item,
@@ -26,6 +27,7 @@ class MultiSelect<T> extends StatefulWidget {
     super.key,
     this.onSelect,
     this.itemsSelected,
+    this.isMultiSelect = true,
   });
 
   @override
@@ -53,11 +55,16 @@ class _MultiSelectState<R> extends State<MultiSelect<R>> {
         final isSelect = listSelect.any((element) => item.id == element.id);
         return GestureDetector(
           onTap: () {
-            final indexExists = listSelect.indexWhere((element) => widget.items[index].id == element.id);
-            if (indexExists != -1) {
-              listSelect.removeAt(indexExists);
-            } else {
+            if (!widget.isMultiSelect) {
+              listSelect.clear();
               listSelect.add(widget.items[index]);
+            } else {
+              final indexExists = listSelect.indexWhere((element) => widget.items[index].id == element.id);
+              if (indexExists != -1) {
+                listSelect.removeAt(indexExists);
+              } else {
+                listSelect.add(widget.items[index]);
+              }
             }
             widget.onSelect?.call(listSelect);
             setState(() {});
