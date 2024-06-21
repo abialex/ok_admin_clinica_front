@@ -50,6 +50,25 @@ extension EstadoCitaExtension on EstadoCita {
     }
   }
 
+  double get percent {
+    switch (this) {
+      case EstadoCita.pendiente:
+        return 0;
+      case EstadoCita.confirmado:
+        return 0.25;
+      case EstadoCita.atendiendo:
+        return 0.5;
+      case EstadoCita.finalizado:
+        return 0.75;
+      case EstadoCita.validado:
+        return 1;
+      case EstadoCita.cancelado:
+        return 0;
+      default:
+        return 0;
+    }
+  }
+
   static EstadoCita fromNumber(int number) {
     switch (number) {
       case 1:

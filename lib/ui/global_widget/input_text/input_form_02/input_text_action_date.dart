@@ -47,6 +47,7 @@ class _InputTextDateState extends State<InputTextDate> {
     final picked = await showDatePicker(
       locale: const Locale('es', 'ES'),
       initialEntryMode: DatePickerEntryMode.inputOnly,
+      keyboardType: TextInputType.phone,
       helpText: widget.helper,
       confirmText: 'Aceptar',
       cancelText: 'Cancelar',

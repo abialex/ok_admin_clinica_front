@@ -15,7 +15,7 @@ class PacienteListAsistenteRecepcionPage extends StatelessWidget with Responsive
 
   @override
   PageBaseDesktop buildDesktop(BuildContext context) {
-    return PageBaseDesktop(
+    return const PageBaseDesktop(
       title: "PACIENTES",
       bodyWidget: Center(child: ConstruccionAnimated()),
     );
@@ -23,9 +23,9 @@ class PacienteListAsistenteRecepcionPage extends StatelessWidget with Responsive
 
   @override
   PageBasePhone buildMobile(BuildContext context) {
-    return PageBasePhone(
-        headerWidget: const HeaderMobile(title: "PACIENTES"),
-        bodySliver: const SliverToBoxAdapter(
+    return const PageBasePhone(
+        headerWidget: HeaderMobile(title: "PACIENTES"),
+        bodySliver: SliverToBoxAdapter(
           child: ConstruccionAnimated(),
         ));
   }

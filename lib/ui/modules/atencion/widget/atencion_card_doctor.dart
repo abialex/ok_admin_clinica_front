@@ -4,8 +4,10 @@ import 'package:admin_clinica_front/core/utils/app_cita_config.dart';
 import 'package:admin_clinica_front/core/utils/app_colors.dart';
 import 'package:admin_clinica_front/dominio/entities/estado_cita.dart';
 import 'package:admin_clinica_front/dominio/services/citas_service.dart';
+import 'package:admin_clinica_front/ui/global_widget/app_action.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_box.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_text_style.dart';
+import 'package:admin_clinica_front/ui/global_widget/app_timeline_cita.dart';
 import 'package:admin_clinica_front/ui/global_widget/button_base/button_base.dart';
 import 'package:admin_clinica_front/ui/global_widget/button_base/button_success.dart';
 import 'package:admin_clinica_front/ui/global_widget/dialog/dialog_message/cubit/dialog_message_cubit.dart';
@@ -115,7 +117,6 @@ class AtencionCardDoctor extends StatelessWidget {
                                       ],
                                     ),
                                   AppBox.h10,
-
                                   if (cita.razon != null)
                                     Row(
                                       children: [
@@ -128,53 +129,21 @@ class AtencionCardDoctor extends StatelessWidget {
                                     const SizedBox(height: 5.0),
                                     Text('Razón Ocupado: ${stt.cita.razonOcupado}'),
                                   ],
-                                  AppBox.h4,
-
-                                  Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      // AppTextGlobal.labelLightText(text: "Estado:"),
-                                      Container(
-                                          alignment: Alignment.center,
-                                          width: 110,
-                                          padding: const EdgeInsets.symmetric(
-                                            vertical: 2.5,
-                                            horizontal: 5,
-                                          ),
-                                          decoration: BoxDecoration(
-                                            color: stt.cita.estado.color,
-                                            borderRadius: const BorderRadius.all(
-                                              Radius.circular(
-                                                10,
-                                              ),
-                                            ),
-                                          ),
-                                          child: AppTextGlobal.labelLightText(
-                                            text: stt.cita.estadoString,
-                                            colorText: AppColors.white,
-                                            fontSize: 14,
-                                          ).animate().flip()),
-                                    ],
-                                  ),
-
-                                  // if (cita.fechaConfirmacion != null) ...[
-                                  //   const SizedBox(height: 5.0),
-                                  //   Text('Fecha de Confirmación: ${cita.fechaConfirmacion}'),
-                                  // ],
-                                  // if (cita.fechaValidacion != null) ...[
-                                  //   const SizedBox(height: 5.0),
-                                  //   Text('Fecha de Validación: ${cita.fechaValidacion}'),
-                                  // ],
-                                  // if (cita.fechaInicio != null) ...[
-                                  //   const SizedBox(height: 5.0),
-                                  //   Text('Fecha de Inicio: ${cita.fechaInicio}'),
-                                  // ],
-                                  // if (cita.fechaFin != null) ...[
-                                  //   const SizedBox(height: 5.0),
-                                  //   Text('Fecha de Fin: ${cita.fechaFin}'),
-                                  // ],
-
                                   AppBox.h10,
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                                    child: AppTimeLine(
+                                      itemList: const [
+                                        EstadoCita.pendiente,
+                                        EstadoCita.confirmado,
+                                        EstadoCita.atendiendo,
+                                        EstadoCita.finalizado,
+                                        EstadoCita.validado,
+                                      ],
+                                      itemSelected: stt.cita.estado,
+                                      estadoPercent: stt.cita.estado.percent,
+                                    ),
+                                  )
                                 ],
                               ),
                             ),
@@ -221,24 +190,12 @@ class AtencionCardDoctor extends StatelessWidget {
                       ),
                       // *tipó
                       Positioned(
-                        bottom: 5,
-                        right: 2.5,
+                        top: -15,
+                        right: -5,
                         child: () {
                           switch (stt.cita.estado) {
                             case EstadoCita.pendiente:
-                              return _buildActionState(
-                                onTap: () {
-                                  // nextCita(context, stt.cita);
-                                },
-                                builder: () {
-                                  return Row(
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    children: [
-                                      AppTextGlobal.labelLightText(text: "No ha llegado", fontSize: 12),
-                                    ],
-                                  );
-                                },
-                              );
+                              return const SizedBox.shrink();
 
                             case EstadoCita.confirmado:
                               return _buildActionState(
@@ -246,21 +203,9 @@ class AtencionCardDoctor extends StatelessWidget {
                                   nextCita(context, stt.cita);
                                 },
                                 builder: () {
-                                  return Row(
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    children: [
-                                      AppTextGlobal.labelLightText(text: "Empezar", fontSize: 18, colorText: AppColors.yellow),
-                                      AppBox.w2,
-                                      const Icon(
-                                        Icons.warning,
-                                        color: AppColors.yellow,
-                                        size: 20,
-                                      )
-                                          .animate(
-                                            onPlay: (controller) => controller.loop(reverse: true),
-                                          )
-                                          .shake(delay: 2.5.seconds, duration: 0.5.seconds),
-                                    ],
+                                  return const ActionWidget(
+                                    text: "Empezar",
+                                    icon: Icons.touch_app_sharp,
                                   );
                                 },
                               );
@@ -271,21 +216,9 @@ class AtencionCardDoctor extends StatelessWidget {
                                   nextCita(context, stt.cita);
                                 },
                                 builder: () {
-                                  return Row(
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    children: [
-                                      AppTextGlobal.labelLightText(text: "Finalizar", fontSize: 18, colorText: EstadoCita.finalizado.color),
-                                      AppBox.w2,
-                                      SvgPicture.asset(
-                                        AppConstSvgs.state_finalizado,
-                                        height: 20,
-                                        color: EstadoCita.finalizado.color,
-                                      )
-                                          .animate(
-                                            onPlay: (controller) => controller.loop(reverse: true),
-                                          )
-                                          .shake(delay: 2.5.seconds, duration: 0.5.seconds),
-                                    ],
+                                  return const ActionWidget(
+                                    text: "Finalizar",
+                                    icon: Icons.touch_app_sharp,
                                   );
                                 },
                               );
@@ -296,12 +229,7 @@ class AtencionCardDoctor extends StatelessWidget {
                                   nextCita(context, stt.cita);
                                 },
                                 builder: () {
-                                  return Row(
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    children: [
-                                      AppTextGlobal.labelLightText(text: "", fontSize: 12),
-                                    ],
-                                  );
+                                  return const SizedBox.shrink();
                                 },
                               );
                             case EstadoCita.validado:
@@ -310,18 +238,7 @@ class AtencionCardDoctor extends StatelessWidget {
                                   // nextCita(context, stt.cita);
                                 },
                                 builder: () {
-                                  return Row(
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    children: [
-                                      // AppTextGlobal.labelLightText(text: "Concluido", fontSize: 12),
-                                      // AppBox.w2,
-                                      SvgPicture.asset(
-                                        AppConstSvgs.state_validado,
-                                        height: 15,
-                                        color: EstadoCita.validado.color,
-                                      ),
-                                    ],
-                                  );
+                                  return const SizedBox.shrink();
                                 },
                               );
 
@@ -415,147 +332,36 @@ class AtencionCardDoctor extends StatelessWidget {
                         bottom: 0,
                         left: 0,
                         top: 17.5,
-                        child: GestureDetector(
-                          onTap: () {
-                            // AppBottomModal.showBottomModal(
-                            //   context,
-                            //   header: Column(
-                            //     children: [
-                            //       AppBox.h10,
-                            //       if (cita.datosPaciente != null)
-                            //         Row(
-                            //           crossAxisAlignment: CrossAxisAlignment.center,
-                            //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            //           children: [
-                            //             Expanded(child: Center(child: AppTextGlobal.lightText(text: stt.cita.datosPaciente!.toUpperCase()))),
-                            //           ],
-                            //         ),
-                            //       if (cita.pacienteDatos != null)
-                            //         Row(
-                            //           crossAxisAlignment: CrossAxisAlignment.center,
-                            //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            //           children: [
-                            //             Expanded(child: Center(child: AppTextGlobal.lightText(text: stt.cita.pacienteDatos!.toUpperCase()))),
-                            //           ],
-                            //         ),
-                            //       AppBox.h10,
-                            //       Row(
-                            //         mainAxisSize: MainAxisSize.max,
-                            //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            //         children: [
-                            //           // AppTextGlobal.labelLightText(text: "Estado:"),
-                            //           Container(
-                            //             alignment: Alignment.center,
-                            //             width: 110,
-                            //             padding: const EdgeInsets.symmetric(
-                            //               vertical: 2.5,
-                            //               horizontal: 5,
-                            //             ),
-                            //             decoration: BoxDecoration(
-                            //               color: stt.cita.estado.color,
-                            //               borderRadius: const BorderRadius.all(
-                            //                 Radius.circular(
-                            //                   10,
-                            //                 ),
-                            //               ),
-                            //             ),
-                            //             child: AppTextGlobal.labelLightText(
-                            //               text: stt.cita.estadoString,
-                            //               colorText: AppColors.white,
-                            //               fontSize: 14,
-                            //             ).animate().flip(),
-                            //           ),
-                            //           Row(
-                            //             children: [
-                            //               const Icon(
-                            //                 Icons.av_timer_rounded,
-                            //                 color: AppColors.slg01,
-                            //               ),
-                            //               // AppTextGlobal.labelLightText(text: "Hora:"),
-                            //               AppBox.w2,
-                            //               AppTextGlobal.labelLightText(text: stt.cita.fechaHoraCita.toFormatHHmm()),
-                            //             ],
-                            //           )
-                            //         ],
-                            //       ),
-                            //     ],
-                            //   ),
-                            //   body: CustomScrollView(
-                            //     slivers: [
-                            //       if (stt.cita.estado == EstadoCita.pendiente)
-                            //         _buildOptionsBottomModal(
-                            //           onTap: () {
-                            //             Navigator.pop(context);
-                            //             Navigator.pushNamed(
-                            //               context,
-                            //               Routes.base_asistenteRecepcion + Routes.cita_update,
-                            //             );
-                            //             context.read<CitaUpdateBloc>().add(CitaUpdateEvent.citaGetById(stt.cita.id));
-                            //           },
-                            //           text: "MODIFICAR",
-                            //         ),
-                            //       if (stt.cita.estado == EstadoCita.pendiente)
-                            //         _buildOptionsBottomModal(
-                            //           onTap: () {
-                            //             dialogCubit.showCustomAlert(
-                            //               titulo: "CANCELAR",
-                            //               texto: "SIN IMPLEMENTAR",
-                            //               icon: Icons.cancel,
-                            //               colorBackground: AppColors.red,
-                            //             );
-                            //           },
-                            //           text: "CANCELAR",
-                            //         ),
-                            //       if (stt.cita.celular != null)
-                            //         _buildOptionsBottomModal(
-                            //           onTap: () {
-                            //             dialogCubit.showCustomAlert(
-                            //               titulo: "Llamar",
-                            //               texto: "Seguro que quiere llamar a ${stt.cita.datosPaciente ?? (stt.cita.pacienteDatos ?? "No tiene nombre")}",
-                            //               icon: Icons.phone,
-                            //               colorBackground: AppColors.blueSunat,
-                            //               onAceptar: () {
-                            //                 FlutterPhoneDirectCaller.callNumber(stt.cita.celular!);
-                            //               },
-                            //             );
-                            //           },
-                            //           text: "LLAMAR",
-                            //         ),
-                            //     ],
-                            //   ),
-                            // );
-                          },
-                          child: Container(
-                            decoration: const BoxDecoration(
-                              color: AppColors.slg01,
-                              borderRadius: BorderRadius.only(
-                                bottomRight: Radius.circular(10.0),
-                                topRight: Radius.circular(10.0),
+                        child: Container(
+                          decoration: const BoxDecoration(
+                            color: AppColors.slg01,
+                            borderRadius: BorderRadius.only(
+                              bottomRight: Radius.circular(10.0),
+                              topRight: Radius.circular(10.0),
+                            ),
+                          ),
+                          width: sizeButtonLeft,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Icon(
+                                Icons.circle,
+                                color: AppColors.white,
+                                size: 13,
                               ),
-                            ),
-                            width: sizeButtonLeft,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                const Icon(
-                                  Icons.circle,
-                                  color: AppColors.white,
-                                  size: 13,
-                                ),
-                                AppBox.h16,
-                                const Icon(
-                                  Icons.circle,
-                                  color: AppColors.white,
-                                  size: 13,
-                                ),
-                                AppBox.h16,
-                                const Icon(
-                                  Icons.circle,
-                                  color: AppColors.white,
-                                  size: 13,
-                                ),
-                              ],
-                            ),
+                              AppBox.h16,
+                              const Icon(
+                                Icons.circle,
+                                color: AppColors.white,
+                                size: 13,
+                              ),
+                              AppBox.h16,
+                              const Icon(
+                                Icons.circle,
+                                color: AppColors.white,
+                                size: 13,
+                              ),
+                            ],
                           ),
                         ),
                       )
@@ -712,9 +518,7 @@ class CitasGroupedByHourAtencionDoctor extends StatelessWidget {
   Widget build(BuildContext context) {
     for (var horaItem in CitaConfig.horaList) {
       horaItem.listItems.clear();
-      if (horaItem.hora >= (DateTime.now().hour - 2)) {
-        horaItem.listItems.addAll(citas.where((element) => element.estado != EstadoCita.validado && element.estado != EstadoCita.cancelado).toList());
-      }
+      horaItem.listItems.addAll(citas.where((element) => element.estado != EstadoCita.validado && element.estado != EstadoCita.cancelado && element.fechaHoraCita.hour == horaItem.hora).toList());
     }
 
     return ListView(
