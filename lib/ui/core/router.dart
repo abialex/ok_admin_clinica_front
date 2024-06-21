@@ -1,6 +1,7 @@
 // ignore_for_file: constant_identifier_names
 
 import 'package:admin_clinica_front/ui/modules/atencion/page.dart';
+import 'package:admin_clinica_front/ui/modules/cita/r_asistente_asistente/pages/cita_list_page.dart';
 import 'package:admin_clinica_front/ui/modules/cita/r_doctor/pages/cita_list_doctor_page.dart';
 import 'package:admin_clinica_front/ui/modules/cita/r_asistente_recepcion/pages/cita_update_page.dart';
 import 'package:admin_clinica_front/ui/modules/doctor/doctor_list/doctor_list_adm_page.dart';
@@ -122,6 +123,11 @@ class AppRouter {
           //   transitionsBuilder: _createSlideFadeTransition,
         );
       //? Asistente-asistente
+      case Routes.base_asistenteAsistente + Routes.cita_list:
+        return PageRouteBuilder(
+          pageBuilder: (_, __, ___) => CitaListAsistenteAsistentePage(),
+          //  transitionsBuilder: _createScaleTransition,
+        );
       //? Doctor
       case Routes.base_doctor + Routes.cita_list:
         return PageRouteBuilder(

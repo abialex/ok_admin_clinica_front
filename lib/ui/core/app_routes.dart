@@ -33,7 +33,7 @@ List<ModulesRouter> modulesRouterList = [
       RutasNav(
         icon: Icons.message,
         titulo: "Citas",
-        routePage: Routes.cita_list,
+        routePage: Routes.base_asistenteAsistente + Routes.cita_list,
       ),
     ],
   ),
