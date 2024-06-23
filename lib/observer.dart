@@ -31,12 +31,12 @@ Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
     log(details.exceptionAsString(), stackTrace: details.stack);
   };
 
+  WidgetsFlutterBinding.ensureInitialized();
   Bloc.observer = const AppBlocObserver();
   await setupLocator();
-  WidgetsFlutterBinding.ensureInitialized();
   if (TargetPlatform.windows == defaultTargetPlatform || TargetPlatform.macOS == defaultTargetPlatform || TargetPlatform.linux == defaultTargetPlatform) {
     //setWindowTitle('WS');
-    setWindowMinSize(const Size(500, 360));
+    setWindowMinSize(const Size(750, 600));
     setWindowMaxSize(Size.infinite);
   }
   //await Firebase.initializeApp(options: options);

@@ -42,7 +42,7 @@ GetIt locator = GetIt.instance;
 
 Future<void> setupLocator() async {
   // locator.registerSingleton<FlutterSecureStorage>(const FlutterSecureStorage());
-  locator.registerLazySingleton<Dio>(() => ApiClient().createDioLocal());
+  locator.registerLazySingleton<Dio>(() => ApiClient().setupDio());
   locator.registerLazySingleton<FlutterSecureStorage>(() => FlutterStorageClient().createSecureStorage());
   locator.registerSingletonAsync<SharedPreferences>(() async => SharedPreferencesClient().createShredPreferences());
 

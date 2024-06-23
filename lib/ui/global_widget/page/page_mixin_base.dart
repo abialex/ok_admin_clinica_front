@@ -13,7 +13,34 @@ mixin ResponsiveWidgetMixin on StatelessWidget {
             if (constraints.maxWidth < 600) {
               return buildMobile(context);
             } else if (constraints.maxWidth < 1200) {
-              return buildTablet(context);
+              return buildDesktop(context);
+            } else {
+              return buildDesktop(context);
+            }
+          }(),
+        );
+      },
+    );
+  }
+
+  Widget buildMobile(BuildContext context);
+
+  PageBaseDesktop buildDesktop(BuildContext context);
+
+  Widget buildTablet(BuildContext context);
+}
+
+mixin ResponsiveFullWidgetMixin on StatefulWidget {
+  Widget whatIs(BuildContext context) {
+    return LayoutBuilder(
+      builder: (_, constraints) {
+        return AnimatedSwitcher(
+          duration: const Duration(milliseconds: 50),
+          child: () {
+            if (constraints.maxWidth < 600) {
+              return buildMobile(context);
+            } else if (constraints.maxWidth < 1200) {
+              return buildDesktop(context);
             } else {
               return buildDesktop(context);
             }

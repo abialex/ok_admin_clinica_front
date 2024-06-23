@@ -42,9 +42,14 @@ List<ModulesRouter> modulesRouterList = [
     modulesTipo: "Recepcion",
     modulesList: [
       RutasNav(
-        icon: Icons.personal_injury_outlined,
+        icon: Icons.person_3_rounded,
         titulo: "Doctor",
         routePage: Routes.base_asistenteRecepcion + Routes.doctor_list,
+      ),
+      RutasNav(
+        icon: Icons.personal_injury_outlined,
+        titulo: "Pacientes",
+        routePage: Routes.base_asistenteRecepcion + Routes.paciente_list,
       ),
       RutasNav(
         icon: Icons.home,
@@ -52,9 +57,14 @@ List<ModulesRouter> modulesRouterList = [
         routePage: Routes.home,
       ),
       RutasNav(
-        icon: Icons.message,
+        icon: Icons.notifications_active,
         titulo: "Citas",
         routePage: Routes.base_asistenteRecepcion + Routes.cita_list,
+      ),
+      RutasNav(
+        icon: Icons.bookmark_outline_sharp,
+        titulo: "Otros",
+        routePage: Routes.base_asistenteRecepcion + Routes.otros,
       ),
     ],
   ),
@@ -83,8 +93,8 @@ List<ModulesRouter> modulesRouterList = [
     modulesList: [
       RutasNav(
         icon: Icons.personal_injury_outlined,
-        titulo: "Doctor",
-        routePage: Routes.base_admin + Routes.doctor_list,
+        titulo: "Atención",
+        routePage: Routes.base_doctor + Routes.atencion,
       ),
       RutasNav(
         icon: Icons.home,
@@ -92,9 +102,9 @@ List<ModulesRouter> modulesRouterList = [
         routePage: Routes.home,
       ),
       RutasNav(
-        icon: Icons.message,
+        icon: Icons.notifications_active,
         titulo: "Citas",
-        routePage: Routes.citaDetails,
+        routePage: Routes.base_doctor + Routes.cita_list,
       ),
     ],
   )

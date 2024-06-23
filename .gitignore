@@ -73,3 +73,4 @@
 # my_custom_directory/
 *.g.dart
 *.freezed.dart
+assets/env/

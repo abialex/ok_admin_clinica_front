@@ -1,6 +1,7 @@
 // ignore_for_file: constant_identifier_names
 
 import 'dart:convert';
+import 'package:admin_clinica_front/data/models/doctor/doctor_dto.dart';
 import 'package:admin_clinica_front/data/utils/key_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -11,7 +12,6 @@ class SharedPreferencesLocal {
   SharedPreferencesLocal(this._sharedPreferences);
 
   Future<void> saveToken(String token) async {
-    // final preferences = await SharedPreferences.getInstance();
     _sharedPreferences.setString(KeyStorage.AUTH_TOKEN, token);
     // await preferences.setString(_KeyStorage.AUTH_TOKEN, token);
   }
@@ -30,11 +30,30 @@ class SharedPreferencesLocal {
   }
 
   Future<String?> getToken() async {
-    // final preferences = SharedPreferences.getInstance();
     return _sharedPreferences.getString(KeyStorage.AUTH_TOKEN);
   }
 
   Future<void> signOut() async {
     // await preferences.delete(key: _KeyStorage.AUTH_TOKEN);
+  }
+
+  Future<void> saveDoctorSelected(DoctorDto doctor) async {
+    String jsonString = json.encode(doctor.toJson());
+    _sharedPreferences.setString(KeyStorage.DOCTOR, jsonString);
+  }
+
+  Future<DoctorDto?> getDoctorSelected() async {
+    try {
+      final result = _sharedPreferences.getString(KeyStorage.DOCTOR);
+      if (result == null) return null;
+      return DoctorDto.fromJson(jsonDecode(result));
+    } catch (e) {
+      _sharedPreferences.clear();
+      return null;
+    }
+  }
+
+  Future<void> clearSession() async {
+    _sharedPreferences.remove(KeyStorage.USER);
   }
 }

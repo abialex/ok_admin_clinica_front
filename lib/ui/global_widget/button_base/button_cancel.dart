@@ -22,7 +22,7 @@ class ButtonCancel extends StatelessWidget {
       text: text,
       height: height,
       backgroundColor: AppColors.white,
-      textColor: AppColors.blueSecondary,
+      textColor: AppColors.dark,
     );
   }
 }

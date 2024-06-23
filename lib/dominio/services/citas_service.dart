@@ -1,5 +1,8 @@
 import 'package:admin_clinica_front/core/extensions/date_time_extensions.dart';
+import 'package:admin_clinica_front/data/models/cita/cita_ocupada/cita_ocupada_create.dart';
 import 'package:admin_clinica_front/data/models/request/request_model.dart';
+import 'package:admin_clinica_front/dominio/entities/estado_cita.dart';
+import 'package:admin_clinica_front/dominio/entities/tipo_cita.dart';
 import 'package:either_dart/either.dart';
 
 import '../../data/models/cita/cita_agil/cita_agil_create.dart';
@@ -13,7 +16,7 @@ class CitasService {
 
   Future<Either<String, int>> citaAgilCreate(CitaAgilCreateViewModel view) async {
     CitaAgilCreateModel model = CitaAgilCreateModel(
-      fechaHoraCita: view.fechaHoraCita,
+      fechaHoraCita: view.fechaHoraCita.toFormatyyyyMMddHHmmss(),
       datosPaciente: view.datosPaciente,
       doctor_id: view.doctorId,
       ubicacion_id: view.ubicacionId,
@@ -23,12 +26,12 @@ class CitasService {
     return await _citaRepository.createCitaAgil(model);
   }
 
-  Future<Either<String, int>> updateCitaAgil(CitaAgilUpdateViewModel view) async {
+  Future<Either<String, int>> citaAgilUpdate(CitaAgilUpdateViewModel view) async {
     // Aquí puedes agregar lógica de validación o preparación de datos
     CitaAgilUpdateModel model = CitaAgilUpdateModel(
       id: view.id,
       razon: view.razon,
-      estado: view.estado,
+      estado: EstadoCitaExtension.fromEstado(view.estado),
       fechaHoraCita: view.fechaHoraCita.toFormatyyyyMMddHHmmss(),
       datosPaciente: view.datosPaciente,
       doctor_id: view.doctorId,
@@ -48,10 +51,10 @@ class CitasService {
               .map((cita) => CitasViewModel(
                     id: cita.id,
                     fechaHoraCita: DateTime.parse(cita.fechaHoraCita),
-                    estado: cita.estado,
-                    tipo: cita.tipo,
+                    estado: EstadoCitaExtension.fromNumber(cita.estado),
+                    tipo: TipoCitaExtension.fromNumber(cita.estado),
                     celular: cita.celular,
-                    pacienteDatos: cita.paciente?.nombres,
+                    pacienteDatos: cita.paciente != null ? "${cita.paciente!.nombres} ${cita.paciente?.apellidos}" : null,
                     razon: cita.razon,
                     razonOcupado: cita.razonOcupado,
                     datosPaciente: cita.datosPaciente,
@@ -76,7 +79,7 @@ class CitasService {
       CitaRequest request = CitaRequest(
         fechaHoraCita: view.fechaHoraCita.toFormatyyyyMMdd(),
         doctor_id: view.doctorId,
-        ubicacion_id: view.ubicacionId,
+        ubicaciones_id: view.ubicacionesId,
       );
       final result = await _citaRepository.getCitasByFechaIdDoctorIdUbicacion(request);
       return result.fold(
@@ -87,10 +90,10 @@ class CitasService {
                 (cita) => CitasViewModel(
                   id: cita.id,
                   fechaHoraCita: DateTime.parse(cita.fechaHoraCita),
-                  estado: cita.estado,
-                  tipo: cita.tipo,
+                  estado: EstadoCitaExtension.fromNumber(cita.estado),
+                  tipo: TipoCitaExtension.fromNumber(cita.tipo),
                   celular: cita.celular,
-                  pacienteDatos: cita.paciente?.nombres,
+                  pacienteDatos: cita.paciente != null ? "${cita.paciente!.nombres} ${cita.paciente?.apellidos}" : null,
                   razon: cita.razon,
                   razonOcupado: cita.razonOcupado,
                   datosPaciente: cita.datosPaciente,
@@ -141,10 +144,10 @@ class CitasService {
               (cita) => CitasViewModel(
                 id: cita.id,
                 fechaHoraCita: DateTime.parse(cita.fechaHoraCita),
-                estado: cita.estado,
-                tipo: cita.tipo,
+                estado: EstadoCitaExtension.fromNumber(cita.estado),
+                tipo: TipoCitaExtension.fromNumber(cita.estado),
                 celular: cita.celular,
-                pacienteDatos: cita.paciente?.nombres,
+                pacienteDatos: cita.paciente != null ? "${cita.paciente!.nombres} ${cita.paciente?.apellidos}" : null,
                 razon: cita.razon,
                 razonOcupado: cita.razonOcupado,
                 datosPaciente: cita.datosPaciente,
@@ -173,12 +176,55 @@ class CitasService {
       case TipoAccionEnum.validar:
         return _citaRepository.validarCita(idcita);
       case TipoAccionEnum.cancelar:
-        return const Left("falta cancelar");
-      case TipoAccionEnum.eliminar:
-        return _citaRepository.deleteCitaById(idcita);
+        return _citaRepository.cancelarCita(idcita);
       default:
-        return const Left("tipo no definido");
+        return const Left("tipo no definido en la App");
     }
+  }
+
+  Future<Either<String, bool>> deleteCitaById(int idcita) async {
+    return await _citaRepository.deleteCitaById(idcita);
+  }
+
+  Future<Either<String, CitaViewModel>> getCitaById(int citaId) async {
+    try {
+      final result = await _citaRepository.getCitaById(citaId);
+
+      return result.fold(
+        (error) => Left(error),
+        (dto) => Right(CitaViewModel(
+          id: dto.id,
+          doctorId: dto.doctor_id,
+          ubicacionId: dto.ubicacion_id,
+          fechaHoraCita: DateTime.parse(dto.fechaHoraCita),
+          doctor: dto.doctor,
+          estadoString: dto.estado_string,
+          tipoString: dto.tipo_string,
+          tipo: TipoCitaExtension.fromNumber(dto.tipo),
+          celular: dto.celular,
+          pacienteDatos: dto.paciente != null ? "${dto.paciente!.nombres} ${dto.paciente?.apellidos}" : null,
+          razon: dto.razon,
+          razonOcupado: dto.razonOcupado,
+          datosPaciente: dto.datosPaciente,
+          estado: EstadoCitaExtension.fromNumber(dto.estado),
+          fechaConfirmacion: dto.fechaConfirmacion != null ? DateTime.parse(dto.fechaConfirmacion!) : null,
+          fechaValidacion: dto.fechaValidacion != null ? DateTime.parse(dto.fechaValidacion!) : null,
+          fechaInicio: dto.fechaInicio != null ? DateTime.parse(dto.fechaInicio!) : null,
+          fechaFin: dto.fechaFin != null ? DateTime.parse(dto.fechaFin!) : null,
+        )),
+      );
+    } catch (e) {
+      return const Left("Error inesperado");
+    }
+  }
+
+  Future<Either<String, int>> citaOcupadaCreate(CitaOcupadaCreateViewModel view) async {
+    CitaOcupadaCreateModel model = CitaOcupadaCreateModel(
+      doctor_id: view.doctorId,
+      fechaHoraCita: view.fechaHoraCita.toFormatyyyyMMddHHmmss(),
+      razonOcupado: view.razonOcupado,
+    );
+    return await _citaRepository.createCitaOcupada(model);
   }
 }
 

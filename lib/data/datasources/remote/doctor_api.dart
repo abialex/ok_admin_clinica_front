@@ -17,47 +17,71 @@ class DoctorApi implements BaseApi {
 
   DoctorApi(this._dio);
 
-  Future<Either<String, List<DoctorsDto>>>
-      getDoctorsByIdUbicacionFromAsistente() async {
+  Future<Either<String, List<DoctorsDto>>> getDoctorsByIdUbicacionFromAsistente() async {
     final response = await _dio.get<ApiModel>(
       "${url}by-ubicacion",
     );
-    return ApiUtils.reponseHandler(response,
-        (data) => (data as List).map((e) => DoctorsDto.fromJson(e)).toList());
+    return ApiUtils.reponseHandler(response, (data) => (data as List).map((e) => DoctorsDto.fromJson(e)).toList());
   }
 
   Future<Either<String, List<DoctorsDto>>> getDoctors() async {
     final response = await _dio.get<ApiModel>(
       "${url}doctor/",
     );
-    return ApiUtils.reponseHandler(response,
-        (data) => (data as List).map((e) => DoctorsDto.fromJson(e)).toList());
+    return ApiUtils.reponseHandler(response, (data) => (data as List).map((e) => DoctorsDto.fromJson(e)).toList());
   }
 
   Future<Either<String, DoctorDto>> getDoctorsById(int iddoctor) async {
     final response = await _dio.get<ApiModel>(
       "${url}doctor/$iddoctor/",
     );
-    return ApiUtils.reponseHandler(
-        response, (data) => DoctorDto.fromJson(data));
+    return ApiUtils.reponseHandler(response, (data) => DoctorDto.fromJson(data));
   }
 
-  Future<Either<String, DoctorCredentialsDto>> createDoctor(
-      DoctorCreateModel doctorCreateModel) async {
+  Future<Either<String, DoctorCredentialsDto>> createDoctor(DoctorCreateModel doctorCreateModel) async {
     final response = await _dio.post<ApiModel>(
       "${url}doctor/",
       data: doctorCreateModel.toJson(),
     );
-    return ApiUtils.reponseHandler(
-        response, (data) => DoctorCredentialsDto.fromJson(data));
+    return ApiUtils.reponseHandler(response, (data) => DoctorCredentialsDto.fromJson(data));
   }
 
-  Future<Either<String, int>> updateDoctor(
-      DoctorUpdateModel doctorUpdateModel) async {
+  Future<Either<String, int>> updateDoctor(DoctorUpdateModel doctorUpdateModel) async {
     final response = await _dio.put<ApiModel>(
       "${url}doctor/${doctorUpdateModel.id}/",
       data: doctorUpdateModel.toJson(),
     );
     return ApiUtils.reponseHandler(response, (data) => data as int);
+  }
+
+  Future<Either<String, bool>> activarDoctor(int doctorId) async {
+    final response = await _dio.get<ApiModel>(
+      "${url}doctor-activar/by-id",
+      queryParameters: {"id": doctorId},
+    );
+    return ApiUtils.reponseHandler(response, (data) => (data as bool));
+  }
+
+  Future<Either<String, bool>> inactivarDoctor(int doctorId) async {
+    final response = await _dio.get<ApiModel>(
+      "${url}doctor-inactivar/by-id",
+      queryParameters: {"id": doctorId},
+    );
+    return ApiUtils.reponseHandler(response, (data) => (data as bool));
+  }
+
+  Future<Either<String, String>> resetPassword(int doctorId) async {
+    final response = await _dio.get<ApiModel>(
+      "${url}reset-password/by-id",
+      queryParameters: {"id": doctorId},
+    );
+    return ApiUtils.reponseHandler(response, (data) => (data as String));
+  }
+
+  Future<Either<String, List<DoctorsDto>>> getDoctorByUserDoctor() async {
+    final response = await _dio.get<ApiModel>(
+      "${url}by-doctor_user",
+    );
+    return ApiUtils.reponseHandler(response, (data) => (data as List).map((e) => DoctorsDto.fromJson(e)).toList());
   }
 }

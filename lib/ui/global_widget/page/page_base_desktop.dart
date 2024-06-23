@@ -1,65 +1,136 @@
 import 'package:admin_clinica_front/core/utils/app_colors.dart';
+import 'package:admin_clinica_front/ui/global_widget/app_box.dart';
+import 'package:admin_clinica_front/ui/global_widget/app_text_style.dart';
+import 'package:admin_clinica_front/ui/global_widget/cubits/theme_cubit.dart';
+import 'package:admin_clinica_front/ui/global_widget/custom_navbar_navigation/cubit/navigator_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class PageBaseDesktop extends StatelessWidget {
   final Color backgroundColor;
-  final Widget? headerWidget;
+  final String? title;
   final Widget? bodyWidget;
   final Widget? footerWidget;
+  final Function()? onTapFloating;
   const PageBaseDesktop({
     super.key,
     this.backgroundColor = AppColors.lightGray,
-    this.headerWidget,
+    this.title,
     this.bodyWidget,
     this.footerWidget,
+    this.onTapFloating,
   });
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: true,
+      appBar: AppBar(
+        title: AppTextGlobal.labelLargeText(text: title ?? "Título", colorText: AppColors.white),
+        actions: const [
+          Padding(
+            padding: EdgeInsets.all(8.0),
+            child: Icon(
+              Icons.exit_to_app,
+              color: AppColors.white,
+              size: 30,
+            ),
+          )
+        ],
+        centerTitle: true,
+        backgroundColor: AppColors.slgPrincipal,
+        leading: _buildIconMenu(),
+      ),
+      floatingActionButton: onTapFloating != null
+          ? FloatingActionButton(
+              backgroundColor: AppColors.slg01,
+              onPressed: onTapFloating,
+              child: const Icon(Icons.add),
+            )
+          : null,
+      drawer: const AppDrawerDesktop(),
       backgroundColor: backgroundColor,
-      body: SafeArea(
-        top: true,
-        child: SingleChildScrollView(
-          child: SizedBox(
-            height: MediaQuery.of(context).size.height - MediaQuery.of(context).padding.top,
-            child: Column(
-              children: [
-                headerWidget == null
-                    ? const SizedBox.shrink()
-                    : Container(
-                        height: 60,
-                        color: Colors.limeAccent[100],
-                        child: Padding(
-                          padding: const EdgeInsets.all(0),
-                          child: headerWidget!,
-                        ),
-                      ),
-                bodyWidget == null
-                    ? const SizedBox.shrink()
-                    : Expanded(
-                        flex: 30,
-                        child: Container(
-                          alignment: Alignment.center,
-                          //color: Colors.limeAccent[100],
-                          padding: const EdgeInsets.symmetric(horizontal: 10),
-                          child: bodyWidget!,
-                        ),
-                      ),
-                footerWidget == null
-                    ? const SizedBox.shrink()
-                    : Container(
-                        height: 70,
-                        alignment: Alignment.center,
-                        //color: Colors.deepPurpleAccent[100],
-                        padding: const EdgeInsets.symmetric(horizontal: 10),
-                        child: footerWidget!,
-                      )
-              ],
+      bottomNavigationBar: footerWidget,
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 15),
+        child: bodyWidget,
+      ),
+    );
+  }
+
+  Builder _buildIconMenu() {
+    return Builder(
+      builder: (BuildContext context) {
+        return IconButton(
+          icon: const Icon(
+            Icons.menu,
+            color: AppColors.white,
+          ),
+          onPressed: () {
+            Scaffold.of(context).openDrawer();
+          },
+          tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
+        );
+      },
+    );
+  }
+}
+
+class AppDrawerDesktop extends StatelessWidget {
+  const AppDrawerDesktop({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final navbarCubit = context.read<NavigatorCubit>();
+    final themeCubit = context.watch<ThemeCubit>();
+
+    return Drawer(
+      child: Column(
+        children: <Widget>[
+          Container(
+            alignment: Alignment.center,
+            decoration: const BoxDecoration(
+              color: AppColors.slgPrincipal,
+            ),
+            child: DrawerHeader(
+              child: Text(
+                'Asistente recepción',
+                style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 20),
+              ),
             ),
           ),
-        ),
+          Expanded(
+            child: ListView.separated(
+                shrinkWrap: true,
+                itemBuilder: (context, i) => AppBox.h12,
+                itemCount: navbarCubit.state.modulesList.length + 1,
+                separatorBuilder: (_, index) {
+                  final item = navbarCubit.state.modulesList[index];
+                  return ListTile(
+                    autofocus: navbarCubit.state.delayIndex == index,
+                    leading: Icon(item.icon),
+                    title: Text(item.titulo),
+                    onTap: () {
+                      Navigator.pop(context);
+                      Navigator.pushReplacementNamed(context, context.read<NavigatorCubit>().state.modulesList[index].routePage);
+                      context.read<NavigatorCubit>().updateIndexDelay(index);
+
+                      // Navegar a HomeScreen
+                    },
+                  );
+                }),
+          ),
+          ListTile(
+            leading: const Icon(Icons.abc),
+            title: const Text("item.titulo"),
+            onTap: () {
+              themeCubit.toggle();
+
+              // Navegar a HomeScreen
+            },
+          )
+        ],
       ),
     );
   }

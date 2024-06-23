@@ -1,7 +1,8 @@
+import 'package:admin_clinica_front/ui/global_widget/app_loader_mini.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_text_style.dart';
 import 'package:admin_clinica_front/ui/global_widget/page/page_base_desktop.dart';
 import 'package:admin_clinica_front/ui/global_widget/page/page_base_phone.dart';
-import 'package:admin_clinica_front/ui/modules/doctor/bloc/doctor_bloc.dart';
+import 'package:admin_clinica_front/ui/modules/doctor/bloc/doctor_list_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -17,9 +18,8 @@ class DoctorListAsistenteAsistentePage extends StatelessWidget with ResponsiveWi
 
   @override
   Widget build(BuildContext context) {
-    final dialogCubit = context.read<DialogMessageCubit>();
-    final doctorBloc = context.read<DoctorBloc>();
-    return BlocBuilder<DoctorBloc, DoctorState>(
+    final doctorBloc = context.read<DoctorListBloc>();
+    return BlocBuilder<DoctorListBloc, DoctorListState>(
       bloc: doctorBloc,
       builder: (context, state) {
         return whatIs(context);
@@ -29,23 +29,27 @@ class DoctorListAsistenteAsistentePage extends StatelessWidget with ResponsiveWi
 
   @override
   PageBaseDesktop buildDesktop(BuildContext context) {
-    return const PageBaseDesktop(
-      headerWidget: Text("Sin implementar"),
+    return PageBaseDesktop(
+      title: "DOCTORES",
     );
   }
 
   @override
   PageBasePhone buildMobile(BuildContext context) {
-    final doctorbloc = context.read<DoctorBloc>();
+    final doctorbloc = context.read<DoctorListBloc>();
     return PageBasePhone(
-      title: "Doctor page",
       bodySliver: doctorbloc.state.map(
         initial: (stt) {
           doctorbloc.add(GetDoctors());
           return const SizedBox.shrink();
         },
         loading: (stt) {
-          return const SliverToBoxAdapter(child: Text("cargando"));
+          return const SliverToBoxAdapter(
+              child: Center(
+            child: AppLoaderMini(
+              height: 50,
+            ),
+          ));
         },
         doctorsLoaded: (stt) {
           return SliverList(
@@ -139,7 +143,7 @@ class DoctorListAsistenteAsistentePage extends StatelessWidget with ResponsiveWi
           storage.saveToken("token 1f9579b30ba59f8dc25a853528d3adac2609f69d");
           final result = await api.getDoctorsByIdUbicacionFromAsistente();
           result.fold((left) => print(left), (right) => print(right));
-          dialog.showDialog(titulo: "s", texto: "s");
+          dialog.showCustomAlert(titulo: "s", texto: "s");
         },
         tooltip: 'Increment',
         child: const Icon(Icons.add),

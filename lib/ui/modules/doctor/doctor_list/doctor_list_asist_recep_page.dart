@@ -1,48 +1,113 @@
+import 'package:admin_clinica_front/core/di/injections.dart';
+import 'package:admin_clinica_front/core/utils/app_colors.dart';
+import 'package:admin_clinica_front/data/datasources/remote/doctor_api.dart';
+import 'package:admin_clinica_front/dominio/repositories/ilocal_repository.dart';
 import 'package:admin_clinica_front/ui/core/router.dart';
-import 'package:admin_clinica_front/ui/global_widget/app_text_style.dart';
+import 'package:admin_clinica_front/ui/global_widget/app_loader_mini.dart';
+import 'package:admin_clinica_front/ui/global_widget/dialog/dialog_message/cubit/dialog_message_cubit.dart';
+import 'package:admin_clinica_front/ui/global_widget/page/mobile/app_header_mobile.dart';
 import 'package:admin_clinica_front/ui/global_widget/page/page_base_desktop.dart';
 import 'package:admin_clinica_front/ui/global_widget/page/page_base_phone.dart';
-import 'package:admin_clinica_front/ui/modules/doctor/bloc/doctor_bloc.dart';
-import 'package:admin_clinica_front/ui/view_models/doctor_view/doctor_view_models.dart';
+import 'package:admin_clinica_front/ui/global_widget/page/page_mixin_base.dart';
+import 'package:admin_clinica_front/ui/modules/doctor/bloc/doctor_list_bloc.dart';
+import 'package:admin_clinica_front/ui/modules/doctor/bloc/doctor_update_bloc.dart';
+import 'package:admin_clinica_front/ui/modules/doctor/widget/desktop/desk_doctor_card.dart';
+import 'package:admin_clinica_front/ui/modules/doctor/widget/doctor_card.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../../../core/di/injections.dart';
-import '../../../../core/utils/app_colors.dart';
-import '../../../../data/datasources/remote/doctor_api.dart';
-import '../../../../dominio/repositories/ilocal_repository.dart';
-import '../../../global_widget/bottomSheet/button_sheet.dart';
-import '../../../global_widget/dialog/dialog_message/cubit/dialog_message_cubit.dart';
-import '../../../global_widget/page/page_mixin_base.dart';
 
 class DoctorListAsistenteRecepcionPage extends StatelessWidget with ResponsiveWidgetMixin {
   const DoctorListAsistenteRecepcionPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final dialogCubit = context.read<DialogMessageCubit>();
-    final doctorBloc = context.read<DoctorBloc>();
-    return BlocBuilder<DoctorBloc, DoctorState>(
-      bloc: doctorBloc,
-      builder: (context, state) {
-        return whatIs(context);
-      },
-    );
+    return whatIs(context);
   }
 
   @override
   PageBaseDesktop buildDesktop(BuildContext context) {
-    return const PageBaseDesktop(
-      headerWidget: Text("Sin implementar"),
+    context.read<DoctorListBloc>().add(GetDoctors());
+
+    return PageBaseDesktop(
+      onTapFloating: () {
+        Navigator.pushNamed(
+          context,
+          Routes.base_asistenteRecepcion + Routes.doctor_add,
+        );
+      },
+      title: "DOCTORES",
+      bodyWidget: BlocBuilder<DoctorListBloc, DoctorListState>(
+        builder: (context, state) {
+          return AnimatedSwitcher(
+            duration: 0.5.seconds,
+            child: state.map(
+              initial: (sst) {
+                return const SizedBox.shrink();
+              },
+              loading: (sst) {
+                return const Center(
+                  child: AppLoaderMini(
+                    height: 50,
+                  ),
+                );
+              },
+              doctorsLoaded: (stt) {
+                if (stt.doctors.isEmpty) {
+                  return const Center(
+                    child: Text("Agregue un doctor"),
+                  );
+                }
+                return Column(
+                  children: [
+                    Expanded(
+                      child: SingleChildScrollView(
+                        child: Container(
+                          alignment: Alignment.center,
+                          child: Wrap(
+                              spacing: 10,
+                              // crossAxisAlignment: WrapCrossAlignment.end,
+                              // runAlignment: WrapAlignment.start,
+                              runSpacing: 10,
+                              children: List.generate(
+                                stt.doctors.length,
+                                (index) {
+                                  final item = stt.doctors[index];
+                                  return SizedBox(
+                                    width: 500,
+                                    child: DeskDoctorsCard(
+                                        onUpdate: (doctorId) {
+                                          final doctorUpdateBloc = context.read<DoctorUpdateBloc>();
+                                          doctorUpdateBloc.add(DoctorUpdateEvent.getDoctor(doctorId));
+                                          Navigator.pushNamed(context, Routes.base_asistenteRecepcion + Routes.doctor_update);
+                                        },
+                                        doctor: item),
+                                  );
+                                },
+                              )),
+                        ),
+                      ),
+                    ),
+                  ],
+                );
+              },
+              failure: (stt) {
+                return SliverToBoxAdapter(child: Text(stt.error));
+              },
+            ),
+          );
+        },
+      ),
     );
   }
 
   @override
   PageBasePhone buildMobile(BuildContext context) {
-    final doctorbloc = context.read<DoctorBloc>();
+    context.read<DoctorListBloc>().add(GetDoctors());
+
     return PageBasePhone(
       floatingWidget: FloatingActionButton(
-        backgroundColor: AppColors.blueSecondary,
+        backgroundColor: AppColors.slg01,
         foregroundColor: AppColors.white,
         onPressed: () {
           Navigator.pushNamed(
@@ -50,130 +115,59 @@ class DoctorListAsistenteRecepcionPage extends StatelessWidget with ResponsiveWi
             Routes.base_asistenteRecepcion + Routes.doctor_add,
           );
         },
+        mini: true,
         child: const Icon(Icons.add),
       ),
-      headerWidget: const Text("Asistente Recepcion"),
-      title: "Doctor page",
-      bodySliver: doctorbloc.state.map(
-        initial: (sst) {
-          doctorbloc.add(GetDoctors());
-          return const SliverToBoxAdapter(child: SizedBox.shrink());
-        },
-        loading: (sst) {
-          return const SliverToBoxAdapter(child: Text("cargando"));
-        },
-        doctorsLoaded: (stt) {
-          return SliverList(
-            delegate: SliverChildBuilderDelegate(
-              (context, index) {
-                final item = stt.doctors[index];
-
-                return GestureDetector(
-                  onTap: () {
-                    ButtonSheet.showCustomBottomSheet<DoctorsViewModel>(
-                      context,
-                      widgetBuilder: (context) {
-                        return Column(
-                          children: [
-                            Container(
-                              height: 5.0,
-                              width: 50.0,
-                              margin: const EdgeInsets.only(top: 10.0, bottom: 5.0),
-                              decoration: const BoxDecoration(
-                                color: AppColors.dark,
-                                borderRadius: BorderRadius.all(Radius.circular(2.5)),
-                              ),
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                // const AppTextFontWeight(text: "Doctor:"),
-                                AppTextGlobal.labelLightText(text: "${item.nombres} ${item.apellidos}"),
-                              ],
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                Navigator.pushNamed(context, Routes.doctor_update);
-                              },
-                              child: Container(
-                                padding: const EdgeInsets.symmetric(
-                                  vertical: 5,
-                                ),
-                                child: Container(
-                                  padding: const EdgeInsets.symmetric(
-                                    vertical: 10,
-                                  ),
-                                  decoration: const BoxDecoration(color: AppColors.white, borderRadius: BorderRadius.all(Radius.circular(10))),
-                                  child: Row(
-                                    children: [
-                                      const Icon(
-                                        Icons.circle,
-                                        color: AppColors.blueSecondary,
-                                        size: 15,
-                                      ),
-                                      AppTextGlobal.lightText(
-                                        text: "Actualizar",
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        );
-                      },
+      headerWidget: const HeaderMobile(
+        subTitle: "Doctor",
+        title: "DOCTORES",
+      ),
+      bodySliver: SliverToBoxAdapter(
+        child: BlocBuilder<DoctorListBloc, DoctorListState>(
+          builder: (context, state) {
+            return AnimatedSwitcher(
+              duration: 0.5.seconds,
+              child: state.map(
+                initial: (sst) {
+                  return const SizedBox.shrink();
+                },
+                loading: (sst) {
+                  return const Center(
+                    child: AppLoaderMini(
+                      height: 50,
+                    ),
+                  );
+                },
+                doctorsLoaded: (stt) {
+                  if (stt.doctors.isEmpty) {
+                    return const Center(
+                      child: Text("Agregue un doctor"),
                     );
-                  },
-                  child: Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                    decoration: const BoxDecoration(
-                      color: AppColors.lightGray,
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(15),
-                      ),
-                    ),
-                    child: Column(
-                      children: [
-                        Row(
-                          children: [
-                            AppTextGlobal.labelLightText(
-                              text: "Nombres",
-                            ),
-                            AppTextGlobal.lightText(text: item.nombres)
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            AppTextGlobal.labelLightText(
-                              text: "Apellidos",
-                            ),
-                            AppTextGlobal.lightText(text: item.apellidos)
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            AppTextGlobal.labelLightText(
-                              text: "Username",
-                            ),
-                            AppTextGlobal.lightText(text: item.username)
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                );
-              },
-              childCount: stt.doctors.length,
-            ),
-          );
-        },
-        failure: (stt) {
-          return SliverToBoxAdapter(child: Text(stt.error));
-        },
-        // ubicacionLoaded: (value) {
-        //   return
-        // },
+                  }
+                  return ListView.builder(
+                    physics: const NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    itemCount: stt.doctors.length,
+                    itemBuilder: (context, index) {
+                      final item = stt.doctors[index];
+                      return DoctorsCard(
+                          onUpdate: (doctorId) {
+                            Navigator.pop(context);
+                            final doctorUpdateBloc = context.read<DoctorUpdateBloc>();
+                            doctorUpdateBloc.add(DoctorUpdateEvent.getDoctor(doctorId));
+                            Navigator.pushNamed(context, Routes.base_asistenteRecepcion + Routes.doctor_update);
+                          },
+                          doctor: item);
+                    },
+                  );
+                },
+                failure: (stt) {
+                  return SliverToBoxAdapter(child: Text(stt.error));
+                },
+              ),
+            );
+          },
+        ),
       ),
     );
   }
@@ -212,7 +206,7 @@ class DoctorListAsistenteRecepcionPage extends StatelessWidget with ResponsiveWi
           storage.saveToken("token 1f9579b30ba59f8dc25a853528d3adac2609f69d");
           final result = await api.getDoctorsByIdUbicacionFromAsistente();
           result.fold((left) => print(left), (right) => print(right));
-          dialog.showDialog(titulo: "s", texto: "s");
+          dialog.showCustomAlert(titulo: "s", texto: "s");
         },
         tooltip: 'Increment',
         child: const Icon(Icons.add),
