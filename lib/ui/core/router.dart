@@ -1,8 +1,12 @@
 // ignore_for_file: constant_identifier_names
 
 import 'package:admin_clinica_front/ui/modules/atencion/page.dart';
+import 'package:admin_clinica_front/ui/modules/cita/r_asistente_asistente/pages/cita_list_page.dart';
 import 'package:admin_clinica_front/ui/modules/cita/r_doctor/pages/cita_list_doctor_page.dart';
 import 'package:admin_clinica_front/ui/modules/cita/r_asistente_recepcion/pages/cita_update_page.dart';
+import 'package:admin_clinica_front/ui/modules/cita/r_doctor_administrador/pages/cita_add_page.dart';
+import 'package:admin_clinica_front/ui/modules/cita/r_doctor_administrador/pages/cita_list_page.dart';
+import 'package:admin_clinica_front/ui/modules/cita/r_doctor_administrador/pages/cita_update_page.dart';
 import 'package:admin_clinica_front/ui/modules/doctor/doctor_list/doctor_list_adm_page.dart';
 import 'package:admin_clinica_front/ui/modules/login/page.dart';
 import 'package:admin_clinica_front/ui/modules/otros/page.dart';
@@ -22,6 +26,7 @@ class Routes {
   static const String base_asistenteAsistente = "/asistente_asistente";
   static const String base_asistenteRecepcion = "/asistente_recepcion";
   static const String base_doctor = "/doctor";
+  static const String base_doctor_admin = "/doctor_admin";
 
   static const String home = '/home';
   static const String doctor_list = '/doctor_list';
@@ -58,13 +63,13 @@ class AppRouter {
           pageBuilder: (_, __, ___) => const HomePage(),
           // transitionsBuilder: _createTransition,
         );
-      case Routes.base_admin + Routes.cita_list:
+      case Routes.base_doctor + Routes.atencion:
         return PageRouteBuilder(
-          pageBuilder: (_, __, ___) => CitaListAsistenteRecepcionPage(),
+          pageBuilder: (_, __, ___) => AtencionPage(),
           // transitionsBuilder: _createTransition,
         );
-      //? Asistente-recepcion
       // return MaterialPageRoute(builder: (_) => const CitaPage());
+      //? Asistente-recepcion
       case Routes.base_asistenteRecepcion + Routes.cita_list:
         return PageRouteBuilder(
           pageBuilder: (_, __, ___) => CitaListAsistenteRecepcionPage(),
@@ -122,15 +127,32 @@ class AppRouter {
           //   transitionsBuilder: _createSlideFadeTransition,
         );
       //? Asistente-asistente
-      //? Doctor
+      case Routes.base_asistenteAsistente + Routes.cita_list:
+        return PageRouteBuilder(
+          pageBuilder: (_, __, ___) => CitaListAsistenteAsistentePage(),
+          //  transitionsBuilder: _createScaleTransition,
+        );
+      //? Doctor-doctor
       case Routes.base_doctor + Routes.cita_list:
         return PageRouteBuilder(
           pageBuilder: (_, __, ___) => CitaListDoctorPage(),
           //   transitionsBuilder: _createSlideFadeTransition,
         );
-      case Routes.base_doctor + Routes.atencion:
+
+      //? Doctor-administrador
+      case Routes.base_doctor_admin + Routes.cita_list:
         return PageRouteBuilder(
-          pageBuilder: (_, __, ___) => AtencionPage(),
+          pageBuilder: (_, __, ___) => CitaListDoctorAdministradorPage(),
+          //   transitionsBuilder: _createSlideFadeTransition,
+        );
+      case Routes.base_doctor_admin + Routes.cita_add:
+        return PageRouteBuilder(
+          pageBuilder: (_, __, ___) => CitaAddDoctorAdminPage(),
+          //   transitionsBuilder: _createSlideFadeTransition,
+        );
+      case Routes.base_doctor_admin + Routes.cita_update:
+        return PageRouteBuilder(
+          pageBuilder: (_, __, ___) => CitaUpdateDoctorAdminPage(),
           //   transitionsBuilder: _createSlideFadeTransition,
         );
       //? Administrador

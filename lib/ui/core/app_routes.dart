@@ -33,7 +33,7 @@ List<ModulesRouter> modulesRouterList = [
       RutasNav(
         icon: Icons.message,
         titulo: "Citas",
-        routePage: Routes.cita_list,
+        routePage: Routes.base_asistenteAsistente + Routes.cita_list,
       ),
     ],
   ),
@@ -90,6 +90,7 @@ List<ModulesRouter> modulesRouterList = [
   ),
   ModulesRouter(
     modulesName: "DOCTOR",
+    modulesTipo: "Doctor",
     modulesList: [
       RutasNav(
         icon: Icons.personal_injury_outlined,
@@ -105,6 +106,27 @@ List<ModulesRouter> modulesRouterList = [
         icon: Icons.notifications_active,
         titulo: "Citas",
         routePage: Routes.base_doctor + Routes.cita_list,
+      ),
+    ],
+  ),
+  ModulesRouter(
+    modulesName: "DOCTOR",
+    modulesTipo: "Administrador",
+    modulesList: [
+      RutasNav(
+        icon: Icons.personal_injury_outlined,
+        titulo: "Atención",
+        routePage: Routes.base_doctor + Routes.atencion,
+      ),
+      RutasNav(
+        icon: Icons.home,
+        titulo: "Home",
+        routePage: Routes.home,
+      ),
+      RutasNav(
+        icon: Icons.notifications_active,
+        titulo: "Citas",
+        routePage: Routes.base_doctor_admin + Routes.cita_list,
       ),
     ],
   )

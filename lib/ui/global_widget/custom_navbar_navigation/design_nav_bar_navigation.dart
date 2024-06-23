@@ -414,14 +414,27 @@ class BlurryContainer extends StatelessWidget {
             ),
           ),
           child: const Center(
-            child: Text(
-              'EL NAVBAR NO TIENE OPCIONES DE NAVEGACIÓN',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 12,
-                color: AppColors.redAccent,
-                fontWeight: FontWeight.bold,
-              ),
+            child: Column(
+              children: [
+                Text(
+                  'EL NAVBAR NO TIENE OPCIONES DE NAVEGACIÓN',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: AppColors.redAccent,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Text(
+                  'Tal vez el rol asignado no tiene funcionalidades',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 10,
+                    color: AppColors.redAccent,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
             ),
           ),
         ),
