@@ -1,8 +1,11 @@
+import 'package:admin_clinica_front/core/di/injections.dart';
 import 'package:admin_clinica_front/core/utils/app_colors.dart';
+import 'package:admin_clinica_front/dominio/services/local_service.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_box.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_text_style.dart';
 import 'package:admin_clinica_front/ui/global_widget/cubits/theme_cubit.dart';
 import 'package:admin_clinica_front/ui/global_widget/custom_navbar_navigation/cubit/navigator_cubit.dart';
+import 'package:admin_clinica_front/ui/view_models/usuario_view/usuario_view_models.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -84,7 +87,7 @@ class AppDrawerDesktop extends StatelessWidget {
   Widget build(BuildContext context) {
     final navbarCubit = context.read<NavigatorCubit>();
     final themeCubit = context.watch<ThemeCubit>();
-
+    final auth = locator<LocalService>();
     return Drawer(
       child: Column(
         children: <Widget>[
@@ -94,9 +97,31 @@ class AppDrawerDesktop extends StatelessWidget {
               color: AppColors.slgPrincipal,
             ),
             child: DrawerHeader(
-              child: Text(
-                'Asistente recepción',
-                style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 20),
+              child: FutureBuilder<UsuarioLoginResponseViewModel?>(
+                future: auth.getUsuario(),
+                builder: (BuildContext context, AsyncSnapshot<UsuarioLoginResponseViewModel?> snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const CircularProgressIndicator();
+                  } else if (snapshot.hasError) {
+                    return Text('Error: ${snapshot.error}');
+                  } else {
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        AppTextGlobal.labelLightText(
+                          text: snapshot.data?.nombres.toUpperCase() ?? "- -",
+                          fontSize: 16,
+                          colorText: AppColors.slg01,
+                        ),
+                        AppTextGlobal.labelSmallText(
+                          text: "${snapshot.data?.rol ?? "- -"}  ",
+                          fontWeight: FontWeight.w600,
+                          colorText: AppColors.slg01,
+                        ),
+                      ],
+                    );
+                  }
+                },
               ),
             ),
           ),
