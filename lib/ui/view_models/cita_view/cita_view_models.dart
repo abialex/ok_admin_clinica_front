@@ -133,6 +133,22 @@ class CitaRequestViewModel {
   });
 }
 
+class CitaRequestAdminViewModel {
+  final int? doctorId;
+  final int ubicacionId;
+  final DateTime? fecha;
+  final DateTime? fechaInicio;
+  final DateTime? fechaFin;
+
+  CitaRequestAdminViewModel({
+    this.doctorId,
+    required this.ubicacionId,
+    this.fecha,
+    this.fechaInicio,
+    this.fechaFin,
+  });
+}
+
 class CitaFilterViewModel {
   final int? doctorId;
   final int? ubicacionId;

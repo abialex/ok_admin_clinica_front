@@ -1,5 +1,6 @@
 import 'package:admin_clinica_front/core/extensions/date_time_extensions.dart';
 import 'package:admin_clinica_front/data/models/cita/cita_ocupada/cita_ocupada_create.dart';
+import 'package:admin_clinica_front/data/models/request/cita_request_model.dart';
 import 'package:admin_clinica_front/data/models/request/request_model.dart';
 import 'package:admin_clinica_front/dominio/entities/estado_cita.dart';
 import 'package:admin_clinica_front/dominio/entities/tipo_cita.dart';
@@ -82,6 +83,48 @@ class CitasService {
         ubicaciones_id: view.ubicacionesId,
       );
       final result = await _citaRepository.getCitasByFechaIdDoctorIdUbicacion(request);
+      return result.fold(
+        (error) => Left(error),
+        (responseList) {
+          final finalList = responseList
+              .map(
+                (cita) => CitasViewModel(
+                  id: cita.id,
+                  fechaHoraCita: DateTime.parse(cita.fechaHoraCita),
+                  estado: EstadoCitaExtension.fromNumber(cita.estado),
+                  tipo: TipoCitaExtension.fromNumber(cita.tipo),
+                  celular: cita.celular,
+                  pacienteDatos: cita.paciente != null ? "${cita.paciente!.nombres} ${cita.paciente?.apellidos}" : null,
+                  razon: cita.razon,
+                  razonOcupado: cita.razonOcupado,
+                  datosPaciente: cita.datosPaciente,
+                  estadoString: cita.estado_string,
+                  tipoString: cita.tipo_string,
+                  fechaConfirmacion: cita.fechaConfirmacion != null ? DateTime.parse(cita.fechaConfirmacion!) : null,
+                  fechaValidacion: cita.fechaValidacion != null ? DateTime.parse(cita.fechaValidacion!) : null,
+                  fechaInicio: cita.fechaInicio != null ? DateTime.parse(cita.fechaInicio!) : null,
+                  fechaFin: cita.fechaFin != null ? DateTime.parse(cita.fechaFin!) : null,
+                ),
+              )
+              .toList();
+          return Right(finalList);
+        },
+      );
+    } catch (e) {
+      return const Left("Error inesperado");
+    }
+  }
+
+  Future<Either<String, List<CitasViewModel>>> getUbicacionIdDateDoctorId(CitaRequestAdminViewModel view) async {
+    try {
+      CitaRequestAdmin request = CitaRequestAdmin(
+        ubicacion_id: view.ubicacionId,
+        doctor_id: view.doctorId,
+        fecha_inicio: view.fechaInicio?.toFormatyyyyMMdd(),
+        fecha_fin: view.fechaFin?.toFormatyyyyMMdd(),
+        fecha: view.fecha?.toFormatyyyyMMdd(),
+      );
+      final result = await _citaRepository.getUbicacionIdDateDoctorId(request);
       return result.fold(
         (error) => Left(error),
         (responseList) {
