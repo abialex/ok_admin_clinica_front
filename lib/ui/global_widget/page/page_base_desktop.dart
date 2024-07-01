@@ -3,7 +3,7 @@ import 'package:admin_clinica_front/core/utils/app_colors.dart';
 import 'package:admin_clinica_front/dominio/services/local_service.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_box.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_text_style.dart';
-import 'package:admin_clinica_front/ui/global_widget/cubits/theme_cubit.dart';
+import 'package:admin_clinica_front/ui/cubits/theme_cubit.dart';
 import 'package:admin_clinica_front/ui/global_widget/custom_navbar_navigation/cubit/navigator_cubit.dart';
 import 'package:admin_clinica_front/ui/view_models/usuario_view/usuario_view_models.dart';
 import 'package:flutter/material.dart';

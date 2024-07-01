@@ -2,7 +2,7 @@ import 'package:admin_clinica_front/core/constants/app_const_icons.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_box.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_loader.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_text_style.dart';
-import 'package:admin_clinica_front/ui/global_widget/blocs/sunat/sunat_cubit.dart';
+import 'package:admin_clinica_front/ui/blocs/sunat/sunat_cubit.dart';
 import 'package:admin_clinica_front/ui/global_widget/input_text/input_form_02/input_text_action_base.dart';
 import 'package:admin_clinica_front/ui/validators/validators.dart';
 import 'package:admin_clinica_front/ui/view_models/services_view/services_view_models.dart';
