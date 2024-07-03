@@ -2,9 +2,13 @@ import 'package:admin_clinica_front/data/datasources/remote/cita_api.dart';
 import 'package:admin_clinica_front/data/datasources/remote/sunat_api.dart';
 import 'package:admin_clinica_front/data/datasources/remote/ubicacion_api.dart';
 import 'package:admin_clinica_front/data/datasources/remote/usuario_api.dart';
+import 'package:admin_clinica_front/data/repositories_impl/doctor_contenedor_impl/doctor_contenedor_repository.dart';
 import 'package:admin_clinica_front/data/repositories_impl/local_shared_repository_impl.dart';
 import 'package:admin_clinica_front/data/repositories_impl/services_repository.dart';
+import 'package:admin_clinica_front/data/repositories_impl/ubicacion_contenedor_impl/ubicacion_contenedor_repository.dart';
 import 'package:admin_clinica_front/data/repositories_impl/ubicacion_repository_impl.dart';
+import 'package:admin_clinica_front/dominio/repositories/idoctor_contenedor/idoctor_contenedor_repository.dart';
+import 'package:admin_clinica_front/dominio/repositories/idubicacion_contenedor/iubicacion_contenedor_repository.dart';
 import 'package:admin_clinica_front/dominio/repositories/iservices_repository.dart';
 import 'package:admin_clinica_front/dominio/repositories/iubicacion_repository.dart';
 import 'package:admin_clinica_front/dominio/services/citas_service.dart';
@@ -66,6 +70,8 @@ void setupRepositorys() {
   locator.registerLazySingleton<IAsistenteRepository>(() => AsistenteRepository(locator()));
   locator.registerLazySingleton<IUbicacionRepository>(() => UbicacionRepository(locator()));
   locator.registerLazySingleton<IServicesRepository>(() => ServicesRepository(locator()));
+  locator.registerLazySingleton<IDoctorContenedorLocalRepository>(() => DoctorContenedorLocalRepository(locator()));
+  locator.registerLazySingleton<IUbicacionContenedorLocalRepository>(() => UbicacionContenedorLocalRepository(locator()));
 }
 
 void setupServices() {
