@@ -1,5 +1,6 @@
 import 'package:admin_clinica_front/core/utils/app_colors.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_text_style.dart';
+import 'package:admin_clinica_front/ui/cubits/index_cubit.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -31,7 +32,7 @@ class FormPages extends StatelessWidget {
                     (index) => Expanded(
                           child: GestureDetector(
                             onTap: () {
-                              context.read<IndexCubit>().changeIndex(index);
+                              context.read<IndexCubit>().goto(index);
                             },
                             child: AnimatedContainer(
                               duration: 0.25.seconds,
@@ -59,17 +60,5 @@ class FormPages extends StatelessWidget {
         },
       ),
     );
-  }
-}
-
-class IndexCubit extends Cubit<int> {
-  IndexCubit() : super(0);
-
-  void changeIndex(int mode) {
-    emit(mode);
-  }
-
-  void resetToIndex() {
-    emit(0);
   }
 }

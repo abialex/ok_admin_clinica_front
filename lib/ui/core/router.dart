@@ -160,7 +160,7 @@ class AppRouter {
       //? Administrador-admin
       case Routes.base_admin + Routes.monitoreo:
         return PageRouteBuilder(
-          pageBuilder: (_, __, ___) => const MonitoreoAdminPage(),
+          pageBuilder: (_, __, ___) => MonitoreoAdminPage(),
           //   transitionsBuilder: _createSlideFadeTransition,
         );
 
