@@ -4,8 +4,8 @@ import 'package:bloc/bloc.dart';
 class UbicacionSelectedCubit extends Cubit<UbicacionContenedorDataModel?> {
   UbicacionSelectedCubit() : super(null);
 
-  void setDoctor(UbicacionContenedorDataModel doctor) {
-    emit(doctor);
+  void setUbicacion(UbicacionContenedorDataModel ubicacion) {
+    emit(ubicacion);
   }
 
   void clearDoctor() {

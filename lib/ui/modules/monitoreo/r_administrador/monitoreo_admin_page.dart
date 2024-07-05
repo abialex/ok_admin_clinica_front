@@ -59,7 +59,7 @@ class MonitoreoAdminPage extends StatelessWidget with ResponsiveWidgetMixin {
                       UbicacionContenedorDropdown(
                         contendor: const UbicacionContenedorDataModel(nombre: "", id: 1),
                         onChanged: (value) {
-                          context.read<UbicacionSelectedCubit>().setDoctor(value!);
+                          context.read<UbicacionSelectedCubit>().setUbicacion(value!);
                           request.ubicacionId = value.id!;
                         },
                         label: "Ubicaciones",
@@ -69,7 +69,9 @@ class MonitoreoAdminPage extends StatelessWidget with ResponsiveWidgetMixin {
                       BlocProvider(
                         create: (context) => IndexCubit(),
                         child: Builder(builder: (context) {
-                          request.doctorId = null;
+                          if (context.read<IndexCubit>().state == 0) {
+                            request.doctorId = null;
+                          }
                           return Column(
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: [
@@ -88,27 +90,52 @@ class MonitoreoAdminPage extends StatelessWidget with ResponsiveWidgetMixin {
                                 child: context.watch<IndexCubit>().state == 1
                                     ? BlocBuilder<UbicacionSelectedCubit, UbicacionContenedorDataModel?>(
                                         builder: (context, state) {
-                                          return state != null
-                                              ? DoctorContendorDropdown(
-                                                  key: UniqueKey(),
-                                                  contendor: DoctorContenedorDataModel(
-                                                    usuarioId: 0,
-                                                    username: "",
-                                                    nombres: "",
-                                                    apellidos: "",
-                                                    isActive: true,
-                                                    fechaNacimiento: DateTime.now(),
-                                                    celular: "",
-                                                  ),
-                                                  onChanged: (value) {
-                                                    request.doctorId = value?.id!;
+                                          if (state == null) {
+                                            return Center(child: AppTextGlobal.errorlightText(text: "Seleccione una ubicación"));
+                                          }
+                                          if (state.id == 1) {
+                                            return DoctorContendorDropdown(
+                                              contendor: DoctorContenedorDataModel(
+                                                usuarioId: 0,
+                                                username: "",
+                                                nombres: "",
+                                                apellidos: "",
+                                                isActive: true,
+                                                fechaNacimiento: DateTime.now(),
+                                                celular: "",
+                                              ),
+                                              onChanged: (value) {
+                                                request.doctorId = value?.id!;
 
-                                                    // Aquí manejas el cambio de selección del doctor si es necesario
-                                                  },
-                                                  label: "Doctores",
-                                                  ubicacionId: state.id ?? 0, // Aquí usas el estado actualizado de la ubicación
-                                                )
-                                              : Center(child: AppTextGlobal.errorlightText(text: "Seleccione una ubicación"));
+                                                // Aquí manejas el cambio de selección del doctor si es necesario
+                                              },
+                                              label: "Doctores huanta",
+                                              ubicacionId: 1, // Aquí usas el estado actualizado de la ubicación
+                                            );
+                                          }
+                                          if (state.id == 2) {
+                                            return SizedBox(
+                                              child: DoctorContendorDropdown(
+                                                contendor: DoctorContenedorDataModel(
+                                                  usuarioId: 0,
+                                                  username: "",
+                                                  nombres: "",
+                                                  apellidos: "",
+                                                  isActive: true,
+                                                  fechaNacimiento: DateTime.now(),
+                                                  celular: "",
+                                                ),
+                                                onChanged: (value) {
+                                                  request.doctorId = value?.id!;
+
+                                                  // Aquí manejas el cambio de selección del doctor si es necesario
+                                                },
+                                                label: "Doctores huamanga",
+                                                ubicacionId: 2, // Aquí usas el estado actualizado de la ubicación
+                                              ),
+                                            );
+                                          }
+                                          return const SizedBox.shrink();
                                         },
                                       )
                                     : Center(
