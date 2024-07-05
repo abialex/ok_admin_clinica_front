@@ -15,6 +15,7 @@ class DoctorContenedorLocalRepository implements IDoctorContenedorLocalRepositor
         (error) => Left(error),
         (response) => Right(response
             .map((e) => DoctorContenedorDataModel(
+                  id: e.id,
                   usuarioId: e.usuario_id,
                   username: e.username,
                   nombres: e.nombres,

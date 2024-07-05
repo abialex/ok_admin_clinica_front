@@ -112,11 +112,11 @@ class CitaApi {
     return ApiUtils.reponseHandler(response, (data) => (data as bool));
   }
 
-  Future<Either<String, List<CitasDTO>>> getCitasByFechaDoctorIdUbicacionId(CitaRequestAdmin citaRequest) async {
+  Future<Either<String, List<CitaDTO>>> getCitasByFechaDoctorIdUbicacionId(CitaRequestAdmin citaRequest) async {
     final response = await _dio.post<ApiModel>(
       "citas/cita_by_date_location_doctor/",
       data: citaRequest.toJson(),
     );
-    return ApiUtils.reponseHandler(response, (data) => (data as List).map((e) => CitasDTO.fromJson(e)).toList());
+    return ApiUtils.reponseHandler(response, (data) => (data as List).map((e) => CitaDTO.fromJson(e)).toList());
   }
 }

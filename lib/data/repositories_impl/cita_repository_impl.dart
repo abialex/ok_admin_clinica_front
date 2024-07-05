@@ -80,7 +80,7 @@ class CitaRepository implements ICitaRepository {
   }
 
   @override
-  Future<Either<String, List<CitasDTO>>> getUbicacionIdDateDoctorId(CitaRequestAdmin citaRequestAdmin) {
+  Future<Either<String, List<CitaDTO>>> getUbicacionIdDateDoctorId(CitaRequestAdmin citaRequestAdmin) {
     return api.getCitasByFechaDoctorIdUbicacionId(citaRequestAdmin);
   }
 }

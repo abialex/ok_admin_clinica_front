@@ -115,7 +115,7 @@ class CitasService {
     }
   }
 
-  Future<Either<String, List<CitasViewModel>>> getUbicacionIdDateDoctorId(CitaRequestAdminViewModel view) async {
+  Future<Either<String, List<CitaViewModel>>> getUbicacionIdDateDoctorId(CitaRequestAdminViewModel view) async {
     try {
       CitaRequestAdmin request = CitaRequestAdmin(
         ubicacion_id: view.ubicacionId,
@@ -130,22 +130,25 @@ class CitasService {
         (responseList) {
           final finalList = responseList
               .map(
-                (cita) => CitasViewModel(
-                  id: cita.id,
-                  fechaHoraCita: DateTime.parse(cita.fechaHoraCita),
-                  estado: EstadoCitaExtension.fromNumber(cita.estado),
-                  tipo: TipoCitaExtension.fromNumber(cita.tipo),
-                  celular: cita.celular,
-                  pacienteDatos: cita.paciente != null ? "${cita.paciente!.nombres} ${cita.paciente?.apellidos}" : null,
-                  razon: cita.razon,
-                  razonOcupado: cita.razonOcupado,
-                  datosPaciente: cita.datosPaciente,
-                  estadoString: cita.estado_string,
-                  tipoString: cita.tipo_string,
-                  fechaConfirmacion: cita.fechaConfirmacion != null ? DateTime.parse(cita.fechaConfirmacion!) : null,
-                  fechaValidacion: cita.fechaValidacion != null ? DateTime.parse(cita.fechaValidacion!) : null,
-                  fechaInicio: cita.fechaInicio != null ? DateTime.parse(cita.fechaInicio!) : null,
-                  fechaFin: cita.fechaFin != null ? DateTime.parse(cita.fechaFin!) : null,
+                (dto) => CitaViewModel(
+                  id: dto.id,
+                  doctorId: dto.doctor_id,
+                  ubicacionId: dto.ubicacion_id,
+                  fechaHoraCita: DateTime.parse(dto.fechaHoraCita),
+                  doctor: dto.doctor,
+                  estadoString: dto.estado_string,
+                  tipoString: dto.tipo_string,
+                  tipo: TipoCitaExtension.fromNumber(dto.tipo),
+                  celular: dto.celular,
+                  pacienteDatos: dto.paciente != null ? "${dto.paciente!.nombres} ${dto.paciente?.apellidos}" : null,
+                  razon: dto.razon,
+                  razonOcupado: dto.razonOcupado,
+                  datosPaciente: dto.datosPaciente,
+                  estado: EstadoCitaExtension.fromNumber(dto.estado),
+                  fechaConfirmacion: dto.fechaConfirmacion != null ? DateTime.parse(dto.fechaConfirmacion!) : null,
+                  fechaValidacion: dto.fechaValidacion != null ? DateTime.parse(dto.fechaValidacion!) : null,
+                  fechaInicio: dto.fechaInicio != null ? DateTime.parse(dto.fechaInicio!) : null,
+                  fechaFin: dto.fechaFin != null ? DateTime.parse(dto.fechaFin!) : null,
                 ),
               )
               .toList();

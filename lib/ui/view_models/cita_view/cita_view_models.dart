@@ -134,11 +134,11 @@ class CitaRequestViewModel {
 }
 
 class CitaRequestAdminViewModel {
-  final int? doctorId;
-  final int ubicacionId;
-  final DateTime? fecha;
-  final DateTime? fechaInicio;
-  final DateTime? fechaFin;
+  int? doctorId;
+  int ubicacionId;
+  DateTime? fecha;
+  DateTime? fechaInicio;
+  DateTime? fechaFin;
 
   CitaRequestAdminViewModel({
     this.doctorId,
