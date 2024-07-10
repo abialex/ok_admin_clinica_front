@@ -1,3 +1,4 @@
+import 'package:admin_clinica_front/ui/blocs/excel/excel_cubit.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_loader.dart';
 import 'package:admin_clinica_front/ui/cubits/theme_cubit.dart';
 import 'package:admin_clinica_front/ui/global_widget/custom_navbar_navigation/cubit/navigator_cubit.dart';
@@ -36,6 +37,8 @@ class _MainState extends State<Main> {
         BlocProvider(create: (_) => NavigatorCubit()),
         BlocProvider(create: (_) => LoaderCubit()),
         BlocProvider(create: (_) => ThemeCubit()),
+        BlocProvider(create: (_) => ExcelCubit()),
+
         //bloc
         BlocProvider(create: (context) => DoctorListBloc()),
         BlocProvider(create: (context) => DoctorCreateBloc()),

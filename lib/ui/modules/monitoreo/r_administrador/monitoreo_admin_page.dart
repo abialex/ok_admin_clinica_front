@@ -1,8 +1,10 @@
 // ignore_for_file: must_be_immutable
 
+import 'package:admin_clinica_front/core/extensions/date_time_extensions.dart';
 import 'package:admin_clinica_front/core/utils/app_colors.dart';
 import 'package:admin_clinica_front/data/models/doctor/doctor_contenedor_data_model.dart';
 import 'package:admin_clinica_front/data/models/ubicacion/ubicacion_contenedor_data_model.dart';
+import 'package:admin_clinica_front/ui/blocs/excel/excel_cubit.dart';
 import 'package:admin_clinica_front/ui/cubits/index_cubit.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_box.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_text_style.dart';
@@ -17,7 +19,9 @@ import 'package:admin_clinica_front/ui/modules/monitoreo/bloc/citas_for_admin_cu
 import 'package:admin_clinica_front/ui/modules/monitoreo/cubit/doctor_selected_cubit.dart';
 import 'package:admin_clinica_front/ui/modules/monitoreo/r_administrador/widgets/cita_card.dart';
 import 'package:admin_clinica_front/ui/view_models/cita_view/cita_view_models.dart';
+import 'package:admin_clinica_front/ui/view_models/excel_view/excel_view.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
@@ -215,14 +219,58 @@ class MonitoreoAdminPage extends StatelessWidget with ResponsiveWidgetMixin {
                   ),
                 ),
                 Expanded(
-                    flex: 3,
-                    child: ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: context.watch<CitasForAdminCubit>().state.length,
-                      itemBuilder: (context, index) {
-                        return CitaCardTest(cita: context.watch<CitasForAdminCubit>().state[index]);
-                      },
-                    )),
+                  flex: 3,
+                  child: Column(
+                    children: [
+                      Expanded(
+                        flex: 3,
+                        child: ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: context.watch<CitasForAdminCubit>().state.length,
+                          itemBuilder: (context, index) {
+                            return CitaCardTest(cita: context.watch<CitasForAdminCubit>().state[index]);
+                          },
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
+                              children: [
+                                AppTextGlobal.labelLightText(text: "EXCEL:"),
+                                IconButton(
+                                    onPressed: () {
+                                      context.read<ExcelCubit>().crearExcel(
+                                            ExcelView(
+                                              nameFile: "doctores",
+                                              headerList: ["DOCTOR", "Fecha Cita", "Fecha Confirmación", "Fecha inicio", "Fecha fin", "Fecha Validación"],
+                                              dataList: context
+                                                  .read<CitasForAdminCubit>()
+                                                  .state
+                                                  .map((e) => [
+                                                        e.doctor,
+                                                        e.fechaHoraCita.toFormatyyyyMMddHHmmss(),
+                                                        e.fechaConfirmacion?.toFormatyyyyMMddHHmmss() ?? '',
+                                                        e.fechaInicio?.toFormatyyyyMMddHHmmss() ?? '',
+                                                        e.fechaFin?.toFormatyyyyMMddHHmmss() ?? '',
+                                                        e.fechaValidacion?.toFormatyyyyMMddHHmmss() ?? '',
+                                                      ])
+                                                  .toList(),
+                                            ),
+                                          );
+                                    },
+                                    icon: const Icon(Icons.print)),
+                              ],
+                            ),
+                            Expanded(child: AppTextGlobal.labelLightText(text: context.watch<ExcelCubit>().state, textAlign: TextAlign.right)),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ],
             ),
           );

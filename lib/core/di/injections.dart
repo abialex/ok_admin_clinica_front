@@ -12,6 +12,7 @@ import 'package:admin_clinica_front/dominio/repositories/idubicacion_contenedor/
 import 'package:admin_clinica_front/dominio/repositories/iservices_repository.dart';
 import 'package:admin_clinica_front/dominio/repositories/iubicacion_repository.dart';
 import 'package:admin_clinica_front/dominio/services/citas_service.dart';
+import 'package:admin_clinica_front/dominio/services/excel_service.dart';
 import 'package:admin_clinica_front/dominio/services/services_service.dart';
 import 'package:admin_clinica_front/dominio/services/ubicacion_service.dart';
 import 'package:admin_clinica_front/dominio/services/usuario_service.dart';
@@ -81,6 +82,7 @@ void setupServices() {
   locator.registerLazySingleton<LocalService>(() => LocalService(locator()));
   locator.registerLazySingleton<UbicacionService>(() => UbicacionService(locator()));
   locator.registerLazySingleton<ServicesService>(() => ServicesService(locator()));
+  locator.registerLazySingleton<ExcelService>(() => ExcelService());
 }
 
 void setupDataSource() {
