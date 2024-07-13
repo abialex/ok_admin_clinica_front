@@ -1,9 +1,9 @@
 import 'package:admin_clinica_front/core/di/injections.dart';
 import 'package:admin_clinica_front/core/utils/app_colors.dart';
 import 'package:admin_clinica_front/dominio/services/local_service.dart';
+import 'package:admin_clinica_front/ui/core/router.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_box.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_text_style.dart';
-import 'package:admin_clinica_front/ui/cubits/theme_cubit.dart';
 import 'package:admin_clinica_front/ui/global_widget/custom_navbar_navigation/cubit/navigator_cubit.dart';
 import 'package:admin_clinica_front/ui/view_models/usuario_view/usuario_view_models.dart';
 import 'package:flutter/material.dart';
@@ -86,7 +86,7 @@ class AppDrawerDesktop extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final navbarCubit = context.read<NavigatorCubit>();
-    final themeCubit = context.watch<ThemeCubit>();
+    // final themeCubit = context.watch<ThemeCubit>();
     final auth = locator<LocalService>();
     return Drawer(
       child: Column(
@@ -148,9 +148,12 @@ class AppDrawerDesktop extends StatelessWidget {
           ),
           ListTile(
             leading: const Icon(Icons.abc),
-            title: const Text("item.titulo"),
-            onTap: () {
-              themeCubit.toggle();
+            title: const Text("Cerrar Sesión"),
+            onTap: () async {
+              final navbarCubit = context.read<NavigatorCubit>();
+              navbarCubit.updateIndexDelay(1);
+              Navigator.pushReplacementNamed(context, Routes.login);
+              await auth.clearSession();
 
               // Navegar a HomeScreen
             },
