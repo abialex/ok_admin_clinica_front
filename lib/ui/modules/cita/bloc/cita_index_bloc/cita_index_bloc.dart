@@ -13,6 +13,7 @@ class CitaIndexBloc extends Bloc<CitaIndexEvent, CitaIndexState> {
     on<InitialEvent>(initial);
     on<NextCitaEvent>(nextCita);
     on<GetCitaEvent>(getCitaById);
+    on<EliminarCitaEvent>(eliminarCita);
   }
 
   final citaService = locator<CitasService>();
@@ -60,6 +61,18 @@ class CitaIndexBloc extends Bloc<CitaIndexEvent, CitaIndexState> {
           ),
         ),
       );
+    } else {
+      emit(Failure(result.left));
+    }
+  }
+
+  Future<void> eliminarCita(EliminarCitaEvent event, Emitter<CitaIndexState> emit) async {
+    emit(Loading());
+    final cita = event.citaViewModel;
+
+    final result = await citaService.deleteCitaById(event.citaViewModel.id);
+    if (result.isRight) {
+      emit(CitaIndexState.citaEliminada(cita));
     } else {
       emit(Failure(result.left));
     }

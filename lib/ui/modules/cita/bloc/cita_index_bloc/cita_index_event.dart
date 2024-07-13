@@ -4,5 +4,7 @@ part of 'cita_index_bloc.dart';
 class CitaIndexEvent with _$CitaIndexEvent {
   const factory CitaIndexEvent.initial(CitasViewModel citaViewModel) = InitialEvent;
   const factory CitaIndexEvent.nextCita(CitasViewModel citaViewModel, TipoAccionEnum tipoAccion) = NextCitaEvent;
+  const factory CitaIndexEvent.eliminarCita(CitasViewModel citaViewModel) = EliminarCitaEvent;
+
   const factory CitaIndexEvent.getCita(int citaId) = GetCitaEvent;
 }

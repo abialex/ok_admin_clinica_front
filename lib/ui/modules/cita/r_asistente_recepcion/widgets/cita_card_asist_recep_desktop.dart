@@ -21,7 +21,6 @@ import 'package:admin_clinica_front/ui/view_models/cita_view/cita_view_models.da
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -387,20 +386,22 @@ class CitasCardAsistRecepDesktop extends StatelessWidget {
                                       },
                                       text: "CANCELAR",
                                     ),
-                                  if (stt.cita.celular != null)
+                                  if (stt.cita.estado == EstadoCita.pendiente)
                                     _buildOptionsBottomModal(
                                       onTap: () {
                                         dialogCubit.showCustomAlert(
-                                          titulo: "Llamar",
-                                          texto: "Seguro que quiere llamar a ${stt.cita.datosPaciente ?? (stt.cita.pacienteDatos ?? "No tiene nombre")}",
-                                          icon: Icons.phone,
-                                          colorBackground: AppColors.blueSunat,
+                                          titulo: "Eliminar Cita",
+                                          texto: "Seguro de eliminar a ${stt.cita.datosPaciente ?? (stt.cita.pacienteDatos ?? "No tiene nombre")}",
+                                          icon: Icons.delete,
+                                          colorBackground: AppColors.redSunat,
                                           onAceptar: () {
-                                            FlutterPhoneDirectCaller.callNumber(stt.cita.celular!);
+                                            Navigator.pop(context);
+
+                                            bloc.add(CitaIndexEvent.eliminarCita(cita));
                                           },
                                         );
                                       },
-                                      text: "LLAMAR  ${stt.cita.celular}",
+                                      text: "ELIMINAR ",
                                     ),
                                 ],
                               ),
@@ -441,6 +442,12 @@ class CitasCardAsistRecepDesktop extends StatelessWidget {
                         ),
                       )
                     ],
+                  );
+                },
+                citaEliminada: (value) {
+                  return Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: AppTextGlobal.errorlightText(text: "Para recuperar la cita eliminada consulte al Administrador", textAlign: TextAlign.center),
                   );
                 },
                 failure: (stt) {

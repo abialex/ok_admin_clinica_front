@@ -545,6 +545,9 @@ class CitasCardAsistRecep extends StatelessWidget {
                     ],
                   );
                 },
+                citaEliminada: (value) {
+                  return const SizedBox.shrink();
+                },
                 failure: (stt) {
                   return Container(
                       padding: const EdgeInsets.symmetric(
