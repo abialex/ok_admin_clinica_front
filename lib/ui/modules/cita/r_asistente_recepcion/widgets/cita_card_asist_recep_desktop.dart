@@ -18,7 +18,9 @@ import 'package:admin_clinica_front/ui/modules/cita/bloc/cita_index_bloc/cita_in
 import 'package:admin_clinica_front/ui/modules/cita/bloc/cita_update_bloc/cita_update_bloc.dart';
 import 'package:admin_clinica_front/ui/modules/cita/bloc/cita_update_bloc/cita_update_event.dart';
 import 'package:admin_clinica_front/ui/view_models/cita_view/cita_view_models.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -440,7 +442,21 @@ class CitasCardAsistRecepDesktop extends StatelessWidget {
                             ),
                           ),
                         ),
-                      )
+                      ),
+                      Positioned(
+                        bottom: 2,
+                        right: 12.5,
+                        child: Row(
+                          children: [
+                            AppTextGlobal.lightText(
+                              text: stt.cita.ubicacion ?? "- -",
+                              fontSize: 10,
+                              fontWeight: FontWeight.bold,
+                              textAlign: TextAlign.right,
+                            ),
+                          ],
+                        ),
+                      ),
                     ],
                   );
                 },

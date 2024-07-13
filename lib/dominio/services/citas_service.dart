@@ -65,6 +65,8 @@ class CitasService {
                     fechaValidacion: cita.fechaValidacion != null ? DateTime.parse(cita.fechaValidacion!) : null,
                     fechaInicio: cita.fechaInicio != null ? DateTime.parse(cita.fechaInicio!) : null,
                     fechaFin: cita.fechaFin != null ? DateTime.parse(cita.fechaFin!) : null,
+                    ubicacion: cita.ubicacion,
+                    ubicacionId: cita.ubicacion_id,
                   ))
               .toList();
           return Right(finalList);
@@ -104,6 +106,8 @@ class CitasService {
                   fechaValidacion: cita.fechaValidacion != null ? DateTime.parse(cita.fechaValidacion!) : null,
                   fechaInicio: cita.fechaInicio != null ? DateTime.parse(cita.fechaInicio!) : null,
                   fechaFin: cita.fechaFin != null ? DateTime.parse(cita.fechaFin!) : null,
+                  ubicacion: cita.ubicacion,
+                  ubicacionId: cita.ubicacion_id,
                 ),
               )
               .toList();
@@ -203,6 +207,8 @@ class CitasService {
                 fechaValidacion: cita.fechaValidacion != null ? DateTime.parse(cita.fechaValidacion!) : null,
                 fechaInicio: cita.fechaInicio != null ? DateTime.parse(cita.fechaInicio!) : null,
                 fechaFin: cita.fechaFin != null ? DateTime.parse(cita.fechaFin!) : null,
+                ubicacion: cita.ubicacion,
+                ubicacionId: cita.ubicacion_id,
               ),
             )
             .toList();

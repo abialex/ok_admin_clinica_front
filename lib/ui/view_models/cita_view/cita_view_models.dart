@@ -61,6 +61,8 @@ class CitasViewModel {
   final DateTime? fechaValidacion;
   final DateTime? fechaInicio;
   final DateTime? fechaFin;
+  final String? ubicacion;
+  final int? ubicacionId;
 
   CitasViewModel({
     required this.id,
@@ -78,6 +80,8 @@ class CitasViewModel {
     this.fechaValidacion,
     this.fechaInicio,
     this.fechaFin,
+    this.ubicacion,
+    this.ubicacionId,
   });
 }
 
