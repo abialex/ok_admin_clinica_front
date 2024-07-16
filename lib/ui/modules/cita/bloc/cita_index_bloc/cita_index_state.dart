@@ -6,5 +6,7 @@ class CitaIndexState with _$CitaIndexState {
   factory CitaIndexState.initial() = Initial;
   factory CitaIndexState.loading() = Loading;
   factory CitaIndexState.citaLoaded(CitasViewModel cita) = CitaLoaded;
+  factory CitaIndexState.citaEliminada(CitasViewModel cita) = CitaEliminada;
+
   factory CitaIndexState.failure(String error) = Failure;
 }

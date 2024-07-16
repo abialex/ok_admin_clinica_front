@@ -1,0 +1,299 @@
+// ignore_for_file: must_be_immutable
+
+import 'package:admin_clinica_front/core/extensions/date_time_extensions.dart';
+import 'package:admin_clinica_front/core/utils/app_colors.dart';
+import 'package:admin_clinica_front/data/models/doctor/doctor_contenedor_data_model.dart';
+import 'package:admin_clinica_front/data/models/ubicacion/ubicacion_contenedor_data_model.dart';
+import 'package:admin_clinica_front/ui/blocs/excel/excel_cubit.dart';
+import 'package:admin_clinica_front/ui/cubits/index_cubit.dart';
+import 'package:admin_clinica_front/ui/global_widget/app_box.dart';
+import 'package:admin_clinica_front/ui/global_widget/app_text_style.dart';
+import 'package:admin_clinica_front/ui/global_widget/button_base/button_success.dart';
+import 'package:admin_clinica_front/ui/global_widget/checkbox/app_checkbox_list_cubit.dart';
+import 'package:admin_clinica_front/ui/global_widget/dropdown_multiselect/doctor_contenedor_dropdown.dart';
+import 'package:admin_clinica_front/ui/global_widget/dropdown_multiselect/ubicacion_contenedor_dropdown.dart';
+import 'package:admin_clinica_front/ui/global_widget/page/page_base_desktop.dart';
+import 'package:admin_clinica_front/ui/global_widget/page/page_base_phone.dart';
+import 'package:admin_clinica_front/ui/global_widget/page/page_mixin_base.dart';
+import 'package:admin_clinica_front/ui/modules/monitoreo/bloc/citas_for_admin_cubit.dart';
+import 'package:admin_clinica_front/ui/modules/monitoreo/cubit/doctor_selected_cubit.dart';
+import 'package:admin_clinica_front/ui/modules/monitoreo/r_administrador/widgets/cita_card.dart';
+import 'package:admin_clinica_front/ui/view_models/cita_view/cita_view_models.dart';
+import 'package:admin_clinica_front/ui/view_models/excel_view/excel_view.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:syncfusion_flutter_datepicker/datepicker.dart';
+
+class MonitoreoAdminPage extends StatelessWidget with ResponsiveWidgetMixin {
+  MonitoreoAdminPage({super.key});
+
+  CitaRequestAdminViewModel request = CitaRequestAdminViewModel(ubicacionId: 0);
+
+  @override
+  Widget build(BuildContext context) {
+    return whatIs(context);
+  }
+
+  @override
+  PageBaseDesktop buildDesktop(BuildContext context) {
+    final formKey = GlobalKey<FormState>();
+    return PageBaseDesktop(
+      title: "Monitoreo",
+      bodyWidget: MultiBlocProvider(
+        providers: [
+          BlocProvider(
+            create: (context) => UbicacionSelectedCubit(),
+          ),
+          BlocProvider(
+            create: (context) => CitasForAdminCubit(),
+          ),
+        ],
+        child: Builder(builder: (context) {
+          return Form(
+            key: formKey,
+            child: Row(
+              children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    // mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      AppBox.h4,
+                      UbicacionContenedorDropdown(
+                        contendor: const UbicacionContenedorDataModel(nombre: "", id: 1),
+                        onChanged: (value) {
+                          context.read<UbicacionSelectedCubit>().setUbicacion(value!);
+                          request.ubicacionId = value.id!;
+                        },
+                        label: "Ubicaciones",
+                        idContenedor: 1,
+                      ),
+                      AppBox.h4,
+                      BlocProvider(
+                        create: (context) => IndexCubit(),
+                        child: Builder(builder: (context) {
+                          if (context.read<IndexCubit>().state == 0) {
+                            request.doctorId = null;
+                          }
+                          return Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: [
+                              // AppTextGlobal.labelMediumText(text: "Doctores"),
+                              CheckBoxListCubitWidget<String>(
+                                fontSize: 13,
+                                autoCubit: false,
+                                isRequiredSelected: true,
+                                items: [
+                                  ItemCustom(id: 1, itemName: "Todos los doctores", item: "Todos los doctores"),
+                                  ItemCustom(id: 2, itemName: "Un doctor", item: "Un doctor"),
+                                ],
+                              ),
+                              SizedBox(
+                                height: 90,
+                                child: context.watch<IndexCubit>().state == 1
+                                    ? BlocBuilder<UbicacionSelectedCubit, UbicacionContenedorDataModel?>(
+                                        builder: (context, state) {
+                                          if (state == null) {
+                                            return Center(child: AppTextGlobal.errorlightText(text: "Seleccione una ubicación"));
+                                          }
+                                          if (state.id == 1) {
+                                            return DoctorContendorDropdown(
+                                              contendor: DoctorContenedorDataModel(
+                                                usuarioId: 0,
+                                                username: "",
+                                                nombres: "",
+                                                apellidos: "",
+                                                isActive: true,
+                                                fechaNacimiento: DateTime.now(),
+                                                celular: "",
+                                              ),
+                                              onChanged: (value) {
+                                                request.doctorId = value?.id!;
+
+                                                // Aquí manejas el cambio de selección del doctor si es necesario
+                                              },
+                                              label: "Doctores huanta",
+                                              ubicacionId: 1, // Aquí usas el estado actualizado de la ubicación
+                                            );
+                                          }
+                                          if (state.id == 2) {
+                                            return SizedBox(
+                                              child: DoctorContendorDropdown(
+                                                contendor: DoctorContenedorDataModel(
+                                                  usuarioId: 0,
+                                                  username: "",
+                                                  nombres: "",
+                                                  apellidos: "",
+                                                  isActive: true,
+                                                  fechaNacimiento: DateTime.now(),
+                                                  celular: "",
+                                                ),
+                                                onChanged: (value) {
+                                                  request.doctorId = value?.id!;
+
+                                                  // Aquí manejas el cambio de selección del doctor si es necesario
+                                                },
+                                                label: "Doctores huamanga",
+                                                ubicacionId: 2, // Aquí usas el estado actualizado de la ubicación
+                                              ),
+                                            );
+                                          }
+                                          return const SizedBox.shrink();
+                                        },
+                                      )
+                                    : Center(
+                                        child: Text("Todos los doctores", style: TextStyle(color: context.watch<IndexCubit>().state == 0 ? AppColors.dark : Colors.transparent)),
+                                      ),
+                              ),
+                            ],
+                          );
+                        }),
+                      ),
+                      AppBox.h4,
+                      Expanded(
+                        child: BlocProvider(
+                          create: (context) => IndexCubit(),
+                          child: Builder(builder: (context) {
+                            return Column(
+                              children: [
+                                // AppTextGlobal.labelMediumText(text: "Fechas"),
+                                CheckBoxListCubitWidget<String>(
+                                  fontSize: 13,
+                                  autoCubit: false,
+                                  isRequiredSelected: true,
+                                  items: [
+                                    ItemCustom(id: 1, itemName: "Fecha Especifica", item: "Todos los doctores"),
+                                    ItemCustom(id: 2, itemName: "Rango de Fecha", item: "Un doctor"),
+                                  ],
+                                ),
+                                () {
+                                  switch ((context.watch<IndexCubit>().state)) {
+                                    case 0:
+                                      request.fechaFin = null;
+                                      request.fechaInicio = null;
+                                      return SfDateRangePicker(
+                                        selectionMode: DateRangePickerSelectionMode.single,
+                                        backgroundColor: AppColors.lightBackgroundColor,
+                                        onSelectionChanged: (s) {
+                                          request.fecha = DateTime.parse(s.value.toString());
+                                        },
+                                      );
+                                    case 1:
+                                      request.fecha = null;
+                                      return SfDateRangePicker(
+                                        backgroundColor: AppColors.white,
+                                        selectionMode: DateRangePickerSelectionMode.range,
+                                        onSelectionChanged: (args) {
+                                          if (args.value.startDate != null) {
+                                            final initial = DateTime.parse(args.value.startDate.toString());
+                                            request.fechaInicio = initial;
+                                          }
+                                          if (args.value.endDate != null) {
+                                            final end = DateTime.parse(args.value.endDate.toString());
+                                            request.fechaFin = end;
+                                          }
+                                        },
+                                      );
+                                    default:
+                                      return const Text("N.A");
+                                  }
+                                }()
+                              ],
+                            );
+                          }),
+                        ),
+                      ),
+                      ButtonSuccess(
+                        text: "Buscar",
+                        onClick: () {
+                          if (formKey.currentState!.validate()) {
+                            if (request.fechaFin != null && request.fechaInicio != null || request.fecha != null) {
+                              context.read<CitasForAdminCubit>().getCitasByFilter(request);
+                            }
+                          } else {}
+                        },
+                      ),
+                      AppBox.h10,
+                    ],
+                  ),
+                ),
+                Expanded(
+                  flex: 3,
+                  child: Column(
+                    children: [
+                      Expanded(
+                        flex: 3,
+                        child: ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: context.watch<CitasForAdminCubit>().state.length,
+                          itemBuilder: (context, index) {
+                            return CitaCardTest(cita: context.watch<CitasForAdminCubit>().state[index]);
+                          },
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
+                              children: [
+                                AppTextGlobal.labelLightText(text: "EXCEL:"),
+                                IconButton(
+                                    onPressed: () {
+                                      context.read<ExcelCubit>().crearExcel(
+                                            ExcelView(
+                                              nameFile: "doctores",
+                                              headerList: ["DOCTOR", "Fecha Cita", "Fecha Confirmación", "Fecha inicio", "Fecha fin", "Fecha Validación"],
+                                              dataList: context
+                                                  .read<CitasForAdminCubit>()
+                                                  .state
+                                                  .map((e) => [
+                                                        e.doctor,
+                                                        e.fechaHoraCita.toFormatyyyyMMddHHmmss(),
+                                                        e.fechaConfirmacion?.toFormatyyyyMMddHHmmss() ?? '',
+                                                        e.fechaInicio?.toFormatyyyyMMddHHmmss() ?? '',
+                                                        e.fechaFin?.toFormatyyyyMMddHHmmss() ?? '',
+                                                        e.fechaValidacion?.toFormatyyyyMMddHHmmss() ?? '',
+                                                      ])
+                                                  .toList(),
+                                            ),
+                                          );
+                                    },
+                                    icon: const Icon(Icons.print)),
+                              ],
+                            ),
+                            Expanded(child: AppTextGlobal.labelLightText(text: context.watch<ExcelCubit>().state, textAlign: TextAlign.right)),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          );
+        }),
+      ),
+    );
+  }
+
+  @override
+  Widget buildMobile(BuildContext context) {
+    throw const PageBasePhoneBeta(
+      bodySliver: [Text("data")],
+    );
+  }
+
+  @override
+  Widget buildTablet(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        title: const Text("TABLET"),
+      ),
+      body: const SizedBox.shrink(),
+    );
+  }
+}

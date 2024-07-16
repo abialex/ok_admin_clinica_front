@@ -2,6 +2,8 @@
 import 'package:admin_clinica_front/core/utils/app_colors.dart';
 import 'package:admin_clinica_front/ui/blocs/usuario_session/bloc/usuario_bloc.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_loader_mini.dart';
+import 'package:admin_clinica_front/ui/global_widget/app_text_style.dart';
+import 'package:admin_clinica_front/ui/cubits/count_isolate_cubit.dart';
 import 'package:admin_clinica_front/ui/global_widget/cubits/count_isolate_cubit.dart';
 import 'package:admin_clinica_front/ui/global_widget/date/app_date_picker_cupertino.dart';
 import 'package:admin_clinica_front/ui/global_widget/page/mobile/app_header_mobile.dart';

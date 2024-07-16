@@ -8,6 +8,7 @@ import 'package:admin_clinica_front/ui/global_widget/app_box.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_construccion.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_text_style.dart';
 import 'package:admin_clinica_front/ui/global_widget/button_base/button_success.dart';
+import 'package:admin_clinica_front/ui/global_widget/page/desktop/app_responsive_desktop_card.dart';
 import 'package:admin_clinica_front/ui/global_widget/page/mobile/app_header_mobile.dart';
 import 'package:admin_clinica_front/ui/global_widget/page/page_base_desktop.dart';
 import 'package:admin_clinica_front/ui/global_widget/page/page_base_phone.dart';
@@ -33,8 +34,165 @@ class CitaUpdateAsistenteRecepcionPage extends StatelessWidget with ResponsiveWi
 
   @override
   PageBaseDesktop buildDesktop(BuildContext context) {
+    final citaCreateBloc = context.read<CitaUpdateBloc>();
+    final citaBloc = context.read<CitaBloc>();
+    final ubicacionesPersonal = context.read<UsuarioBloc>().state.usuario?.ubicaciones ?? [];
+    if (ubicacionesPersonal.isEmpty) {
+      citaCreateBloc.add(CitaUpdateEvent.citaUpdateError("No tiene ubicaciones asignadas, consulte al administrador"));
+    }
+    if (ubicacionesPersonal.length > 1) {
+      citaCreateBloc.add(CitaUpdateEvent.citaUpdateError("Tiene mas de una ubicación asignada, consulte al administrador"));
+    }
     return PageBaseDesktop(
+      backgroundColor: AppColors.white,
       title: "MODIFICAR CITA",
+      bodyWidget: AppResponsiveDesktopCard(
+        widget: BlocBuilder<CitaUpdateBloc, CitaUpdateState>(
+          builder: (context, state) {
+            return state.map(
+              initial: (stt) {
+                return const SizedBox.shrink();
+              },
+              loading: (stt) {
+                return const SizedBox.shrink();
+              },
+              citaAgilSetup: (stt) {
+                return Column(
+                  children: [
+                    AppBox.h10,
+                    if (stt.citaViewModel.datosPaciente != null)
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Icon(
+                            Icons.person,
+                            color: AppColors.slg01,
+                          ),
+                          Expanded(child: Center(child: AppTextGlobal.lightText(text: stt.citaViewModel.datosPaciente!.toUpperCase()))),
+                          AppBox.w6,
+                        ],
+                      ),
+                    if (stt.citaViewModel.pacienteDatos != null)
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Icon(
+                            Icons.person,
+                            color: AppColors.slg01,
+                          ),
+                          Expanded(child: Center(child: AppTextGlobal.lightText(text: stt.citaViewModel.pacienteDatos!.toUpperCase()))),
+                          AppBox.w6,
+                        ],
+                      ),
+                    AppBox.h10,
+                    Row(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        // AppTextGlobal.labelLightText(text: "Estado:"),
+                        Container(
+                          alignment: Alignment.center,
+                          width: 110,
+                          padding: const EdgeInsets.symmetric(
+                            vertical: 2.5,
+                            horizontal: 5,
+                          ),
+                          decoration: BoxDecoration(
+                            color: stt.citaViewModel.estado.color,
+                            borderRadius: const BorderRadius.all(
+                              Radius.circular(
+                                10,
+                              ),
+                            ),
+                          ),
+                          child: AppTextGlobal.labelLightText(
+                            text: stt.citaViewModel.estadoString,
+                            colorText: AppColors.white,
+                            fontSize: 14,
+                          ).animate().flip(),
+                        ),
+                        Row(
+                          children: [
+                            const Icon(
+                              Icons.av_timer_rounded,
+                              color: AppColors.slg01,
+                            ),
+                            // AppTextGlobal.labelLightText(text: "Hora:"),
+                            AppBox.w2,
+                            AppTextGlobal.labelLightText(text: stt.citaViewModel.fechaHoraCita.toFormatHHmm()),
+                          ],
+                        )
+                      ],
+                    ),
+                    AppBox.h10,
+                    () {
+                      switch (stt.citaViewModel.tipo) {
+                        case TipoCita.tentativa:
+                          return const ConstruccionAnimated();
+                        case TipoCita.agil:
+                          return CitaUpdateFormAgil(
+                            cita: stt.citaViewModel,
+                          );
+                        case TipoCita.completa:
+                          return const ConstruccionAnimated();
+                        case TipoCita.ocupada:
+                          return const ConstruccionAnimated();
+                        default:
+                          return const Text("data");
+                      }
+                    }()
+                  ],
+                );
+              },
+              citaUpdateSuccess: (stt) {
+                citaBloc.add(GetCitas(CitaRequestViewModel(
+                  doctorId: stt.doctorId,
+                  ubicacionesId: stt.ubicacionesId,
+                  fechaHoraCita: stt.fechaCita,
+                )));
+                return Center(
+                    child: Column(
+                  children: [
+                    AppBox.h20,
+                    CircleAvatar(
+                      backgroundColor: AppColors.lightBackgroundColor,
+                      maxRadius: 120,
+                      child: Padding(
+                        padding: const EdgeInsets.all(10),
+                        child: SvgPicture.asset(
+                          AppConstSvgs.logo,
+                          color: AppColors.slgPrincipal,
+                        ),
+                      ),
+                    )
+                        .animate(
+                          onPlay: (controller) => controller.loop(),
+                        )
+                        .rotate(
+                          delay: 2.seconds,
+                          duration: 1.5.seconds,
+                        ),
+                    AppBox.h20,
+                    AppTextGlobal.labelLightText(text: "SE MODIFICÓ CORRECTAMENTE"),
+                    AppBox.h20,
+                    ButtonSuccess(
+                      text: "VER CITAS",
+                      onClick: () {
+                        Navigator.pop(context);
+                      },
+                    ),
+                  ],
+                ));
+              },
+              failure: (stt) {
+                return AppTextGlobal.errorlightText(text: stt.error, maxLines: 2);
+              },
+            );
+          },
+        ),
+      ),
     );
   }
 

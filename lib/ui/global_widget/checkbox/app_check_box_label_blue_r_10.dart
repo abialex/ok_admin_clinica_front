@@ -8,10 +8,12 @@ class CheckBoxLabelBlueR10 extends StatelessWidget {
     super.key,
     this.value,
     this.text,
+    this.fontSize,
   });
   final void Function() onChanged;
   final bool? value;
   final String? text;
+  final double? fontSize;
 
   @override
   Widget build(BuildContext context) {
@@ -21,6 +23,7 @@ class CheckBoxLabelBlueR10 extends StatelessWidget {
       iconBackgroundColor: AppColors.white,
       text: text,
       value: value,
+      fontSize: fontSize,
     );
   }
 }

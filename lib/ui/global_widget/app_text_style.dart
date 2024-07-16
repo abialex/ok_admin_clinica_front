@@ -76,6 +76,7 @@ class AppTextGlobal {
     double? fontSize,
     Color colorText = AppColors.dark,
     TextAlign? textAlign,
+    FontWeight? fontWeight,
   }) =>
       _BaseText.lightText(
         text: text,
@@ -83,6 +84,7 @@ class AppTextGlobal {
         maxLines: maxLines,
         fontSize: fontSize,
         textAlign: textAlign,
+        fontWeight: fontWeight,
       );
   static Text mediumText({
     required String text,

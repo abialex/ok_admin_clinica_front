@@ -61,6 +61,8 @@ class CitasViewModel {
   final DateTime? fechaValidacion;
   final DateTime? fechaInicio;
   final DateTime? fechaFin;
+  final String? ubicacion;
+  final int? ubicacionId;
 
   CitasViewModel({
     required this.id,
@@ -78,6 +80,8 @@ class CitasViewModel {
     this.fechaValidacion,
     this.fechaInicio,
     this.fechaFin,
+    this.ubicacion,
+    this.ubicacionId,
   });
 }
 
@@ -130,6 +134,22 @@ class CitaRequestViewModel {
     required this.doctorId,
     required this.ubicacionesId,
     required this.fechaHoraCita,
+  });
+}
+
+class CitaRequestAdminViewModel {
+  int? doctorId;
+  int ubicacionId;
+  DateTime? fecha;
+  DateTime? fechaInicio;
+  DateTime? fechaFin;
+
+  CitaRequestAdminViewModel({
+    this.doctorId,
+    required this.ubicacionId,
+    this.fecha,
+    this.fechaInicio,
+    this.fechaFin,
   });
 }
 

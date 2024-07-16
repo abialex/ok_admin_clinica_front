@@ -1,5 +1,6 @@
 import 'package:admin_clinica_front/core/extensions/date_time_extensions.dart';
 import 'package:admin_clinica_front/data/models/cita/cita_ocupada/cita_ocupada_create.dart';
+import 'package:admin_clinica_front/data/models/request/cita_request_model.dart';
 import 'package:admin_clinica_front/data/models/request/request_model.dart';
 import 'package:admin_clinica_front/dominio/entities/estado_cita.dart';
 import 'package:admin_clinica_front/dominio/entities/tipo_cita.dart';
@@ -64,6 +65,8 @@ class CitasService {
                     fechaValidacion: cita.fechaValidacion != null ? DateTime.parse(cita.fechaValidacion!) : null,
                     fechaInicio: cita.fechaInicio != null ? DateTime.parse(cita.fechaInicio!) : null,
                     fechaFin: cita.fechaFin != null ? DateTime.parse(cita.fechaFin!) : null,
+                    ubicacion: cita.ubicacion,
+                    ubicacionId: cita.ubicacion_id,
                   ))
               .toList();
           return Right(finalList);
@@ -103,6 +106,53 @@ class CitasService {
                   fechaValidacion: cita.fechaValidacion != null ? DateTime.parse(cita.fechaValidacion!) : null,
                   fechaInicio: cita.fechaInicio != null ? DateTime.parse(cita.fechaInicio!) : null,
                   fechaFin: cita.fechaFin != null ? DateTime.parse(cita.fechaFin!) : null,
+                  ubicacion: cita.ubicacion,
+                  ubicacionId: cita.ubicacion_id,
+                ),
+              )
+              .toList();
+          return Right(finalList);
+        },
+      );
+    } catch (e) {
+      return const Left("Error inesperado");
+    }
+  }
+
+  Future<Either<String, List<CitaViewModel>>> getUbicacionIdDateDoctorId(CitaRequestAdminViewModel view) async {
+    try {
+      CitaRequestAdmin request = CitaRequestAdmin(
+        ubicacion_id: view.ubicacionId,
+        doctor_id: view.doctorId,
+        fecha_inicio: view.fechaInicio?.toFormatyyyyMMdd(),
+        fecha_fin: view.fechaFin?.toFormatyyyyMMdd(),
+        fecha: view.fecha?.toFormatyyyyMMdd(),
+      );
+      final result = await _citaRepository.getUbicacionIdDateDoctorId(request);
+      return result.fold(
+        (error) => Left(error),
+        (responseList) {
+          final finalList = responseList
+              .map(
+                (dto) => CitaViewModel(
+                  id: dto.id,
+                  doctorId: dto.doctor_id,
+                  ubicacionId: dto.ubicacion_id,
+                  fechaHoraCita: DateTime.parse(dto.fechaHoraCita),
+                  doctor: dto.doctor,
+                  estadoString: dto.estado_string,
+                  tipoString: dto.tipo_string,
+                  tipo: TipoCitaExtension.fromNumber(dto.tipo),
+                  celular: dto.celular,
+                  pacienteDatos: dto.paciente != null ? "${dto.paciente!.nombres} ${dto.paciente?.apellidos}" : null,
+                  razon: dto.razon,
+                  razonOcupado: dto.razonOcupado,
+                  datosPaciente: dto.datosPaciente,
+                  estado: EstadoCitaExtension.fromNumber(dto.estado),
+                  fechaConfirmacion: dto.fechaConfirmacion != null ? DateTime.parse(dto.fechaConfirmacion!) : null,
+                  fechaValidacion: dto.fechaValidacion != null ? DateTime.parse(dto.fechaValidacion!) : null,
+                  fechaInicio: dto.fechaInicio != null ? DateTime.parse(dto.fechaInicio!) : null,
+                  fechaFin: dto.fechaFin != null ? DateTime.parse(dto.fechaFin!) : null,
                 ),
               )
               .toList();
@@ -157,6 +207,8 @@ class CitasService {
                 fechaValidacion: cita.fechaValidacion != null ? DateTime.parse(cita.fechaValidacion!) : null,
                 fechaInicio: cita.fechaInicio != null ? DateTime.parse(cita.fechaInicio!) : null,
                 fechaFin: cita.fechaFin != null ? DateTime.parse(cita.fechaFin!) : null,
+                ubicacion: cita.ubicacion,
+                ubicacionId: cita.ubicacion_id,
               ),
             )
             .toList();

@@ -9,6 +9,7 @@ import 'package:admin_clinica_front/ui/modules/cita/r_doctor_administrador/pages
 import 'package:admin_clinica_front/ui/modules/cita/r_doctor_administrador/pages/cita_update_page.dart';
 import 'package:admin_clinica_front/ui/modules/doctor/doctor_list/doctor_list_adm_page.dart';
 import 'package:admin_clinica_front/ui/modules/login/page.dart';
+import 'package:admin_clinica_front/ui/modules/monitoreo/r_administrador/monitoreo_admin_page.dart';
 import 'package:admin_clinica_front/ui/modules/otros/page.dart';
 import 'package:admin_clinica_front/ui/modules/paciente/paciente_list/paciente_list_asist_recep_page.dart';
 import 'package:flutter/material.dart';
@@ -42,6 +43,7 @@ class Routes {
 
   static const String otros = '/otros';
   static const String atencion = '/atencion';
+  static const String monitoreo = '/monitoreo';
 
   static const String login = '/';
 }
@@ -155,7 +157,12 @@ class AppRouter {
           pageBuilder: (_, __, ___) => CitaUpdateDoctorAdminPage(),
           //   transitionsBuilder: _createSlideFadeTransition,
         );
-      //? Administrador
+      //? Administrador-admin
+      case Routes.base_admin + Routes.monitoreo:
+        return PageRouteBuilder(
+          pageBuilder: (_, __, ___) => MonitoreoAdminPage(),
+          //   transitionsBuilder: _createSlideFadeTransition,
+        );
 
       default:
         return MaterialPageRoute(builder: (_) => const NotFoundPage());
