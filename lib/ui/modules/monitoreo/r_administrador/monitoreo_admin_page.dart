@@ -1,6 +1,5 @@
 // ignore_for_file: must_be_immutable
 
-import 'package:admin_clinica_front/core/extensions/date_time_extensions.dart';
 import 'package:admin_clinica_front/core/utils/app_colors.dart';
 import 'package:admin_clinica_front/data/models/doctor/doctor_contenedor_data_model.dart';
 import 'package:admin_clinica_front/data/models/ubicacion/ubicacion_contenedor_data_model.dart';
@@ -15,13 +14,11 @@ import 'package:admin_clinica_front/ui/global_widget/dropdown_multiselect/ubicac
 import 'package:admin_clinica_front/ui/global_widget/page/page_base_desktop.dart';
 import 'package:admin_clinica_front/ui/global_widget/page/page_base_phone.dart';
 import 'package:admin_clinica_front/ui/global_widget/page/page_mixin_base.dart';
-import 'package:admin_clinica_front/ui/modules/monitoreo/bloc/citas_for_admin_cubit.dart';
+import 'package:admin_clinica_front/ui/modules/monitoreo/bloc/cita_list/cita_list_admin_bloc.dart';
 import 'package:admin_clinica_front/ui/modules/monitoreo/cubit/doctor_selected_cubit.dart';
 import 'package:admin_clinica_front/ui/modules/monitoreo/r_administrador/widgets/cita_card.dart';
 import 'package:admin_clinica_front/ui/view_models/cita_view/cita_view_models.dart';
-import 'package:admin_clinica_front/ui/view_models/excel_view/excel_view.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
@@ -46,7 +43,7 @@ class MonitoreoAdminPage extends StatelessWidget with ResponsiveWidgetMixin {
             create: (context) => UbicacionSelectedCubit(),
           ),
           BlocProvider(
-            create: (context) => CitasForAdminCubit(),
+            create: (context) => CitaListAdminBloc(),
           ),
         ],
         child: Builder(builder: (context) {
@@ -209,7 +206,7 @@ class MonitoreoAdminPage extends StatelessWidget with ResponsiveWidgetMixin {
                         onClick: () {
                           if (formKey.currentState!.validate()) {
                             if (request.fechaFin != null && request.fechaInicio != null || request.fecha != null) {
-                              context.read<CitasForAdminCubit>().getCitasByFilter(request);
+                              context.read<CitaListAdminBloc>().add(CitaListAdminEvent.getCitas(request));
                             }
                           } else {}
                         },
@@ -220,55 +217,50 @@ class MonitoreoAdminPage extends StatelessWidget with ResponsiveWidgetMixin {
                 ),
                 Expanded(
                   flex: 3,
-                  child: Column(
-                    children: [
-                      Expanded(
-                        flex: 3,
-                        child: ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: context.watch<CitasForAdminCubit>().state.length,
-                          itemBuilder: (context, index) {
-                            return CitaCardTest(cita: context.watch<CitasForAdminCubit>().state[index]);
-                          },
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  child: BlocBuilder<CitaListAdminBloc, CitaListAdminState>(
+                    builder: (context, state) {
+                      return state.map(initial: (stt) {
+                        return const SizedBox.shrink();
+                      }, loading: (stt) {
+                        return const Center(child: CircularProgressIndicator());
+                      }, citaLoaded: (stt) {
+                        return Column(
                           children: [
-                            Row(
-                              children: [
-                                AppTextGlobal.labelLightText(text: "EXCEL:"),
-                                IconButton(
-                                    onPressed: () {
-                                      context.read<ExcelCubit>().crearExcel(
-                                            ExcelView(
-                                              nameFile: "doctores",
-                                              headerList: ["DOCTOR", "Fecha Cita", "Fecha Confirmación", "Fecha inicio", "Fecha fin", "Fecha Validación"],
-                                              dataList: context
-                                                  .read<CitasForAdminCubit>()
-                                                  .state
-                                                  .map((e) => [
-                                                        e.doctor,
-                                                        e.fechaHoraCita.toFormatyyyyMMddHHmmss(),
-                                                        e.fechaConfirmacion?.toFormatyyyyMMddHHmmss() ?? '',
-                                                        e.fechaInicio?.toFormatyyyyMMddHHmmss() ?? '',
-                                                        e.fechaFin?.toFormatyyyyMMddHHmmss() ?? '',
-                                                        e.fechaValidacion?.toFormatyyyyMMddHHmmss() ?? '',
-                                                      ])
-                                                  .toList(),
-                                            ),
-                                          );
-                                    },
-                                    icon: const Icon(Icons.print)),
-                              ],
+                            Expanded(
+                              flex: 3,
+                              child: ListView.builder(
+                                shrinkWrap: true,
+                                itemCount: stt.citas.length,
+                                itemBuilder: (context, index) {
+                                  return CitaCardTest(cita: stt.citas[index]);
+                                },
+                              ),
                             ),
-                            Expanded(child: AppTextGlobal.labelLightText(text: context.watch<ExcelCubit>().state, textAlign: TextAlign.right)),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Row(
+                                    children: [
+                                      AppTextGlobal.labelLightText(text: "EXCEL:"),
+                                      IconButton(
+                                          onPressed: () {
+                                            context.read<ExcelCubit>().createReporteCitas(stt.citas);
+                                          },
+                                          icon: const Icon(Icons.print)),
+                                    ],
+                                  ),
+                                  Expanded(child: AppTextGlobal.labelLightText(text: context.watch<ExcelCubit>().state, textAlign: TextAlign.right)),
+                                ],
+                              ),
+                            ),
                           ],
-                        ),
-                      ),
-                    ],
+                        );
+                      }, failure: (stt) {
+                        return const SizedBox.shrink();
+                      });
+                    },
                   ),
                 ),
               ],

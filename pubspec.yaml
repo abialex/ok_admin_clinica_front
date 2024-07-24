@@ -52,6 +52,7 @@ dependencies:
   excel: ^2.0.8
   permission_handler: ^10.0.0
   path_provider: ^2.0.9
+  process_run: any
   flutter:
     sdk: flutter
 

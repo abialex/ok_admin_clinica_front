@@ -6,6 +6,7 @@ class CitaViewModel {
   final String doctor;
   final int doctorId;
   final int? ubicacionId;
+  final String? ubicacionString;
   final String estadoString;
   final String tipoString;
   final DateTime fechaHoraCita;
@@ -27,6 +28,7 @@ class CitaViewModel {
     required this.doctor,
     required this.doctorId,
     this.ubicacionId,
+    this.ubicacionString,
     required this.estadoString,
     required this.tipoString,
     required this.fechaHoraCita,
