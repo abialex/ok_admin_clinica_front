@@ -98,7 +98,7 @@ class ExcelService {
       ..createSync(recursive: true)
       ..writeAsBytesSync(excel.encode()!);
     cmdService.openFolder("${Directory.current.path}/$outputPath");
-    cmdService.openFile(fileName);
+    cmdService.openFile("${Directory.current.path}/$outputPath/$fileName");
     return outputPath + fileName;
   }
 }
