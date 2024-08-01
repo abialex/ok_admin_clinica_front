@@ -22,8 +22,12 @@ extension DateFormatting on DateTime {
     return formatter.format(this);
   }
 
-  String toFormaMMddSlash() {
+  String toFormaMMddSlashEs() {
     return '${DateFormat('MMMM', 'es-ES').format(this)} - ${DateFormat('dd EEEE', 'es-ES').format(copyWith(year: DateTime.now().year))}';
+  }
+
+  String toFormaMMddSlash() {
+    return DateFormat('MM/dd').format(this);
   }
 
   String toFormatHHmm() {

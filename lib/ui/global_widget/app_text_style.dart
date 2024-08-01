@@ -145,6 +145,7 @@ class AppTextGlobal {
         color: colorText,
         textAlign: textAlign,
         fontSize: fontSize,
+        maxLines: maxLines,
       );
 
   static Text labelLargeText({
