@@ -8,6 +8,13 @@ extension DateFormatting on DateTime {
     return formatter.format(this);
   }
 
+  String toFormatyyyyMMddHHmmSlash() {
+    final DateFormat formatter = DateFormat('yyyy/MM/dd HH:mm');
+    minute;
+    // Formato de fecha deseado: año-mes-día
+    return formatter.format(this);
+  }
+
   String toFormatyyyyMMddHHmmssSlash() {
     final DateFormat formatter = DateFormat('yyyy/MM/dd HH:mm:ss');
     minute;

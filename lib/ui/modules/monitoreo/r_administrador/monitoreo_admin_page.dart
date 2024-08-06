@@ -457,7 +457,7 @@ class GraficoCita extends StatelessWidget {
                     (element) => element.fechaHoraCita.isSameDate(item) && element.fechaValidacion != null && element.fechaConfirmacion != null,
                   )
                   .toList();
-              double gols = citasDia.fold(
+              double promedioTime = citasDia.fold(
                   0,
                   (previousValue, element) =>
                       previousValue +
@@ -466,31 +466,16 @@ class GraficoCita extends StatelessWidget {
                           (element.fechaConfirmacion?.minute ?? 0) -
                           (element.fechaConfirmacion?.hour ?? 0) * 60)); //sacar promedio de hora la lista de citas
               //sacar promedio de hora la lista de citas
-              if (citasDia.isNotEmpty) gols = gols / citasDia.length;
+              if (citasDia.isNotEmpty) promedioTime = promedioTime / citasDia.length;
               return GestureDetector(
                 onTap: () {
                   if (citasDia.isEmpty) return;
                   showDialog(
                     context: context,
                     builder: (context) {
-                      return AlertDialog(
-                        content: IntrinsicHeight(
-                          child: Column(
-                            children: List.generate(
-                              citasDia.length,
-                              (index) {
-                                final cita = citasDia[index];
-                                return Row(
-                                  children: [
-                                    Text(cita.fechaValidacion?.toFormatyyyyMMddHHmmss() ?? '-'),
-                                    AppBox.w10,
-                                    Text(cita.fechaConfirmacion?.toFormatyyyyMMddHHmmss() ?? 'n'),
-                                  ],
-                                );
-                              },
-                            ),
-                          ),
-                        ),
+                      return DetallesDialog(
+                        citasDia: citasDia,
+                        promedioTime: promedioTime,
                       );
                     },
                   );
@@ -507,7 +492,7 @@ class GraficoCita extends StatelessWidget {
                               RotatedBox(
                                 quarterTurns: 1,
                                 child: AppTextGlobal.labelMediumText(
-                                  text: citasDia.isEmpty ? '' : convertDoubleToTimeString2(gols),
+                                  text: citasDia.isEmpty ? '' : convertDoubleToTimeString2(promedioTime),
                                   fontSize: 11,
                                   maxLines: 2,
                                   textAlign: TextAlign.center,
@@ -517,7 +502,7 @@ class GraficoCita extends StatelessWidget {
                               Container(
                                 alignment: Alignment.bottomCenter,
                                 color: AppColors.blueAccent,
-                                height: constraints.maxHeight * (gols / (60 * 4)).clamp(0, 0.9),
+                                height: constraints.maxHeight * (promedioTime / (60 * 4)).clamp(0, 0.9),
                                 child: AppTextGlobal.labelSmallText(
                                   text: '${citasDia.length.toString()}\ncitas',
                                   fontSize: 11,
@@ -573,6 +558,76 @@ class GraficoCita extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+}
+
+class DetallesDialog extends StatelessWidget {
+  const DetallesDialog({super.key, required this.citasDia, required this.promedioTime});
+
+  final List<CitaViewModel> citasDia;
+  final double promedioTime;
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      content: IntrinsicHeight(
+        child: Column(
+          children: [
+            Column(
+              children: List.generate(
+                citasDia.length,
+                (index) {
+                  final cita = citasDia[index];
+                  return Container(
+                    margin: const EdgeInsets.all(5),
+                    padding: const EdgeInsets.all(5),
+                    decoration: BoxDecoration(
+                      border: Border.all(color: AppColors.blueAccent),
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    child: Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(cita.fechaValidacion?.toFormatyyyyMMddHHmmSlash() ?? '-'),
+                            const Text(' - '),
+                            Text(cita.fechaConfirmacion?.toFormatyyyyMMddHHmmSlash() ?? 'n'),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            AppTextGlobal.labelLightText(text: cita.doctor),
+                            AppBox.w10,
+                            Text(convertDoubleToTimeString2(
+                                ((cita.fechaValidacion?.hour ?? 0) * 60 + (cita.fechaValidacion?.minute ?? 0) - (cita.fechaConfirmacion?.minute ?? 0) - (cita.fechaConfirmacion?.hour ?? 0) * 60))),
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            AppTextGlobal.lightText(text: cita.razon ?? " N.A"),
+                          ],
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              ),
+            ),
+            AppBox.h10,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                AppTextGlobal.lightText(text: "Promedio Atención: ", textAlign: TextAlign.center),
+                AppTextGlobal.lightText(text: convertDoubleToTimeString2(promedioTime), textAlign: TextAlign.center),
+              ],
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
