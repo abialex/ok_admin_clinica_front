@@ -20,7 +20,6 @@ import 'package:admin_clinica_front/ui/modules/monitoreo/bloc/cita_list/cita_lis
 import 'package:admin_clinica_front/ui/modules/monitoreo/cubit/doctor_selected_cubit.dart';
 import 'package:admin_clinica_front/ui/view_models/cita_view/cita_view_models.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
@@ -46,6 +45,9 @@ class MonitoreoAdminPage extends StatelessWidget with ResponsiveWidgetMixin {
           ),
           BlocProvider(
             create: (context) => CitaListAdminBloc(),
+          ),
+          BlocProvider(
+            create: (context) => IndexCubit(),
           ),
         ],
         child: Builder(builder: (context) {
@@ -151,9 +153,8 @@ class MonitoreoAdminPage extends StatelessWidget with ResponsiveWidgetMixin {
                       ),
                       AppBox.h4,
                       Expanded(
-                        child: BlocProvider(
-                          create: (context) => IndexCubit(),
-                          child: Builder(builder: (context) {
+                        child: BlocBuilder<IndexCubit, int>(
+                          builder: (context, state) {
                             return Column(
                               children: [
                                 // AppTextGlobal.labelMediumText(text: "Fechas"),
@@ -167,7 +168,7 @@ class MonitoreoAdminPage extends StatelessWidget with ResponsiveWidgetMixin {
                                   ],
                                 ),
                                 () {
-                                  switch ((context.watch<IndexCubit>().state)) {
+                                  switch ((state)) {
                                     case 0:
                                       request.fechaFin = null;
                                       request.fechaInicio = null;
@@ -181,6 +182,7 @@ class MonitoreoAdminPage extends StatelessWidget with ResponsiveWidgetMixin {
                                     case 1:
                                       request.fecha = null;
                                       return SfDateRangePicker(
+                                        key: UniqueKey(),
                                         backgroundColor: AppColors.white,
                                         selectionMode: DateRangePickerSelectionMode.range,
                                         onSelectionChanged: (args) {
@@ -200,7 +202,7 @@ class MonitoreoAdminPage extends StatelessWidget with ResponsiveWidgetMixin {
                                 }()
                               ],
                             );
-                          }),
+                          },
                         ),
                       ),
                       ButtonSuccess(
@@ -234,8 +236,8 @@ class MonitoreoAdminPage extends StatelessWidget with ResponsiveWidgetMixin {
                             stt.citas.where((element) => (element.fechaInicio == null && element.fechaFin != null) || element.fechaInicio != null && element.fechaFin == null).toList();
                         return Stack(
                           children: [
-                            CitaPromedioList(
-                              citas: stt.citas,
+                            CitaPromedioAsistentaList(
+                              citas: stt.citas.where((element) => element.fechaValidacion != null && element.fechaConfirmacion != null).toList(),
                               request: request,
                             ),
                             Positioned(
@@ -298,8 +300,8 @@ class MonitoreoAdminPage extends StatelessWidget with ResponsiveWidgetMixin {
   }
 }
 
-class CitaPromedioList extends StatelessWidget {
-  const CitaPromedioList({
+class CitaPromedioAsistentaList extends StatelessWidget {
+  const CitaPromedioAsistentaList({
     super.key,
     required this.citas,
     required this.request,
@@ -309,127 +311,175 @@ class CitaPromedioList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Expanded(
+    return BlocListener<IndexCubit, int>(
+      listener: (context, state) {
+        context.read<CitaListAdminBloc>().add(InitialCitaListAdmin());
+      },
+      child: Column(
+        children: [
+          Expanded(
             flex: 3,
-            child: Row(
-              children: [
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      Expanded(
-                        child: LayoutBuilder(
-                          builder: (context, constraints) => Container(
-                              alignment: Alignment.bottomRight,
-                              color: AppColors.slg01,
-                              child: AppTextGlobal.labelMediumText(
-                                text: "3h",
-                                colorText: AppColors.white,
-                              )),
-                        ),
-                      ),
-                      // ),
-                      Expanded(
-                        child: LayoutBuilder(
-                          builder: (context, constraints) => Container(
-                              alignment: Alignment.bottomRight,
-                              color: AppColors.slg01,
-                              child: AppTextGlobal.labelMediumText(
-                                text: "2h",
-                                colorText: AppColors.white,
-                              )),
-                        ),
-                      ),
-                      // ),
-                      Expanded(
-                        child: LayoutBuilder(
-                          builder: (context, constraints) => Container(
-                              alignment: Alignment.bottomRight,
-                              color: AppColors.slg01,
-                              child: AppTextGlobal.labelMediumText(
-                                text: "1h",
-                                colorText: AppColors.white,
-                              )),
-                        ),
-                      ),
-                      Expanded(
-                        child: LayoutBuilder(
-                          builder: (context, constraints) => Container(
-                              alignment: Alignment.bottomRight,
-                              color: AppColors.slg01,
-                              child: AppTextGlobal.labelMediumText(
-                                text: "0h ",
-                                colorText: AppColors.white,
-                              )),
-                        ),
-                      ),
-                      ColoredBox(
-                        color: AppColors.blueSecondary,
-                        child: AppTextGlobal.labelSmallText(text: 'CANT. CITAS', fontSize: 11, maxLines: 2, textAlign: TextAlign.center, colorText: AppColors.white),
-                      ),
-                      Container(
-                          child: AppTextGlobal.labelMediumText(
-                        text: "DÍA",
-                        fontSize: 11,
-                        textAlign: TextAlign.center,
-                      )),
-                    ],
-                  ),
-                ),
-                Expanded(
-                  flex: 12,
-                  child: GraficoCita(
+            child: context.watch<IndexCubit>().state == 1
+                ? GraficoByRangeDays(
                     citas: citas,
-                    dateTimeList: getDatesBetween(request.fechaInicio ?? DateTime.now(), request.fechaFin ?? DateTime.now().add(5.days)),
-                  ),
-                ),
-              ],
-            )
-
-            // ListView.builder(
-            //   shrinkWrap: true,
-            //   itemCount: citas.length,
-            //   itemBuilder: (context, index) {
-            //     return CitaCardTest(cita: citas[index]);
-            //   },
-            // ),
-            ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                children: [
-                  AppTextGlobal.labelLightText(text: "EXCEL:"),
-                  IconButton(
-                      onPressed: () {
-                        context.read<ExcelCubit>().createReporteCitas(citas);
-                      },
-                      icon: const Icon(Icons.print)),
-                ],
-              ),
-              Expanded(child: AppTextGlobal.labelLightText(text: context.watch<ExcelCubit>().state, textAlign: TextAlign.right)),
-            ],
+                    request: request,
+                  )
+                : GraficoByOneDay(citas: citas),
           ),
-        ),
-      ],
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    AppTextGlobal.labelLightText(text: "EXCEL:"),
+                    IconButton(
+                        onPressed: () {
+                          context.read<ExcelCubit>().createReporteCitas(citas);
+                        },
+                        icon: const Icon(Icons.print)),
+                  ],
+                ),
+                Expanded(child: AppTextGlobal.labelLightText(text: context.watch<ExcelCubit>().state, textAlign: TextAlign.right)),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
+}
 
-  List<DateTime> getDatesBetween(DateTime startDate, DateTime endDate) {
-    List<DateTime> dates = [];
-    DateTime currentDate = startDate;
+class GraficoByOneDay extends StatelessWidget {
+  const GraficoByOneDay({
+    super.key,
+    required this.citas,
+  });
 
-    while (currentDate.isBefore(endDate) || currentDate.isAtSameMomentAs(endDate)) {
-      dates.add(currentDate);
-      currentDate = currentDate.add(const Duration(days: 1));
-    }
+  final List<CitaViewModel> citas;
 
-    return dates;
+  @override
+  Widget build(BuildContext context) {
+    double promedioTime = citas.where((element) => element.fechaConfirmacion != null && element.fechaValidacion != null).fold(
+        0,
+        (previousValue, element) =>
+            previousValue +
+            ((element.fechaValidacion?.hour ?? 0) * 60 +
+                (element.fechaValidacion?.minute ?? 0) -
+                (element.fechaConfirmacion?.minute ?? 0) -
+                (element.fechaConfirmacion?.hour ?? 0) * 60)); //sacar promedio de hora la lista de citas
+    //sacar promedio de hora la lista de citas
+    if (citas.isNotEmpty) promedioTime = promedioTime / citas.length;
+    return citas.isNotEmpty
+        ? Column(
+            children: [
+              Expanded(
+                child: Container(
+                  margin: const EdgeInsets.only(top: 70),
+                  child: AppSliverList(
+                    items: citas
+                        .where(
+                          (element) => element.fechaValidacion != null && element.fechaConfirmacion != null,
+                        )
+                        .toList(),
+                    itemBuilder: (context, item) {
+                      return Container(
+                          margin: const EdgeInsets.symmetric(
+                            vertical: 2.5,
+                            horizontal: 150,
+                          ),
+                          padding: const EdgeInsets.symmetric(
+                            vertical: 5,
+                            horizontal: 10,
+                          ),
+                          decoration: BoxDecoration(
+                            border: Border.all(color: AppColors.slg01),
+                            borderRadius: BorderRadius.circular(15),
+                            color: AppColors.white,
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Column(
+                                children: [
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    // crossAxisAlignment: CrossAxisAlignment.stretch,
+                                    children: [
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          AppTextGlobal.lightText(text: "Hora de Confirmación", textAlign: TextAlign.left),
+                                          AppBox.w10,
+                                          AppTextGlobal.lightText(text: item.fechaConfirmacion?.toFormatHHm12h() ?? '--'),
+                                        ],
+                                      ),
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          AppTextGlobal.lightText(text: "Hora de Validación", textAlign: TextAlign.left),
+                                          AppBox.w10,
+                                          AppTextGlobal.lightText(text: item.fechaValidacion?.toFormatHHm12h() ?? '--'),
+                                        ],
+                                      ),
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          AppTextGlobal.lightText(text: "Tiempo:", textAlign: TextAlign.left),
+                                          AppBox.w10,
+                                          AppTextGlobal.lightText(
+                                            text: convertDoubleToTimeString2(((item.fechaValidacion?.hour ?? 0) * 60 +
+                                                (item.fechaValidacion?.minute ?? 0) -
+                                                (item.fechaConfirmacion?.minute ?? 0) -
+                                                (item.fechaConfirmacion?.hour ?? 0) * 60)),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                  // AppTextGlobal.labelLightText(text: item.doctor),
+                                  // Text(item.razon ?? 'ss'),
+                                ],
+                              ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: [
+                                  AppTextGlobal.labelLightText(text: item.doctor),
+                                  Text(item.razon ?? 'ss'),
+                                ],
+                              ),
+                            ],
+                          ));
+                    },
+                  ),
+                ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  AppTextGlobal.lightText(text: "Promedio Atención: "),
+                  AppTextGlobal.labelLightText(
+                    text: (convertDoubleToTimeString2(promedioTime)),
+                  ),
+                ],
+              )
+            ],
+          )
+        : Center(child: AppTextGlobal.labelLightText(text: 'No hay citas'));
   }
+}
+
+List<DateTime> getDatesBetween(DateTime startDate, DateTime endDate) {
+  List<DateTime> dates = [];
+  DateTime currentDate = startDate;
+
+  while (currentDate.isBefore(endDate) || currentDate.isAtSameMomentAs(endDate)) {
+    dates.add(currentDate);
+    currentDate = currentDate.add(const Duration(days: 1));
+  }
+
+  return dates;
 }
 
 class GraficoCita extends StatelessWidget {
@@ -445,123 +495,106 @@ class GraficoCita extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Expanded(
-          child: AppSliverList<DateTime>(
-            scrollDirection: Axis.horizontal,
-            items: List.generate(dateTimeList.length, (index) => dateTimeList[index]),
-            itemBuilder: (context, item) {
-              //LOGIC
+        if (dateTimeList.length != 1)
+          Expanded(
+            child: AppSliverList<DateTime>(
+              scrollDirection: Axis.horizontal,
+              items: List.generate(dateTimeList.length, (index) => dateTimeList[index]),
+              itemBuilder: (context, item) {
+                //LOGIC
 
-              final List<CitaViewModel> citasDia = citas
-                  .where(
-                    (element) => element.fechaHoraCita.isSameDate(item) && element.fechaValidacion != null && element.fechaConfirmacion != null,
-                  )
-                  .toList();
-              double promedioTime = citasDia.fold(
-                  0,
-                  (previousValue, element) =>
-                      previousValue +
-                      ((element.fechaValidacion?.hour ?? 0) * 60 +
-                          (element.fechaValidacion?.minute ?? 0) -
-                          (element.fechaConfirmacion?.minute ?? 0) -
-                          (element.fechaConfirmacion?.hour ?? 0) * 60)); //sacar promedio de hora la lista de citas
-              //sacar promedio de hora la lista de citas
-              if (citasDia.isNotEmpty) promedioTime = promedioTime / citasDia.length;
-              return GestureDetector(
-                onTap: () {
-                  if (citasDia.isEmpty) return;
-                  showDialog(
-                    context: context,
-                    builder: (context) {
-                      return DetallesDialog(
-                        citasDia: citasDia,
-                        promedioTime: promedioTime,
-                      );
-                    },
-                  );
-                },
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 2.5),
-                  child: Column(
-                    children: [
-                      Expanded(
-                        child: LayoutBuilder(
-                          builder: (context, constraints) => Column(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              RotatedBox(
-                                quarterTurns: 1,
-                                child: AppTextGlobal.labelMediumText(
-                                  text: citasDia.isEmpty ? '' : convertDoubleToTimeString2(promedioTime),
-                                  fontSize: 11,
-                                  maxLines: 2,
-                                  textAlign: TextAlign.center,
+                final List<CitaViewModel> citasDia = citas
+                    .where(
+                      (element) => element.fechaHoraCita.isSameDate(item) && element.fechaValidacion != null && element.fechaConfirmacion != null,
+                    )
+                    .toList();
+                double promedioTime = citasDia.fold(
+                    0,
+                    (previousValue, element) =>
+                        previousValue +
+                        ((element.fechaValidacion?.hour ?? 0) * 60 +
+                            (element.fechaValidacion?.minute ?? 0) -
+                            (element.fechaConfirmacion?.minute ?? 0) -
+                            (element.fechaConfirmacion?.hour ?? 0) * 60)); //sacar promedio de hora la lista de citas
+                //sacar promedio de hora la lista de citas
+                if (citasDia.isNotEmpty) promedioTime = promedioTime / citasDia.length;
+                return GestureDetector(
+                  onTap: () {
+                    if (citasDia.isEmpty) return;
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                        return DetallesDialog(
+                          citasDia: citasDia,
+                          promedioTime: promedioTime,
+                        );
+                      },
+                    );
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 2.5),
+                    child: Column(
+                      children: [
+                        Expanded(
+                          child: LayoutBuilder(
+                            builder: (context, constraints) => Column(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                RotatedBox(
+                                  quarterTurns: 1,
+                                  child: AppTextGlobal.labelMediumText(
+                                    text: citasDia.isEmpty ? '' : convertDoubleToTimeString2(promedioTime),
+                                    fontSize: 11,
+                                    maxLines: 2,
+                                    textAlign: TextAlign.center,
+                                  ),
                                 ),
-                              ),
-                              AppBox.h6,
-                              Container(
-                                alignment: Alignment.bottomCenter,
-                                color: AppColors.blueAccent,
-                                height: constraints.maxHeight * (promedioTime / (60 * 4)).clamp(0, 0.9),
-                                child: AppTextGlobal.labelSmallText(
-                                  text: '${citasDia.length.toString()}\ncitas',
-                                  fontSize: 11,
-                                  maxLines: 2,
-                                  textAlign: TextAlign.center,
-                                  colorText: Colors.transparent,
+                                AppBox.h6,
+                                Container(
+                                  alignment: Alignment.bottomCenter,
+                                  color: AppColors.blueAccent,
+                                  height: constraints.maxHeight * (promedioTime / (60 * 4)).clamp(0, 0.9),
+                                  child: AppTextGlobal.labelSmallText(
+                                    text: '${citasDia.length.toString()}\ncitas',
+                                    fontSize: 11,
+                                    maxLines: 2,
+                                    textAlign: TextAlign.center,
+                                    colorText: Colors.transparent,
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
-                      ),
-                      if (citasDia.isNotEmpty)
+                        if (citasDia.isNotEmpty)
+                          Container(
+                            width: 30,
+                            alignment: Alignment.center,
+                            color: AppColors.blueSecondary,
+                            child: AppTextGlobal.labelSmallText(text: citasDia.length.toString(), fontSize: 11, maxLines: 2, textAlign: TextAlign.center, colorText: AppColors.white),
+                          ),
                         Container(
-                          width: 30,
-                          alignment: Alignment.center,
-                          color: AppColors.blueSecondary,
-                          child: AppTextGlobal.labelSmallText(text: citasDia.length.toString(), fontSize: 11, maxLines: 2, textAlign: TextAlign.center, colorText: AppColors.white),
+                          color: AppColors.lightBackgroundColor,
+                          child: AppTextGlobal.labelMediumText(
+                            text: item.toFormaMMddSlash(),
+                            fontSize: 11,
+                          ),
                         ),
-                      Container(
-                        color: AppColors.lightBackgroundColor,
-                        child: AppTextGlobal.labelMediumText(
-                          text: item.toFormaMMddSlash(),
-                          fontSize: 11,
-                        ),
-                      ),
-
-                      // Expanded(
-                      //   child: LayoutBuilder(
-                      //     builder: (context, constraints) => Container(
-                      //         margin: const EdgeInsets.symmetric(horizontal: 2.5),
-                      //         color: AppColors.yellowAccent,
-                      //         child: Column(
-                      //           mainAxisAlignment: MainAxisAlignment.end,
-                      //           children: [
-                      //             RotatedBox(
-                      //               quarterTurns: 1,
-                      //               child: AppTextGlobal.labelMediumText(
-                      //                 text: convertDoubleToTimeString(60.5),
-                      //                 fontSize: 11,
-                      //               ),
-                      //             ),
-                      //             AppBox.h(constraints.maxHeight * (30.5 / 60).clamp(0, 0.9))
-                      //           ],
-                      //         )),
-                      //   ),
-                      // ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-              );
-            },
-          ),
-        ),
+                );
+              },
+            ),
+          )
+        else
+          Expanded(child: Center(child: AppTextGlobal.labelLargeText(text: "Seleccione el rango de fechas")))
       ],
     );
   }
 }
 
+// quedé en  CREAR UN DIALOG PARA MOSTRAR LOS DETALLES DE LAS CITAS POR FECHA DE HOY
 class DetallesDialog extends StatelessWidget {
   const DetallesDialog({super.key, required this.citasDia, required this.promedioTime});
 
@@ -601,8 +634,10 @@ class DetallesDialog extends StatelessWidget {
                           children: [
                             AppTextGlobal.labelLightText(text: cita.doctor),
                             AppBox.w10,
-                            Text(convertDoubleToTimeString2(
-                                ((cita.fechaValidacion?.hour ?? 0) * 60 + (cita.fechaValidacion?.minute ?? 0) - (cita.fechaConfirmacion?.minute ?? 0) - (cita.fechaConfirmacion?.hour ?? 0) * 60))),
+                            Text(
+                              convertDoubleToTimeString2(
+                                  ((cita.fechaValidacion?.hour ?? 0) * 60 + (cita.fechaValidacion?.minute ?? 0) - (cita.fechaConfirmacion?.minute ?? 0) - (cita.fechaConfirmacion?.hour ?? 0) * 60)),
+                            ),
                           ],
                         ),
                         Row(
@@ -640,4 +675,92 @@ String convertDoubleToTimeString2(double timeInMinutes) {
   if (hours == 0) return '${minutes}m';
   if (minutes == 0) return '${hours}h';
   return '${hours}h ${minutes}m';
+}
+
+class GraficoByRangeDays extends StatelessWidget {
+  const GraficoByRangeDays({
+    super.key,
+    required this.citas,
+    required this.request,
+  });
+  final List<CitaViewModel> citas;
+  final CitaRequestAdminViewModel request;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: LayoutBuilder(
+                  builder: (context, constraints) => Container(
+                      alignment: Alignment.bottomRight,
+                      color: AppColors.slg01,
+                      child: AppTextGlobal.labelMediumText(
+                        text: "3h",
+                        colorText: AppColors.white,
+                      )),
+                ),
+              ),
+              // ),
+              Expanded(
+                child: LayoutBuilder(
+                  builder: (context, constraints) => Container(
+                      alignment: Alignment.bottomRight,
+                      color: AppColors.slg01,
+                      child: AppTextGlobal.labelMediumText(
+                        text: "2h",
+                        colorText: AppColors.white,
+                      )),
+                ),
+              ),
+              // ),
+              Expanded(
+                child: LayoutBuilder(
+                  builder: (context, constraints) => Container(
+                      alignment: Alignment.bottomRight,
+                      color: AppColors.slg01,
+                      child: AppTextGlobal.labelMediumText(
+                        text: "1h",
+                        colorText: AppColors.white,
+                      )),
+                ),
+              ),
+              Expanded(
+                child: LayoutBuilder(
+                  builder: (context, constraints) => Container(
+                      alignment: Alignment.bottomRight,
+                      color: AppColors.slg01,
+                      child: AppTextGlobal.labelMediumText(
+                        text: "0h ",
+                        colorText: AppColors.white,
+                      )),
+                ),
+              ),
+              ColoredBox(
+                color: AppColors.blueSecondary,
+                child: AppTextGlobal.labelSmallText(text: 'CANT. CITAS', fontSize: 11, maxLines: 2, textAlign: TextAlign.center, colorText: AppColors.white),
+              ),
+              Container(
+                  child: AppTextGlobal.labelMediumText(
+                text: "DÍA",
+                fontSize: 11,
+                textAlign: TextAlign.center,
+              )),
+            ],
+          ),
+        ),
+        Expanded(
+          flex: 12,
+          child: GraficoCita(
+            citas: citas,
+            dateTimeList: getDatesBetween(request.fechaInicio ?? DateTime.now(), request.fechaFin ?? DateTime.now()),
+          ),
+        ),
+      ],
+    );
+  }
 }
