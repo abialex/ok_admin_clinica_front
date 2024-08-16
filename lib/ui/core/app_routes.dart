@@ -85,7 +85,7 @@ List<ModulesRouter> modulesRouterList = [
       RutasNav(
         icon: Icons.personal_injury_outlined,
         titulo: "Doctores",
-        routePage: Routes.citaDetails,
+        routePage: Routes.base_asistenteRecepcion + Routes.doctor_list,
       ),
     ],
   ),

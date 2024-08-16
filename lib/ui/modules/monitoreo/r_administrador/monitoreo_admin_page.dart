@@ -9,6 +9,7 @@ import 'package:admin_clinica_front/ui/global_widget/app_box.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_text_style.dart';
 import 'package:admin_clinica_front/ui/global_widget/button_base/button_success.dart';
 import 'package:admin_clinica_front/ui/global_widget/checkbox/app_checkbox_list_cubit.dart';
+import 'package:admin_clinica_front/ui/global_widget/dialog/dialog_message/cubit/dialog_message_cubit.dart';
 import 'package:admin_clinica_front/ui/global_widget/dropdown_multiselect/doctor_contenedor_dropdown.dart';
 import 'package:admin_clinica_front/ui/global_widget/dropdown_multiselect/ubicacion_contenedor_dropdown.dart';
 import 'package:admin_clinica_front/ui/global_widget/page/page_base_desktop.dart';
@@ -244,6 +245,8 @@ class PageControl extends StatelessWidget {
                     if (formKey.currentState!.validate()) {
                       if (request.fechaFin != null && request.fechaInicio != null || request.fecha != null) {
                         context.read<CitaListAdminBloc>().add(CitaListAdminEvent.getCitas(request));
+                      } else {
+                        context.read<DialogMessageCubit>().showErrorAlert(texto: "Seleccione una fecha");
                       }
                     } else {}
                   },

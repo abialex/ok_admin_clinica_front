@@ -1,17 +1,21 @@
+import 'package:admin_clinica_front/core/enums/control_cita_tipo_enum.dart';
 import 'package:admin_clinica_front/core/utils/app_colors.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_text_style.dart';
 import 'package:admin_clinica_front/ui/modules/monitoreo/r_administrador/widgets/grafico_cita_asistenta.dart';
 import 'package:admin_clinica_front/ui/view_models/cita_view/cita_view_models.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 class GraficoByRangeDays extends StatelessWidget {
   const GraficoByRangeDays({
     super.key,
     required this.citas,
     required this.request,
+    required this.tipoControlCita,
   });
   final List<CitaPromedioDateTime> citas;
   final CitaRequestAdminViewModel request;
+  final ControlCitaTipoEnum tipoControlCita;
 
   @override
   Widget build(BuildContext context) {
@@ -82,7 +86,10 @@ class GraficoByRangeDays extends StatelessWidget {
         ),
         Expanded(
           flex: 12,
-          child: GraficoCitaAsistentaControl(itemsList: citas),
+          child: GraficoCitaAsistentaControl(
+            itemsList: citas,
+            tipoControlCita: tipoControlCita,
+          ),
         ),
       ],
     );

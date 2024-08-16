@@ -1,3 +1,4 @@
+import 'package:admin_clinica_front/core/enums/control_cita_tipo_enum.dart';
 import 'package:admin_clinica_front/core/extensions/date_time_extensions.dart';
 import 'package:admin_clinica_front/core/utils/app_colors.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_box.dart';
@@ -11,8 +12,10 @@ class GraficoCitaAsistentaControl extends StatelessWidget {
   const GraficoCitaAsistentaControl({
     super.key,
     required this.itemsList,
+    required this.tipoControlCita,
   });
   final List<CitaPromedioDateTime> itemsList;
+  final ControlCitaTipoEnum tipoControlCita;
 
   @override
   Widget build(BuildContext context) {
@@ -33,6 +36,7 @@ class GraficoCitaAsistentaControl extends StatelessWidget {
                         return DetallesDialog(
                           citasDia: item.citas,
                           promedioTime: item.promedio,
+                          tipoControlCita: tipoControlCita,
                         );
                       },
                     );

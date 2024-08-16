@@ -1,3 +1,4 @@
+import 'package:admin_clinica_front/core/enums/control_cita_tipo_enum.dart';
 import 'package:admin_clinica_front/ui/cubits/index_cubit.dart';
 import 'package:admin_clinica_front/ui/modules/monitoreo/bloc/cita_list/cita_list_admin_bloc.dart';
 import 'package:admin_clinica_front/ui/modules/monitoreo/r_administrador/widgets/citas_by_one_day.dart';
@@ -23,10 +24,12 @@ class CitaPromedioAsistentaList extends StatelessWidget {
       },
       child: context.watch<IndexCubit>().state == 1
           ? GraficoByRangeDays(
+              tipoControlCita: ControlCitaTipoEnum.confirmadoToValidado,
               citas: citas,
               request: request,
             )
           : GraficoByOneDay(
+              tipoControlCita: ControlCitaTipoEnum.confirmadoToValidado,
               citasToday: citas.expand((element) => element.citas).toList(),
               promedioTimeToday: citas.expand((element) => element.citas).fold(
                       0,

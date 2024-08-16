@@ -1,3 +1,4 @@
+import 'package:admin_clinica_front/core/enums/control_cita_tipo_enum.dart';
 import 'package:admin_clinica_front/core/extensions/date_time_extensions.dart';
 import 'package:admin_clinica_front/core/utils/app_colors.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_box.dart';
@@ -12,10 +13,12 @@ class GraficoByOneDay extends StatelessWidget {
     super.key,
     required this.citasToday,
     required this.promedioTimeToday,
+    required this.tipoControlCita,
   });
 
   final List<CitaViewModel> citasToday;
   final double promedioTimeToday;
+  final ControlCitaTipoEnum tipoControlCita;
 
   @override
   Widget build(BuildContext context) {
@@ -45,47 +48,16 @@ class GraficoByOneDay extends StatelessWidget {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Column(
-                                children: [
-                                  Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    // crossAxisAlignment: CrossAxisAlignment.stretch,
-                                    children: [
-                                      Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          AppTextGlobal.lightText(text: "Hora de Confirmación", textAlign: TextAlign.left),
-                                          AppBox.w10,
-                                          AppTextGlobal.lightText(text: item.fechaConfirmacion?.toFormatHHm12h() ?? '--'),
-                                        ],
-                                      ),
-                                      Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          AppTextGlobal.lightText(text: "Hora de Validación", textAlign: TextAlign.left),
-                                          AppBox.w10,
-                                          AppTextGlobal.lightText(text: item.fechaValidacion?.toFormatHHm12h() ?? '--'),
-                                        ],
-                                      ),
-                                      Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          AppTextGlobal.lightText(text: "Tiempo:", textAlign: TextAlign.left),
-                                          AppBox.w10,
-                                          AppTextGlobal.lightText(
-                                            text: convertDoubleToTimeString2(((item.fechaValidacion?.hour ?? 0) * 60 +
-                                                (item.fechaValidacion?.minute ?? 0) -
-                                                (item.fechaConfirmacion?.minute ?? 0) -
-                                                (item.fechaConfirmacion?.hour ?? 0) * 60)),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                  // AppTextGlobal.labelLightText(text: item.doctor),
-                                  // Text(item.razon ?? 'ss'),
-                                ],
-                              ),
+                              () {
+                                switch (tipoControlCita) {
+                                  case ControlCitaTipoEnum.inicioToFin:
+                                    return _inicioToFin(item);
+                                  case ControlCitaTipoEnum.confirmadoToValidado:
+                                    return _confirmadoToValidado(item);
+                                  default:
+                                    return const Text("Tipo no definido");
+                                }
+                              }(),
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 children: [
@@ -111,6 +83,75 @@ class GraficoByOneDay extends StatelessWidget {
             ],
           )
         : Center(child: AppTextGlobal.labelLightText(text: 'No hay citas'));
+  }
+
+  Widget _inicioToFin(CitaViewModel item) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            AppTextGlobal.lightText(text: item.fechaInicio?.toFormatHHm12h() ?? '--'),
+            AppBox.w10,
+            AppTextGlobal.lightText(text: "- Hora de Inicio", textAlign: TextAlign.left),
+          ],
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            AppTextGlobal.lightText(text: item.fechaFin?.toFormatHHm12h() ?? '--'),
+            AppBox.w4,
+            AppTextGlobal.lightText(text: "- Hora Fin", textAlign: TextAlign.left),
+          ],
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            AppTextGlobal.lightText(text: "Tiempo:", textAlign: TextAlign.left),
+            AppBox.w4,
+            AppTextGlobal.lightText(
+              text: convertDoubleToTimeString2(((item.fechaFin?.hour ?? 0) * 60 + (item.fechaFin?.minute ?? 0) - (item.fechaInicio?.minute ?? 0) - (item.fechaInicio?.hour ?? 0) * 60)),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+
+  Widget _confirmadoToValidado(CitaViewModel item) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            AppTextGlobal.lightText(text: item.fechaConfirmacion?.toFormatHHm12h() ?? '--'),
+            AppBox.w4,
+            AppTextGlobal.lightText(text: "- Hora de Confirmación", textAlign: TextAlign.left),
+          ],
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            AppTextGlobal.lightText(text: item.fechaValidacion?.toFormatHHm12h() ?? '--'),
+            AppBox.w4,
+            AppTextGlobal.lightText(text: "- Hora de Validación", textAlign: TextAlign.left),
+          ],
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            AppTextGlobal.lightText(text: "Tiempo:", textAlign: TextAlign.left),
+            AppBox.w10,
+            AppTextGlobal.lightText(
+              text: convertDoubleToTimeString2(
+                  ((item.fechaValidacion?.hour ?? 0) * 60 + (item.fechaValidacion?.minute ?? 0) - (item.fechaConfirmacion?.minute ?? 0) - (item.fechaConfirmacion?.hour ?? 0) * 60)),
+            ),
+          ],
+        ),
+      ],
+    );
   }
 }
 
