@@ -15,6 +15,7 @@ import 'package:admin_clinica_front/ui/modules/login/bloc/login_bloc.dart';
 import 'package:admin_clinica_front/ui/modules/login/widget/preview_slg.dart';
 import 'package:admin_clinica_front/ui/modules/login/widget/text_form_field_box.dart';
 import 'package:admin_clinica_front/ui/validators/validators.dart';
+import 'package:admin_clinica_front/ui/view_models/usuario_view/usuario_view_models.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -39,11 +40,19 @@ class _LoginPageState extends State<LoginPage> {
     context.read<LoginBloc>().add(const LoginEvent.authenticated());
   }
 
+  loadModules(UsuarioLoginResponseViewModel usuario) {
+    //buscando los modulos asignados a este usuario
+    final router = modulesRouterList.where((e) => e.modulesName == usuario.rol && e.modulesTipo == usuario.tipo).firstOrNull;
+    //buscando el index del Home
+    final indexHome = router?.modulesList.indexWhere((element) => element.routePage == Routes.home);
+    if (indexHome == -1) context.read<DialogMessageCubit>().showCustomAlert(titulo: "Módulo faltante", texto: "La aplicación ha iniciado sin el módulo Home");
+    context.read<NavigatorCubit>().setupModules(router?.modulesList);
+    context.read<NavigatorCubit>().updateIndexDelay(indexHome ?? -1);
+  }
+
   @override
   Widget build(BuildContext context) {
     final usuarioBloc = context.read<UsuarioBloc>();
-    final dialogCubit = context.read<DialogMessageCubit>();
-
     final formKey = GlobalKey<FormState>(); // Clave global para el formulario
 
     return BlocListener<LoginBloc, LoginState>(
@@ -67,29 +76,15 @@ class _LoginPageState extends State<LoginPage> {
             });
           },
           usuarioAuthenticated: (value) async {
-            //buscando los modulos asignados a este usuario
-            final router = modulesRouterList.where((e) => e.modulesName == value.usuario.rol && e.modulesTipo == value.usuario.tipo).firstOrNull;
-            //buscando el index del Home
-            final indexHome = router?.modulesList.indexWhere((element) => element.routePage == Routes.home);
-            if (indexHome == -1) dialogCubit.showCustomAlert(titulo: "Módulo faltante", texto: "La aplicación ha iniciado sin el módulo Home");
-            context.read<NavigatorCubit>().setupModules(router?.modulesList);
-            context.read<NavigatorCubit>().updateIndexDelay(indexHome ?? -1);
-            //guardarndo usuario al storage
-            // Navigator.pushReplacementNamed(context, Routes.home);
+            loadModules(value.usuario);
 
             setState(() {
               showPreview = true;
             });
           },
           usuarioLoaded: (value) async {
-            //buscando los modulos asignados a este usuario
-            final router = modulesRouterList.where((e) => e.modulesName == value.usuario.rol && e.modulesTipo == value.usuario.tipo).firstOrNull;
-            //buscando el index del Home
-            final indexHome = router?.modulesList.indexWhere((element) => element.routePage == Routes.home);
-            if (indexHome == -1) dialogCubit.showCustomAlert(titulo: "Módulo faltante", texto: "La aplicación ha iniciado sin el módulo Home");
-            context.read<NavigatorCubit>().setupModules(router?.modulesList);
-            context.read<NavigatorCubit>().updateIndexDelay(indexHome ?? -1);
-            //guardarndo usuario al storage
+            loadModules(value.usuario);
+            //guardando usuario al storage
             await usuarioBloc.setUsuario(value.usuario);
             Navigator.pushReplacementNamed(context, Routes.home);
           },
