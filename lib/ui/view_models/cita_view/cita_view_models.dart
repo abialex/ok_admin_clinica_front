@@ -6,6 +6,7 @@ class CitaViewModel {
   final String doctor;
   final int doctorId;
   final int? ubicacionId;
+  final String? ubicacionString;
   final String estadoString;
   final String tipoString;
   final DateTime fechaHoraCita;
@@ -27,6 +28,7 @@ class CitaViewModel {
     required this.doctor,
     required this.doctorId,
     this.ubicacionId,
+    this.ubicacionString,
     required this.estadoString,
     required this.tipoString,
     required this.fechaHoraCita,
@@ -61,6 +63,8 @@ class CitasViewModel {
   final DateTime? fechaValidacion;
   final DateTime? fechaInicio;
   final DateTime? fechaFin;
+  final String? ubicacion;
+  final int? ubicacionId;
 
   CitasViewModel({
     required this.id,
@@ -78,6 +82,8 @@ class CitasViewModel {
     this.fechaValidacion,
     this.fechaInicio,
     this.fechaFin,
+    this.ubicacion,
+    this.ubicacionId,
   });
 }
 
@@ -133,6 +139,22 @@ class CitaRequestViewModel {
   });
 }
 
+class CitaRequestAdminViewModel {
+  int? doctorId;
+  int ubicacionId;
+  DateTime? fecha;
+  DateTime? fechaInicio;
+  DateTime? fechaFin;
+
+  CitaRequestAdminViewModel({
+    this.doctorId,
+    required this.ubicacionId,
+    this.fecha,
+    this.fechaInicio,
+    this.fechaFin,
+  });
+}
+
 class CitaFilterViewModel {
   final int? doctorId;
   final int? ubicacionId;
@@ -174,4 +196,12 @@ class CitaOcupadaUpdateViewModel {
     required this.fechaHoraCita,
     required this.razonOcupado,
   });
+}
+
+class CitaPromedioDateTime {
+  final DateTime date;
+  final double promedio;
+  final int cantidad;
+  final List<CitaViewModel> citas;
+  CitaPromedioDateTime({required this.date, required this.promedio, required this.cantidad, required this.citas});
 }

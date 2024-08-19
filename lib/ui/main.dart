@@ -1,5 +1,6 @@
+import 'package:admin_clinica_front/ui/blocs/excel/excel_cubit.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_loader.dart';
-import 'package:admin_clinica_front/ui/global_widget/cubits/theme_cubit.dart';
+import 'package:admin_clinica_front/ui/cubits/theme_cubit.dart';
 import 'package:admin_clinica_front/ui/global_widget/custom_navbar_navigation/cubit/navigator_cubit.dart';
 import 'package:admin_clinica_front/ui/global_widget/dialog/desk_dialog/cubit/desk_dialog_cubit.dart';
 import 'package:admin_clinica_front/ui/modules/cita/bloc/cita_crear_bloc/cita_create_bloc.dart';
@@ -36,6 +37,8 @@ class _MainState extends State<Main> {
         BlocProvider(create: (_) => NavigatorCubit()),
         BlocProvider(create: (_) => LoaderCubit()),
         BlocProvider(create: (_) => ThemeCubit()),
+        BlocProvider(create: (_) => ExcelCubit()),
+
         //bloc
         BlocProvider(create: (context) => DoctorListBloc()),
         BlocProvider(create: (context) => DoctorCreateBloc()),

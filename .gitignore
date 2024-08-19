@@ -74,3 +74,4 @@
 *.g.dart
 *.freezed.dart
 assets/env/
+*.xlsx

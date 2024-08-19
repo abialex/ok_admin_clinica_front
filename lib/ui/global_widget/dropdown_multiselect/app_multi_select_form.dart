@@ -9,6 +9,7 @@ class MultiSelectForm<T> extends FormField<List<MultiSelectItem<T>>> {
     required this.items,
     required this.itemBuilder,
     required this.validatorParent,
+    this.isMultiSelect = true,
     super.key,
     this.onSelect,
     List<MultiSelectItem<T>>? itemsSelected,
@@ -29,6 +30,7 @@ class MultiSelectForm<T> extends FormField<List<MultiSelectItem<T>>> {
                     border: state.hasError ? Border.all(color: AppColors.redAccent) : null,
                   ),
                   child: MultiSelect<T>(
+                    isMultiSelect: isMultiSelect,
                     items: items,
                     itemBuilder: itemBuilder,
                     itemsSelected: itemsSelected,
@@ -61,4 +63,5 @@ class MultiSelectForm<T> extends FormField<List<MultiSelectItem<T>>> {
   final void Function(List<MultiSelectItem<T>>)? onSelect;
   final BuildContext contexts;
   final String? Function(List<MultiSelectItem<T>>?)? validatorParent;
+  final bool isMultiSelect;
 }

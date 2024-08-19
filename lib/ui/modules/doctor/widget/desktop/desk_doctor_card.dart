@@ -251,7 +251,7 @@ class DeskDoctorsCard extends StatelessWidget {
                                                 ),
                                                 AppBox.w4,
                                                 AppTextGlobal.lightText(
-                                                  text: stt.doctor.fechaNacimiento.toFormaMMddSlash().toUpperCase(),
+                                                  text: stt.doctor.fechaNacimiento.toFormaMMddSlashEs().toUpperCase(),
                                                   colorText: AppColors.grey,
                                                 ),
                                               ],

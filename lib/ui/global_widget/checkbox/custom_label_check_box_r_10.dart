@@ -12,12 +12,14 @@ class CustomLabelCheckBoxR10 extends StatefulWidget {
     this.initialValue = false,
     this.value,
     this.sizeIcon = 16,
+    this.fontSize,
   });
   final String? text;
   final bool initialValue;
   final bool? value;
   final Color backgroundColor;
   final Color iconBackgroundColor;
+  final double? fontSize;
 
   final double sizeIcon;
   final void Function() onChanged;
@@ -46,7 +48,7 @@ class _CustomLabelCheckBoxR10State extends State<CustomLabelCheckBoxR10> {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          if (widget.text != null) AppTextGlobal.labelLightText(text: widget.text!) else const SizedBox.shrink(),
+          if (widget.text != null) AppTextGlobal.labelLightText(text: widget.text!, fontSize: widget.fontSize) else const SizedBox.shrink(),
           AnimatedContainer(
             decoration: BoxDecoration(
               color: widget.value ?? val ? AppColors.blueAccent : Colors.transparent,

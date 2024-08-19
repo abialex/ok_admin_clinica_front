@@ -3,6 +3,7 @@ import 'package:admin_clinica_front/data/models/cita/cita_agil/cita_agil_create.
 import 'package:admin_clinica_front/data/models/cita/cita_agil/cita_agil_update.dart';
 import 'package:admin_clinica_front/data/models/cita/cita_ocupada/cita_ocupada_create.dart';
 import 'package:admin_clinica_front/data/models/cita/citas_dto.dart';
+import 'package:admin_clinica_front/data/models/request/cita_request_model.dart';
 import 'package:dio/dio.dart';
 import 'package:either_dart/either.dart';
 
@@ -109,5 +110,13 @@ class CitaApi {
       queryParameters: {"id": id},
     );
     return ApiUtils.reponseHandler(response, (data) => (data as bool));
+  }
+
+  Future<Either<String, List<CitaDTO>>> getCitasByFechaDoctorIdUbicacionId(CitaRequestAdmin citaRequest) async {
+    final response = await _dio.post<ApiModel>(
+      "citas/cita_by_date_location_doctor/",
+      data: citaRequest.toJson(),
+    );
+    return ApiUtils.reponseHandler(response, (data) => (data as List).map((e) => CitaDTO.fromJson(e)).toList());
   }
 }

@@ -5,7 +5,7 @@ import 'package:admin_clinica_front/ui/blocs/usuario_session/bloc/usuario_bloc.d
 import 'package:admin_clinica_front/ui/core/router.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_box.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_text_style.dart';
-import 'package:admin_clinica_front/ui/global_widget/cubits/count_isolate_cubit.dart';
+import 'package:admin_clinica_front/ui/cubits/count_isolate_cubit.dart';
 import 'package:admin_clinica_front/ui/global_widget/page/mobile/app_header_mobile.dart';
 import 'package:admin_clinica_front/ui/global_widget/page/page_base_desktop.dart';
 import 'package:admin_clinica_front/ui/global_widget/page/page_base_phone.dart';

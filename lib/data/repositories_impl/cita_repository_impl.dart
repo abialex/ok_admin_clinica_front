@@ -3,6 +3,7 @@ import 'package:admin_clinica_front/data/models/cita/cita_agil/cita_agil_update.
 import 'package:admin_clinica_front/data/models/cita/cita_dto.dart';
 import 'package:admin_clinica_front/data/models/cita/cita_ocupada/cita_ocupada_create.dart';
 import 'package:admin_clinica_front/data/models/cita/citas_dto.dart';
+import 'package:admin_clinica_front/data/models/request/cita_request_model.dart';
 import 'package:admin_clinica_front/data/models/request/request_model.dart';
 import 'package:admin_clinica_front/dominio/repositories/icita_repository.dart';
 import 'package:either_dart/either.dart';
@@ -76,5 +77,10 @@ class CitaRepository implements ICitaRepository {
   @override
   Future<Either<String, bool>> cancelarCita(int id) {
     return api.cancelarCita(id);
+  }
+
+  @override
+  Future<Either<String, List<CitaDTO>>> getUbicacionIdDateDoctorId(CitaRequestAdmin citaRequestAdmin) {
+    return api.getCitasByFechaDoctorIdUbicacionId(citaRequestAdmin);
   }
 }

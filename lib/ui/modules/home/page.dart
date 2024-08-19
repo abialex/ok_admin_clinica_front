@@ -49,77 +49,78 @@ class HomePage extends StatelessWidget with ResponsiveWidgetMixin {
         bodySliver: SliverToBoxAdapter(
           child: Column(
             children: [
-              GridView.builder(
-                shrinkWrap: true,
-                padding: EdgeInsets.zero,
-                itemCount: navbarCubit.state.modulesList.length - 1,
-                itemBuilder: (context, index) {
-                  var indexHome = navbarCubit.state.modulesList.indexWhere((element) => element.titulo == "Home");
-                  int adjustedIndex = index >= indexHome ? index + 1 : index; // Ajusta el índice para omitir el segundo elemento
+              if (navbarCubit.state.modulesList.isNotEmpty)
+                GridView.builder(
+                  shrinkWrap: true,
+                  padding: EdgeInsets.zero,
+                  itemCount: navbarCubit.state.modulesList.length - 1,
+                  itemBuilder: (context, index) {
+                    var indexHome = navbarCubit.state.modulesList.indexWhere((element) => element.titulo == "Home");
+                    int adjustedIndex = index >= indexHome ? index + 1 : index; // Ajusta el índice para omitir el segundo elemento
 
-                  final item = navbarCubit.state.modulesList[adjustedIndex];
-                  if (item.titulo == "Home") {
-                    return null;
-                  }
-                  return Column(
-                    children: [
-                      Container(
-                        alignment: Alignment.center,
-                        padding: const EdgeInsets.all(2.5),
-                        child: AppTextGlobal.labelMediumText(
-                          text: item.titulo.toUpperCase(),
-                          colorText: AppColors.grey,
+                    final item = navbarCubit.state.modulesList[adjustedIndex];
+                    if (item.titulo == "Home") {
+                      return null;
+                    }
+                    return Column(
+                      children: [
+                        Container(
+                          alignment: Alignment.center,
+                          padding: const EdgeInsets.all(2.5),
+                          child: AppTextGlobal.labelMediumText(
+                            text: item.titulo.toUpperCase(),
+                            colorText: AppColors.grey,
+                          ),
                         ),
-                      ),
-                      Expanded(
-                        child: GestureDetector(
-                          onTap: () {
-                            context.read<NavigatorCubit>().updateIndexDelay(adjustedIndex);
-                            Navigator.pushReplacementNamed(context, item.routePage);
-                          },
-                          child: Container(
-                            alignment: Alignment.center,
-                            padding: const EdgeInsets.all(10),
-                            decoration: const BoxDecoration(
-                              color: AppColors.slgPrincipal,
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(10),
+                        Expanded(
+                          child: GestureDetector(
+                            onTap: () {
+                              context.read<NavigatorCubit>().updateIndexDelay(adjustedIndex);
+                              Navigator.pushReplacementNamed(context, item.routePage);
+                            },
+                            child: Container(
+                              alignment: Alignment.center,
+                              padding: const EdgeInsets.all(10),
+                              decoration: const BoxDecoration(
+                                color: AppColors.slgPrincipal,
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(10),
+                                ),
                               ),
-                            ),
-                            child: Stack(
-                              children: [
-                                // Positioned(
-                                //   right: 0,
-                                //   bottom: 0,
-                                //   child: Icon(
-                                //     item.icon,
-                                //     size: 40,
-                                //   ),
-                                // ),
-                                Positioned(
-                                  left: 15,
-                                  right: 15,
-                                  child: FittedBox(
-                                    child: Icon(
-                                      item.icon,
-                                      color: AppColors.white,
+                              child: Stack(
+                                children: [
+                                  // Positioned(
+                                  //   right: 0,
+                                  //   bottom: 0,
+                                  //   child: Icon(
+                                  //     item.icon,
+                                  //     size: 40,
+                                  //   ),
+                                  // ),
+                                  Positioned(
+                                    left: 15,
+                                    right: 15,
+                                    child: FittedBox(
+                                      child: Icon(
+                                        item.icon,
+                                        color: AppColors.white,
+                                      ),
                                     ),
-                                  ),
-                                )
-                              ],
+                                  )
+                                ],
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                    ],
-                  );
-                },
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  mainAxisSpacing: 15,
-                  crossAxisSpacing: 15,
+                      ],
+                    );
+                  },
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    mainAxisSpacing: 15,
+                    crossAxisSpacing: 15,
+                  ),
                 ),
-              ),
               AppBox.h20,
               Container(
                 child: AppTextGlobal.labelLargeText(text: "."),

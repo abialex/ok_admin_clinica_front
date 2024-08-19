@@ -21,6 +21,8 @@ class CitasDTO {
   final String? fechaValidacion;
   final String? fechaInicio;
   final String? fechaFin;
+  final String? ubicacion;
+  final int? ubicacion_id;
 
   CitasDTO({
     required this.id,
@@ -38,6 +40,8 @@ class CitasDTO {
     this.fechaValidacion,
     this.fechaInicio,
     this.fechaFin,
+    this.ubicacion,
+    this.ubicacion_id,
   });
   //fromJson
   factory CitasDTO.fromJson(Map<String, dynamic> map) => _$CitasDTOFromJson(map);

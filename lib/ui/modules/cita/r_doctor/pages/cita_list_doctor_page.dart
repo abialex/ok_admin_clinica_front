@@ -2,6 +2,7 @@
 import 'dart:async';
 import 'package:admin_clinica_front/ui/blocs/usuario_session/bloc/usuario_bloc.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_box.dart';
+import 'package:admin_clinica_front/ui/global_widget/app_list_doctor_horizontal_scroll.dart';
 import 'package:admin_clinica_front/ui/global_widget/date/app_date_picker_cupertino.dart';
 import 'package:admin_clinica_front/ui/global_widget/page/mobile/app_header_mobile.dart';
 import 'package:admin_clinica_front/ui/global_widget/page/page_base_desktop.dart';
@@ -9,7 +10,6 @@ import 'package:admin_clinica_front/ui/global_widget/page/page_base_phone.dart';
 import 'package:admin_clinica_front/ui/modules/cita/bloc/cita_crear_bloc/cita_create_bloc.dart';
 import 'package:admin_clinica_front/ui/modules/cita/bloc/cita_crear_bloc/cita_create_event.dart';
 import 'package:admin_clinica_front/ui/modules/cita/r_doctor/widgets/cita_card_doctor.dart';
-import 'package:admin_clinica_front/ui/modules/cita/r_asistente_recepcion/widgets/doctor_carrusel_card.dart';
 import 'package:admin_clinica_front/ui/modules/doctor/bloc/doctor_list_bloc.dart';
 import 'package:admin_clinica_front/ui/view_models/cita_view/cita_view_models.dart';
 import 'package:admin_clinica_front/ui/view_models/doctor_view/doctor_view_models.dart';
@@ -112,7 +112,7 @@ class CitaListDoctorPage extends StatelessWidget with ResponsiveWidgetMixin {
                           }
 
                           doctorSelected = usuarioBloc.state.doctorIdSelected;
-                          return DoctorCarousel(
+                          return ListDoctorHorizontalScroll(
                             doctorIdInitialSelected: doctorSelected?.id,
                             doctors: stt.doctors,
                             onChanged: (doctor) {},

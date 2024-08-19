@@ -6,6 +6,7 @@ import 'package:admin_clinica_front/ui/global_widget/app_box.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_construccion.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_text_style.dart';
 import 'package:admin_clinica_front/ui/global_widget/button_base/button_success.dart';
+import 'package:admin_clinica_front/ui/global_widget/page/desktop/app_responsive_desktop_card.dart';
 import 'package:admin_clinica_front/ui/global_widget/page/mobile/app_header_mobile.dart';
 import 'package:admin_clinica_front/ui/global_widget/page/page_base_desktop.dart';
 import 'package:admin_clinica_front/ui/global_widget/page/page_base_phone.dart';
@@ -35,8 +36,188 @@ class CitaAddPage extends StatelessWidget with ResponsiveWidgetMixin {
 
   @override
   PageBaseDesktop buildDesktop(BuildContext context) {
+    final citaCreateBloc = context.read<CitaCreateBloc>();
+    final citaBloc = context.read<CitaBloc>();
+    final ubicacionesPersonal = context.read<UsuarioBloc>().state.usuario?.ubicaciones ?? [];
+    if (ubicacionesPersonal.isEmpty) {
+      citaCreateBloc.add(CitaCreateEvent.citaCreateError("No tiene ubicaciones asignadas, consulte al administrador"));
+    }
+    if (ubicacionesPersonal.length > 1) {
+      citaCreateBloc.add(CitaCreateEvent.citaCreateError("Tiene mas de una ubicación asignada, consulte al administrador"));
+    }
+    String doctorDatos = "";
     return PageBaseDesktop(
+      backgroundColor: AppColors.white,
       title: "CREAR DOCTORES",
+      bodyWidget: AppResponsiveDesktopCard(
+        widget: BlocBuilder<CitaCreateBloc, CitaCreateState>(
+          builder: (context, state) {
+            return state.map(
+              initial: (stt) {
+                return const SizedBox.shrink();
+              },
+              loading: (stt) {
+                return const SizedBox.shrink();
+              },
+              citaUploadPreDatos: (stt) {
+                doctorDatos = stt.doctorDatos != null ? "${stt.doctorDatos!.nombres} ${stt.doctorDatos!.apellidos}" : "SIN DOCTOR SELECCIONADO";
+                return Column(
+                  children: [
+                    Container(
+                      alignment: Alignment.center,
+                      padding: const EdgeInsets.symmetric(horizontal: 12.5, vertical: 7.5),
+                      decoration: BoxDecoration(
+                        color: AppColors.lightBackgroundColor,
+                        borderRadius: BorderRadius.circular(10),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.75), // Color de la sombra
+                            spreadRadius: -2,
+                            blurRadius: 5,
+                            offset: const Offset(1.5, 1.5),
+                          ),
+                        ],
+                      ),
+                      child: Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Expanded(
+                                flex: 7,
+                                child: AppTextGlobal.labelLightText(
+                                  text: doctorDatos,
+                                  textAlign: TextAlign.center,
+                                  fontSize: 14.5,
+                                ).animate().scale(
+                                      begin: const Offset(0.9, 0.9),
+                                      end: const Offset(1, 1),
+                                    ),
+                              ),
+                              // const Expanded(child: SizedBox.shrink())
+                            ],
+                          ),
+                          AppBox.h10,
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  const Icon(Icons.timer_sharp),
+                                  AppBox.w4,
+                                  AppTextGlobal.labelLightText(text: stt.horaString),
+                                ],
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  const Icon(Icons.date_range),
+                                  AppBox.w4,
+                                  AppTextGlobal.labelLightText(text: stt.fechaCita.toFormatddMMyyyySlash()),
+                                ],
+                              ),
+                            ],
+                          )
+                        ],
+                      ),
+                    ),
+                    AppBox.h10,
+                    FormPages(
+                      items: [
+                        ItemPage(
+                          titulo: "Ágil",
+                          widget: CitaAddFormAgil(
+                            doctorId: stt.doctorDatos!.id,
+                            fechaCita: stt.fechaCita,
+                            ubicacionId: ubicacionesPersonal[0],
+                            hora: stt.hora,
+                          ),
+                        ),
+                        ItemPage(
+                          titulo: "Completa",
+                          widget: const ConstruccionAnimated(),
+                        ),
+                        ItemPage(
+                          titulo: "Tentativa",
+                          widget: const ConstruccionAnimated(),
+                        ),
+                        ItemPage(
+                          titulo: "Ocupada",
+                          widget: const CitaAddFormOcupada(),
+                        )
+                      ],
+                    ),
+                  ],
+                );
+              },
+              citaCreateSuccess: (stt) {
+                citaBloc.add(
+                  GetCitas(
+                    CitaRequestViewModel(
+                      doctorId: stt.doctorId,
+                      ubicacionesId: stt.ubicacionesId,
+                      fechaHoraCita: stt.fechaCita,
+                    ),
+                  ),
+                );
+                return Center(
+                    child: Column(
+                  children: [
+                    AppBox.h20,
+                    CircleAvatar(
+                      backgroundColor: AppColors.lightBackgroundColor,
+                      maxRadius: 120,
+                      child: Padding(
+                        padding: const EdgeInsets.all(10),
+                        child: SvgPicture.asset(
+                          AppConstSvgs.logo,
+                          color: AppColors.slgPrincipal,
+                        ),
+                      ),
+                    )
+                        .animate(
+                          onPlay: (controller) => controller.loop(),
+                        )
+                        .rotate(
+                          delay: 2.seconds,
+                          duration: 1.5.seconds,
+                        ),
+                    AppBox.h20,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        AppTextGlobal.lightText(text: ""),
+                        AppTextGlobal.labelLightText(text: "CITA ÁGIL "),
+                        AppTextGlobal.lightText(text: "para el "),
+                        AppTextGlobal.labelLightText(text: stt.fechaCita.toFormatddMMyyyySlash()),
+                        AppTextGlobal.lightText(text: " a las "),
+                        AppTextGlobal.labelLightText(text: stt.fechaCita.toFormatHHmm()),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        AppTextGlobal.lightText(text: "Dr(a). : "),
+                        Expanded(child: AppTextGlobal.labelLightText(text: doctorDatos)),
+                      ],
+                    ),
+                    AppBox.h20,
+                    ButtonSuccess(
+                      text: "VER CITAS",
+                      onClick: () {
+                        Navigator.pop(context);
+                      },
+                    ),
+                  ],
+                ));
+              },
+              failure: (stt) {
+                return AppTextGlobal.errorlightText(text: stt.error, maxLines: 2);
+              },
+            );
+          },
+        ),
+      ),
     );
   }
 

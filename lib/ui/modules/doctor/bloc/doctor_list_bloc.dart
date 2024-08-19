@@ -30,6 +30,10 @@ class DoctorListBloc extends Bloc<DoctorListEvent, DoctorListState> {
         result = await _doctorService.getDoctors();
         break;
       case "DOCTOR":
+        if (usuario.tipo == "Administrador") {
+          result = await _doctorService.getDoctors();
+          break;
+        }
         result = await _doctorService.getDoctorByUserDoctor();
         break;
       default:
