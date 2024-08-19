@@ -101,10 +101,10 @@ class _LoginPageState extends State<LoginPage> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     AppTextGlobal.labelLightText(
-                                      text: "Acceso",
-                                      textAlign: TextAlign.left,
+                                      text: "App de Control de Citas Dentales",
+                                      textAlign: TextAlign.center,
                                       colorText: AppColors.grey,
-                                      fontSize: 20,
+                                      fontSize: 12,
                                     ),
                                     AppBox.h20,
                                     AppTextFormFieldBox(
@@ -258,11 +258,18 @@ class _LoginPageState extends State<LoginPage> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
-                                    const SizedBox(
-                                      height: 400,
-                                      child: CarruselImag(),
+                                    // const SizedBox(
+                                    //   height: 400,
+                                    //   child: CarruselImag(),
+                                    // ),
+                                    AppLoaderTextJumpAnimate(
+                                      message: "Control de Citas Dentales",
+                                      heightJump: 2.5,
+                                      buildText: (value) {
+                                        return AppTextGlobal.labelMediumText(text: value);
+                                      },
                                     ),
-                                    AppBox.h20,
+                                    AppBox.h40,
                                     AnimatedSwitcher(
                                       duration: 0.5.seconds,
                                       child: state.map(
