@@ -130,6 +130,7 @@ class AppTextGlobal {
     Color colorText = AppColors.dark,
     TextAlign? textAlign,
     double? fontSize,
+    int? maxLines,
   }) =>
       _BaseText.lightText(
         text: text,
@@ -137,13 +138,16 @@ class AppTextGlobal {
         color: colorText,
         fontSize: fontSize ?? 12,
         textAlign: textAlign,
+        maxLines: maxLines,
       );
 
-  static Text labelMediumText({required String text, Color colorText = AppColors.dark, int maxLines = 1, TextAlign? textAlign}) => _BaseText.mediumText(
+  static Text labelMediumText({required String text, Color colorText = AppColors.dark, int maxLines = 1, TextAlign? textAlign, double? fontSize}) => _BaseText.mediumText(
         text: text,
         fontWeight: FontWeight.bold,
         color: colorText,
         textAlign: textAlign,
+        fontSize: fontSize,
+        maxLines: maxLines,
       );
 
   static Text labelLargeText({

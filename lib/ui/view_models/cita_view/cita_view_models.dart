@@ -197,3 +197,11 @@ class CitaOcupadaUpdateViewModel {
     required this.razonOcupado,
   });
 }
+
+class CitaPromedioDateTime {
+  final DateTime date;
+  final double promedio;
+  final int cantidad;
+  final List<CitaViewModel> citas;
+  CitaPromedioDateTime({required this.date, required this.promedio, required this.cantidad, required this.citas});
+}

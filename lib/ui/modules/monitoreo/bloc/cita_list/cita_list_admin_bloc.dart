@@ -11,6 +11,7 @@ part 'cita_list_admin_bloc.freezed.dart';
 class CitaListAdminBloc extends Bloc<CitaListAdminEvent, CitaListAdminState> {
   CitaListAdminBloc() : super(CitaListAdminState.initial()) {
     on<GetCitas>(getCitas);
+    on<InitialCitaListAdmin>(initialCitas);
   }
 
   final _citaService = locator<CitasService>();
@@ -27,5 +28,9 @@ class CitaListAdminBloc extends Bloc<CitaListAdminEvent, CitaListAdminState> {
         CitaListAdminState.citaLoaded(right),
       ),
     );
+  }
+
+  Future<void> initialCitas(InitialCitaListAdmin event, Emitter<CitaListAdminState> emit) async {
+    emit(Initial());
   }
 }

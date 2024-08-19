@@ -3,7 +3,6 @@ import 'package:admin_clinica_front/ui/global_widget/app_box.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_text_style.dart';
 import 'package:admin_clinica_front/ui/global_widget/button_base/button_base.dart';
 import 'package:admin_clinica_front/ui/global_widget/button_base/button_cancel.dart';
-import 'package:admin_clinica_front/ui/global_widget/button_base/button_success.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -34,12 +33,12 @@ class DialogCubitPage extends StatelessWidget {
         final DialogMessageCubit dialogCubit = context.read();
         return Visibility(
           visible: state.show,
-          child: Positioned.fill(
-            child: Container(
-              color: Colors.black38,
-              child: Center(
-                child: Dialog(
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+          child: Container(
+            color: Colors.black38,
+            child: Center(
+              child: Dialog(
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                child: IntrinsicWidth(
                   child: Stack(
                     clipBehavior: Clip.none,
                     alignment: Alignment.center,
@@ -78,6 +77,7 @@ class DialogCubitPage extends StatelessWidget {
                                           child: AppTextGlobal.lightText(
                                         text: state.texto,
                                         maxLines: 4,
+                                        textAlign: TextAlign.center,
                                       )),
                                     ],
                                   ),

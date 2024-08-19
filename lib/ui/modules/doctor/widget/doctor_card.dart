@@ -178,7 +178,7 @@ class DoctorsCard extends StatelessWidget {
                             ),
                             AppBox.w4,
                             AppTextGlobal.lightText(
-                              text: stt.doctor.fechaNacimiento.toFormaMMddSlash(),
+                              text: stt.doctor.fechaNacimiento.toFormaMMddSlashEs(),
                               fontSize: 12,
                               colorText: AppColors.grey,
                             ),
