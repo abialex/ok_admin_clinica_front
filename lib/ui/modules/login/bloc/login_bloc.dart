@@ -40,7 +40,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     // await Future.delayed(4.seconds);
     final userLogged = await _localService.getUsuario();
     if (userLogged == null) {
-      emit(LoginState.authenticatedFailure());
+      emit(LoginState.authenticatedFailure("Ingrese sus credenciales"));
       return;
     }
     final result = await _userService.authenticated(userLogged.token);
@@ -48,7 +48,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       (left) => emit(LoginState.failure(left)),
       (right) {
         if (right.isValido) {
-          emit(LoginState.usuarioLoaded(userLogged));
+          emit(LoginState.usuarioAuthenticated(userLogged));
         } else {
           emit(LoginState.failure(right.mensaje));
         }
