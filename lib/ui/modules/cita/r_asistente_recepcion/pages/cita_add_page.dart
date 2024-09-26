@@ -48,7 +48,7 @@ class CitaAddPage extends StatelessWidget with ResponsiveWidgetMixin {
     String doctorDatos = "";
     return PageBaseDesktop(
       backgroundColor: AppColors.white,
-      title: "CREAR DOCTORES",
+      title: "CREAR CITA",
       bodyWidget: AppResponsiveDesktopCard(
         widget: BlocBuilder<CitaCreateBloc, CitaCreateState>(
           builder: (context, state) {
