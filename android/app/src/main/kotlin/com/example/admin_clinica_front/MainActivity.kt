@@ -1,4 +1,4 @@
-package com.slg.admin_clinica_front
+package com.slg.admin_clinica
 
 import io.flutter.embedding.android.FlutterActivity
 
