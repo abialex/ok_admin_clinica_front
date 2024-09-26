@@ -1,4 +1,4 @@
-import 'package:admin_clinica_front/core/utils/app_colors.dart';
+import 'package:admin_clinica_front/common/constants/app_const_colors.dart';
 
 import 'package:admin_clinica_front/ui/global_widget/app_text_style.dart';
 import 'package:flutter/material.dart';

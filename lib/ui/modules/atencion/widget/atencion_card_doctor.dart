@@ -1,7 +1,7 @@
-import 'package:admin_clinica_front/core/constants/app_const_svgs.dart';
-import 'package:admin_clinica_front/core/extensions/date_time_extensions.dart';
-import 'package:admin_clinica_front/core/utils/app_cita_config.dart';
-import 'package:admin_clinica_front/core/utils/app_colors.dart';
+import 'package:admin_clinica_front/common/constants/app_const_svgs.dart';
+import 'package:admin_clinica_front/common/utils/extensions/date_time_extensions.dart';
+import 'package:admin_clinica_front/config/app_cita_config.dart';
+import 'package:admin_clinica_front/common/constants/app_const_colors.dart';
 import 'package:admin_clinica_front/dominio/entities/estado_cita.dart';
 import 'package:admin_clinica_front/dominio/services/citas_service.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_action.dart';
@@ -40,7 +40,7 @@ class AtencionCardDoctor extends StatelessWidget {
               ),
               decoration: BoxDecoration(
                 border: Border.all(
-                  color: AppColors.slg01,
+                  color: AppConstColors.slg01,
                   width: 0.3,
                 ),
                 color: Colors.white,
@@ -72,7 +72,7 @@ class AtencionCardDoctor extends StatelessWidget {
                         children: [
                           Container(
                             decoration: const BoxDecoration(
-                              color: AppColors.slg01,
+                              color: AppConstColors.slg01,
                               borderRadius: BorderRadius.only(
                                 topLeft: Radius.circular(10.0),
                                 topRight: Radius.circular(10.0),
@@ -95,7 +95,7 @@ class AtencionCardDoctor extends StatelessWidget {
                                       children: [
                                         const Icon(
                                           Icons.person,
-                                          color: AppColors.slg01,
+                                          color: AppConstColors.slg01,
                                         ),
                                         // AppTextGlobal.labelLightText(text: "Paciente SLG:"),
                                         Expanded(child: Center(child: AppTextGlobal.lightText(text: stt.cita.datosPaciente!.toUpperCase()))),
@@ -109,7 +109,7 @@ class AtencionCardDoctor extends StatelessWidget {
                                       children: [
                                         const Icon(
                                           Icons.person,
-                                          color: AppColors.slg01,
+                                          color: AppConstColors.slg01,
                                         ),
                                         // AppTextGlobal.labelLightText(text: "Paciente Libre:"),
                                         Expanded(child: Center(child: AppTextGlobal.lightText(text: stt.cita.pacienteDatos!.toUpperCase()))),
@@ -158,18 +158,18 @@ class AtencionCardDoctor extends StatelessWidget {
                           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 2.5),
                           decoration: const BoxDecoration(
                             borderRadius: BorderRadius.vertical(top: Radius.circular(10)),
-                            color: AppColors.white,
+                            color: AppConstColors.white,
                             border: Border(
                               left: BorderSide(
-                                color: AppColors.slg01,
+                                color: AppConstColors.slg01,
                                 width: 0.3,
                               ),
                               top: BorderSide(
-                                color: AppColors.slg01,
+                                color: AppConstColors.slg01,
                                 width: 0.3,
                               ),
                               right: BorderSide(
-                                color: AppColors.slg01,
+                                color: AppConstColors.slg01,
                                 width: 0.2999,
                                 // width: 1,
                               ),
@@ -179,7 +179,7 @@ class AtencionCardDoctor extends StatelessWidget {
                             children: [
                               const Icon(
                                 Icons.av_timer_rounded,
-                                color: AppColors.slg01,
+                                color: AppConstColors.slg01,
                               ),
                               // AppTextGlobal.labelLightText(text: "Hora:"),
                               AppBox.w2,
@@ -248,7 +248,7 @@ class AtencionCardDoctor extends StatelessWidget {
                             default:
                               return ButtonCustomBase(
                                 backgroundColor: stt.cita.estado.color,
-                                textColor: AppColors.white,
+                                textColor: AppConstColors.white,
                                 text: "N.A",
                                 onClick: () {
                                   // nextCita(context, stt.cita);
@@ -334,7 +334,7 @@ class AtencionCardDoctor extends StatelessWidget {
                         top: 17.5,
                         child: Container(
                           decoration: const BoxDecoration(
-                            color: AppColors.slg01,
+                            color: AppConstColors.slg01,
                             borderRadius: BorderRadius.only(
                               bottomRight: Radius.circular(10.0),
                               topRight: Radius.circular(10.0),
@@ -346,19 +346,19 @@ class AtencionCardDoctor extends StatelessWidget {
                             children: [
                               const Icon(
                                 Icons.circle,
-                                color: AppColors.white,
+                                color: AppConstColors.white,
                                 size: 13,
                               ),
                               AppBox.h16,
                               const Icon(
                                 Icons.circle,
-                                color: AppColors.white,
+                                color: AppConstColors.white,
                                 size: 13,
                               ),
                               AppBox.h16,
                               const Icon(
                                 Icons.circle,
-                                color: AppColors.white,
+                                color: AppConstColors.white,
                                 size: 13,
                               ),
                             ],
@@ -411,7 +411,7 @@ class AtencionCardDoctor extends StatelessWidget {
           ),
           margin: const EdgeInsets.symmetric(vertical: 10),
           decoration: const BoxDecoration(
-            color: AppColors.slg01,
+            color: AppConstColors.slg01,
             borderRadius: BorderRadius.all(
               Radius.circular(10),
             ),
@@ -421,13 +421,13 @@ class AtencionCardDoctor extends StatelessWidget {
               AppBox.w10,
               const Icon(
                 Icons.circle,
-                color: AppColors.white,
+                color: AppConstColors.white,
                 size: 10,
               ),
               AppBox.w10,
               AppTextGlobal.lightText(
                 text: text,
-                colorText: AppColors.white,
+                colorText: AppConstColors.white,
               ),
             ],
           ),
@@ -542,7 +542,7 @@ class CitasGroupedByHourAtencionDoctor extends StatelessWidget {
                   loading: (stt) {
                     return Container(
                       decoration: const BoxDecoration(
-                        color: AppColors.lightBackgroundColor,
+                        color: AppConstColors.lightBackgroundColor,
                         borderRadius: BorderRadius.all(
                           Radius.circular(10),
                         ),
@@ -555,11 +555,11 @@ class CitasGroupedByHourAtencionDoctor extends StatelessWidget {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            AppTextGlobal.labelMediumText(text: hora.horaString2, colorText: AppColors.slg01),
+                            AppTextGlobal.labelMediumText(text: hora.horaString2, colorText: AppConstColors.slg01),
                             SvgPicture.asset(
                               AppConstSvgs.logo,
                               height: 25,
-                              color: AppColors.slgPrincipal,
+                              color: AppConstColors.slgPrincipal,
                             )
                                 .animate(
                                   onPlay: (controller) => controller.loop(),
@@ -584,7 +584,7 @@ class CitasGroupedByHourAtencionDoctor extends StatelessWidget {
                     return Container(
                       key: UniqueKey(),
                       decoration: const BoxDecoration(
-                        color: AppColors.lightBackgroundColor,
+                        color: AppConstColors.lightBackgroundColor,
                         borderRadius: BorderRadius.all(
                           Radius.circular(10),
                         ),
@@ -600,7 +600,7 @@ class CitasGroupedByHourAtencionDoctor extends StatelessWidget {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                AppTextGlobal.labelMediumText(text: hora.horaString2, colorText: AppColors.slg01),
+                                AppTextGlobal.labelMediumText(text: hora.horaString2, colorText: AppConstColors.slg01),
                                 Row(
                                   children: [
                                     // Visibility(
@@ -631,7 +631,7 @@ class CitasGroupedByHourAtencionDoctor extends StatelessWidget {
                                     // )
                                   ],
                                 ),
-                                AppTextGlobal.labelLightText(text: stt.cita.length.toString(), colorText: AppColors.lightGray),
+                                AppTextGlobal.labelLightText(text: stt.cita.length.toString(), colorText: AppConstColors.lightGray),
                               ],
                             ),
                           ),
@@ -647,7 +647,7 @@ class CitasGroupedByHourAtencionDoctor extends StatelessWidget {
                     return Container(
                       key: UniqueKey(),
                       decoration: const BoxDecoration(
-                        color: AppColors.lightBackgroundColor,
+                        color: AppConstColors.lightBackgroundColor,
                         borderRadius: BorderRadius.all(
                           Radius.circular(10),
                         ),
@@ -660,7 +660,7 @@ class CitasGroupedByHourAtencionDoctor extends StatelessWidget {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            AppTextGlobal.labelMediumText(text: hora.horaString2, colorText: AppColors.slg01),
+                            AppTextGlobal.labelMediumText(text: hora.horaString2, colorText: AppConstColors.slg01),
                             AppTextGlobal.errorlightText(text: stt.error),
                             const SizedBox.shrink(),
                           ],

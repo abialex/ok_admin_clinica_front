@@ -1,6 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:admin_clinica_front/core/utils/app_colors.dart';
+import 'package:admin_clinica_front/common/constants/app_const_colors.dart';
 import 'package:admin_clinica_front/dominio/entities/estado_cita.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_text_style.dart';
 import 'package:flutter/material.dart';
@@ -28,8 +28,8 @@ class AppTimeLine extends StatelessWidget {
             height: 40,
             child: LinearProgressIndicator(
               value: estadoPercent,
-              color: AppColors.slg01,
-              backgroundColor: AppColors.lightGray,
+              color: AppConstColors.slg01,
+              backgroundColor: AppConstColors.lightGray,
             ),
           ),
           Positioned.fill(
@@ -42,14 +42,14 @@ class AppTimeLine extends StatelessWidget {
                   clipBehavior: Clip.none,
                   children: [
                     CircleAvatar(
-                      backgroundColor: indexSelected >= index ? AppColors.slg01 : AppColors.lightGray,
+                      backgroundColor: indexSelected >= index ? AppConstColors.slg01 : AppConstColors.lightGray,
                       maxRadius: 12,
                       child: indexSelected >= index
                           ? Icon(
                               Icons.check,
                               size: 14,
                             )
-                          : AppTextGlobal.lightText(text: (index + 1).toString(), colorText: AppColors.white, fontSize: 11),
+                          : AppTextGlobal.lightText(text: (index + 1).toString(), colorText: AppConstColors.white, fontSize: 11),
                     ),
                     Positioned(
                       bottom: -15,
@@ -57,7 +57,7 @@ class AppTimeLine extends StatelessWidget {
                       right: -20,
                       child: AppTextGlobal.lightText(
                         text: itemList[index].name,
-                        colorText: indexSelected >= index ? AppColors.slg01 : AppColors.dark,
+                        colorText: indexSelected >= index ? AppConstColors.slg01 : AppConstColors.dark,
                         fontSize: 10,
                         textAlign: TextAlign.center,
                         maxLines: 2,

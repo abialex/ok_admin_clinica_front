@@ -1,4 +1,4 @@
-import 'package:admin_clinica_front/core/utils/app_colors.dart';
+import 'package:admin_clinica_front/common/constants/app_const_colors.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_box.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_text_style.dart';
 import 'package:flutter/widgets.dart';
@@ -12,7 +12,7 @@ class ActionWidget extends StatelessWidget {
     super.key,
     required this.text,
     required this.icon,
-    this.backgroundColor = AppColors.slg01,
+    this.backgroundColor = AppConstColors.slg01,
   });
 
   @override
@@ -26,11 +26,11 @@ class ActionWidget extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          AppTextGlobal.labelLightText(text: text, colorText: AppColors.white),
+          AppTextGlobal.labelLightText(text: text, colorText: AppConstColors.white),
           AppBox.w2,
           Icon(
             icon,
-            color: AppColors.white,
+            color: AppConstColors.white,
             size: 25,
           )
               .animate(

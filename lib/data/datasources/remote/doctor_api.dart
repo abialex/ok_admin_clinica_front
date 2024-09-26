@@ -8,7 +8,7 @@ import 'package:either_dart/either.dart';
 import '../../models/api_model/api_model.dart';
 import '../../models/doctor/doctor_dto.dart';
 import '../../models/doctor/doctor_update_model.dart';
-import '../../utils/api_utils.dart';
+import '../../../config/api_utils.dart';
 
 class DoctorApi implements BaseApi {
   final Dio _dio;

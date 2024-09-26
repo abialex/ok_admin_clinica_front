@@ -1,8 +1,8 @@
 // ignore_for_file: must_be_immutable
 import 'dart:async';
-import 'package:admin_clinica_front/core/utils/app_colors.dart';
+import 'package:admin_clinica_front/common/constants/app_const_colors.dart';
 import 'package:admin_clinica_front/ui/blocs/usuario_session/bloc/usuario_bloc.dart';
-import 'package:admin_clinica_front/ui/core/router.dart';
+import 'package:admin_clinica_front/config/routes/router.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_box.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_text_style.dart';
 import 'package:admin_clinica_front/ui/cubits/count_isolate_cubit.dart';
@@ -20,7 +20,7 @@ import 'package:admin_clinica_front/ui/view_models/doctor_view/doctor_view_model
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../../core/di/injections.dart';
+import '../../../config/app_dependecy_injection.dart';
 import '../../../../data/datasources/remote/doctor_api.dart';
 import '../../../../dominio/repositories/ilocal_repository.dart';
 
@@ -199,7 +199,7 @@ class AtencionPage extends StatelessWidget with ResponsiveWidgetMixin {
                                 child: AppTextGlobal.lightText(
                                   text: "$state",
                                   fontSize: 50,
-                                  colorText: AppColors.grey,
+                                  colorText: AppConstColors.grey,
                                 ),
                               ),
                               AppBox.w6,
@@ -223,12 +223,12 @@ class AtencionPage extends StatelessWidget with ResponsiveWidgetMixin {
                                 child: Container(
                                   padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                                   decoration: BoxDecoration(
-                                    color: AppColors.slg01,
+                                    color: AppConstColors.slg01,
                                     borderRadius: BorderRadius.circular(10),
                                   ),
                                   child: const Icon(
                                     Icons.restore,
-                                    color: AppColors.white,
+                                    color: AppConstColors.white,
                                     size: 35,
                                   ),
                                 ),

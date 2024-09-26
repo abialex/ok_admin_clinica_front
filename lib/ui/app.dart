@@ -1,5 +1,5 @@
-import 'package:admin_clinica_front/core/theme/app_theme.dart';
-import 'package:admin_clinica_front/ui/core/router.dart';
+import 'package:admin_clinica_front/config/app_theme.dart';
+import 'package:admin_clinica_front/config/routes/router.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_loader.dart';
 import 'package:admin_clinica_front/ui/cubits/theme_cubit.dart';
 import 'package:admin_clinica_front/ui/global_widget/dialog/desk_dialog/cubit/desk_dialog_cubit.dart';

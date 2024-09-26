@@ -1,4 +1,4 @@
-import 'package:admin_clinica_front/core/di/injections.dart';
+import 'package:admin_clinica_front/config/app_dependecy_injection.dart';
 import 'package:admin_clinica_front/dominio/services/ubicacion_service.dart';
 import 'package:admin_clinica_front/ui/view_models/ubicacion_view/ubicacion_view.dart';
 import 'package:bloc/bloc.dart';

@@ -1,8 +1,8 @@
-import 'package:admin_clinica_front/core/di/injections.dart';
-import 'package:admin_clinica_front/core/utils/app_colors.dart';
+import 'package:admin_clinica_front/config/app_dependecy_injection.dart';
+import 'package:admin_clinica_front/common/constants/app_const_colors.dart';
 import 'package:admin_clinica_front/data/datasources/remote/doctor_api.dart';
 import 'package:admin_clinica_front/dominio/repositories/ilocal_repository.dart';
-import 'package:admin_clinica_front/ui/core/router.dart';
+import 'package:admin_clinica_front/config/routes/router.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_loader_mini.dart';
 import 'package:admin_clinica_front/ui/global_widget/dialog/dialog_message/cubit/dialog_message_cubit.dart';
 import 'package:admin_clinica_front/ui/global_widget/page/mobile/app_header_mobile.dart';
@@ -107,8 +107,8 @@ class DoctorListAsistenteRecepcionPage extends StatelessWidget with ResponsiveWi
 
     return PageBasePhone(
       floatingWidget: FloatingActionButton(
-        backgroundColor: AppColors.slg01,
-        foregroundColor: AppColors.white,
+        backgroundColor: AppConstColors.slg01,
+        foregroundColor: AppConstColors.white,
         onPressed: () {
           Navigator.pushNamed(
             context,
@@ -176,9 +176,9 @@ class DoctorListAsistenteRecepcionPage extends StatelessWidget with ResponsiveWi
   Widget buildTablet(BuildContext context) {
     final dialog = context.read<DialogMessageCubit>();
     return Scaffold(
-      backgroundColor: AppColors.cyan,
+      backgroundColor: AppConstColors.cyan,
       appBar: AppBar(
-        backgroundColor: AppColors.blueAccent,
+        backgroundColor: AppConstColors.blueAccent,
         title: const Text("ss"),
       ),
       body: Stack(

@@ -1,6 +1,6 @@
 // ignore_for_file: must_be_immutable
 
-import 'package:admin_clinica_front/core/utils/app_colors.dart';
+import 'package:admin_clinica_front/common/constants/app_const_colors.dart';
 import 'package:admin_clinica_front/data/models/doctor/doctor_contenedor_data_model.dart';
 import 'package:admin_clinica_front/data/models/ubicacion/ubicacion_contenedor_data_model.dart';
 import 'package:admin_clinica_front/ui/blocs/excel/excel_cubit.dart';
@@ -178,7 +178,7 @@ class PageControl extends StatelessWidget {
                                   },
                                 )
                               : Center(
-                                  child: Text("Todos los doctores", style: TextStyle(color: context.watch<IndexCubit>().state == 0 ? AppColors.dark : Colors.transparent)),
+                                  child: Text("Todos los doctores", style: TextStyle(color: context.watch<IndexCubit>().state == 0 ? AppConstColors.dark : Colors.transparent)),
                                 ),
                         ),
                       ],
@@ -208,7 +208,7 @@ class PageControl extends StatelessWidget {
                                 request.fechaInicio = null;
                                 return SfDateRangePicker(
                                   selectionMode: DateRangePickerSelectionMode.single,
-                                  backgroundColor: AppColors.lightBackgroundColor,
+                                  backgroundColor: AppConstColors.lightBackgroundColor,
                                   onSelectionChanged: (s) {
                                     request.fecha = DateTime.parse(s.value.toString());
                                   },
@@ -217,7 +217,7 @@ class PageControl extends StatelessWidget {
                                 request.fecha = null;
                                 return SfDateRangePicker(
                                   key: UniqueKey(),
-                                  backgroundColor: AppColors.white,
+                                  backgroundColor: AppConstColors.white,
                                   selectionMode: DateRangePickerSelectionMode.range,
                                   onSelectionChanged: (args) {
                                     if (args.value.startDate != null) {

@@ -1,5 +1,5 @@
-import 'package:admin_clinica_front/core/utils/app_colors.dart';
-import 'package:admin_clinica_front/ui/core/router.dart';
+import 'package:admin_clinica_front/common/constants/app_const_colors.dart';
+import 'package:admin_clinica_front/config/routes/router.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_box.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_text_style.dart';
 import 'package:admin_clinica_front/ui/global_widget/button_base/button_success.dart';
@@ -17,7 +17,7 @@ class PreviewSLG extends StatelessWidget {
       duration: 1.75.seconds,
       child: Container(
         alignment: Alignment.center,
-        color: AppColors.white.withOpacity(0.97),
+        color: AppConstColors.white.withOpacity(0.97),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,

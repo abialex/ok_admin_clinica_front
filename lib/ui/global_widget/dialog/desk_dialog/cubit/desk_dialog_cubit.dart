@@ -1,4 +1,4 @@
-import 'package:admin_clinica_front/core/utils/app_colors.dart';
+import 'package:admin_clinica_front/common/constants/app_const_colors.dart';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -13,7 +13,7 @@ class DeskDialogCubit extends Cubit<DeskDialogState> {
       required String texto,
       Function()? onAceptar,
       Function()? onCancelar,
-      Color colorBackground = AppColors.slg01,
+      Color colorBackground = AppConstColors.slg01,
       bool onlyOptions = false,
       IconData icon = Icons.info_outline}) {
     emit(state.copyWith(
@@ -37,7 +37,7 @@ class DeskDialogCubit extends Cubit<DeskDialogState> {
       show: true,
       onlyOptions: true,
       titulo: "Éxito",
-      colorBackground: AppColors.green,
+      colorBackground: AppConstColors.green,
       icon: Icons.check,
       texto: texto,
       onAceptar: onAceptar,
@@ -54,7 +54,7 @@ class DeskDialogCubit extends Cubit<DeskDialogState> {
       show: true,
       onlyOptions: true,
       titulo: "Info",
-      colorBackground: AppColors.slg01,
+      colorBackground: AppConstColors.slg01,
       icon: Icons.info,
       texto: texto,
       onAceptar: onAceptar,
@@ -71,7 +71,7 @@ class DeskDialogCubit extends Cubit<DeskDialogState> {
       show: true,
       onlyOptions: false,
       titulo: "Advertencia",
-      colorBackground: AppColors.yellow,
+      colorBackground: AppConstColors.yellow,
       icon: Icons.warning,
       texto: texto,
       onAceptar: onAceptar,
@@ -88,7 +88,7 @@ class DeskDialogCubit extends Cubit<DeskDialogState> {
       show: true,
       onlyOptions: true,
       titulo: "Error",
-      colorBackground: AppColors.red,
+      colorBackground: AppConstColors.red,
       icon: Icons.error,
       texto: texto,
       onAceptar: onAceptar,
@@ -105,7 +105,7 @@ class DeskDialogCubit extends Cubit<DeskDialogState> {
       show: true,
       onlyOptions: false,
       titulo: "Confirmar",
-      colorBackground: AppColors.blue,
+      colorBackground: AppConstColors.blue,
       icon: Icons.question_mark_rounded,
       texto: texto,
       onAceptar: onAceptar,
@@ -114,6 +114,6 @@ class DeskDialogCubit extends Cubit<DeskDialogState> {
   }
 
   disguiseDialog() {
-    emit(state.copyWith(show: false, colorBackground: AppColors.greenAccent));
+    emit(state.copyWith(show: false, colorBackground: AppConstColors.greenAccent));
   }
 }

@@ -1,6 +1,6 @@
 // ignore_for_file: must_be_immutable, lines_longer_than_80_chars, inference_failure_on_function_return_type
 
-import 'package:admin_clinica_front/core/utils/app_colors.dart';
+import 'package:admin_clinica_front/common/constants/app_const_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -51,7 +51,7 @@ class CustomTextFormField extends StatelessWidget {
             label,
             style: const TextStyle(
               fontSize: 14,
-              color: AppColors.blueSecondary,
+              color: AppConstColors.blueSecondary,
               fontWeight: FontWeight.w600,
             ),
           ),
@@ -73,7 +73,7 @@ class CustomTextFormField extends StatelessWidget {
                   decoration: InputDecoration(
                     isDense: true,
                     filled: true,
-                    fillColor: AppColors.white,
+                    fillColor: AppConstColors.white,
                     hintText: placeholder,
                     contentPadding: const EdgeInsets.only(
                       top: 5,
@@ -94,35 +94,35 @@ class CustomTextFormField extends StatelessWidget {
                     hintStyle: const TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w400,
-                      color: AppColors.darkGray,
+                      color: AppConstColors.darkGray,
                     ),
                     floatingLabelStyle: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
-                      color: !enable ? Colors.black54 : AppColors.primary,
+                      color: !enable ? Colors.black54 : AppConstColors.primary,
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(5),
                       borderSide: const BorderSide(
-                        color: AppColors.grey,
+                        color: AppConstColors.grey,
                       ),
                     ),
                     disabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(5),
                       borderSide: const BorderSide(
-                        color: AppColors.grey,
+                        color: AppConstColors.grey,
                       ),
                     ),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(5),
                       borderSide: const BorderSide(
-                        color: AppColors.grey,
+                        color: AppConstColors.grey,
                       ),
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(5),
                       borderSide: const BorderSide(
-                        color: AppColors.grey,
+                        color: AppConstColors.grey,
                       ),
                     ),
                     errorBorder: OutlineInputBorder(

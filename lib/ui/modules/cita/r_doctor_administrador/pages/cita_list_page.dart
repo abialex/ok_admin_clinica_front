@@ -1,5 +1,5 @@
 // ignore_for_file: must_be_immutable
-import 'package:admin_clinica_front/core/utils/app_colors.dart';
+import 'package:admin_clinica_front/common/constants/app_const_colors.dart';
 import 'package:admin_clinica_front/ui/blocs/usuario_session/bloc/usuario_bloc.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_list_doctor_horizontal_scroll.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_loader_mini.dart';
@@ -17,10 +17,10 @@ import 'package:admin_clinica_front/ui/view_models/doctor_view/doctor_view_model
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../../../core/di/injections.dart';
+import '../../../../../config/app_dependecy_injection.dart';
 import '../../../../../data/datasources/remote/doctor_api.dart';
 import '../../../../../dominio/repositories/ilocal_repository.dart';
-import '../../../../core/router.dart';
+import '../../../../../config/routes/router.dart';
 import '../../../../global_widget/page/page_mixin_base.dart';
 import '../../bloc/cita_bloc.dart';
 
@@ -59,8 +59,8 @@ class CitaListDoctorAdministradorPage extends StatelessWidget with ResponsiveWid
           collapsedHeight: 110,
           pinned: true,
           floating: false,
-          shadowColor: AppColors.white,
-          surfaceTintColor: AppColors.white,
+          shadowColor: AppConstColors.white,
+          surfaceTintColor: AppConstColors.white,
           flexibleSpace: FlexibleSpaceBar(
             collapseMode: CollapseMode.parallax,
             background: Builder(builder: (context) {

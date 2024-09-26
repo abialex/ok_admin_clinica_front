@@ -1,10 +1,10 @@
-import 'package:admin_clinica_front/core/constants/app_const_svgs.dart';
-import 'package:admin_clinica_front/core/extensions/date_time_extensions.dart';
-import 'package:admin_clinica_front/core/utils/app_cita_config.dart';
-import 'package:admin_clinica_front/core/utils/app_colors.dart';
+import 'package:admin_clinica_front/common/constants/app_const_svgs.dart';
+import 'package:admin_clinica_front/common/utils/extensions/date_time_extensions.dart';
+import 'package:admin_clinica_front/config/app_cita_config.dart';
+import 'package:admin_clinica_front/common/constants/app_const_colors.dart';
 import 'package:admin_clinica_front/dominio/entities/estado_cita.dart';
 import 'package:admin_clinica_front/dominio/services/citas_service.dart';
-import 'package:admin_clinica_front/ui/core/router.dart';
+import 'package:admin_clinica_front/config/routes/router.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_action.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_box.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_text_style.dart';
@@ -44,7 +44,7 @@ class CitasCardAsistAsist extends StatelessWidget {
               ),
               decoration: BoxDecoration(
                 border: Border.all(
-                  color: AppColors.slg01,
+                  color: AppConstColors.slg01,
                   width: 0.3,
                 ),
                 color: Colors.white,
@@ -76,7 +76,7 @@ class CitasCardAsistAsist extends StatelessWidget {
                         children: [
                           Container(
                             decoration: const BoxDecoration(
-                              color: AppColors.slg01,
+                              color: AppConstColors.slg01,
                               borderRadius: BorderRadius.only(
                                 topLeft: Radius.circular(10.0),
                                 topRight: Radius.circular(10.0),
@@ -99,7 +99,7 @@ class CitasCardAsistAsist extends StatelessWidget {
                                       children: [
                                         const Icon(
                                           Icons.person,
-                                          color: AppColors.slg01,
+                                          color: AppConstColors.slg01,
                                         ),
                                         // AppTextGlobal.labelLightText(text: "Paciente SLG:"),
                                         Expanded(child: Center(child: AppTextGlobal.lightText(text: stt.cita.datosPaciente!.toUpperCase()))),
@@ -113,7 +113,7 @@ class CitasCardAsistAsist extends StatelessWidget {
                                       children: [
                                         const Icon(
                                           Icons.person,
-                                          color: AppColors.slg01,
+                                          color: AppConstColors.slg01,
                                         ),
                                         // AppTextGlobal.labelLightText(text: "Paciente Libre:"),
                                         Expanded(child: Center(child: AppTextGlobal.lightText(text: stt.cita.pacienteDatos!.toUpperCase()))),
@@ -158,7 +158,7 @@ class CitasCardAsistAsist extends StatelessWidget {
                                                 ),
                                                 child: AppTextGlobal.labelLightText(
                                                   text: stt.cita.estadoString,
-                                                  colorText: AppColors.white,
+                                                  colorText: AppConstColors.white,
                                                   fontSize: 14,
                                                 ).animate().flip()),
                                           ],
@@ -226,7 +226,7 @@ class CitasCardAsistAsist extends StatelessWidget {
                                   return const ActionWidget(
                                     text: "Empezar",
                                     icon: Icons.warning,
-                                    backgroundColor: AppColors.slg01,
+                                    backgroundColor: AppConstColors.slg01,
                                   );
                                 },
                               );
@@ -240,7 +240,7 @@ class CitasCardAsistAsist extends StatelessWidget {
                                   return const ActionWidget(
                                     text: "Finalizar",
                                     icon: Icons.warning,
-                                    backgroundColor: AppColors.slg01,
+                                    backgroundColor: AppConstColors.slg01,
                                   );
                                 },
                               );
@@ -268,7 +268,7 @@ class CitasCardAsistAsist extends StatelessWidget {
                             default:
                               return ButtonCustomBase(
                                 backgroundColor: stt.cita.estado.color,
-                                textColor: AppColors.white,
+                                textColor: AppConstColors.white,
                                 text: "default",
                                 onClick: () {
                                   // nextCita(context, stt.cita);
@@ -285,18 +285,18 @@ class CitasCardAsistAsist extends StatelessWidget {
                           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 2.5),
                           decoration: const BoxDecoration(
                             borderRadius: BorderRadius.vertical(top: Radius.circular(10)),
-                            color: AppColors.white,
+                            color: AppConstColors.white,
                             border: Border(
                               left: BorderSide(
-                                color: AppColors.slg01,
+                                color: AppConstColors.slg01,
                                 width: 0.3,
                               ),
                               top: BorderSide(
-                                color: AppColors.slg01,
+                                color: AppConstColors.slg01,
                                 width: 0.3,
                               ),
                               right: BorderSide(
-                                color: AppColors.slg01,
+                                color: AppConstColors.slg01,
                                 width: 0.2999,
                                 // width: 1,
                               ),
@@ -306,7 +306,7 @@ class CitasCardAsistAsist extends StatelessWidget {
                             children: [
                               const Icon(
                                 Icons.av_timer_rounded,
-                                color: AppColors.slg01,
+                                color: AppConstColors.slg01,
                               ),
                               // AppTextGlobal.labelLightText(text: "Hora:"),
                               AppBox.w2,
@@ -436,7 +436,7 @@ class CitasCardAsistAsist extends StatelessWidget {
                                         ),
                                         child: AppTextGlobal.labelLightText(
                                           text: stt.cita.estadoString,
-                                          colorText: AppColors.white,
+                                          colorText: AppConstColors.white,
                                           fontSize: 14,
                                         ).animate().flip(),
                                       ),
@@ -444,7 +444,7 @@ class CitasCardAsistAsist extends StatelessWidget {
                                         children: [
                                           const Icon(
                                             Icons.av_timer_rounded,
-                                            color: AppColors.slg01,
+                                            color: AppConstColors.slg01,
                                           ),
                                           // AppTextGlobal.labelLightText(text: "Hora:"),
                                           AppBox.w2,
@@ -492,7 +492,7 @@ class CitasCardAsistAsist extends StatelessWidget {
                           },
                           child: Container(
                             decoration: const BoxDecoration(
-                              color: AppColors.slg01,
+                              color: AppConstColors.slg01,
                               borderRadius: BorderRadius.only(
                                 bottomRight: Radius.circular(10.0),
                                 topRight: Radius.circular(10.0),
@@ -504,19 +504,19 @@ class CitasCardAsistAsist extends StatelessWidget {
                               children: [
                                 const Icon(
                                   Icons.circle,
-                                  color: AppColors.white,
+                                  color: AppConstColors.white,
                                   size: 13,
                                 ),
                                 AppBox.h16,
                                 const Icon(
                                   Icons.circle,
-                                  color: AppColors.white,
+                                  color: AppConstColors.white,
                                   size: 13,
                                 ),
                                 AppBox.h16,
                                 const Icon(
                                   Icons.circle,
-                                  color: AppColors.white,
+                                  color: AppConstColors.white,
                                   size: 13,
                                 ),
                               ],
@@ -570,7 +570,7 @@ class CitasCardAsistAsist extends StatelessWidget {
           ),
           margin: const EdgeInsets.symmetric(vertical: 10),
           decoration: const BoxDecoration(
-            color: AppColors.slg01,
+            color: AppConstColors.slg01,
             borderRadius: BorderRadius.all(
               Radius.circular(10),
             ),
@@ -580,13 +580,13 @@ class CitasCardAsistAsist extends StatelessWidget {
               AppBox.w10,
               const Icon(
                 Icons.circle,
-                color: AppColors.white,
+                color: AppConstColors.white,
                 size: 10,
               ),
               AppBox.w10,
               AppTextGlobal.lightText(
                 text: text,
-                colorText: AppColors.white,
+                colorText: AppConstColors.white,
               ),
             ],
           ),
@@ -691,7 +691,7 @@ class CitasGroupedByHourAsistAsist extends StatelessWidget {
                   loading: (stt) {
                     return Container(
                       decoration: const BoxDecoration(
-                        color: AppColors.lightBackgroundColor,
+                        color: AppConstColors.lightBackgroundColor,
                         borderRadius: BorderRadius.all(
                           Radius.circular(10),
                         ),
@@ -704,11 +704,11 @@ class CitasGroupedByHourAsistAsist extends StatelessWidget {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            AppTextGlobal.labelMediumText(text: hora.horaString2, colorText: AppColors.slg01),
+                            AppTextGlobal.labelMediumText(text: hora.horaString2, colorText: AppConstColors.slg01),
                             SvgPicture.asset(
                               AppConstSvgs.logo,
                               height: 25,
-                              color: AppColors.slgPrincipal,
+                              color: AppConstColors.slgPrincipal,
                             )
                                 .animate(
                                   onPlay: (controller) => controller.loop(),
@@ -726,7 +726,7 @@ class CitasGroupedByHourAsistAsist extends StatelessWidget {
                     return Container(
                       key: UniqueKey(),
                       decoration: const BoxDecoration(
-                        color: AppColors.redSunat,
+                        color: AppConstColors.redSunat,
                         borderRadius: BorderRadius.all(
                           Radius.circular(10),
                         ),
@@ -742,20 +742,20 @@ class CitasGroupedByHourAsistAsist extends StatelessWidget {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                AppTextGlobal.labelMediumText(text: hora.horaString2, colorText: AppColors.white),
+                                AppTextGlobal.labelMediumText(text: hora.horaString2, colorText: AppConstColors.white),
                                 AppBox.w8,
                                 Expanded(
                                   child: stt.razonOcupado != null
                                       ? AppTextGlobal.labelLightText(
                                           text: stt.razonOcupado!,
-                                          colorText: AppColors.white,
+                                          colorText: AppConstColors.white,
                                           textAlign: TextAlign.center,
                                           fontSize: 11,
                                           maxLines: 2,
                                         )
                                       : AppTextGlobal.labelLightText(
                                           text: stt.razonOcupado ?? "OCUPADO",
-                                          colorText: AppColors.white,
+                                          colorText: AppConstColors.white,
                                           textAlign: TextAlign.center,
                                         ),
                                 ),
@@ -767,7 +767,7 @@ class CitasGroupedByHourAsistAsist extends StatelessWidget {
                                   },
                                   child: const Icon(
                                     Icons.lock_open_sharp,
-                                    color: AppColors.white,
+                                    color: AppConstColors.white,
                                   ),
                                 )
                               ],
@@ -784,7 +784,7 @@ class CitasGroupedByHourAsistAsist extends StatelessWidget {
                     return Container(
                       key: UniqueKey(),
                       decoration: const BoxDecoration(
-                        color: AppColors.lightBackgroundColor,
+                        color: AppConstColors.lightBackgroundColor,
                         borderRadius: BorderRadius.all(
                           Radius.circular(10),
                         ),
@@ -800,8 +800,8 @@ class CitasGroupedByHourAsistAsist extends StatelessWidget {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                AppTextGlobal.labelMediumText(text: hora.horaString2, colorText: AppColors.slg01),
-                                AppTextGlobal.labelLightText(text: stt.cita.length.toString(), colorText: AppColors.lightGray),
+                                AppTextGlobal.labelMediumText(text: hora.horaString2, colorText: AppConstColors.slg01),
+                                AppTextGlobal.labelLightText(text: stt.cita.length.toString(), colorText: AppConstColors.lightGray),
                                 Row(
                                   children: [
                                     // Visibility(
@@ -825,8 +825,8 @@ class CitasGroupedByHourAsistAsist extends StatelessWidget {
                                       },
                                       child: const CircleAvatar(
                                         minRadius: 2.5,
-                                        backgroundColor: AppColors.slg01,
-                                        foregroundColor: AppColors.white,
+                                        backgroundColor: AppConstColors.slg01,
+                                        foregroundColor: AppConstColors.white,
                                         child: Icon(Icons.add),
                                       ),
                                     )
@@ -847,7 +847,7 @@ class CitasGroupedByHourAsistAsist extends StatelessWidget {
                     return Container(
                       key: UniqueKey(),
                       decoration: const BoxDecoration(
-                        color: AppColors.lightBackgroundColor,
+                        color: AppConstColors.lightBackgroundColor,
                         borderRadius: BorderRadius.all(
                           Radius.circular(10),
                         ),
@@ -860,7 +860,7 @@ class CitasGroupedByHourAsistAsist extends StatelessWidget {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            AppTextGlobal.labelMediumText(text: hora.horaString2, colorText: AppColors.slg01),
+                            AppTextGlobal.labelMediumText(text: hora.horaString2, colorText: AppConstColors.slg01),
                             AppTextGlobal.errorlightText(text: stt.error),
                             const SizedBox.shrink(),
                           ],

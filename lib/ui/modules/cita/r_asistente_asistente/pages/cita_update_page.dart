@@ -1,6 +1,6 @@
-import 'package:admin_clinica_front/core/constants/app_const_svgs.dart';
-import 'package:admin_clinica_front/core/extensions/date_time_extensions.dart';
-import 'package:admin_clinica_front/core/utils/app_colors.dart';
+import 'package:admin_clinica_front/common/constants/app_const_svgs.dart';
+import 'package:admin_clinica_front/common/utils/extensions/date_time_extensions.dart';
+import 'package:admin_clinica_front/common/constants/app_const_colors.dart';
 import 'package:admin_clinica_front/dominio/entities/estado_cita.dart';
 import 'package:admin_clinica_front/dominio/entities/tipo_cita.dart';
 import 'package:admin_clinica_front/ui/blocs/usuario_session/bloc/usuario_bloc.dart';
@@ -77,7 +77,7 @@ class CitaUpdateAsistenteAsistentePage extends StatelessWidget with ResponsiveWi
                         children: [
                           const Icon(
                             Icons.person,
-                            color: AppColors.slg01,
+                            color: AppConstColors.slg01,
                           ),
                           Expanded(child: Center(child: AppTextGlobal.lightText(text: stt.citaViewModel.datosPaciente!.toUpperCase()))),
                           AppBox.w6,
@@ -90,7 +90,7 @@ class CitaUpdateAsistenteAsistentePage extends StatelessWidget with ResponsiveWi
                         children: [
                           const Icon(
                             Icons.person,
-                            color: AppColors.slg01,
+                            color: AppConstColors.slg01,
                           ),
                           Expanded(child: Center(child: AppTextGlobal.lightText(text: stt.citaViewModel.pacienteDatos!.toUpperCase()))),
                           AppBox.w6,
@@ -119,7 +119,7 @@ class CitaUpdateAsistenteAsistentePage extends StatelessWidget with ResponsiveWi
                           ),
                           child: AppTextGlobal.labelLightText(
                             text: stt.citaViewModel.estadoString,
-                            colorText: AppColors.white,
+                            colorText: AppConstColors.white,
                             fontSize: 14,
                           ).animate().flip(),
                         ),
@@ -127,7 +127,7 @@ class CitaUpdateAsistenteAsistentePage extends StatelessWidget with ResponsiveWi
                           children: [
                             const Icon(
                               Icons.av_timer_rounded,
-                              color: AppColors.slg01,
+                              color: AppConstColors.slg01,
                             ),
                             // AppTextGlobal.labelLightText(text: "Hora:"),
                             AppBox.w2,
@@ -167,13 +167,13 @@ class CitaUpdateAsistenteAsistentePage extends StatelessWidget with ResponsiveWi
                   children: [
                     AppBox.h20,
                     CircleAvatar(
-                      backgroundColor: AppColors.lightBackgroundColor,
+                      backgroundColor: AppConstColors.lightBackgroundColor,
                       maxRadius: 120,
                       child: Padding(
                         padding: const EdgeInsets.all(10),
                         child: SvgPicture.asset(
                           AppConstSvgs.logo,
-                          color: AppColors.slgPrincipal,
+                          color: AppConstColors.slgPrincipal,
                         ),
                       ),
                     )

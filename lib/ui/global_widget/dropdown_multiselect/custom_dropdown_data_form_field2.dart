@@ -1,6 +1,6 @@
 // ignore_for_file: must_be_immutable, inference_failure_on_function_return_type, lines_longer_than_80_chars
 
-import 'package:admin_clinica_front/core/utils/app_colors.dart';
+import 'package:admin_clinica_front/common/constants/app_const_colors.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 
@@ -39,7 +39,7 @@ class CustomDropdownDataFormField2<T> extends StatelessWidget {
             label,
             style: const TextStyle(
               fontSize: 12,
-              color: AppColors.blueSecondary,
+              color: AppConstColors.blueSecondary,
               fontWeight: FontWeight.w600,
             ),
           ),
@@ -62,7 +62,7 @@ class CustomDropdownDataFormField2<T> extends StatelessWidget {
                             style: const TextStyle(
                               fontSize: 12,
                               fontWeight: FontWeight.normal,
-                              color: AppColors.dark,
+                              color: AppConstColors.dark,
                             ),
                             overflow: TextOverflow.ellipsis,
                           ),
@@ -86,37 +86,37 @@ class CustomDropdownDataFormField2<T> extends StatelessWidget {
                   decoration: InputDecoration(
                     isDense: true,
                     filled: true,
-                    fillColor: AppColors.white,
+                    fillColor: AppConstColors.white,
                     hintText: ' $placeholder',
                     contentPadding: EdgeInsets.zero,
                     counterText: '',
                     hintStyle: const TextStyle(
                       fontSize: 12,
                       fontWeight: FontWeight.w400,
-                      color: AppColors.grey,
+                      color: AppConstColors.grey,
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(5),
                       borderSide: const BorderSide(
-                        color: AppColors.grey,
+                        color: AppConstColors.grey,
                       ),
                     ),
                     disabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(5),
                       borderSide: const BorderSide(
-                        color: AppColors.grey,
+                        color: AppConstColors.grey,
                       ),
                     ),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(5),
                       borderSide: const BorderSide(
-                        color: AppColors.grey,
+                        color: AppConstColors.grey,
                       ),
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(5),
                       borderSide: const BorderSide(
-                        color: AppColors.grey,
+                        color: AppConstColors.grey,
                       ),
                     ),
                     errorBorder: OutlineInputBorder(

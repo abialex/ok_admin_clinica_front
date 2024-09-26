@@ -1,6 +1,6 @@
 import 'package:admin_clinica_front/ui/global_widget/app_box.dart';
 import 'package:admin_clinica_front/ui/global_widget/input_text/input_form_02/input_text_form_base.dart';
-import 'package:admin_clinica_front/ui/validators/validators.dart';
+import 'package:admin_clinica_front/common/utils/validators.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 

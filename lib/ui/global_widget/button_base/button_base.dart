@@ -1,4 +1,4 @@
-import 'package:admin_clinica_front/core/utils/app_colors.dart';
+import 'package:admin_clinica_front/common/constants/app_const_colors.dart';
 import 'package:flutter/material.dart';
 
 class ButtonCustomBase extends StatelessWidget {
@@ -33,7 +33,7 @@ class ButtonCustomBase extends StatelessWidget {
         padding: padding,
         decoration: BoxDecoration(
           borderRadius: const BorderRadius.all(Radius.circular(10)),
-          border: Border.all(width: 0.3, color: AppColors.grey),
+          border: Border.all(width: 0.3, color: AppConstColors.grey),
           color: backgroundColor,
           boxShadow: [
             BoxShadow(

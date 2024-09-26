@@ -1,6 +1,6 @@
 // ignore_for_file: must_be_immutable
 import 'dart:async';
-import 'package:admin_clinica_front/core/utils/app_colors.dart';
+import 'package:admin_clinica_front/common/constants/app_const_colors.dart';
 import 'package:admin_clinica_front/ui/blocs/usuario_session/bloc/usuario_bloc.dart';
 import 'package:admin_clinica_front/ui/cubits/timer_cubit.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_box.dart';
@@ -24,10 +24,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
-import '../../../../../core/di/injections.dart';
+import '../../../../../config/app_dependecy_injection.dart';
 import '../../../../../data/datasources/remote/doctor_api.dart';
 import '../../../../../dominio/repositories/ilocal_repository.dart';
-import '../../../../core/router.dart';
+import '../../../../../config/routes/router.dart';
 import '../../../../global_widget/page/page_mixin_base.dart';
 import '../../bloc/cita_bloc.dart';
 
@@ -198,7 +198,7 @@ class CitaListAsistenteRecepcionPage extends StatelessWidget with ResponsiveWidg
                       padding: const EdgeInsets.fromLTRB(5, 15, 5, 10),
                       child: SfDateRangePicker(
                         selectionMode: DateRangePickerSelectionMode.single,
-                        backgroundColor: AppColors.lightBackgroundColor,
+                        backgroundColor: AppConstColors.lightBackgroundColor,
                         onSelectionChanged: (value) {
                           final dateSelectedSf = DateTime.parse(value.value.toString());
                           dateSelected = dateSelectedSf;
@@ -331,8 +331,8 @@ class CitaListAsistenteRecepcionPage extends StatelessWidget with ResponsiveWidg
           collapsedHeight: 110,
           pinned: true,
           floating: false,
-          shadowColor: AppColors.white,
-          surfaceTintColor: AppColors.white,
+          shadowColor: AppConstColors.white,
+          surfaceTintColor: AppConstColors.white,
           flexibleSpace: FlexibleSpaceBar(
             collapseMode: CollapseMode.parallax,
             background: BlocProvider(
@@ -487,7 +487,7 @@ class CitaListAsistenteRecepcionPage extends StatelessWidget with ResponsiveWidg
                                     const Icon(
                                       Icons.restart_alt,
                                       size: 32,
-                                      color: AppColors.grey,
+                                      color: AppConstColors.grey,
                                     ),
                                     Positioned.fill(
                                       child: Container(
@@ -495,7 +495,7 @@ class CitaListAsistenteRecepcionPage extends StatelessWidget with ResponsiveWidg
                                         child: AppTextGlobal.lightText(
                                           text: "$state",
                                           fontSize: 10,
-                                          colorText: AppColors.grey,
+                                          colorText: AppConstColors.grey,
                                         ),
                                       ),
                                     ),
@@ -708,7 +708,7 @@ class TimerStatus extends StatelessWidget {
                   const Icon(
                     Icons.restart_alt,
                     size: 32,
-                    color: AppColors.grey,
+                    color: AppConstColors.grey,
                   ),
                   Positioned.fill(
                     child: Container(
@@ -716,7 +716,7 @@ class TimerStatus extends StatelessWidget {
                       child: AppTextGlobal.lightText(
                         text: "$state",
                         fontSize: 10,
-                        colorText: AppColors.grey,
+                        colorText: AppConstColors.grey,
                       ),
                     ),
                   ),

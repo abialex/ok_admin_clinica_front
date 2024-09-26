@@ -1,4 +1,4 @@
-import 'package:admin_clinica_front/core/utils/app_colors.dart';
+import 'package:admin_clinica_front/common/constants/app_const_colors.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_text_style.dart';
 import 'package:flutter/material.dart';
 
@@ -51,7 +51,7 @@ class _CustomLabelCheckBoxR10State extends State<CustomLabelCheckBoxR10> {
           if (widget.text != null) AppTextGlobal.labelLightText(text: widget.text!, fontSize: widget.fontSize) else const SizedBox.shrink(),
           AnimatedContainer(
             decoration: BoxDecoration(
-              color: widget.value ?? val ? AppColors.blueAccent : Colors.transparent,
+              color: widget.value ?? val ? AppConstColors.blueAccent : Colors.transparent,
               border: Border.all(
                 color: widget.backgroundColor,
               ),

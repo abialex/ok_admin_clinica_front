@@ -1,4 +1,4 @@
-import 'package:admin_clinica_front/core/extensions/date_time_extensions.dart';
+import 'package:admin_clinica_front/common/utils/extensions/date_time_extensions.dart';
 import 'package:admin_clinica_front/data/models/cita/cita_ocupada/cita_ocupada_create.dart';
 import 'package:admin_clinica_front/data/models/request/cita_request_model.dart';
 import 'package:admin_clinica_front/data/models/request/request_model.dart';

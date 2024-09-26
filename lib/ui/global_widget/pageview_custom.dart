@@ -1,4 +1,4 @@
-import 'package:admin_clinica_front/core/utils/app_colors.dart';
+import 'package:admin_clinica_front/common/constants/app_const_colors.dart';
 import 'package:flutter/material.dart';
 
 class PageItemCustom {
@@ -86,14 +86,14 @@ class _MyPageViewCustomState extends State<MyPageViewCustom> {
         child: Container(
           padding: const EdgeInsets.symmetric(vertical: 5),
           margin: const EdgeInsets.symmetric(vertical: 5),
-          decoration: BoxDecoration(color: index == _currentPage ? AppColors.slg01 : AppColors.white, border: Border.all()),
+          decoration: BoxDecoration(color: index == _currentPage ? AppConstColors.slg01 : AppConstColors.white, border: Border.all()),
           child: Text(
             text,
             textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: 17,
               fontWeight: FontWeight.bold,
-              color: index == _currentPage ? AppColors.white : AppColors.slg01,
+              color: index == _currentPage ? AppConstColors.white : AppConstColors.slg01,
             ),
           ),
         ),

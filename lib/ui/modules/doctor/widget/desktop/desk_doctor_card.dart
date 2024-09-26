@@ -1,5 +1,5 @@
-import 'package:admin_clinica_front/core/extensions/date_time_extensions.dart';
-import 'package:admin_clinica_front/core/utils/app_colors.dart';
+import 'package:admin_clinica_front/common/utils/extensions/date_time_extensions.dart';
+import 'package:admin_clinica_front/common/constants/app_const_colors.dart';
 import 'package:admin_clinica_front/dominio/entities/estado_cita.dart';
 import 'package:admin_clinica_front/dominio/services/citas_service.dart';
 import 'package:admin_clinica_front/dominio/services/doctor_service.dart';
@@ -46,7 +46,7 @@ class DeskDoctorsCard extends StatelessWidget {
             ),
             decoration: BoxDecoration(
               border: Border.all(
-                color: AppColors.slg01,
+                color: AppConstColors.slg01,
                 width: 0.3,
               ),
               color: Colors.white,
@@ -86,7 +86,7 @@ class DeskDoctorsCard extends StatelessWidget {
                             children: [
                               const Icon(
                                 Icons.person_3_rounded,
-                                color: AppColors.slg01,
+                                color: AppConstColors.slg01,
                               ),
                               // AppTextGlobal.labelLightText(text: "Paciente SLG:"),
                               Expanded(
@@ -104,7 +104,7 @@ class DeskDoctorsCard extends StatelessWidget {
                             child: inverseCubit.state
                                 ? Container(
                                     alignment: Alignment.center,
-                                    color: AppColors.white,
+                                    color: AppConstColors.white,
                                     margin: const EdgeInsets.all(5),
                                     child: Row(
                                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -193,7 +193,7 @@ class DeskDoctorsCard extends StatelessWidget {
                                                   horizontal: 5,
                                                 ),
                                                 decoration: BoxDecoration(
-                                                  color: stt.doctor.isActive ? AppColors.greenAccent : AppColors.redSunat,
+                                                  color: stt.doctor.isActive ? AppConstColors.greenAccent : AppConstColors.redSunat,
                                                   borderRadius: const BorderRadius.all(
                                                     Radius.circular(
                                                       10,
@@ -202,7 +202,7 @@ class DeskDoctorsCard extends StatelessWidget {
                                                 ),
                                                 child: AppTextGlobal.labelLightText(
                                                   text: stt.doctor.isActive ? "Activo" : "Inactivo",
-                                                  colorText: AppColors.white,
+                                                  colorText: AppConstColors.white,
                                                 ).animate().flip(),
                                               ),
                                             ],
@@ -217,19 +217,19 @@ class DeskDoctorsCard extends StatelessWidget {
                                             padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2.5),
                                             decoration: const BoxDecoration(
                                               // borderRadius: BorderRadius.vertical(top: Radius.circular(10)),
-                                              color: AppColors.white,
+                                              color: AppConstColors.white,
                                             ),
                                             child: Row(
                                               children: [
                                                 const Icon(
                                                   Icons.phone,
-                                                  color: AppColors.grey,
+                                                  color: AppConstColors.grey,
                                                   size: 18,
                                                 ),
                                                 AppBox.w4,
                                                 AppTextGlobal.lightText(
                                                   text: stt.doctor.celular,
-                                                  colorText: AppColors.grey,
+                                                  colorText: AppConstColors.grey,
                                                 ),
                                               ],
                                             ),
@@ -238,7 +238,7 @@ class DeskDoctorsCard extends StatelessWidget {
                                             padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2.5),
                                             decoration: const BoxDecoration(
                                               // borderRadius: BorderRadius.vertical(top: Radius.circular(10)),
-                                              color: AppColors.white,
+                                              color: AppConstColors.white,
                                             ),
                                             child: Row(
                                               crossAxisAlignment: CrossAxisAlignment.center,
@@ -246,13 +246,13 @@ class DeskDoctorsCard extends StatelessWidget {
                                               children: [
                                                 const Icon(
                                                   Icons.cake_outlined,
-                                                  color: AppColors.grey,
+                                                  color: AppConstColors.grey,
                                                   size: 18,
                                                 ),
                                                 AppBox.w4,
                                                 AppTextGlobal.lightText(
                                                   text: stt.doctor.fechaNacimiento.toFormaMMddSlashEs().toUpperCase(),
-                                                  colorText: AppColors.grey,
+                                                  colorText: AppConstColors.grey,
                                                 ),
                                               ],
                                             ),
@@ -370,13 +370,13 @@ class DeskDoctorsCard extends StatelessWidget {
                       top: 10,
                       right: 10,
                       child: CircleAvatar(
-                        backgroundColor: AppColors.slg01,
+                        backgroundColor: AppConstColors.slg01,
                         child: IconButton(
                           padding: const EdgeInsets.all(2.5),
-                          hoverColor: AppColors.slgPrincipal,
+                          hoverColor: AppConstColors.slgPrincipal,
                           icon: Icon(
                             inverseCubit.state ? Icons.cancel_outlined : Icons.edit,
-                            color: AppColors.white,
+                            color: AppConstColors.white,
                             size: 25,
                           ),
                           onPressed: () {
@@ -602,7 +602,7 @@ class DeskDoctorsCard extends StatelessWidget {
           ),
           margin: const EdgeInsets.symmetric(vertical: 5),
           decoration: const BoxDecoration(
-            color: AppColors.slg01,
+            color: AppConstColors.slg01,
             borderRadius: BorderRadius.all(
               Radius.circular(10),
             ),
@@ -612,13 +612,13 @@ class DeskDoctorsCard extends StatelessWidget {
               AppBox.w10,
               const Icon(
                 Icons.circle,
-                color: AppColors.white,
+                color: AppConstColors.white,
                 size: 10,
               ),
               AppBox.w10,
               AppTextGlobal.lightText(
                 text: text,
-                colorText: AppColors.white,
+                colorText: AppConstColors.white,
               ),
             ],
           ),
@@ -700,13 +700,13 @@ class DeskIconAction extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           CircleAvatar(
-            backgroundColor: AppColors.slg01,
+            backgroundColor: AppConstColors.slg01,
             child: IconButton(
               padding: const EdgeInsets.all(2.5),
-              hoverColor: AppColors.darkBackgroundColor,
+              hoverColor: AppConstColors.darkBackgroundColor,
               icon: Icon(
                 icon,
-                color: AppColors.white,
+                color: AppConstColors.white,
                 size: 25,
               ),
               onPressed: onAction,

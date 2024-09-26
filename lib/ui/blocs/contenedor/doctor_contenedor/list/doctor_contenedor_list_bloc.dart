@@ -1,4 +1,4 @@
-import 'package:admin_clinica_front/core/di/injections.dart';
+import 'package:admin_clinica_front/config/app_dependecy_injection.dart';
 import 'package:admin_clinica_front/data/models/doctor/doctor_contenedor_data_model.dart';
 import 'package:admin_clinica_front/data/models/filter_model/filter_model.dart';
 import 'package:admin_clinica_front/dominio/repositories/idoctor_contenedor/idoctor_contenedor_repository.dart';

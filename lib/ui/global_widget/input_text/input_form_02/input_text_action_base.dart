@@ -1,6 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:admin_clinica_front/core/utils/app_colors.dart';
+import 'package:admin_clinica_front/common/constants/app_const_colors.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_box.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_text_style.dart';
 import 'package:flutter/material.dart';
@@ -110,7 +110,7 @@ class _InputTextActionBaseState extends State<InputTextActionBase> {
                     ],
                     onChanged: widget.onChanged,
                     validator: widget.validator,
-                    cursorColor: AppColors.blueSecondary,
+                    cursorColor: AppConstColors.blueSecondary,
                     style: widget.textInputColor,
                     decoration: InputDecoration(
                       isDense: true,
@@ -125,7 +125,7 @@ class _InputTextActionBaseState extends State<InputTextActionBase> {
                       ),
                       filled: true,
                       isCollapsed: false,
-                      fillColor: AppColors.lightGray,
+                      fillColor: AppConstColors.lightGray,
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(5),
                       ),
@@ -142,15 +142,15 @@ class _InputTextActionBaseState extends State<InputTextActionBase> {
                       errorBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(5),
                         borderSide: BorderSide(
-                          color: AppColors.redAccent,
+                          color: AppConstColors.redAccent,
                         ),
                       ),
-                      errorStyle: TextStyle(color: AppColors.redAccent),
+                      errorStyle: TextStyle(color: AppConstColors.redAccent),
                       hintText: widget.hintText,
                       hintStyle: const TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w400,
-                        color: AppColors.darkGray,
+                        color: AppConstColors.darkGray,
                       ),
                       contentPadding: EdgeInsets.only(
                         left: 10,
@@ -177,7 +177,7 @@ class _InputTextActionBaseState extends State<InputTextActionBase> {
       //   0,
       // ),
       decoration: BoxDecoration(
-        color: AppColors.blueAccent,
+        color: AppConstColors.blueAccent,
         borderRadius: BorderRadius.all(
           Radius.circular(5),
         ),
@@ -188,7 +188,7 @@ class _InputTextActionBaseState extends State<InputTextActionBase> {
           padding: const EdgeInsets.all(5),
           child: Icon(
             widget.iconData,
-            color: AppColors.white,
+            color: AppConstColors.white,
           ),
         ),
       ),

@@ -1,6 +1,6 @@
-import 'package:admin_clinica_front/core/enums/control_cita_tipo_enum.dart';
-import 'package:admin_clinica_front/core/extensions/date_time_extensions.dart';
-import 'package:admin_clinica_front/core/utils/app_colors.dart';
+import 'package:admin_clinica_front/common/enums/control_cita_tipo_enum.dart';
+import 'package:admin_clinica_front/common/utils/extensions/date_time_extensions.dart';
+import 'package:admin_clinica_front/common/constants/app_const_colors.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_box.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_sliver_list.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_text_style.dart';
@@ -41,9 +41,9 @@ class GraficoByOneDay extends StatelessWidget {
                             horizontal: 10,
                           ),
                           decoration: BoxDecoration(
-                            border: Border.all(color: AppColors.slg01),
+                            border: Border.all(color: AppConstColors.slg01),
                             borderRadius: BorderRadius.circular(15),
-                            color: AppColors.white,
+                            color: AppConstColors.white,
                           ),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,

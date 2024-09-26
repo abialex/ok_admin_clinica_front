@@ -1,4 +1,4 @@
-import 'package:admin_clinica_front/core/utils/app_colors.dart';
+import 'package:admin_clinica_front/common/constants/app_const_colors.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_box.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_text_style.dart';
 import 'package:admin_clinica_front/ui/global_widget/button_base/button_base.dart';
@@ -20,8 +20,8 @@ class DialogCubitPage extends StatelessWidget {
   const DialogCubitPage(
       {super.key,
       this.textAlign = TextAlign.center,
-      this.colorTitle = AppColors.dark,
-      this.colorMensaje = AppColors.dark,
+      this.colorTitle = AppConstColors.dark,
+      this.colorMensaje = AppConstColors.dark,
       this.textAceptarCustom = "Aceptar",
       this.textCancelarCustom = "Cancelar",
       this.onlyOptions = false});
@@ -44,7 +44,7 @@ class DialogCubitPage extends StatelessWidget {
                     alignment: Alignment.center,
                     children: [
                       Container(
-                        decoration: const BoxDecoration(color: AppColors.white, borderRadius: BorderRadius.all(Radius.circular(10))),
+                        decoration: const BoxDecoration(color: AppConstColors.white, borderRadius: BorderRadius.all(Radius.circular(10))),
                         height: 270,
                         child: Padding(
                           padding: const EdgeInsets.fromLTRB(10, 50, 10, 10),
@@ -91,7 +91,7 @@ class DialogCubitPage extends StatelessWidget {
                                         children: [
                                           Expanded(
                                             child: ButtonCustomBase(
-                                              textColor: AppColors.white,
+                                              textColor: AppConstColors.white,
                                               backgroundColor: state.colorBackground,
                                               onClick: () {
                                                 dialogCubit.disguiseDialog();
@@ -117,7 +117,7 @@ class DialogCubitPage extends StatelessWidget {
                                           AppBox.w10,
                                           Expanded(
                                             child: ButtonCustomBase(
-                                              textColor: AppColors.white,
+                                              textColor: AppConstColors.white,
                                               backgroundColor: state.colorBackground,
                                               onClick: () {
                                                 dialogCubit.disguiseDialog();
@@ -140,7 +140,7 @@ class DialogCubitPage extends StatelessWidget {
                               fit: BoxFit.cover,
                               child: Icon(
                                 state.icon,
-                                color: AppColors.white,
+                                color: AppConstColors.white,
                                 size: 60,
                               )
                                   .animate(

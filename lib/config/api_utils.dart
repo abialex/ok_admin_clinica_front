@@ -1,11 +1,10 @@
 import 'package:dio/dio.dart';
 import 'package:either_dart/either.dart';
-import '../../infraestructura/network/http_status_codes.dart';
-import '../models/api_model/api_model.dart';
+import 'http_status_codes.dart';
+import '../data/models/api_model/api_model.dart';
 
 class ApiUtils {
-  static Either<String, T> reponseHandler<T>(
-      Response<ApiModel> response, T Function(dynamic) callToJson) {
+  static Either<String, T> reponseHandler<T>(Response<ApiModel> response, T Function(dynamic) callToJson) {
     switch (response.statusCode) {
       case 200:
       case 201:

@@ -1,4 +1,4 @@
-import 'package:admin_clinica_front/core/enums/control_cita_tipo_enum.dart';
+import 'package:admin_clinica_front/common/enums/control_cita_tipo_enum.dart';
 import 'package:admin_clinica_front/ui/cubits/index_cubit.dart';
 import 'package:admin_clinica_front/ui/modules/monitoreo/bloc/cita_list/cita_list_admin_bloc.dart';
 import 'package:admin_clinica_front/ui/modules/monitoreo/r_administrador/widgets/citas_by_one_day.dart';

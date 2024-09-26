@@ -26,30 +26,18 @@ mixin _$DialogMessageState {
   dynamic Function()? get onCancelar => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
-  $DialogMessageStateCopyWith<DialogMessageState> get copyWith =>
-      throw _privateConstructorUsedError;
+  $DialogMessageStateCopyWith<DialogMessageState> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class $DialogMessageStateCopyWith<$Res> {
-  factory $DialogMessageStateCopyWith(
-          DialogMessageState value, $Res Function(DialogMessageState) then) =
-      _$DialogMessageStateCopyWithImpl<$Res, DialogMessageState>;
+  factory $DialogMessageStateCopyWith(DialogMessageState value, $Res Function(DialogMessageState) then) = _$DialogMessageStateCopyWithImpl<$Res, DialogMessageState>;
   @useResult
-  $Res call(
-      {bool show,
-      bool onlyOptions,
-      String titulo,
-      String texto,
-      IconData icon,
-      Color colorBackground,
-      dynamic Function()? onAceptar,
-      dynamic Function()? onCancelar});
+  $Res call({bool show, bool onlyOptions, String titulo, String texto, IconData icon, Color colorBackground, dynamic Function()? onAceptar, dynamic Function()? onCancelar});
 }
 
 /// @nodoc
-class _$DialogMessageStateCopyWithImpl<$Res, $Val extends DialogMessageState>
-    implements $DialogMessageStateCopyWith<$Res> {
+class _$DialogMessageStateCopyWithImpl<$Res, $Val extends DialogMessageState> implements $DialogMessageStateCopyWith<$Res> {
   _$DialogMessageStateCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
@@ -107,31 +95,16 @@ class _$DialogMessageStateCopyWithImpl<$Res, $Val extends DialogMessageState>
 }
 
 /// @nodoc
-abstract class _$$DialogStateImplCopyWith<$Res>
-    implements $DialogMessageStateCopyWith<$Res> {
-  factory _$$DialogStateImplCopyWith(
-          _$DialogStateImpl value, $Res Function(_$DialogStateImpl) then) =
-      __$$DialogStateImplCopyWithImpl<$Res>;
+abstract class _$$DialogStateImplCopyWith<$Res> implements $DialogMessageStateCopyWith<$Res> {
+  factory _$$DialogStateImplCopyWith(_$DialogStateImpl value, $Res Function(_$DialogStateImpl) then) = __$$DialogStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {bool show,
-      bool onlyOptions,
-      String titulo,
-      String texto,
-      IconData icon,
-      Color colorBackground,
-      dynamic Function()? onAceptar,
-      dynamic Function()? onCancelar});
+  $Res call({bool show, bool onlyOptions, String titulo, String texto, IconData icon, Color colorBackground, dynamic Function()? onAceptar, dynamic Function()? onCancelar});
 }
 
 /// @nodoc
-class __$$DialogStateImplCopyWithImpl<$Res>
-    extends _$DialogMessageStateCopyWithImpl<$Res, _$DialogStateImpl>
-    implements _$$DialogStateImplCopyWith<$Res> {
-  __$$DialogStateImplCopyWithImpl(
-      _$DialogStateImpl _value, $Res Function(_$DialogStateImpl) _then)
-      : super(_value, _then);
+class __$$DialogStateImplCopyWithImpl<$Res> extends _$DialogMessageStateCopyWithImpl<$Res, _$DialogStateImpl> implements _$$DialogStateImplCopyWith<$Res> {
+  __$$DialogStateImplCopyWithImpl(_$DialogStateImpl _value, $Res Function(_$DialogStateImpl) _then) : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
@@ -191,7 +164,7 @@ class _$DialogStateImpl implements _DialogState {
       this.titulo = "titulo",
       this.texto = "texto",
       this.icon = Icons.info_outline,
-      this.colorBackground = AppColors.greenAccent,
+      this.colorBackground = AppConstColors.greenAccent,
       this.onAceptar = null,
       this.onCancelar = null});
 
@@ -231,28 +204,22 @@ class _$DialogStateImpl implements _DialogState {
         (other.runtimeType == runtimeType &&
             other is _$DialogStateImpl &&
             (identical(other.show, show) || other.show == show) &&
-            (identical(other.onlyOptions, onlyOptions) ||
-                other.onlyOptions == onlyOptions) &&
+            (identical(other.onlyOptions, onlyOptions) || other.onlyOptions == onlyOptions) &&
             (identical(other.titulo, titulo) || other.titulo == titulo) &&
             (identical(other.texto, texto) || other.texto == texto) &&
             (identical(other.icon, icon) || other.icon == icon) &&
-            (identical(other.colorBackground, colorBackground) ||
-                other.colorBackground == colorBackground) &&
-            (identical(other.onAceptar, onAceptar) ||
-                other.onAceptar == onAceptar) &&
-            (identical(other.onCancelar, onCancelar) ||
-                other.onCancelar == onCancelar));
+            (identical(other.colorBackground, colorBackground) || other.colorBackground == colorBackground) &&
+            (identical(other.onAceptar, onAceptar) || other.onAceptar == onAceptar) &&
+            (identical(other.onCancelar, onCancelar) || other.onCancelar == onCancelar));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, show, onlyOptions, titulo, texto,
-      icon, colorBackground, onAceptar, onCancelar);
+  int get hashCode => Object.hash(runtimeType, show, onlyOptions, titulo, texto, icon, colorBackground, onAceptar, onCancelar);
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$DialogStateImplCopyWith<_$DialogStateImpl> get copyWith =>
-      __$$DialogStateImplCopyWithImpl<_$DialogStateImpl>(this, _$identity);
+  _$$DialogStateImplCopyWith<_$DialogStateImpl> get copyWith => __$$DialogStateImplCopyWithImpl<_$DialogStateImpl>(this, _$identity);
 }
 
 abstract class _DialogState implements DialogMessageState {
@@ -284,6 +251,5 @@ abstract class _DialogState implements DialogMessageState {
   dynamic Function()? get onCancelar;
   @override
   @JsonKey(ignore: true)
-  _$$DialogStateImplCopyWith<_$DialogStateImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$DialogStateImplCopyWith<_$DialogStateImpl> get copyWith => throw _privateConstructorUsedError;
 }

@@ -1,4 +1,4 @@
-import 'package:admin_clinica_front/ui/core/router.dart';
+import 'package:admin_clinica_front/config/routes/router.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_loader_mini.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_text_style.dart';
 import 'package:admin_clinica_front/ui/global_widget/page/page_base_desktop.dart';
@@ -8,8 +8,8 @@ import 'package:admin_clinica_front/ui/view_models/doctor_view/doctor_view_model
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../core/di/injections.dart';
-import '../../../../core/utils/app_colors.dart';
+import '../../../../config/app_dependecy_injection.dart';
+import '../../../../common/constants/app_const_colors.dart';
 import '../../../../data/datasources/remote/doctor_api.dart';
 import '../../../../dominio/repositories/ilocal_repository.dart';
 import '../../../global_widget/bottomSheet/button_sheet.dart';
@@ -42,8 +42,8 @@ class DoctorListAdminPage extends StatelessWidget with ResponsiveWidgetMixin {
     final doctorbloc = context.read<DoctorListBloc>();
     return PageBasePhone(
       floatingWidget: FloatingActionButton(
-        backgroundColor: AppColors.blueSecondary,
-        foregroundColor: AppColors.white,
+        backgroundColor: AppConstColors.blueSecondary,
+        foregroundColor: AppConstColors.white,
         onPressed: () {
           Navigator.pushNamed(
             context,
@@ -82,7 +82,7 @@ class DoctorListAdminPage extends StatelessWidget with ResponsiveWidgetMixin {
                               width: 50.0,
                               margin: const EdgeInsets.only(top: 10.0, bottom: 5.0),
                               decoration: const BoxDecoration(
-                                color: AppColors.dark,
+                                color: AppConstColors.dark,
                                 borderRadius: BorderRadius.all(Radius.circular(2.5)),
                               ),
                             ),
@@ -105,12 +105,12 @@ class DoctorListAdminPage extends StatelessWidget with ResponsiveWidgetMixin {
                                   padding: const EdgeInsets.symmetric(
                                     vertical: 10,
                                   ),
-                                  decoration: const BoxDecoration(color: AppColors.white, borderRadius: BorderRadius.all(Radius.circular(10))),
+                                  decoration: const BoxDecoration(color: AppConstColors.white, borderRadius: BorderRadius.all(Radius.circular(10))),
                                   child: Row(
                                     children: [
                                       const Icon(
                                         Icons.circle,
-                                        color: AppColors.blueSecondary,
+                                        color: AppConstColors.blueSecondary,
                                         size: 15,
                                       ),
                                       AppTextGlobal.lightText(
@@ -130,7 +130,7 @@ class DoctorListAdminPage extends StatelessWidget with ResponsiveWidgetMixin {
                     margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                     padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                     decoration: const BoxDecoration(
-                      color: AppColors.lightGray,
+                      color: AppConstColors.lightGray,
                       borderRadius: BorderRadius.all(
                         Radius.circular(15),
                       ),
@@ -181,9 +181,9 @@ class DoctorListAdminPage extends StatelessWidget with ResponsiveWidgetMixin {
   Widget buildTablet(BuildContext context) {
     final dialog = context.read<DialogMessageCubit>();
     return Scaffold(
-      backgroundColor: AppColors.cyan,
+      backgroundColor: AppConstColors.cyan,
       appBar: AppBar(
-        backgroundColor: AppColors.blueAccent,
+        backgroundColor: AppConstColors.blueAccent,
         title: const Text("ss"),
       ),
       body: Stack(

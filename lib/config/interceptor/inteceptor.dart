@@ -1,6 +1,6 @@
-import 'package:admin_clinica_front/core/di/injections.dart';
+import 'package:admin_clinica_front/config/app_dependecy_injection.dart';
 import 'package:admin_clinica_front/data/models/api_model/api_model.dart';
-import 'package:admin_clinica_front/infraestructura/network/http_status_codes.dart';
+import 'package:admin_clinica_front/config/http_status_codes.dart';
 import 'package:dio/dio.dart';
 
 import '../../dominio/repositories/ilocal_repository.dart';

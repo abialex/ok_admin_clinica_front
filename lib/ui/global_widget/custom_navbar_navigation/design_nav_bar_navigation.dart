@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:admin_clinica_front/core/utils/app_colors.dart';
+import 'package:admin_clinica_front/common/constants/app_const_colors.dart';
 import 'package:admin_clinica_front/ui/global_widget/custom_navbar_navigation/cubit/navigator_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -20,10 +20,10 @@ class DesignNavCustom extends StatefulWidget {
   const DesignNavCustom({
     super.key,
     this.onDestinationSelected,
-    this.backgroundColor = AppColors.greenAccent,
-    this.iconBackgroundColorSelected = AppColors.cyan,
-    this.iconBackgroundColorNoSelected = AppColors.greenAccent,
-    this.iconColor = AppColors.white,
+    this.backgroundColor = AppConstColors.greenAccent,
+    this.iconBackgroundColorSelected = AppConstColors.cyan,
+    this.iconBackgroundColorNoSelected = AppConstColors.greenAccent,
+    this.iconColor = AppConstColors.white,
     required this.items,
     this.initialIndex = 0,
     this.heightNavBar = 85,
@@ -421,7 +421,7 @@ class BlurryContainer extends StatelessWidget {
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 12,
-                    color: AppColors.redAccent,
+                    color: AppConstColors.redAccent,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -430,7 +430,7 @@ class BlurryContainer extends StatelessWidget {
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 10,
-                    color: AppColors.redAccent,
+                    color: AppConstColors.redAccent,
                     fontWeight: FontWeight.bold,
                   ),
                 ),

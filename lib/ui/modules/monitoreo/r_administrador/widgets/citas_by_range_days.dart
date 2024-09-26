@@ -1,5 +1,5 @@
-import 'package:admin_clinica_front/core/enums/control_cita_tipo_enum.dart';
-import 'package:admin_clinica_front/core/utils/app_colors.dart';
+import 'package:admin_clinica_front/common/enums/control_cita_tipo_enum.dart';
+import 'package:admin_clinica_front/common/constants/app_const_colors.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_text_style.dart';
 import 'package:admin_clinica_front/ui/modules/monitoreo/r_administrador/widgets/grafico_cita_asistenta.dart';
 import 'package:admin_clinica_front/ui/view_models/cita_view/cita_view_models.dart';
@@ -29,10 +29,10 @@ class GraficoByRangeDays extends StatelessWidget {
                 child: LayoutBuilder(
                   builder: (context, constraints) => Container(
                       alignment: Alignment.bottomRight,
-                      color: AppColors.slg01,
+                      color: AppConstColors.slg01,
                       child: AppTextGlobal.labelMediumText(
                         text: "3h",
-                        colorText: AppColors.white,
+                        colorText: AppConstColors.white,
                       )),
                 ),
               ),
@@ -41,10 +41,10 @@ class GraficoByRangeDays extends StatelessWidget {
                 child: LayoutBuilder(
                   builder: (context, constraints) => Container(
                       alignment: Alignment.bottomRight,
-                      color: AppColors.slg01,
+                      color: AppConstColors.slg01,
                       child: AppTextGlobal.labelMediumText(
                         text: "2h",
-                        colorText: AppColors.white,
+                        colorText: AppConstColors.white,
                       )),
                 ),
               ),
@@ -53,10 +53,10 @@ class GraficoByRangeDays extends StatelessWidget {
                 child: LayoutBuilder(
                   builder: (context, constraints) => Container(
                       alignment: Alignment.bottomRight,
-                      color: AppColors.slg01,
+                      color: AppConstColors.slg01,
                       child: AppTextGlobal.labelMediumText(
                         text: "1h",
-                        colorText: AppColors.white,
+                        colorText: AppConstColors.white,
                       )),
                 ),
               ),
@@ -64,16 +64,16 @@ class GraficoByRangeDays extends StatelessWidget {
                 child: LayoutBuilder(
                   builder: (context, constraints) => Container(
                       alignment: Alignment.bottomRight,
-                      color: AppColors.slg01,
+                      color: AppConstColors.slg01,
                       child: AppTextGlobal.labelMediumText(
                         text: "0h ",
-                        colorText: AppColors.white,
+                        colorText: AppConstColors.white,
                       )),
                 ),
               ),
               ColoredBox(
-                color: AppColors.blueSecondary,
-                child: AppTextGlobal.labelSmallText(text: 'CANT. CITAS', fontSize: 11, maxLines: 2, textAlign: TextAlign.center, colorText: AppColors.white),
+                color: AppConstColors.blueSecondary,
+                child: AppTextGlobal.labelSmallText(text: 'CANT. CITAS', fontSize: 11, maxLines: 2, textAlign: TextAlign.center, colorText: AppConstColors.white),
               ),
               Container(
                   child: AppTextGlobal.labelMediumText(

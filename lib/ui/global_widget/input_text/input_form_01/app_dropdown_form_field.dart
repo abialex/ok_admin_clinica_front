@@ -1,6 +1,6 @@
 // ignore_for_file: must_be_immutable, lines_longer_than_80_chars, inference_failure_on_function_return_type
 
-import 'package:admin_clinica_front/core/utils/app_colors.dart';
+import 'package:admin_clinica_front/common/constants/app_const_colors.dart';
 import 'package:flutter/material.dart';
 
 class CustomDropdownFormField extends StatelessWidget {
@@ -33,7 +33,7 @@ class CustomDropdownFormField extends StatelessWidget {
             label,
             style: const TextStyle(
               fontSize: 14,
-              color: AppColors.blueSecondary,
+              color: AppConstColors.blueSecondary,
               fontWeight: FontWeight.w600,
             ),
           ),
@@ -55,7 +55,7 @@ class CustomDropdownFormField extends StatelessWidget {
                             style: const TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.normal,
-                              color: AppColors.dark,
+                              color: AppConstColors.dark,
                             ),
                             overflow: TextOverflow.ellipsis,
                           ),
@@ -65,7 +65,7 @@ class CustomDropdownFormField extends StatelessWidget {
                   decoration: InputDecoration(
                     isDense: true,
                     filled: true,
-                    fillColor: AppColors.white,
+                    fillColor: AppConstColors.white,
                     hintText: placeholder,
                     contentPadding: EdgeInsets.zero,
                     //floatingLabelAlignment: FloatingLabelAlignment.start,
@@ -81,7 +81,7 @@ class CustomDropdownFormField extends StatelessWidget {
                     hintStyle: const TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w400,
-                      color: AppColors.grey,
+                      color: AppConstColors.grey,
                     ),
                     //floatingLabelStyle: TextStyle(
                     //  fontSize: 16,
@@ -91,25 +91,25 @@ class CustomDropdownFormField extends StatelessWidget {
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(5),
                       borderSide: const BorderSide(
-                        color: AppColors.grey,
+                        color: AppConstColors.grey,
                       ),
                     ),
                     disabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(5),
                       borderSide: const BorderSide(
-                        color: AppColors.grey,
+                        color: AppConstColors.grey,
                       ),
                     ),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(5),
                       borderSide: const BorderSide(
-                        color: AppColors.grey,
+                        color: AppConstColors.grey,
                       ),
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(5),
                       borderSide: const BorderSide(
-                        color: AppColors.grey,
+                        color: AppConstColors.grey,
                       ),
                     ),
                     errorBorder: OutlineInputBorder(

@@ -1,4 +1,4 @@
-import 'package:admin_clinica_front/core/utils/app_colors.dart';
+import 'package:admin_clinica_front/common/constants/app_const_colors.dart';
 import 'package:admin_clinica_front/dominio/entities/estado_cita.dart';
 import 'package:admin_clinica_front/dominio/services/citas_service.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_box.dart';
@@ -38,7 +38,7 @@ class DoctorsAsistenteCard extends StatelessWidget {
             ),
             decoration: BoxDecoration(
               border: Border.all(
-                color: AppColors.slg01,
+                color: AppConstColors.slg01,
                 width: 0.3,
               ),
               color: Colors.white,
@@ -70,7 +70,7 @@ class DoctorsAsistenteCard extends StatelessWidget {
                       children: [
                         Container(
                           decoration: const BoxDecoration(
-                            color: AppColors.slg01,
+                            color: AppConstColors.slg01,
                             borderRadius: BorderRadius.only(
                               topLeft: Radius.circular(10.0),
                               topRight: Radius.circular(10.0),
@@ -92,7 +92,7 @@ class DoctorsAsistenteCard extends StatelessWidget {
                                   children: [
                                     const Icon(
                                       Icons.person_3_rounded,
-                                      color: AppColors.slg01,
+                                      color: AppConstColors.slg01,
                                     ),
                                     // AppTextGlobal.labelLightText(text: "Paciente SLG:"),
                                     Expanded(
@@ -128,7 +128,7 @@ class DoctorsAsistenteCard extends StatelessWidget {
                                             horizontal: 5,
                                           ),
                                           decoration: BoxDecoration(
-                                            color: stt.doctor.isActive ? AppColors.greenAccent : AppColors.redSunat,
+                                            color: stt.doctor.isActive ? AppConstColors.greenAccent : AppConstColors.redSunat,
                                             borderRadius: const BorderRadius.all(
                                               Radius.circular(
                                                 10,
@@ -137,7 +137,7 @@ class DoctorsAsistenteCard extends StatelessWidget {
                                           ),
                                           child: AppTextGlobal.labelLightText(
                                             text: stt.doctor.isActive ? "Activo" : "Inactivo",
-                                            colorText: AppColors.white,
+                                            colorText: AppConstColors.white,
                                             fontSize: 14,
                                           ).animate().flip(),
                                         ),
@@ -348,7 +348,7 @@ class DoctorsAsistenteCard extends StatelessWidget {
                         },
                         child: Container(
                           decoration: const BoxDecoration(
-                            color: AppColors.slg01,
+                            color: AppConstColors.slg01,
                             borderRadius: BorderRadius.only(
                               bottomRight: Radius.circular(10.0),
                               topRight: Radius.circular(10.0),
@@ -360,19 +360,19 @@ class DoctorsAsistenteCard extends StatelessWidget {
                             children: [
                               const Icon(
                                 Icons.circle,
-                                color: AppColors.white,
+                                color: AppConstColors.white,
                                 size: 13,
                               ),
                               AppBox.h16,
                               const Icon(
                                 Icons.circle,
-                                color: AppColors.white,
+                                color: AppConstColors.white,
                                 size: 13,
                               ),
                               AppBox.h16,
                               const Icon(
                                 Icons.circle,
-                                color: AppColors.white,
+                                color: AppConstColors.white,
                                 size: 13,
                               ),
                             ],
@@ -439,7 +439,7 @@ class DoctorsAsistenteCard extends StatelessWidget {
           ),
           margin: const EdgeInsets.symmetric(vertical: 5),
           decoration: const BoxDecoration(
-            color: AppColors.slg01,
+            color: AppConstColors.slg01,
             borderRadius: BorderRadius.all(
               Radius.circular(10),
             ),
@@ -449,13 +449,13 @@ class DoctorsAsistenteCard extends StatelessWidget {
               AppBox.w10,
               const Icon(
                 Icons.circle,
-                color: AppColors.white,
+                color: AppConstColors.white,
                 size: 10,
               ),
               AppBox.w10,
               AppTextGlobal.lightText(
                 text: text,
-                colorText: AppColors.white,
+                colorText: AppConstColors.white,
               ),
             ],
           ),

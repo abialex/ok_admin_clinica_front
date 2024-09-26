@@ -6,8 +6,8 @@ import 'package:admin_clinica_front/ui/global_widget/page/mobile/app_header_mobi
 import 'package:admin_clinica_front/ui/modules/home/bloc/home_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../core/di/injections.dart';
-import '../../../core/utils/app_colors.dart';
+import '../../../config/app_dependecy_injection.dart';
+import '../../../common/constants/app_const_colors.dart';
 import '../../../data/datasources/remote/doctor_api.dart';
 import '../../../dominio/repositories/ilocal_repository.dart';
 import '../../global_widget/page/page_base_desktop.dart';
@@ -69,7 +69,7 @@ class HomePage extends StatelessWidget with ResponsiveWidgetMixin {
                           padding: const EdgeInsets.all(2.5),
                           child: AppTextGlobal.labelMediumText(
                             text: item.titulo.toUpperCase(),
-                            colorText: AppColors.grey,
+                            colorText: AppConstColors.grey,
                           ),
                         ),
                         Expanded(
@@ -82,7 +82,7 @@ class HomePage extends StatelessWidget with ResponsiveWidgetMixin {
                               alignment: Alignment.center,
                               padding: const EdgeInsets.all(10),
                               decoration: const BoxDecoration(
-                                color: AppColors.slgPrincipal,
+                                color: AppConstColors.slgPrincipal,
                                 borderRadius: BorderRadius.all(
                                   Radius.circular(10),
                                 ),
@@ -103,7 +103,7 @@ class HomePage extends StatelessWidget with ResponsiveWidgetMixin {
                                     child: FittedBox(
                                       child: Icon(
                                         item.icon,
-                                        color: AppColors.white,
+                                        color: AppConstColors.white,
                                       ),
                                     ),
                                   )

@@ -1,6 +1,6 @@
-import 'package:admin_clinica_front/core/constants/app_const_svgs.dart';
-import 'package:admin_clinica_front/core/extensions/date_time_extensions.dart';
-import 'package:admin_clinica_front/core/utils/app_colors.dart';
+import 'package:admin_clinica_front/common/constants/app_const_svgs.dart';
+import 'package:admin_clinica_front/common/utils/extensions/date_time_extensions.dart';
+import 'package:admin_clinica_front/common/constants/app_const_colors.dart';
 import 'package:admin_clinica_front/ui/blocs/usuario_session/bloc/usuario_bloc.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_box.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_construccion.dart';
@@ -47,7 +47,7 @@ class CitaAddPage extends StatelessWidget with ResponsiveWidgetMixin {
     }
     String doctorDatos = "";
     return PageBaseDesktop(
-      backgroundColor: AppColors.white,
+      backgroundColor: AppConstColors.white,
       title: "CREAR CITA",
       bodyWidget: AppResponsiveDesktopCard(
         widget: BlocBuilder<CitaCreateBloc, CitaCreateState>(
@@ -67,7 +67,7 @@ class CitaAddPage extends StatelessWidget with ResponsiveWidgetMixin {
                       alignment: Alignment.center,
                       padding: const EdgeInsets.symmetric(horizontal: 12.5, vertical: 7.5),
                       decoration: BoxDecoration(
-                        color: AppColors.lightBackgroundColor,
+                        color: AppConstColors.lightBackgroundColor,
                         borderRadius: BorderRadius.circular(10),
                         boxShadow: [
                           BoxShadow(
@@ -166,13 +166,13 @@ class CitaAddPage extends StatelessWidget with ResponsiveWidgetMixin {
                   children: [
                     AppBox.h20,
                     CircleAvatar(
-                      backgroundColor: AppColors.lightBackgroundColor,
+                      backgroundColor: AppConstColors.lightBackgroundColor,
                       maxRadius: 120,
                       child: Padding(
                         padding: const EdgeInsets.all(10),
                         child: SvgPicture.asset(
                           AppConstSvgs.logo,
-                          color: AppColors.slgPrincipal,
+                          color: AppConstColors.slgPrincipal,
                         ),
                       ),
                     )
@@ -258,7 +258,7 @@ class CitaAddPage extends StatelessWidget with ResponsiveWidgetMixin {
                       alignment: Alignment.center,
                       padding: const EdgeInsets.symmetric(horizontal: 12.5, vertical: 7.5),
                       decoration: BoxDecoration(
-                        color: AppColors.lightBackgroundColor,
+                        color: AppConstColors.lightBackgroundColor,
                         borderRadius: BorderRadius.circular(10),
                         boxShadow: [
                           BoxShadow(
@@ -357,13 +357,13 @@ class CitaAddPage extends StatelessWidget with ResponsiveWidgetMixin {
                   children: [
                     AppBox.h20,
                     CircleAvatar(
-                      backgroundColor: AppColors.lightBackgroundColor,
+                      backgroundColor: AppConstColors.lightBackgroundColor,
                       maxRadius: 120,
                       child: Padding(
                         padding: const EdgeInsets.all(10),
                         child: SvgPicture.asset(
                           AppConstSvgs.logo,
-                          color: AppColors.slgPrincipal,
+                          color: AppConstColors.slgPrincipal,
                         ),
                       ),
                     )

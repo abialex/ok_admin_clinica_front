@@ -1,5 +1,5 @@
 // ignore_for_file: must_be_immutable
-import 'package:admin_clinica_front/core/utils/app_colors.dart';
+import 'package:admin_clinica_front/common/constants/app_const_colors.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_box.dart';
 import 'package:admin_clinica_front/ui/global_widget/custom_navbar_navigation/cubit/navigator_cubit.dart';
 import 'package:flutter/material.dart';
@@ -87,9 +87,9 @@ class PageBasePhone extends StatelessWidget {
                 child: DesignNavCustom(
                   heightNavBar: 70,
                   initialIndex: 2,
-                  backgroundColor: AppColors.slgPrincipal,
-                  iconBackgroundColorNoSelected: AppColors.slgPrincipal,
-                  iconBackgroundColorSelected: AppColors.white,
+                  backgroundColor: AppConstColors.slgPrincipal,
+                  iconBackgroundColorNoSelected: AppConstColors.slgPrincipal,
+                  iconBackgroundColorSelected: AppConstColors.white,
                   onDestinationSelected: (p0) async {
                     context.read<NavigatorCubit>().updateIndexDelay(p0);
                     Navigator.pushReplacementNamed(context, context.read<NavigatorCubit>().state.modulesList[p0].routePage);
@@ -191,9 +191,9 @@ class PageBasePhoneBeta extends StatelessWidget {
                 child: DesignNavCustom(
                   heightNavBar: 70,
                   initialIndex: 2,
-                  backgroundColor: AppColors.slgPrincipal,
-                  iconBackgroundColorNoSelected: AppColors.slgPrincipal,
-                  iconBackgroundColorSelected: AppColors.white,
+                  backgroundColor: AppConstColors.slgPrincipal,
+                  iconBackgroundColorNoSelected: AppConstColors.slgPrincipal,
+                  iconBackgroundColorSelected: AppConstColors.white,
                   onDestinationSelected: (p0) async {
                     context.read<NavigatorCubit>().updateIndexDelay(p0);
                     Navigator.pushReplacementNamed(context, context.read<NavigatorCubit>().state.modulesList[p0].routePage);
@@ -252,7 +252,7 @@ class MySliverHeaderDelegate extends SliverPersistentHeaderDelegate {
           child: Column(
             children: [
               Container(
-                color: AppColors.white,
+                color: AppConstColors.white,
                 alignment: Alignment.center,
                 height: maxExtend,
                 child: widgetHeader,
@@ -262,7 +262,7 @@ class MySliverHeaderDelegate extends SliverPersistentHeaderDelegate {
                 child: shrinkOffset == 0
                     ? Container(
                         alignment: Alignment.center,
-                        color: AppColors.lightFillColor,
+                        color: AppConstColors.lightFillColor,
                         child: widgetHeaderBody,
                       )
                     : const SizedBox.shrink(),

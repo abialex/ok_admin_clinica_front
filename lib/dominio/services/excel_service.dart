@@ -1,7 +1,7 @@
 import 'dart:io';
 
-import 'package:admin_clinica_front/core/di/injections.dart';
-import 'package:admin_clinica_front/core/extensions/date_time_extensions.dart';
+import 'package:admin_clinica_front/config/app_dependecy_injection.dart';
+import 'package:admin_clinica_front/common/utils/extensions/date_time_extensions.dart';
 import 'package:admin_clinica_front/dominio/entities/estado_cita.dart';
 import 'package:admin_clinica_front/dominio/services/cmd_services.dart';
 import 'package:admin_clinica_front/ui/view_models/cita_view/cita_view_models.dart';

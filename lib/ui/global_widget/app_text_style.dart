@@ -1,4 +1,4 @@
-import 'package:admin_clinica_front/core/utils/app_colors.dart';
+import 'package:admin_clinica_front/common/constants/app_const_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -74,7 +74,7 @@ class AppTextGlobal {
     required String text,
     int? maxLines,
     double? fontSize,
-    Color colorText = AppColors.dark,
+    Color colorText = AppConstColors.dark,
     TextAlign? textAlign,
     FontWeight? fontWeight,
   }) =>
@@ -88,7 +88,7 @@ class AppTextGlobal {
       );
   static Text mediumText({
     required String text,
-    Color colorText = AppColors.dark,
+    Color colorText = AppConstColors.dark,
     int maxLines = 1,
     TextAlign? textAlign,
     FontWeight? fontWeight,
@@ -103,13 +103,13 @@ class AppTextGlobal {
 
   static Text largeText({required String text}) => _BaseText.largeText(
         text: text,
-        color: AppColors.blueSecondary,
+        color: AppConstColors.blueSecondary,
       );
 
   static Text labelLightText({
     required String text,
     double? fontSize,
-    Color colorText = AppColors.dark,
+    Color colorText = AppConstColors.dark,
     TextAlign? textAlign,
     TextOverflow textOverflow = TextOverflow.ellipsis,
     int maxLines = 1,
@@ -127,7 +127,7 @@ class AppTextGlobal {
   static Text labelSmallText({
     required String text,
     FontWeight fontWeight = FontWeight.bold,
-    Color colorText = AppColors.dark,
+    Color colorText = AppConstColors.dark,
     TextAlign? textAlign,
     double? fontSize,
     int? maxLines,
@@ -141,7 +141,7 @@ class AppTextGlobal {
         maxLines: maxLines,
       );
 
-  static Text labelMediumText({required String text, Color colorText = AppColors.dark, int maxLines = 1, TextAlign? textAlign, double? fontSize}) => _BaseText.mediumText(
+  static Text labelMediumText({required String text, Color colorText = AppConstColors.dark, int maxLines = 1, TextAlign? textAlign, double? fontSize}) => _BaseText.mediumText(
         text: text,
         fontWeight: FontWeight.bold,
         color: colorText,
@@ -152,7 +152,7 @@ class AppTextGlobal {
 
   static Text labelLargeText({
     required String text,
-    Color colorText = AppColors.dark,
+    Color colorText = AppConstColors.dark,
     TextAlign? textAlign,
   }) =>
       _BaseText.largeText(
@@ -165,12 +165,12 @@ class AppTextGlobal {
   static Text titleText({required String text}) => _BaseText.mediumText(
         text: text,
         fontWeight: FontWeight.bold,
-        color: AppColors.blueSecondary,
+        color: AppConstColors.blueSecondary,
       );
 
   static Text errorlightText({required String text, int maxLines = 1, TextAlign? textAlign}) => _BaseText.lightText(
         text: text,
-        color: AppColors.redAccent,
+        color: AppConstColors.redAccent,
         fontSize: 13,
         maxLines: maxLines,
         textAlign: textAlign,
@@ -178,7 +178,7 @@ class AppTextGlobal {
 
   static Text successlightText({required String text, int maxLines = 1}) => _BaseText.lightText(
         text: text,
-        color: AppColors.greenAccent,
+        color: AppConstColors.greenAccent,
         fontSize: 13,
         maxLines: maxLines,
       );
@@ -186,12 +186,12 @@ class AppTextGlobal {
   static Text nameText({required String text}) => _BaseText.mediumText(
         text: text,
         fontWeight: FontWeight.bold,
-        color: AppColors.dark,
+        color: AppConstColors.dark,
         fontSize: 20,
       );
   static Text dateText({required String text}) => _BaseText.mediumText(
         text: text,
-        color: AppColors.darkGray,
+        color: AppConstColors.darkGray,
         fontSize: 19,
       );
 }

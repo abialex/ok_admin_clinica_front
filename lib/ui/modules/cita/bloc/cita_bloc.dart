@@ -1,4 +1,4 @@
-import 'package:admin_clinica_front/core/di/injections.dart';
+import 'package:admin_clinica_front/config/app_dependecy_injection.dart';
 import 'package:admin_clinica_front/dominio/services/citas_service.dart';
 import 'package:admin_clinica_front/ui/view_models/cita_view/cita_view_models.dart';
 import 'package:bloc/bloc.dart';

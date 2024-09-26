@@ -1,6 +1,6 @@
 // ignore_for_file: must_be_immutable
-import 'package:admin_clinica_front/core/extensions/date_time_extensions.dart';
-import 'package:admin_clinica_front/core/extensions/list_string_extensions.dart';
+import 'package:admin_clinica_front/common/utils/extensions/date_time_extensions.dart';
+import 'package:admin_clinica_front/common/utils/extensions/list_string_extensions.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_box.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_sunat.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_text_style.dart';
@@ -18,13 +18,13 @@ import 'package:admin_clinica_front/ui/global_widget/page/page_base_phone.dart';
 import 'package:admin_clinica_front/ui/modules/doctor/bloc/doctor_create_bloc.dart';
 import 'package:admin_clinica_front/ui/modules/doctor/bloc/doctor_list_bloc.dart';
 import 'package:admin_clinica_front/ui/modules/ubicacion/bloc/ubicacion_bloc.dart';
-import 'package:admin_clinica_front/ui/validators/validators.dart';
+import 'package:admin_clinica_front/common/utils/validators.dart';
 import 'package:admin_clinica_front/ui/view_models/doctor_view/doctor_view_models.dart';
 import 'package:admin_clinica_front/ui/view_models/ubicacion_view/ubicacion_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../../core/di/injections.dart';
-import '../../../../core/utils/app_colors.dart';
+import '../../../../config/app_dependecy_injection.dart';
+import '../../../../common/constants/app_const_colors.dart';
 import '../../../../data/datasources/remote/doctor_api.dart';
 import '../../../../dominio/repositories/ilocal_repository.dart';
 import '../../../global_widget/dialog/dialog_message/cubit/dialog_message_cubit.dart';
@@ -62,7 +62,7 @@ class DoctorAddAsistenteRecepcionPage extends StatelessWidget with ResponsiveWid
     final nombresController = TextEditingController();
 
     return PageBaseDesktop(
-      backgroundColor: AppColors.white,
+      backgroundColor: AppConstColors.white,
       title: "CREAR DOCTOR",
       bodyWidget: AppResponsiveDesktopCard(
         widget: SingleChildScrollView(
@@ -209,7 +209,7 @@ class DoctorAddAsistenteRecepcionPage extends StatelessWidget with ResponsiveWid
                   Container(
                     height: 75,
                     padding: const EdgeInsets.only(top: 30),
-                    color: AppColors.white,
+                    color: AppConstColors.white,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.end,
                       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -255,7 +255,7 @@ class DoctorAddAsistenteRecepcionPage extends StatelessWidget with ResponsiveWid
                                                 children: [
                                                   Container(
                                                     constraints: const BoxConstraints.expand(),
-                                                    decoration: const BoxDecoration(color: AppColors.white, borderRadius: BorderRadius.all(Radius.circular(10))),
+                                                    decoration: const BoxDecoration(color: AppConstColors.white, borderRadius: BorderRadius.all(Radius.circular(10))),
                                                     child: doctorCreateBloc.state.map(
                                                       initial: (stt) {
                                                         return const SizedBox.shrink();
@@ -522,7 +522,7 @@ class DoctorAddAsistenteRecepcionPage extends StatelessWidget with ResponsiveWid
       footerSliver: Container(
         height: 75,
         padding: const EdgeInsets.only(top: 30),
-        color: AppColors.white,
+        color: AppConstColors.white,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.end,
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -568,7 +568,7 @@ class DoctorAddAsistenteRecepcionPage extends StatelessWidget with ResponsiveWid
                                     children: [
                                       Container(
                                         constraints: const BoxConstraints.expand(),
-                                        decoration: const BoxDecoration(color: AppColors.white, borderRadius: BorderRadius.all(Radius.circular(10))),
+                                        decoration: const BoxDecoration(color: AppConstColors.white, borderRadius: BorderRadius.all(Radius.circular(10))),
                                         child: doctorCreateBloc.state.map(
                                           initial: (stt) {
                                             return const SizedBox.shrink();
@@ -678,9 +678,9 @@ class DoctorAddAsistenteRecepcionPage extends StatelessWidget with ResponsiveWid
   Widget buildTablet(BuildContext context) {
     final dialog = context.read<DialogMessageCubit>();
     return Scaffold(
-      backgroundColor: AppColors.cyan,
+      backgroundColor: AppConstColors.cyan,
       appBar: AppBar(
-        backgroundColor: AppColors.blueAccent,
+        backgroundColor: AppConstColors.blueAccent,
         title: const Text("ss"),
       ),
       body: Stack(

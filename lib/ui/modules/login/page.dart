@@ -1,8 +1,8 @@
-import 'package:admin_clinica_front/core/constants/app_const_svgs.dart';
-import 'package:admin_clinica_front/core/utils/app_colors.dart';
+import 'package:admin_clinica_front/common/constants/app_const_svgs.dart';
+import 'package:admin_clinica_front/common/constants/app_const_colors.dart';
 import 'package:admin_clinica_front/ui/blocs/usuario_session/bloc/usuario_bloc.dart';
-import 'package:admin_clinica_front/ui/core/app_routes.dart';
-import 'package:admin_clinica_front/ui/core/router.dart';
+import 'package:admin_clinica_front/config/routes/app_routes.dart';
+import 'package:admin_clinica_front/config/routes/router.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_box.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_details_release_widget.dart';
 import 'package:admin_clinica_front/ui/global_widget/custom_navbar_navigation/cubit/navigator_cubit.dart';
@@ -14,7 +14,7 @@ import 'package:admin_clinica_front/ui/global_widget/loader/app_loader_text_writ
 import 'package:admin_clinica_front/ui/modules/login/bloc/login_bloc.dart';
 import 'package:admin_clinica_front/ui/modules/login/widget/preview_slg.dart';
 import 'package:admin_clinica_front/ui/modules/login/widget/text_form_field_box.dart';
-import 'package:admin_clinica_front/ui/validators/validators.dart';
+import 'package:admin_clinica_front/common/utils/validators.dart';
 import 'package:admin_clinica_front/ui/view_models/usuario_view/usuario_view_models.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -97,14 +97,14 @@ class _LoginPageState extends State<LoginPage> {
           },
           failure: (value) {
             setState(() {
-              mensajeWidget = AppTextGlobal.labelLightText(text: value.error, colorText: AppColors.red);
+              mensajeWidget = AppTextGlobal.labelLightText(text: value.error, colorText: AppConstColors.red);
             });
           },
         );
       },
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-        backgroundColor: AppColors.white,
+        backgroundColor: AppConstColors.white,
         body: Form(
           key: formKey,
           child: Stack(
@@ -127,7 +127,7 @@ class _LoginPageState extends State<LoginPage> {
                               AppBox.w12,
                               SvgPicture.asset(
                                 AppConstSvgs.logo,
-                                color: AppColors.slgPrincipal,
+                                color: AppConstColors.slgPrincipal,
                                 height: 65,
                               )
                                   .animate(
@@ -152,7 +152,7 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                           AppBox.h10,
                           Container(
-                            color: AppColors.white,
+                            color: AppConstColors.white,
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.stretch,
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -160,7 +160,7 @@ class _LoginPageState extends State<LoginPage> {
                                 AppTextGlobal.labelLightText(
                                   text: "App de Control de Citas Dentales",
                                   textAlign: TextAlign.center,
-                                  colorText: AppColors.grey,
+                                  colorText: AppConstColors.grey,
                                   fontSize: 12,
                                 ),
                                 AppBox.h20,
@@ -200,7 +200,7 @@ class _LoginPageState extends State<LoginPage> {
                                 height: 12,
                               ),
                               AppBox.w4,
-                              AppTextGlobal.labelSmallText(text: "/COEsanluisgeminis", colorText: AppColors.grey),
+                              AppTextGlobal.labelSmallText(text: "/COEsanluisgeminis", colorText: AppConstColors.grey),
                             ],
                           ),
                         ],

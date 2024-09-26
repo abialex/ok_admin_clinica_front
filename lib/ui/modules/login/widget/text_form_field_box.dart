@@ -1,4 +1,4 @@
-import 'package:admin_clinica_front/core/utils/app_colors.dart';
+import 'package:admin_clinica_front/common/constants/app_const_colors.dart';
 import 'package:admin_clinica_front/ui/modules/login/bloc/cubit/show_password_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -24,10 +24,10 @@ class AppTextFormFieldBox extends StatelessWidget {
       child: Builder(builder: (context) {
         final showPassword = context.watch<ShowPasswordCubit>();
         return TextFormField(
-          cursorColor: AppColors.dark,
+          cursorColor: AppConstColors.dark,
           controller: controller,
           obscureText: isObscureText == true ? !showPassword.state : false,
-          style: const TextStyle(color: AppColors.dark),
+          style: const TextStyle(color: AppConstColors.dark),
           validator: validator,
           decoration: InputDecoration(
             isDense: true,
@@ -37,13 +37,13 @@ class AppTextFormFieldBox extends StatelessWidget {
             contentPadding: const EdgeInsets.all(10),
             hintStyle: const TextStyle(
               fontSize: 15,
-              color: AppColors.grey,
+              color: AppConstColors.grey,
             ),
             suffixIcon: isObscureText != null
                 ? IconButton(
                     icon: Icon(
                       showPassword.state ? Icons.remove_red_eye : Icons.remove_red_eye_outlined,
-                      color: AppColors.slg01,
+                      color: AppConstColors.slg01,
                     ),
                     onPressed: () {
                       showPassword.toggle();
@@ -53,25 +53,25 @@ class AppTextFormFieldBox extends StatelessWidget {
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10),
               borderSide: const BorderSide(
-                color: AppColors.dark,
+                color: AppConstColors.dark,
               ),
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10),
               borderSide: const BorderSide(
-                color: AppColors.darkAppBar,
+                color: AppConstColors.darkAppBar,
               ),
             ),
             errorBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10),
               borderSide: const BorderSide(
-                color: AppColors.redSunat,
+                color: AppConstColors.redSunat,
               ),
             ),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10),
               borderSide: const BorderSide(
-                color: AppColors.darkAppBar,
+                color: AppConstColors.darkAppBar,
               ),
             ),
           ),

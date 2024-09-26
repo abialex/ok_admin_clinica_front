@@ -1,4 +1,4 @@
-import 'package:admin_clinica_front/core/utils/app_colors.dart';
+import 'package:admin_clinica_front/common/constants/app_const_colors.dart';
 import 'package:admin_clinica_front/ui/global_widget/checkbox/custom_label_check_box_r_10.dart';
 import 'package:flutter/material.dart';
 
@@ -19,8 +19,8 @@ class CheckBoxLabelBlueR10 extends StatelessWidget {
   Widget build(BuildContext context) {
     return CustomLabelCheckBoxR10(
       onChanged: onChanged,
-      backgroundColor: AppColors.blueAccent,
-      iconBackgroundColor: AppColors.white,
+      backgroundColor: AppConstColors.blueAccent,
+      iconBackgroundColor: AppConstColors.white,
       text: text,
       value: value,
       fontSize: fontSize,

@@ -1,7 +1,7 @@
-import 'package:admin_clinica_front/core/di/injections.dart';
-import 'package:admin_clinica_front/core/utils/app_colors.dart';
+import 'package:admin_clinica_front/config/app_dependecy_injection.dart';
+import 'package:admin_clinica_front/common/constants/app_const_colors.dart';
 import 'package:admin_clinica_front/dominio/services/local_service.dart';
-import 'package:admin_clinica_front/ui/core/router.dart';
+import 'package:admin_clinica_front/config/routes/router.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_box.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_text_style.dart';
 import 'package:admin_clinica_front/ui/global_widget/custom_navbar_navigation/cubit/navigator_cubit.dart';
@@ -17,7 +17,7 @@ class PageBaseDesktop extends StatelessWidget {
   final Function()? onTapFloating;
   const PageBaseDesktop({
     super.key,
-    this.backgroundColor = AppColors.lightGray,
+    this.backgroundColor = AppConstColors.lightGray,
     this.title,
     this.bodyWidget,
     this.footerWidget,
@@ -28,24 +28,24 @@ class PageBaseDesktop extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: AppTextGlobal.labelLargeText(text: title ?? "Título", colorText: AppColors.white),
+        title: AppTextGlobal.labelLargeText(text: title ?? "Título", colorText: AppConstColors.white),
         actions: const [
           Padding(
             padding: EdgeInsets.all(8.0),
             child: Icon(
               Icons.exit_to_app,
-              color: AppColors.white,
+              color: AppConstColors.white,
               size: 30,
             ),
           )
         ],
         centerTitle: true,
-        backgroundColor: AppColors.slgPrincipal,
+        backgroundColor: AppConstColors.slgPrincipal,
         leading: _buildIconMenu(),
       ),
       floatingActionButton: onTapFloating != null
           ? FloatingActionButton(
-              backgroundColor: AppColors.slg01,
+              backgroundColor: AppConstColors.slg01,
               onPressed: onTapFloating,
               child: const Icon(Icons.add),
             )
@@ -66,7 +66,7 @@ class PageBaseDesktop extends StatelessWidget {
         return IconButton(
           icon: const Icon(
             Icons.menu,
-            color: AppColors.white,
+            color: AppConstColors.white,
           ),
           onPressed: () {
             Scaffold.of(context).openDrawer();
@@ -94,7 +94,7 @@ class AppDrawerDesktop extends StatelessWidget {
           Container(
             alignment: Alignment.center,
             decoration: const BoxDecoration(
-              color: AppColors.slgPrincipal,
+              color: AppConstColors.slgPrincipal,
             ),
             child: DrawerHeader(
               child: FutureBuilder<UsuarioLoginResponseViewModel?>(
@@ -111,12 +111,12 @@ class AppDrawerDesktop extends StatelessWidget {
                         AppTextGlobal.labelLightText(
                           text: snapshot.data?.nombres.toUpperCase() ?? "- -",
                           fontSize: 16,
-                          colorText: AppColors.slg01,
+                          colorText: AppConstColors.slg01,
                         ),
                         AppTextGlobal.labelSmallText(
                           text: "${snapshot.data?.rol ?? "- -"}  ",
                           fontWeight: FontWeight.w600,
-                          colorText: AppColors.slg01,
+                          colorText: AppConstColors.slg01,
                         ),
                       ],
                     );

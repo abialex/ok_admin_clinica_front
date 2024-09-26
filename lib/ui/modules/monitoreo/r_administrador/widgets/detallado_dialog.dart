@@ -1,6 +1,6 @@
-import 'package:admin_clinica_front/core/enums/control_cita_tipo_enum.dart';
-import 'package:admin_clinica_front/core/extensions/date_time_extensions.dart';
-import 'package:admin_clinica_front/core/utils/app_colors.dart';
+import 'package:admin_clinica_front/common/enums/control_cita_tipo_enum.dart';
+import 'package:admin_clinica_front/common/utils/extensions/date_time_extensions.dart';
+import 'package:admin_clinica_front/common/constants/app_const_colors.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_box.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_text_style.dart';
 import 'package:admin_clinica_front/ui/modules/monitoreo/r_administrador/widgets/citas_by_one_day.dart';
@@ -29,7 +29,7 @@ class DetallesDialog extends StatelessWidget {
                     margin: const EdgeInsets.all(5),
                     padding: const EdgeInsets.all(5),
                     decoration: BoxDecoration(
-                      border: Border.all(color: AppColors.blueAccent),
+                      border: Border.all(color: AppConstColors.blueAccent),
                       borderRadius: BorderRadius.circular(15),
                     ),
                     child: () {

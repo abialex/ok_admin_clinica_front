@@ -2,7 +2,7 @@ import 'package:admin_clinica_front/ui/view_models/local_view/local_view_models.
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../../../../core/di/injections.dart';
+import '../../../../config/app_dependecy_injection.dart';
 import '../../../../dominio/services/local_service.dart';
 import '../../../view_models/usuario_view/usuario_view_models.dart';
 

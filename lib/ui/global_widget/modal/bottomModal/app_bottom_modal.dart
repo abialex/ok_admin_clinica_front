@@ -1,4 +1,4 @@
-import 'package:admin_clinica_front/core/utils/app_colors.dart';
+import 'package:admin_clinica_front/common/constants/app_const_colors.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_box.dart';
 import 'package:flutter/material.dart';
 
@@ -11,7 +11,7 @@ class AppBottomModal {
         return Container(
           constraints: BoxConstraints(maxHeight: MediaQuery.of(context).size.height) * 0.55,
           decoration: const BoxDecoration(
-            color: AppColors.white,
+            color: AppConstColors.white,
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(20.0),
               topRight: Radius.circular(20.0),
@@ -28,7 +28,7 @@ class AppBottomModal {
                 width: 50.0,
                 margin: const EdgeInsets.only(top: 10.0, bottom: 5.0),
                 decoration: const BoxDecoration(
-                  color: AppColors.dark,
+                  color: AppConstColors.dark,
                   borderRadius: BorderRadius.all(Radius.circular(2.5)),
                 ),
               ),

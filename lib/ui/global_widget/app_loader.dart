@@ -1,5 +1,5 @@
-import 'package:admin_clinica_front/core/constants/app_const_svgs.dart';
-import 'package:admin_clinica_front/core/utils/app_colors.dart';
+import 'package:admin_clinica_front/common/constants/app_const_svgs.dart';
+import 'package:admin_clinica_front/common/constants/app_const_colors.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_box.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_text_style.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +13,7 @@ class AppLoader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.slg01.withOpacity(0.6),
+      backgroundColor: AppConstColors.slg01.withOpacity(0.6),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -31,7 +31,7 @@ class AppLoader extends StatelessWidget {
                       AppConstSvgs.logo,
                       height: 100,
                       width: 100,
-                      color: AppColors.slgPrincipal,
+                      color: AppConstColors.slgPrincipal,
                     ),
                   ),
                 ).animate(onPlay: (controller) => controller.loop(reverse: true)).scale(
@@ -49,8 +49,8 @@ class AppLoader extends StatelessWidget {
                   child: CircularProgressIndicator(
                     // strokeAlign: 20,
                     strokeWidth: 10,
-                    backgroundColor: AppColors.white,
-                    color: AppColors.slg04,
+                    backgroundColor: AppConstColors.white,
+                    color: AppConstColors.slg04,
                   ),
                 ),
               ],
@@ -75,7 +75,7 @@ class AppLoader extends StatelessWidget {
                             return ("Cargando...");
                           }
                         }(),
-                        colorText: AppColors.white);
+                        colorText: AppConstColors.white);
                   },
                 )
           ],

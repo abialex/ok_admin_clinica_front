@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import 'package:admin_clinica_front/core/utils/app_colors.dart';
+import 'package:admin_clinica_front/common/constants/app_const_colors.dart';
 
 enum TipoCita {
   tentativa,
@@ -28,15 +28,15 @@ extension TipoCitaExtension on TipoCita {
   Color get color {
     switch (this) {
       case TipoCita.tentativa:
-        return AppColors.orange;
+        return AppConstColors.orange;
       case TipoCita.agil:
-        return AppColors.blue;
+        return AppConstColors.blue;
       case TipoCita.completa:
-        return AppColors.green;
+        return AppConstColors.green;
       case TipoCita.ocupada:
-        return AppColors.grey;
+        return AppConstColors.grey;
       default:
-        return AppColors.dark;
+        return AppConstColors.dark;
     }
   }
 

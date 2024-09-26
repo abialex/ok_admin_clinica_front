@@ -1,4 +1,4 @@
-import 'package:admin_clinica_front/core/extensions/date_time_extensions.dart';
+import 'package:admin_clinica_front/common/utils/extensions/date_time_extensions.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_text_style.dart';
 import 'package:admin_clinica_front/ui/modules/monitoreo/bloc/cita_list/cita_list_admin_bloc.dart';
 import 'package:admin_clinica_front/ui/modules/monitoreo/r_administrador/widgets/citas_control_inicio-fin/cita_promedio_inicio_fin.dart';

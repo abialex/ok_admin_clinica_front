@@ -15,10 +15,10 @@ import 'package:admin_clinica_front/ui/view_models/cita_view/cita_view_models.da
 import 'package:admin_clinica_front/ui/view_models/doctor_view/doctor_view_models.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../../../core/di/injections.dart';
+import '../../../../../config/app_dependecy_injection.dart';
 import '../../../../../data/datasources/remote/doctor_api.dart';
 import '../../../../../dominio/repositories/ilocal_repository.dart';
-import '../../../../core/router.dart';
+import '../../../../../config/routes/router.dart';
 import '../../../../global_widget/page/page_mixin_base.dart';
 import '../../bloc/cita_bloc.dart';
 

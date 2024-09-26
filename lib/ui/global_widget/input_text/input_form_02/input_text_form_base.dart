@@ -1,6 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:admin_clinica_front/core/utils/app_colors.dart';
+import 'package:admin_clinica_front/common/constants/app_const_colors.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_box.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_text_style.dart';
 import 'package:flutter/material.dart';
@@ -102,7 +102,7 @@ class _InputTextBaseState extends State<InputTextBase> {
                   ],
                   onChanged: widget.onChanged,
                   validator: widget.validator,
-                  cursorColor: AppColors.blueSecondary,
+                  cursorColor: AppConstColors.blueSecondary,
                   style: widget.textInputColor,
 
                   decoration: InputDecoration(
@@ -114,8 +114,8 @@ class _InputTextBaseState extends State<InputTextBase> {
                     suffixIconConstraints: BoxConstraints(minHeight: 48, maxWidth: 10),
                     filled: true,
                     isCollapsed: false,
-                    fillColor: AppColors.lightGray,
-                    errorStyle: TextStyle(color: AppColors.redAccent),
+                    fillColor: AppConstColors.lightGray,
+                    errorStyle: TextStyle(color: AppConstColors.redAccent),
                     border: OutlineInputBorder(
                       // borderSide: BorderSide.none,
                       borderRadius: BorderRadius.circular(5),
@@ -135,12 +135,12 @@ class _InputTextBaseState extends State<InputTextBase> {
                     errorBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(5),
                         borderSide: BorderSide(
-                          color: AppColors.redAccent,
+                          color: AppConstColors.redAccent,
                         )),
                     hintStyle: const TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w400,
-                      color: AppColors.darkGray,
+                      color: AppConstColors.darkGray,
                     ),
                     hintText: widget.hintText,
                     contentPadding: EdgeInsets.only(

@@ -2,7 +2,7 @@ import 'package:admin_clinica_front/data/datasources/remote/base_api.dart';
 import 'package:admin_clinica_front/data/models/api_model/api_model.dart';
 import 'package:admin_clinica_front/data/models/usuario/authenticated_dto.dart';
 import 'package:admin_clinica_front/data/models/usuario/user_dto.dart';
-import 'package:admin_clinica_front/data/utils/api_utils.dart';
+import 'package:admin_clinica_front/config/api_utils.dart';
 import 'package:dio/dio.dart';
 import 'package:either_dart/either.dart';
 import '../../models/usuario/login_user_dto.dart';
@@ -18,8 +18,7 @@ class UsuarioApi implements BaseApi {
       "${url}login",
       data: loginUserDto.toJson(),
     );
-    return ApiUtils.reponseHandler(
-        response, (data) => UserLoginDTO.fromJson(data));
+    return ApiUtils.reponseHandler(response, (data) => UserLoginDTO.fromJson(data));
   }
 
   Future<Either<String, AuthenticatedDTO>> authenticated(String token) async {
@@ -27,8 +26,7 @@ class UsuarioApi implements BaseApi {
       "${url}login_authenticated",
       data: {"token": token},
     );
-    return ApiUtils.reponseHandler(
-        response, (data) => AuthenticatedDTO.fromJson(data));
+    return ApiUtils.reponseHandler(response, (data) => AuthenticatedDTO.fromJson(data));
   }
 
   Future<Either<String, bool>> logout() async {

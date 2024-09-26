@@ -1,4 +1,4 @@
-import 'package:admin_clinica_front/core/constants/app_const_svgs.dart';
+import 'package:admin_clinica_front/common/constants/app_const_svgs.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_text_style.dart';
 import 'package:admin_clinica_front/ui/view_models/doctor_view/doctor_view_models.dart';
 import 'package:flutter/material.dart';

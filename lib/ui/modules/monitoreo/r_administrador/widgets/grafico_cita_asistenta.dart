@@ -1,6 +1,6 @@
-import 'package:admin_clinica_front/core/enums/control_cita_tipo_enum.dart';
-import 'package:admin_clinica_front/core/extensions/date_time_extensions.dart';
-import 'package:admin_clinica_front/core/utils/app_colors.dart';
+import 'package:admin_clinica_front/common/enums/control_cita_tipo_enum.dart';
+import 'package:admin_clinica_front/common/utils/extensions/date_time_extensions.dart';
+import 'package:admin_clinica_front/common/constants/app_const_colors.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_box.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_sliver_list.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_text_style.dart';
@@ -62,7 +62,7 @@ class GraficoCitaAsistentaControl extends StatelessWidget {
                                 AppBox.h6,
                                 Container(
                                   alignment: Alignment.bottomCenter,
-                                  color: AppColors.blueAccent,
+                                  color: AppConstColors.blueAccent,
                                   height: constraints.maxHeight * (item.promedio / (60 * 4)).clamp(0, 0.9),
                                   child: AppTextGlobal.labelSmallText(
                                     text: '${item.cantidad}\ncitas',
@@ -80,11 +80,11 @@ class GraficoCitaAsistentaControl extends StatelessWidget {
                           Container(
                             width: 30,
                             alignment: Alignment.center,
-                            color: AppColors.blueSecondary,
-                            child: AppTextGlobal.labelSmallText(text: item.cantidad.toString(), fontSize: 11, maxLines: 2, textAlign: TextAlign.center, colorText: AppColors.white),
+                            color: AppConstColors.blueSecondary,
+                            child: AppTextGlobal.labelSmallText(text: item.cantidad.toString(), fontSize: 11, maxLines: 2, textAlign: TextAlign.center, colorText: AppConstColors.white),
                           ),
                         Container(
-                          color: AppColors.lightBackgroundColor,
+                          color: AppConstColors.lightBackgroundColor,
                           child: AppTextGlobal.labelMediumText(
                             text: item.date.toFormaMMddSlash(),
                             fontSize: 11,

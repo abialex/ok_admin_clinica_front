@@ -1,4 +1,4 @@
-import 'package:admin_clinica_front/core/utils/app_colors.dart';
+import 'package:admin_clinica_front/common/constants/app_const_colors.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_box.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -49,12 +49,12 @@ class AppDatePickerCupertino extends StatelessWidget {
                   alignment: Alignment.center,
                   padding: const EdgeInsets.all(5),
                   decoration: BoxDecoration(
-                    color: AppColors.slg01,
+                    color: AppConstColors.slg01,
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: const Icon(
                     Icons.restore,
-                    color: AppColors.white,
+                    color: AppConstColors.white,
                     size: 24,
                   ),
                 ),

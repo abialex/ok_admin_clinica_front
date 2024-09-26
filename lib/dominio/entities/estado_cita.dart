@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import 'package:admin_clinica_front/core/utils/app_colors.dart';
+import 'package:admin_clinica_front/common/constants/app_const_colors.dart';
 
 enum EstadoCita {
   pendiente,
@@ -34,19 +34,19 @@ extension EstadoCitaExtension on EstadoCita {
   Color get color {
     switch (this) {
       case EstadoCita.pendiente:
-        return AppColors.orange;
+        return AppConstColors.orange;
       case EstadoCita.confirmado:
-        return AppColors.blue;
+        return AppConstColors.blue;
       case EstadoCita.atendiendo:
-        return AppColors.green;
+        return AppConstColors.green;
       case EstadoCita.finalizado:
-        return AppColors.grey;
+        return AppConstColors.grey;
       case EstadoCita.validado:
-        return AppColors.purple;
+        return AppConstColors.purple;
       case EstadoCita.cancelado:
-        return AppColors.red;
+        return AppConstColors.red;
       default:
-        return AppColors.dark;
+        return AppConstColors.dark;
     }
   }
 

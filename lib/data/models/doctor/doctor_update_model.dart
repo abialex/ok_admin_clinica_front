@@ -1,7 +1,5 @@
 // ignore_for_file: non_constant_identifier_names
 
-import 'package:admin_clinica_front/dominio/entities/doctor.dart';
-import 'package:admin_clinica_front/infraestructura/serializers/datetime_converter.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'doctor_update_model.g.dart';

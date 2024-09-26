@@ -1,5 +1,5 @@
-import 'package:admin_clinica_front/core/constants/app_const_svgs.dart';
-import 'package:admin_clinica_front/core/utils/app_colors.dart';
+import 'package:admin_clinica_front/common/constants/app_const_svgs.dart';
+import 'package:admin_clinica_front/common/constants/app_const_colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_svg/svg.dart';
@@ -13,7 +13,7 @@ class AppLoaderMini extends StatelessWidget {
     return SvgPicture.asset(
       AppConstSvgs.logo,
       height: height,
-      color: AppColors.slgPrincipal,
+      color: AppConstColors.slgPrincipal,
     )
         .animate(
           onPlay: (controller) => controller.loop(),

@@ -1,8 +1,8 @@
-import 'package:admin_clinica_front/core/constants/app_const_svgs.dart';
-import 'package:admin_clinica_front/core/di/injections.dart';
-import 'package:admin_clinica_front/core/utils/app_colors.dart';
+import 'package:admin_clinica_front/common/constants/app_const_svgs.dart';
+import 'package:admin_clinica_front/config/app_dependecy_injection.dart';
+import 'package:admin_clinica_front/common/constants/app_const_colors.dart';
 import 'package:admin_clinica_front/dominio/services/local_service.dart';
-import 'package:admin_clinica_front/ui/core/router.dart';
+import 'package:admin_clinica_front/config/routes/router.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_box.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_text_style.dart';
 import 'package:admin_clinica_front/ui/global_widget/custom_navbar_navigation/cubit/navigator_cubit.dart';
@@ -32,7 +32,7 @@ class HeaderMobile extends StatelessWidget {
       // color: AppColors.white,
       padding: const EdgeInsets.only(top: 5, right: 12.5, left: 12.5),
       decoration: const BoxDecoration(
-        color: AppColors.slgPrincipal,
+        color: AppConstColors.slgPrincipal,
         borderRadius: BorderRadius.vertical(
           bottom: Radius.circular(25),
         ),
@@ -59,12 +59,12 @@ class HeaderMobile extends StatelessWidget {
                             AppTextGlobal.labelLightText(
                               text: snapshot.data?.nombres.toUpperCase() ?? "- -",
                               fontSize: 14,
-                              colorText: AppColors.slg01,
+                              colorText: AppConstColors.slg01,
                             ),
                             AppTextGlobal.labelSmallText(
                               text: "${snapshot.data?.rol ?? "- -"}  ${snapshot.data?.tipo ?? ""}",
                               fontWeight: FontWeight.w600,
-                              colorText: AppColors.slg01,
+                              colorText: AppConstColors.slg01,
                             ),
                           ],
                         );
@@ -94,14 +94,14 @@ class HeaderMobile extends StatelessWidget {
                       },
                       child: SvgPicture.asset(
                         AppConstSvgs.logo,
-                        color: AppColors.white,
+                        color: AppConstColors.white,
                         height: 35,
                       ).animate().rotate(end: 0.5),
                     ),
                     AppBox.h8,
                     SvgPicture.asset(
                       AppConstSvgs.logo_string,
-                      color: AppColors.darkFillColor,
+                      color: AppConstColors.darkFillColor,
                       height: 15,
                       // width: 10,
                     ),
@@ -114,7 +114,7 @@ class HeaderMobile extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              AppTextGlobal.labelMediumText(text: title, colorText: AppColors.white).animate().scale(curve: Curves.bounceOut, begin: Offset(0.6, 0.6)),
+              AppTextGlobal.labelMediumText(text: title, colorText: AppConstColors.white).animate().scale(curve: Curves.bounceOut, begin: Offset(0.6, 0.6)),
             ],
           )
         ],

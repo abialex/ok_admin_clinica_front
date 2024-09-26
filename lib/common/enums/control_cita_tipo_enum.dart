@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import 'package:admin_clinica_front/core/utils/app_colors.dart';
+import 'package:admin_clinica_front/common/constants/app_const_colors.dart';
 
 enum ControlCitaTipoEnum {
   confirmadoToInicio,
@@ -28,15 +28,15 @@ extension TipoCitaExtension on ControlCitaTipoEnum {
   Color get color {
     switch (this) {
       case ControlCitaTipoEnum.confirmadoToInicio:
-        return AppColors.orange;
+        return AppConstColors.orange;
       case ControlCitaTipoEnum.inicioToFin:
-        return AppColors.blue;
+        return AppConstColors.blue;
       case ControlCitaTipoEnum.finToValidado:
-        return AppColors.green;
+        return AppConstColors.green;
       case ControlCitaTipoEnum.confirmadoToValidado:
-        return AppColors.grey;
+        return AppConstColors.grey;
       default:
-        return AppColors.dark;
+        return AppConstColors.dark;
     }
   }
 

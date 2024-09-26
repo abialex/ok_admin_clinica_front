@@ -1,4 +1,4 @@
-import 'package:admin_clinica_front/core/utils/app_colors.dart';
+import 'package:admin_clinica_front/common/constants/app_const_colors.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_text_style.dart';
 
 import 'package:flutter/material.dart';
@@ -12,7 +12,7 @@ class ButtonSheet {
         return Container(
           constraints: BoxConstraints(maxHeight: MediaQuery.of(context).size.height) * 0.45,
           decoration: const BoxDecoration(
-            color: AppColors.hintColor,
+            color: AppConstColors.hintColor,
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(15.0),
               topRight: Radius.circular(15.0),
@@ -43,7 +43,7 @@ class instance extends StatelessWidget {
           width: 50.0,
           margin: const EdgeInsets.only(top: 10.0, bottom: 5.0),
           decoration: const BoxDecoration(
-            color: AppColors.darkAppBar,
+            color: AppConstColors.darkAppBar,
             borderRadius: BorderRadius.all(Radius.circular(2.5)),
           ),
         ),
@@ -107,12 +107,12 @@ class instance extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(
                         vertical: 10,
                       ),
-                      decoration: const BoxDecoration(color: AppColors.white, borderRadius: BorderRadius.all(Radius.circular(10))),
+                      decoration: const BoxDecoration(color: AppConstColors.white, borderRadius: BorderRadius.all(Radius.circular(10))),
                       child: Row(
                         children: [
                           const Icon(
                             Icons.arrow_right,
-                            color: AppColors.blueSecondary,
+                            color: AppConstColors.blueSecondary,
                             size: 35,
                           ),
                           AppTextGlobal.lightText(

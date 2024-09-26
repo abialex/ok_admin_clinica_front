@@ -2,7 +2,7 @@
 
 import 'dart:convert';
 import 'package:admin_clinica_front/data/models/doctor/doctor_dto.dart';
-import 'package:admin_clinica_front/data/utils/key_storage.dart';
+import 'package:admin_clinica_front/config/key_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../models/usuario/user_dto.dart';

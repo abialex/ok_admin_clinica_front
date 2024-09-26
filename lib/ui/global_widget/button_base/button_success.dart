@@ -1,4 +1,4 @@
-import 'package:admin_clinica_front/core/utils/app_colors.dart';
+import 'package:admin_clinica_front/common/constants/app_const_colors.dart';
 import 'package:flutter/material.dart';
 
 import 'button_base.dart';
@@ -20,8 +20,8 @@ class ButtonSuccess extends StatelessWidget {
       onClick: onClick,
       text: text,
       height: height,
-      backgroundColor: AppColors.slg01,
-      textColor: AppColors.white,
+      backgroundColor: AppConstColors.slg01,
+      textColor: AppConstColors.white,
     );
   }
 }

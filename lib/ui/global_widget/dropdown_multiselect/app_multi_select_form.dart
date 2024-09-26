@@ -1,4 +1,4 @@
-import 'package:admin_clinica_front/core/utils/app_colors.dart';
+import 'package:admin_clinica_front/common/constants/app_const_colors.dart';
 import 'package:admin_clinica_front/ui/global_widget/dropdown_multiselect/custom_multi_select.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -25,9 +25,9 @@ class MultiSelectForm<T> extends FormField<List<MultiSelectItem<T>>> {
                   alignment: Alignment.center,
                   padding: const EdgeInsets.symmetric(vertical: 3),
                   decoration: BoxDecoration(
-                    color: AppColors.lightGray,
+                    color: AppConstColors.lightGray,
                     borderRadius: BorderRadius.circular(5),
-                    border: state.hasError ? Border.all(color: AppColors.redAccent) : null,
+                    border: state.hasError ? Border.all(color: AppConstColors.redAccent) : null,
                   ),
                   child: MultiSelect<T>(
                     isMultiSelect: isMultiSelect,
@@ -46,7 +46,7 @@ class MultiSelectForm<T> extends FormField<List<MultiSelectItem<T>>> {
                     padding: const EdgeInsets.only(top: 5, left: 11),
                     child: Text(
                       state.errorText!,
-                      style: const TextStyle(color: AppColors.redAccent, fontSize: 12),
+                      style: const TextStyle(color: AppConstColors.redAccent, fontSize: 12),
                     ).animate().shake(rotation: 0.02),
                   ),
               ],

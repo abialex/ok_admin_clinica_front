@@ -1,4 +1,4 @@
-// ignore_for_file: constant_identifier_names
+// ignore_for_file: constant_identifier_names, unused_element
 
 import 'package:admin_clinica_front/ui/modules/atencion/page.dart';
 import 'package:admin_clinica_front/ui/modules/cita/r_asistente_asistente/pages/cita_list_page.dart';
@@ -14,13 +14,13 @@ import 'package:admin_clinica_front/ui/modules/otros/page.dart';
 import 'package:admin_clinica_front/ui/modules/paciente/paciente_list/paciente_list_asist_recep_page.dart';
 import 'package:flutter/material.dart';
 
-import '../modules/cita/r_asistente_recepcion/pages/cita_add_page.dart';
-import '../modules/cita/r_asistente_recepcion/pages/cita_list_page.dart';
-import '../modules/doctor/doctor_add/doctor_add_asist_recep_page.dart';
-import '../modules/doctor/doctor_list/doctor_list_asist_recep_page.dart';
-import '../modules/doctor/doctor_list/doctor_list_asist_asist_page.dart';
-import '../modules/doctor/doctor_update/doctor_update_asist_recep_page.dart';
-import '../modules/home/page.dart';
+import '../../ui/modules/cita/r_asistente_recepcion/pages/cita_add_page.dart';
+import '../../ui/modules/cita/r_asistente_recepcion/pages/cita_list_page.dart';
+import '../../ui/modules/doctor/doctor_add/doctor_add_asist_recep_page.dart';
+import '../../ui/modules/doctor/doctor_list/doctor_list_asist_recep_page.dart';
+import '../../ui/modules/doctor/doctor_list/doctor_list_asist_asist_page.dart';
+import '../../ui/modules/doctor/doctor_update/doctor_update_asist_recep_page.dart';
+import '../../ui/modules/home/page.dart';
 
 class Routes {
   static const String base_admin = "/admin";

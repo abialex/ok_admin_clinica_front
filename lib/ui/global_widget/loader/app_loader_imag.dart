@@ -1,6 +1,6 @@
-import 'package:admin_clinica_front/core/constants/app_const_images.dart';
-import 'package:admin_clinica_front/core/constants/app_const_svgs.dart';
-import 'package:admin_clinica_front/core/utils/app_colors.dart';
+import 'package:admin_clinica_front/common/constants/app_const_images.dart';
+import 'package:admin_clinica_front/common/constants/app_const_svgs.dart';
+import 'package:admin_clinica_front/common/constants/app_const_colors.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_box.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_text_style.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -17,7 +17,7 @@ class AppLoaderImag extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        backgroundColor: AppColors.slg01.withOpacity(0.6),
+        backgroundColor: AppConstColors.slg01.withOpacity(0.6),
         body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -34,8 +34,8 @@ class AppLoaderImag extends StatelessWidget {
                     child: CircularProgressIndicator(
                       // strokeAlign: 20,
                       strokeWidth: 10,
-                      backgroundColor: AppColors.white,
-                      color: AppColors.slg04,
+                      backgroundColor: AppConstColors.white,
+                      color: AppConstColors.slg04,
                     ),
                   ),
                   CarruselImag()

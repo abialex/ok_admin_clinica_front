@@ -1,4 +1,4 @@
-import 'package:admin_clinica_front/core/utils/app_colors.dart';
+import 'package:admin_clinica_front/common/constants/app_const_colors.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_text_style.dart';
 import 'package:admin_clinica_front/ui/cubits/index_cubit.dart';
 import 'package:flutter/cupertino.dart';
@@ -41,12 +41,12 @@ class FormPages extends StatelessWidget {
                                 borderRadius: const BorderRadius.vertical(
                                   top: Radius.circular(5),
                                 ),
-                                border: Border.all(color: index == state ? AppColors.slgPrincipal : AppColors.slg01),
-                                color: index == state ? AppColors.slgPrincipal : AppColors.slg01,
+                                border: Border.all(color: index == state ? AppConstColors.slgPrincipal : AppConstColors.slg01),
+                                color: index == state ? AppConstColors.slgPrincipal : AppConstColors.slg01,
                               ),
                               child: AppTextGlobal.labelLightText(
                                 text: items[index].titulo,
-                                colorText: AppColors.white,
+                                colorText: AppConstColors.white,
                                 fontSize: 14,
                                 textAlign: TextAlign.center,
                               ),

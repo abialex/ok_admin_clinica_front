@@ -1,5 +1,5 @@
-import 'package:admin_clinica_front/core/constants/app_const_svgs.dart';
-import 'package:admin_clinica_front/core/utils/app_colors.dart';
+import 'package:admin_clinica_front/common/constants/app_const_svgs.dart';
+import 'package:admin_clinica_front/common/constants/app_const_colors.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_box.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_grid_sliver_list.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_text_style.dart';
@@ -49,7 +49,7 @@ class ListDoctorHorizontal extends StatelessWidget {
                   margin: const EdgeInsets.symmetric(horizontal: 5),
                   padding: const EdgeInsets.all(2.5),
                   decoration: BoxDecoration(
-                    color: (state?.id == item.id ? AppColors.slg04 : Colors.white),
+                    color: (state?.id == item.id ? AppConstColors.slg04 : Colors.white),
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: Row(
@@ -59,15 +59,15 @@ class ListDoctorHorizontal extends StatelessWidget {
                         AppConstSvgs.doctor,
                         width: 50,
                         height: 50,
-                        color: state?.id == item.id ? AppColors.white : AppColors.dark,
+                        color: state?.id == item.id ? AppConstColors.white : AppConstColors.dark,
                       ),
                       const SizedBox(height: 5),
                       Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          AppTextGlobal.labelLightText(text: item.nombres, fontSize: 12, colorText: state?.id == item.id ? AppColors.white : AppColors.dark),
-                          AppTextGlobal.labelLightText(text: item.apellidos, fontSize: 10, colorText: AppColors.lightwhite),
+                          AppTextGlobal.labelLightText(text: item.nombres, fontSize: 12, colorText: state?.id == item.id ? AppConstColors.white : AppConstColors.dark),
+                          AppTextGlobal.labelLightText(text: item.apellidos, fontSize: 10, colorText: AppConstColors.lightwhite),
                         ],
                       ),
                       AppBox.w10,

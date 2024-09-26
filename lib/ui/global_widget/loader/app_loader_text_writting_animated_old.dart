@@ -1,5 +1,5 @@
-import 'package:admin_clinica_front/core/constants/app_const_svgs.dart';
-import 'package:admin_clinica_front/core/utils/app_colors.dart';
+import 'package:admin_clinica_front/common/constants/app_const_svgs.dart';
+import 'package:admin_clinica_front/common/constants/app_const_colors.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_box.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_text_style.dart';
 import 'package:flutter/material.dart';
@@ -157,7 +157,7 @@ class _AppLoaderTextWritingAnimateoLDState extends State<AppLoaderTextWritingAni
       builder: (context, constraints) {
         return Container(
           // padding: const EdgeInsets.symmetric(horizontal: 0),
-          color: AppColors.dark.withOpacity(0.2),
+          color: AppConstColors.dark.withOpacity(0.2),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -229,7 +229,7 @@ class _AppLoaderTextWritingAnimateoLDState extends State<AppLoaderTextWritingAni
                                 child: SvgPicture.asset(
                                   AppConstSvgs.construction_svgrepo,
                                   height: 40,
-                                  color: AppColors.blue,
+                                  color: AppConstColors.blue,
                                 ),
                               );
                             }

@@ -1,4 +1,4 @@
-import 'package:admin_clinica_front/core/constants/app_const_icons.dart';
+import 'package:admin_clinica_front/common/constants/app_const_icons.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_box.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_sunat.dart';
 import 'package:admin_clinica_front/ui/global_widget/app_text_style.dart';
@@ -7,7 +7,7 @@ import 'package:admin_clinica_front/ui/global_widget/button_base/button_success.
 import 'package:admin_clinica_front/ui/global_widget/input_text/input_form_02/input_text_form_base.dart';
 import 'package:admin_clinica_front/ui/modules/cita/bloc/cita_crear_bloc/cita_create_bloc.dart';
 import 'package:admin_clinica_front/ui/modules/cita/bloc/cita_crear_bloc/cita_create_event.dart';
-import 'package:admin_clinica_front/ui/validators/validators.dart';
+import 'package:admin_clinica_front/common/utils/validators.dart';
 import 'package:admin_clinica_front/ui/view_models/cita_view/cita_view_models.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';

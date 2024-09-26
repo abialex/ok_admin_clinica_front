@@ -5,10 +5,7 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:window_size/window_size.dart';
-// import 'package:wsapp/app/config/app_dependecy_injection.dart';
-// import 'package:wsapp/app/config/app_store_provider.dart';
-
-import 'core/di/injections.dart';
+import 'config/app_dependecy_injection.dart';
 
 class AppBlocObserver extends BlocObserver {
   const AppBlocObserver();

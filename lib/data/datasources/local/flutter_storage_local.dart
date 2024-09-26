@@ -3,7 +3,7 @@
 import 'dart:convert';
 
 import 'package:admin_clinica_front/data/models/doctor/doctor_dto.dart';
-import 'package:admin_clinica_front/data/utils/key_storage.dart';
+import 'package:admin_clinica_front/config/key_storage.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import '../../models/usuario/user_dto.dart';

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../global_widget/custom_navbar_navigation/design_nav_bar_navigation.dart';
+import '../../ui/global_widget/custom_navbar_navigation/design_nav_bar_navigation.dart';
 import 'router.dart';
 
 interface class ModulesRouter {

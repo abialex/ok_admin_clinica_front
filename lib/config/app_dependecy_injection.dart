@@ -1,3 +1,5 @@
+import 'package:admin_clinica_front/config/app_flavor_config.dart';
+import 'package:admin_clinica_front/config/interceptor/inteceptor.dart';
 import 'package:admin_clinica_front/data/datasources/remote/cita_api.dart';
 import 'package:admin_clinica_front/data/datasources/remote/sunat_api.dart';
 import 'package:admin_clinica_front/data/datasources/remote/ubicacion_api.dart';
@@ -17,40 +19,54 @@ import 'package:admin_clinica_front/dominio/services/excel_service.dart';
 import 'package:admin_clinica_front/dominio/services/services_service.dart';
 import 'package:admin_clinica_front/dominio/services/ubicacion_service.dart';
 import 'package:admin_clinica_front/dominio/services/usuario_service.dart';
-import 'package:admin_clinica_front/infraestructura/network/api_client.dart';
-import 'package:admin_clinica_front/infraestructura/storage/flutter_security_client.dart';
-import 'package:admin_clinica_front/infraestructura/storage/shared_preferences_client.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:talker_dio_logger/talker_dio_logger_interceptor.dart';
+import 'package:talker_dio_logger/talker_dio_logger_settings.dart';
 
-import '../../data/datasources/local/flutter_storage_local.dart';
-import '../../data/datasources/local/shared_preferences_local.dart';
-import '../../data/datasources/remote/asistente_api.dart';
-import '../../data/datasources/remote/doctor_api.dart';
-import '../../data/repositories_impl/asistente_repository_impl.dart';
-import '../../data/repositories_impl/cita_repository_impl.dart';
-import '../../data/repositories_impl/doctor_repository_impl.dart';
-import '../../data/repositories_impl/local_storage_repository_impl.dart';
-import '../../data/repositories_impl/usuario_repository_impl.dart';
-import '../../dominio/repositories/iasistente_repository.dart';
-import '../../dominio/repositories/icita_repository.dart';
-import '../../dominio/repositories/idoctor_repository.dart';
-import '../../dominio/repositories/ilocal_repository.dart';
-import '../../dominio/repositories/iusuario_repository.dart';
-import '../../dominio/services/doctor_service.dart';
+import '../data/datasources/local/flutter_storage_local.dart';
+import '../data/datasources/local/shared_preferences_local.dart';
+import '../data/datasources/remote/asistente_api.dart';
+import '../data/datasources/remote/doctor_api.dart';
+import '../data/repositories_impl/asistente_repository_impl.dart';
+import '../data/repositories_impl/cita_repository_impl.dart';
+import '../data/repositories_impl/doctor_repository_impl.dart';
+import '../data/repositories_impl/local_storage_repository_impl.dart';
+import '../data/repositories_impl/usuario_repository_impl.dart';
+import '../dominio/repositories/iasistente_repository.dart';
+import '../dominio/repositories/icita_repository.dart';
+import '../dominio/repositories/idoctor_repository.dart';
+import '../dominio/repositories/ilocal_repository.dart';
+import '../dominio/repositories/iusuario_repository.dart';
+import '../dominio/services/doctor_service.dart';
 import 'package:flutter/foundation.dart' as foundation;
 
-import '../../dominio/services/local_service.dart';
+import '../dominio/services/local_service.dart';
 
 GetIt locator = GetIt.instance;
 
 Future<void> setupLocator() async {
-  // locator.registerSingleton<FlutterSecureStorage>(const FlutterSecureStorage());
-  locator.registerLazySingleton<Dio>(() => ApiClient().setupDio());
-  locator.registerLazySingleton<FlutterSecureStorage>(() => FlutterStorageClient().createSecureStorage());
-  locator.registerSingletonAsync<SharedPreferences>(() async => SharedPreferencesClient().createShredPreferences());
+  var dio = Dio();
+  dio.options.baseUrl = AppFlavorConfig.urlApp;
+  dio.interceptors.add(AppInterceptor());
+  dio.options.connectTimeout = const Duration(seconds: 5); // 5 seconds
+  dio.interceptors.add(LogInterceptor(responseBody: true)); //para visualizar
+  if (kDebugMode) {
+    dio.interceptors.add(
+      TalkerDioLogger(
+        settings: const TalkerDioLoggerSettings(
+          printRequestHeaders: true,
+          printResponseHeaders: true,
+        ),
+      ),
+    );
+  }
+  locator.registerLazySingleton(() => dio);
+  locator.registerLazySingleton<FlutterSecureStorage>(() => const FlutterSecureStorage());
+  locator.registerSingletonAsync<SharedPreferences>(() async => await SharedPreferences.getInstance());
 
   setupDataSource();
   setupRepositorys();
