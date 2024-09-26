@@ -1,11 +1,11 @@
-import 'package:admin_clinica_front/app/data/models/doctor/doctor_dto.dart';
-import 'package:admin_clinica_front/app/data/models/usuario/user_dto.dart';
+import 'package:admin_clinica_front/app/common/models/doctor/doctor_dto.dart';
+import 'package:admin_clinica_front/app/common/models/usuario/user_dto.dart';
 
 import '../../dominio/repositories/ilocal_repository.dart';
-import '../datasources/local/shared_preferences_local.dart';
+import '../../common/service/shared_preferences_service.dart';
 
 class SharedPreferencesRepository implements ILocalRepository {
-  final SharedPreferencesLocal _local;
+  final SharedPreferencesService _local;
   SharedPreferencesRepository(this._local);
   @override
   Future<String?> getToken() {

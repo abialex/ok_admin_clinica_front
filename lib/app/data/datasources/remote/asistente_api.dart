@@ -1,13 +1,13 @@
 import 'package:admin_clinica_front/app/data/datasources/remote/base_api.dart';
-import 'package:admin_clinica_front/app/data/models/asistente/asistentes_dto.dart';
+import 'package:admin_clinica_front/app/common/models/asistente/asistentes_dto.dart';
 import 'package:dio/dio.dart';
 import 'package:either_dart/either.dart';
 
-import '../../models/api_model/api_model.dart';
-import '../../models/asistente/asistente_create_model.dart';
-import '../../models/asistente/asistente_credentials_model.dart';
-import '../../models/asistente/asistente_dto.dart';
-import '../../models/asistente/asistente_update_model.dart';
+import '../../../common/models/api_model/api_model.dart';
+import '../../../common/models/asistente/asistente_create_model.dart';
+import '../../../common/models/asistente/asistente_credentials_model.dart';
+import '../../../common/models/asistente/asistente_dto.dart';
+import '../../../common/models/asistente/asistente_update_model.dart';
 import '../../../config/api_utils.dart';
 
 class AsistenteApi implements BaseApi {

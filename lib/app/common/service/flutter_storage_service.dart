@@ -2,16 +2,16 @@
 
 import 'dart:convert';
 
-import 'package:admin_clinica_front/app/data/models/doctor/doctor_dto.dart';
+import 'package:admin_clinica_front/app/common/models/doctor/doctor_dto.dart';
 import 'package:admin_clinica_front/app/config/key_storage.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-import '../../models/usuario/user_dto.dart';
+import '../models/usuario/user_dto.dart';
 
-class FlutterStorageLocal {
+class FlutterStorageService {
   final FlutterSecureStorage _secureStorage;
 
-  FlutterStorageLocal(this._secureStorage);
+  FlutterStorageService(this._secureStorage);
 
   Future<void> saveToken(String token) async {
     await _secureStorage.write(key: KeyStorage.AUTH_TOKEN, value: token);

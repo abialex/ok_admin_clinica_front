@@ -1,14 +1,14 @@
-import 'package:admin_clinica_front/app/data/models/api_model/api_model.dart';
-import 'package:admin_clinica_front/app/data/models/cita/cita_agil/cita_agil_create.dart';
-import 'package:admin_clinica_front/app/data/models/cita/cita_agil/cita_agil_update.dart';
-import 'package:admin_clinica_front/app/data/models/cita/cita_ocupada/cita_ocupada_create.dart';
-import 'package:admin_clinica_front/app/data/models/cita/citas_dto.dart';
-import 'package:admin_clinica_front/app/data/models/request/cita_request_model.dart';
+import 'package:admin_clinica_front/app/common/models/api_model/api_model.dart';
+import 'package:admin_clinica_front/app/common/models/cita/cita_agil/cita_agil_create.dart';
+import 'package:admin_clinica_front/app/common/models/cita/cita_agil/cita_agil_update.dart';
+import 'package:admin_clinica_front/app/common/models/cita/cita_ocupada/cita_ocupada_create.dart';
+import 'package:admin_clinica_front/app/common/models/cita/citas_dto.dart';
+import 'package:admin_clinica_front/app/common/models/request/cita_request_model.dart';
 import 'package:dio/dio.dart';
 import 'package:either_dart/either.dart';
 
-import '../../models/cita/cita_dto.dart';
-import '../../models/request/request_model.dart';
+import '../../../common/models/cita/cita_dto.dart';
+import '../../../common/models/request/request_model.dart';
 import '../../../config/api_utils.dart';
 
 class CitaApi {

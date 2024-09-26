@@ -1,7 +1,7 @@
 // ignore_for_file: lines_longer_than_80_chars, inference_failure_on_function_return_type, must_be_immutable
 
-import 'package:admin_clinica_front/app/data/models/doctor/doctor_contenedor_data_model.dart';
-import 'package:admin_clinica_front/app/data/models/filter_model/filter_model.dart';
+import 'package:admin_clinica_front/app/common/models/doctor/doctor_contenedor_data_model.dart';
+import 'package:admin_clinica_front/app/common/models/filter_model/filter_model.dart';
 import 'package:admin_clinica_front/app/common/blocs/contenedor/doctor_contenedor/list/doctor_contenedor_list_bloc.dart';
 import 'package:admin_clinica_front/app/common/widget/dropdown_multiselect/custom_dropdown_data_form_field2.dart';
 import 'package:flutter/material.dart';

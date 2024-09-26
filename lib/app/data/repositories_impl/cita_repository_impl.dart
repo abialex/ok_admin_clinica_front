@@ -1,10 +1,10 @@
-import 'package:admin_clinica_front/app/data/models/cita/cita_agil/cita_agil_create.dart';
-import 'package:admin_clinica_front/app/data/models/cita/cita_agil/cita_agil_update.dart';
-import 'package:admin_clinica_front/app/data/models/cita/cita_dto.dart';
-import 'package:admin_clinica_front/app/data/models/cita/cita_ocupada/cita_ocupada_create.dart';
-import 'package:admin_clinica_front/app/data/models/cita/citas_dto.dart';
-import 'package:admin_clinica_front/app/data/models/request/cita_request_model.dart';
-import 'package:admin_clinica_front/app/data/models/request/request_model.dart';
+import 'package:admin_clinica_front/app/common/models/cita/cita_agil/cita_agil_create.dart';
+import 'package:admin_clinica_front/app/common/models/cita/cita_agil/cita_agil_update.dart';
+import 'package:admin_clinica_front/app/common/models/cita/cita_dto.dart';
+import 'package:admin_clinica_front/app/common/models/cita/cita_ocupada/cita_ocupada_create.dart';
+import 'package:admin_clinica_front/app/common/models/cita/citas_dto.dart';
+import 'package:admin_clinica_front/app/common/models/request/cita_request_model.dart';
+import 'package:admin_clinica_front/app/common/models/request/request_model.dart';
 import 'package:admin_clinica_front/app/dominio/repositories/icita_repository.dart';
 import 'package:either_dart/either.dart';
 

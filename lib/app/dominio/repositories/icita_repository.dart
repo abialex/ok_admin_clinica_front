@@ -1,12 +1,12 @@
-import 'package:admin_clinica_front/app/data/models/cita/cita_ocupada/cita_ocupada_create.dart';
-import 'package:admin_clinica_front/app/data/models/request/cita_request_model.dart';
+import 'package:admin_clinica_front/app/common/models/cita/cita_ocupada/cita_ocupada_create.dart';
+import 'package:admin_clinica_front/app/common/models/request/cita_request_model.dart';
 import 'package:either_dart/either.dart';
 
-import '../../data/models/cita/cita_agil/cita_agil_create.dart';
-import '../../data/models/cita/cita_agil/cita_agil_update.dart';
-import '../../data/models/cita/cita_dto.dart';
-import '../../data/models/cita/citas_dto.dart';
-import '../../data/models/request/request_model.dart';
+import '../../common/models/cita/cita_agil/cita_agil_create.dart';
+import '../../common/models/cita/cita_agil/cita_agil_update.dart';
+import '../../common/models/cita/cita_dto.dart';
+import '../../common/models/cita/citas_dto.dart';
+import '../../common/models/request/request_model.dart';
 
 abstract class ICitaRepository {
   Future<Either<String, List<CitasDTO>>> getCitaAll();

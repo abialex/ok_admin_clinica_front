@@ -1,13 +1,13 @@
 import 'package:admin_clinica_front/app/data/datasources/remote/base_api.dart';
-import 'package:admin_clinica_front/app/data/models/doctor/doctor_create_model.dart';
-import 'package:admin_clinica_front/app/data/models/doctor/doctor_credentials_model.dart';
-import 'package:admin_clinica_front/app/data/models/doctor/doctors_dto.dart';
+import 'package:admin_clinica_front/app/common/models/doctor/doctor_create_model.dart';
+import 'package:admin_clinica_front/app/common/models/doctor/doctor_credentials_model.dart';
+import 'package:admin_clinica_front/app/common/models/doctor/doctors_dto.dart';
 import 'package:dio/dio.dart';
 import 'package:either_dart/either.dart';
 
-import '../../models/api_model/api_model.dart';
-import '../../models/doctor/doctor_dto.dart';
-import '../../models/doctor/doctor_update_model.dart';
+import '../../../common/models/api_model/api_model.dart';
+import '../../../common/models/doctor/doctor_dto.dart';
+import '../../../common/models/doctor/doctor_update_model.dart';
 import '../../../config/api_utils.dart';
 
 class DoctorApi implements BaseApi {

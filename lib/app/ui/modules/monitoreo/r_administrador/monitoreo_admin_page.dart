@@ -1,8 +1,8 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:admin_clinica_front/app/common/constants/app_const_colors.dart';
-import 'package:admin_clinica_front/app/data/models/doctor/doctor_contenedor_data_model.dart';
-import 'package:admin_clinica_front/app/data/models/ubicacion/ubicacion_contenedor_data_model.dart';
+import 'package:admin_clinica_front/app/common/models/doctor/doctor_contenedor_data_model.dart';
+import 'package:admin_clinica_front/app/common/models/ubicacion/ubicacion_contenedor_data_model.dart';
 import 'package:admin_clinica_front/app/common/blocs/excel/excel_cubit.dart';
 import 'package:admin_clinica_front/app/common/cubits/index_cubit.dart';
 import 'package:admin_clinica_front/app/common/widget/app_box.dart';

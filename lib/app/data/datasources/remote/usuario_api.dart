@@ -1,11 +1,11 @@
 import 'package:admin_clinica_front/app/data/datasources/remote/base_api.dart';
-import 'package:admin_clinica_front/app/data/models/api_model/api_model.dart';
-import 'package:admin_clinica_front/app/data/models/usuario/authenticated_dto.dart';
-import 'package:admin_clinica_front/app/data/models/usuario/user_dto.dart';
+import 'package:admin_clinica_front/app/common/models/api_model/api_model.dart';
+import 'package:admin_clinica_front/app/common/models/usuario/authenticated_dto.dart';
+import 'package:admin_clinica_front/app/common/models/usuario/user_dto.dart';
 import 'package:admin_clinica_front/app/config/api_utils.dart';
 import 'package:dio/dio.dart';
 import 'package:either_dart/either.dart';
-import '../../models/usuario/login_user_dto.dart';
+import '../../../common/models/usuario/login_user_dto.dart';
 
 class UsuarioApi implements BaseApi {
   final Dio _dio;

@@ -1,6 +1,6 @@
 import 'package:either_dart/either.dart';
 
-import '../../data/models/usuario/login_user_dto.dart';
+import '../../common/models/usuario/login_user_dto.dart';
 import '../../ui/view_models/usuario_view/usuario_view_models.dart';
 import '../repositories/iusuario_repository.dart';
 

@@ -1,6 +1,6 @@
 // ignore_for_file: non_constant_identifier_names
 
-import 'package:admin_clinica_front/app/data/models/paciente/paciente_dto.dart';
+import 'package:admin_clinica_front/app/common/models/paciente/paciente_dto.dart';
 import 'package:json_annotation/json_annotation.dart';
 part 'cita_dto.g.dart';
 

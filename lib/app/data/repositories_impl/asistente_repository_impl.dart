@@ -1,8 +1,8 @@
-import 'package:admin_clinica_front/app/data/models/asistente/asistente_create_model.dart';
-import 'package:admin_clinica_front/app/data/models/asistente/asistente_credentials_model.dart';
-import 'package:admin_clinica_front/app/data/models/asistente/asistente_dto.dart';
-import 'package:admin_clinica_front/app/data/models/asistente/asistente_update_model.dart';
-import 'package:admin_clinica_front/app/data/models/asistente/asistentes_dto.dart';
+import 'package:admin_clinica_front/app/common/models/asistente/asistente_create_model.dart';
+import 'package:admin_clinica_front/app/common/models/asistente/asistente_credentials_model.dart';
+import 'package:admin_clinica_front/app/common/models/asistente/asistente_dto.dart';
+import 'package:admin_clinica_front/app/common/models/asistente/asistente_update_model.dart';
+import 'package:admin_clinica_front/app/common/models/asistente/asistentes_dto.dart';
 import 'package:either_dart/either.dart';
 
 import '../../dominio/repositories/iasistente_repository.dart';

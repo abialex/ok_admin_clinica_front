@@ -1,13 +1,13 @@
 import 'package:admin_clinica_front/app/common/utils/extensions/date_time_extensions.dart';
-import 'package:admin_clinica_front/app/data/models/cita/cita_ocupada/cita_ocupada_create.dart';
-import 'package:admin_clinica_front/app/data/models/request/cita_request_model.dart';
-import 'package:admin_clinica_front/app/data/models/request/request_model.dart';
+import 'package:admin_clinica_front/app/common/models/cita/cita_ocupada/cita_ocupada_create.dart';
+import 'package:admin_clinica_front/app/common/models/request/cita_request_model.dart';
+import 'package:admin_clinica_front/app/common/models/request/request_model.dart';
 import 'package:admin_clinica_front/app/dominio/entities/estado_cita.dart';
 import 'package:admin_clinica_front/app/dominio/entities/tipo_cita.dart';
 import 'package:either_dart/either.dart';
 
-import '../../data/models/cita/cita_agil/cita_agil_create.dart';
-import '../../data/models/cita/cita_agil/cita_agil_update.dart';
+import '../../common/models/cita/cita_agil/cita_agil_create.dart';
+import '../../common/models/cita/cita_agil/cita_agil_update.dart';
 import '../../ui/view_models/cita_view/cita_view_models.dart';
 import '../repositories/icita_repository.dart';
 

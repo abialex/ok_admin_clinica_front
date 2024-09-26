@@ -17,6 +17,7 @@ class AsistenteDto {
   final String? celular;
   final String? domicilio;
   final String? fechaNacimiento;
+  DateTime? get fechaNacimientoDate => fechaNacimiento != null ? DateTime.parse(fechaNacimiento!) : null;
 
   AsistenteDto({
     required this.id,

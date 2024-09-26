@@ -1,12 +1,12 @@
-import 'package:admin_clinica_front/app/data/models/doctor/doctor_create_model.dart';
+import 'package:admin_clinica_front/app/common/models/doctor/doctor_create_model.dart';
 
-import 'package:admin_clinica_front/app/data/models/doctor/doctor_credentials_model.dart';
+import 'package:admin_clinica_front/app/common/models/doctor/doctor_credentials_model.dart';
 
-import 'package:admin_clinica_front/app/data/models/doctor/doctor_dto.dart';
+import 'package:admin_clinica_front/app/common/models/doctor/doctor_dto.dart';
 
-import 'package:admin_clinica_front/app/data/models/doctor/doctor_update_model.dart';
+import 'package:admin_clinica_front/app/common/models/doctor/doctor_update_model.dart';
 
-import 'package:admin_clinica_front/app/data/models/doctor/doctors_dto.dart';
+import 'package:admin_clinica_front/app/common/models/doctor/doctors_dto.dart';
 import 'package:either_dart/either.dart';
 
 import '../../dominio/repositories/idoctor_repository.dart';

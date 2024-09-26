@@ -27,8 +27,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:talker_dio_logger/talker_dio_logger_interceptor.dart';
 import 'package:talker_dio_logger/talker_dio_logger_settings.dart';
 
-import '../data/datasources/local/flutter_storage_local.dart';
-import '../data/datasources/local/shared_preferences_local.dart';
+import '../common/service/flutter_storage_service.dart';
+import '../common/service/shared_preferences_service.dart';
 import '../data/datasources/remote/asistente_api.dart';
 import '../data/datasources/remote/doctor_api.dart';
 import '../data/repositories_impl/asistente_repository_impl.dart';
@@ -104,8 +104,8 @@ void setupServices() {
 }
 
 void setupDataSource() {
-  locator.registerLazySingleton<FlutterStorageLocal>(() => FlutterStorageLocal(locator()));
-  locator.registerLazySingleton<SharedPreferencesLocal>(() => SharedPreferencesLocal(locator()));
+  locator.registerLazySingleton<FlutterStorageService>(() => FlutterStorageService(locator()));
+  locator.registerLazySingleton<SharedPreferencesService>(() => SharedPreferencesService(locator()));
   locator.registerLazySingleton<UsuarioApi>(() => UsuarioApi(locator()));
   locator.registerLazySingleton<CitaApi>(() => CitaApi(locator()));
   locator.registerLazySingleton<DoctorApi>(() => DoctorApi(locator()));

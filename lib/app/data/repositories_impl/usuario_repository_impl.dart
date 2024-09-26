@@ -1,6 +1,6 @@
-import 'package:admin_clinica_front/app/data/models/usuario/authenticated_dto.dart';
-import 'package:admin_clinica_front/app/data/models/usuario/login_user_dto.dart';
-import 'package:admin_clinica_front/app/data/models/usuario/user_dto.dart';
+import 'package:admin_clinica_front/app/common/models/usuario/authenticated_dto.dart';
+import 'package:admin_clinica_front/app/common/models/usuario/login_user_dto.dart';
+import 'package:admin_clinica_front/app/common/models/usuario/user_dto.dart';
 import 'package:admin_clinica_front/app/dominio/repositories/iusuario_repository.dart';
 import 'package:either_dart/either.dart';
 import '../datasources/remote/usuario_api.dart';

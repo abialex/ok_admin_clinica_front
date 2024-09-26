@@ -1,5 +1,5 @@
-import 'package:admin_clinica_front/app/data/models/doctor/doctor_dto.dart';
-import 'package:admin_clinica_front/app/data/models/usuario/user_dto.dart';
+import 'package:admin_clinica_front/app/common/models/doctor/doctor_dto.dart';
+import 'package:admin_clinica_front/app/common/models/usuario/user_dto.dart';
 
 abstract class ILocalRepository {
   Future<void> saveToken(String token);

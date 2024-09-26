@@ -1,8 +1,8 @@
 import 'package:admin_clinica_front/app/common/utils/extensions/date_time_extensions.dart';
-import 'package:admin_clinica_front/app/data/models/doctor/doctor_update_model.dart';
+import 'package:admin_clinica_front/app/common/models/doctor/doctor_update_model.dart';
 import 'package:either_dart/either.dart';
 
-import '../../data/models/doctor/doctor_create_model.dart';
+import '../../common/models/doctor/doctor_create_model.dart';
 import '../../ui/view_models/doctor_view/doctor_view_models.dart';
 import '../repositories/idoctor_repository.dart';
 

@@ -1,6 +1,6 @@
 import 'package:admin_clinica_front/app/common/utils/extensions/date_time_extensions.dart';
-import 'package:admin_clinica_front/app/data/models/doctor/doctor_dto.dart';
-import 'package:admin_clinica_front/app/data/models/usuario/user_dto.dart';
+import 'package:admin_clinica_front/app/common/models/doctor/doctor_dto.dart';
+import 'package:admin_clinica_front/app/common/models/usuario/user_dto.dart';
 import 'package:admin_clinica_front/app/ui/view_models/doctor_view/doctor_view_models.dart';
 import '../../ui/view_models/usuario_view/usuario_view_models.dart';
 import '../repositories/ilocal_repository.dart';

@@ -1,11 +1,11 @@
-import 'package:admin_clinica_front/app/data/models/doctor/doctor_dto.dart';
-import 'package:admin_clinica_front/app/data/models/usuario/user_dto.dart';
+import 'package:admin_clinica_front/app/common/models/doctor/doctor_dto.dart';
+import 'package:admin_clinica_front/app/common/models/usuario/user_dto.dart';
 
 import '../../dominio/repositories/ilocal_repository.dart';
-import '../datasources/local/flutter_storage_local.dart';
+import '../../common/service/flutter_storage_service.dart';
 
 class FlutterStorageRepository implements ILocalRepository {
-  final FlutterStorageLocal _local;
+  final FlutterStorageService _local;
   FlutterStorageRepository(this._local);
 
   @override

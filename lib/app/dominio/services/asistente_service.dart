@@ -1,7 +1,7 @@
 import 'package:either_dart/either.dart';
 
-import '../../data/models/asistente/asistente_create_model.dart';
-import '../../data/models/asistente/asistente_update_model.dart';
+import '../../common/models/asistente/asistente_create_model.dart';
+import '../../common/models/asistente/asistente_update_model.dart';
 import '../../ui/view_models/asistente_view/asistente_view_models.dart';
 import '../repositories/iasistente_repository.dart';
 
@@ -49,7 +49,7 @@ class AsistenteService {
             ubicacionId: right.ubicacion.id,
             celular: right.celular,
             domicilio: right.domicilio,
-            fechaNacimiento: right.fechaNacimiento != null ? DateTime.parse(right.fechaNacimiento!) : null,
+            fechaNacimiento: right.fechaNacimientoDate,
           ),
         ),
       );

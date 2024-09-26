@@ -1,5 +1,5 @@
-import 'package:admin_clinica_front/app/data/models/doctor/doctor_contenedor_data_model.dart';
-import 'package:admin_clinica_front/app/data/models/filter_model/filter_model.dart';
+import 'package:admin_clinica_front/app/common/models/doctor/doctor_contenedor_data_model.dart';
+import 'package:admin_clinica_front/app/common/models/filter_model/filter_model.dart';
 import 'package:either_dart/either.dart';
 
 abstract class IDoctorContenedorLocalRepository {

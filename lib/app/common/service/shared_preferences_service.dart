@@ -1,15 +1,15 @@
 // ignore_for_file: constant_identifier_names
 
 import 'dart:convert';
-import 'package:admin_clinica_front/app/data/models/doctor/doctor_dto.dart';
+import 'package:admin_clinica_front/app/common/models/doctor/doctor_dto.dart';
 import 'package:admin_clinica_front/app/config/key_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../models/usuario/user_dto.dart';
+import '../models/usuario/user_dto.dart';
 
-class SharedPreferencesLocal {
+class SharedPreferencesService {
   final SharedPreferences _sharedPreferences;
-  SharedPreferencesLocal(this._sharedPreferences);
+  SharedPreferencesService(this._sharedPreferences);
 
   Future<void> saveToken(String token) async {
     _sharedPreferences.setString(KeyStorage.AUTH_TOKEN, token);

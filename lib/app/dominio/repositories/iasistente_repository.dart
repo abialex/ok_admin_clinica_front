@@ -1,10 +1,10 @@
 import 'package:either_dart/either.dart';
 
-import '../../data/models/asistente/asistente_create_model.dart';
-import '../../data/models/asistente/asistente_credentials_model.dart';
-import '../../data/models/asistente/asistente_dto.dart';
-import '../../data/models/asistente/asistente_update_model.dart';
-import '../../data/models/asistente/asistentes_dto.dart';
+import '../../common/models/asistente/asistente_create_model.dart';
+import '../../common/models/asistente/asistente_credentials_model.dart';
+import '../../common/models/asistente/asistente_dto.dart';
+import '../../common/models/asistente/asistente_update_model.dart';
+import '../../common/models/asistente/asistentes_dto.dart';
 
 abstract class IAsistenteRepository {
   Future<Either<String, List<AsistentesDto>>> getAsistentes();
