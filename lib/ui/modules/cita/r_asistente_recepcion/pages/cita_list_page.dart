@@ -54,7 +54,6 @@ class CitaListAsistenteRecepcionPage extends StatelessWidget with ResponsiveWidg
   PageBaseDesktop buildDesktop(BuildContext context) {
     final citaBloc = context.read<CitaBloc>();
     final usuarioBloc = context.read<UsuarioBloc>();
-
     return PageBaseDesktop(
       title: "CITAS",
       bodyWidget: Builder(builder: (context) {
@@ -223,9 +222,72 @@ class CitaListAsistenteRecepcionPage extends StatelessWidget with ResponsiveWidg
                   ),
                   Expanded(
                     flex: 3,
-                    child: CitaListDesktop(
-                      doctorSelected: doctorSelected,
-                      dateSelected: dateSelected,
+                    child: Column(
+                      children: [
+                        Expanded(
+                          child: BlocBuilder<CitaBloc, CitaState>(
+                            builder: (context, state) {
+                              final citaBloc = context.read<CitaBloc>();
+                              final usuarioBloc = context.read<UsuarioBloc>();
+                              return AnimatedSwitcher(
+                                duration: 0.5.seconds,
+                                child: state.map(
+                                  initial: (state) {
+                                    return GestureDetector(
+                                      onTap: () {
+                                        citaBloc.add(
+                                          CitaEvent.getCitas(
+                                            CitaRequestViewModel(
+                                              doctorId: doctorSelected?.id ?? 0,
+                                              ubicacionesId: usuarioBloc.state.usuario?.ubicaciones ?? [],
+                                              fechaHoraCita: DateTime.now(),
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                      child: const SizedBox.shrink(),
+                                    );
+                                  },
+                                  loading: (state) {
+                                    // loaderCubit.show();
+                                    return const Center(
+                                      child: AppLoaderMini(
+                                        height: 70,
+                                      ),
+                                    );
+                                  },
+                                  citaLoaded: (state) {
+                                    // loaderCubit.hidden();
+                                    return CitasGroupedByHourAsistRecepDesktop(
+                                      citas: state.citas,
+                                      onAdd: (hora, horaString) {
+                                        context.read<CitaCreateBloc>().add(CitaCreateEvent.citaPreCreateLocal(doctorSelected, dateSelected, hora, horaString));
+                                        Navigator.pushNamed(
+                                          context,
+                                          Routes.base_asistenteRecepcion + Routes.cita_add,
+                                        );
+                                      },
+                                      onBlock: (hora) {
+                                        print(doctorSelected);
+
+                                        return CitaOcupadaCreateViewModel(doctorId: doctorSelected!.id, fechaHoraCita: dateSelected.copyWith(hour: hora));
+                                      },
+                                      onRelease: (citaId) {
+                                        // dialogCubit.showErrorAlert(texto: "sin implementar $citaId");
+                                      },
+                                    );
+                                  },
+                                  failure: (state) {
+                                    // loaderCubit.hidden();
+
+                                    return Text(state.error);
+                                  },
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ],
@@ -549,7 +611,7 @@ class CitaListAsistenteRecepcionPage extends StatelessWidget with ResponsiveWidg
 class CitaListDesktop extends StatelessWidget {
   const CitaListDesktop({
     super.key,
-    required this.doctorSelected,
+    this.doctorSelected,
     required this.dateSelected,
   });
 
@@ -558,6 +620,7 @@ class CitaListDesktop extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(doctorSelected);
     return Column(
       children: [
         Expanded(
@@ -604,6 +667,8 @@ class CitaListDesktop extends StatelessWidget {
                         );
                       },
                       onBlock: (hora) {
+                        print(doctorSelected);
+
                         return CitaOcupadaCreateViewModel(doctorId: doctorSelected!.id, fechaHoraCita: dateSelected.copyWith(hour: hora));
                       },
                       onRelease: (citaId) {
