@@ -8,7 +8,7 @@ import '../models/asistente/asistente_create_model.dart';
 import '../models/asistente/asistente_credentials_model.dart';
 import '../models/asistente/asistente_dto.dart';
 import '../models/asistente/asistente_update_model.dart';
-import '../../config/api_utils.dart';
+import '../utils/api_utils.dart';
 
 class AsistenteApi implements BaseApi {
   final Dio _dio;

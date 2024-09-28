@@ -9,7 +9,7 @@ import 'package:either_dart/either.dart';
 
 import '../models/cita/cita_dto.dart';
 import '../models/request/request_model.dart';
-import '../../config/api_utils.dart';
+import '../utils/api_utils.dart';
 
 class CitaApi {
   final Dio _dio;

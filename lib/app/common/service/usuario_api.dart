@@ -2,7 +2,7 @@ import 'package:admin_clinica_front/app/common/service/base_api.dart';
 import 'package:admin_clinica_front/app/common/models/api_model/api_model.dart';
 import 'package:admin_clinica_front/app/common/models/usuario/authenticated_dto.dart';
 import 'package:admin_clinica_front/app/common/models/usuario/user_dto.dart';
-import 'package:admin_clinica_front/app/config/api_utils.dart';
+import 'package:admin_clinica_front/app/common/utils/api_utils.dart';
 import 'package:dio/dio.dart';
 import 'package:either_dart/either.dart';
 import '../models/usuario/login_user_dto.dart';

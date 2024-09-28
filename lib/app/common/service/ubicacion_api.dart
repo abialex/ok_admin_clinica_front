@@ -1,7 +1,7 @@
 import 'package:admin_clinica_front/app/common/service/base_api.dart';
 import 'package:admin_clinica_front/app/common/models/api_model/api_model.dart';
 import 'package:admin_clinica_front/app/common/models/ubicacion/ubicacion_dto.dart';
-import 'package:admin_clinica_front/app/config/api_utils.dart';
+import 'package:admin_clinica_front/app/common/utils/api_utils.dart';
 import 'package:dio/dio.dart';
 import 'package:either_dart/either.dart';
 
