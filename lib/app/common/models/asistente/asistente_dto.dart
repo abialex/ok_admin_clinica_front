@@ -8,16 +8,17 @@ part 'asistente_dto.g.dart';
 @JsonSerializable() //extends Asistente
 class AsistenteDto {
   final int id;
-  final int usuario_id;
-  final String usuario_username;
-  final UbicacionDto ubicacion;
   final String dni;
   final String nombres;
   final String apellidos;
+  final String fechaNacimiento;
+
+  final int usuario_id;
+  final String usuario_username;
+  final UbicacionDto ubicacion;
   final String? celular;
   final String? domicilio;
-  final String? fechaNacimiento;
-  DateTime? get fechaNacimientoDate => fechaNacimiento != null ? DateTime.parse(fechaNacimiento!) : null;
+  DateTime? get fechaNacimientoDate => DateTime.parse(fechaNacimiento);
 
   AsistenteDto({
     required this.id,
@@ -27,9 +28,9 @@ class AsistenteDto {
     required this.dni,
     required this.nombres,
     required this.apellidos,
+    required this.fechaNacimiento,
     this.celular,
     this.domicilio,
-    this.fechaNacimiento,
   });
   //fromJson
   factory AsistenteDto.fromJson(Map<String, dynamic> map) => _$AsistenteDtoFromJson(map);

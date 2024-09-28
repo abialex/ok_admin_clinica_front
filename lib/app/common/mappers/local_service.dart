@@ -11,15 +11,17 @@ class LocalService {
 
   Future<void> saveUsuario(UsuarioLoginResponseViewModel localUsuarioViewModel) {
     final model = UserLoginDTO(
-        user_id: localUsuarioViewModel.userId,
-        username: localUsuarioViewModel.username,
-        nombres: localUsuarioViewModel.nombres,
-        token: localUsuarioViewModel.token,
-        is_new_token: localUsuarioViewModel.isNewToken,
-        rol: localUsuarioViewModel.rol,
-        dias_token: localUsuarioViewModel.diasToken,
-        tipo: localUsuarioViewModel.tipo,
-        ubicaciones: localUsuarioViewModel.ubicaciones);
+      user_id: localUsuarioViewModel.userId,
+      username: localUsuarioViewModel.username,
+      nombres: localUsuarioViewModel.nombres,
+      token: localUsuarioViewModel.token,
+      is_new_token: localUsuarioViewModel.isNewToken,
+      rol: localUsuarioViewModel.rol,
+      dias_token: localUsuarioViewModel.diasToken,
+      tipo: localUsuarioViewModel.tipo,
+      ubicaciones: localUsuarioViewModel.ubicaciones,
+      id: localUsuarioViewModel.userId,
+    );
     return _localRepository.saveUsuario(model);
   }
 
