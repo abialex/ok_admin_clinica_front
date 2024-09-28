@@ -3,7 +3,7 @@ import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../../../config/app_dependecy_injection.dart';
-import '../../../../dominio/services/local_service.dart';
+import '../../../mappers/local_service.dart';
 import '../../../../ui/view_models/usuario_view/usuario_view_models.dart';
 
 part 'usuario_event.dart';

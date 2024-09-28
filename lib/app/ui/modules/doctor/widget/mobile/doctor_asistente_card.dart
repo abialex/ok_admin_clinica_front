@@ -1,6 +1,6 @@
 import 'package:admin_clinica_front/app/common/constants/app_const_colors.dart';
-import 'package:admin_clinica_front/app/dominio/entities/estado_cita.dart';
-import 'package:admin_clinica_front/app/dominio/services/citas_service.dart';
+import 'package:admin_clinica_front/app/data/entities/estado_cita.dart';
+import 'package:admin_clinica_front/app/common/mappers/citas_service.dart';
 import 'package:admin_clinica_front/app/common/widget/app_box.dart';
 import 'package:admin_clinica_front/app/common/widget/app_text_style.dart';
 import 'package:admin_clinica_front/app/common/widget/button_base/button_success.dart';

@@ -1,5 +1,5 @@
-import 'package:admin_clinica_front/app/dominio/entities/estado_cita.dart';
-import 'package:admin_clinica_front/app/dominio/entities/tipo_cita.dart';
+import 'package:admin_clinica_front/app/data/entities/estado_cita.dart';
+import 'package:admin_clinica_front/app/data/entities/tipo_cita.dart';
 
 class CitaViewModel {
   final int id;

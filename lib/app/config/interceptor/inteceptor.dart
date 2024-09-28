@@ -3,7 +3,7 @@ import 'package:admin_clinica_front/app/common/models/api_model/api_model.dart';
 import 'package:admin_clinica_front/app/config/http_status_codes.dart';
 import 'package:dio/dio.dart';
 
-import '../../dominio/repositories/ilocal_repository.dart';
+import '../../data/repository/storage/ilocal_repository.dart';
 
 class AppInterceptor extends Interceptor {
   @override

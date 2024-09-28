@@ -1,5 +1,5 @@
 import 'package:admin_clinica_front/app/config/app_dependecy_injection.dart';
-import 'package:admin_clinica_front/app/dominio/services/excel_service.dart';
+import 'package:admin_clinica_front/app/common/mappers/excel_service.dart';
 import 'package:admin_clinica_front/app/ui/view_models/cita_view/cita_view_models.dart';
 import 'package:admin_clinica_front/app/ui/view_models/excel_view/excel_view.dart';
 import 'package:bloc/bloc.dart';

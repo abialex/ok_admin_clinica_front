@@ -1,7 +1,7 @@
 import 'package:admin_clinica_front/app/config/app_dependecy_injection.dart';
 import 'package:admin_clinica_front/app/common/constants/app_const_colors.dart';
-import 'package:admin_clinica_front/app/data/datasources/remote/doctor_api.dart';
-import 'package:admin_clinica_front/app/dominio/repositories/ilocal_repository.dart';
+import 'package:admin_clinica_front/app/common/service/doctor_api.dart';
+import 'package:admin_clinica_front/app/data/repository/storage/ilocal_repository.dart';
 import 'package:admin_clinica_front/app/config/routes/router.dart';
 import 'package:admin_clinica_front/app/common/widget/app_loader_mini.dart';
 import 'package:admin_clinica_front/app/common/widget/dialog/dialog_message/cubit/dialog_message_cubit.dart';

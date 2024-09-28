@@ -1,9 +1,8 @@
-import 'package:admin_clinica_front/app/ui/view_models/local_view/local_view_models.dart';
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../../../config/app_dependecy_injection.dart';
-import '../../../../dominio/services/local_service.dart';
+import '../../../../common/mappers/local_service.dart';
 import '../../../view_models/usuario_view/usuario_view_models.dart';
 
 part 'home_event.dart';
@@ -14,9 +13,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   final _localService = locator<LocalService>();
 
   HomeBloc() : super(_Initial()) {
-    on<HomeEvent>((event, emit) {
-      // TODO: implement event handler
-    });
+    on<HomeEvent>((event, emit) {});
 
     on<SetupUsuarioEvent>((event, emit) {
       emit(state.copyWith(usuario: event.usuario));

@@ -1,7 +1,7 @@
 import 'package:admin_clinica_front/app/config/app_dependecy_injection.dart';
 import 'package:admin_clinica_front/app/common/models/filter_model/filter_model.dart';
 import 'package:admin_clinica_front/app/common/models/ubicacion/ubicacion_contenedor_data_model.dart';
-import 'package:admin_clinica_front/app/dominio/repositories/idubicacion_contenedor/iubicacion_contenedor_repository.dart';
+import 'package:admin_clinica_front/app/common/repository/contenedores/ubicacion_contenedor_impl/iubicacion_contenedor_repository.dart';
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 part 'ubicacion_contenedor_list_event.dart';

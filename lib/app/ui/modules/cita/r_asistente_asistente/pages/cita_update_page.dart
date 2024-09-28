@@ -1,8 +1,8 @@
 import 'package:admin_clinica_front/app/common/constants/app_const_svgs.dart';
 import 'package:admin_clinica_front/app/common/utils/extensions/date_time_extensions.dart';
 import 'package:admin_clinica_front/app/common/constants/app_const_colors.dart';
-import 'package:admin_clinica_front/app/dominio/entities/estado_cita.dart';
-import 'package:admin_clinica_front/app/dominio/entities/tipo_cita.dart';
+import 'package:admin_clinica_front/app/data/entities/estado_cita.dart';
+import 'package:admin_clinica_front/app/data/entities/tipo_cita.dart';
 import 'package:admin_clinica_front/app/common/blocs/usuario_session/bloc/usuario_bloc.dart';
 import 'package:admin_clinica_front/app/common/widget/app_box.dart';
 import 'package:admin_clinica_front/app/common/widget/app_construccion.dart';

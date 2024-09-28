@@ -1,6 +1,6 @@
 import 'package:admin_clinica_front/app/config/app_dependecy_injection.dart';
-import 'package:admin_clinica_front/app/dominio/entities/tipo_cita.dart';
-import 'package:admin_clinica_front/app/dominio/services/citas_service.dart';
+import 'package:admin_clinica_front/app/data/entities/tipo_cita.dart';
+import 'package:admin_clinica_front/app/common/mappers/citas_service.dart';
 import 'package:admin_clinica_front/app/ui/view_models/cita_view/cita_view_models.dart';
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';

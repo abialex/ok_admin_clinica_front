@@ -1,5 +1,5 @@
 import 'package:admin_clinica_front/app/config/app_dependecy_injection.dart';
-import 'package:admin_clinica_front/app/dominio/services/ubicacion_service.dart';
+import 'package:admin_clinica_front/app/common/mappers/ubicacion_service.dart';
 import 'package:admin_clinica_front/app/ui/view_models/ubicacion_view/ubicacion_view.dart';
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';

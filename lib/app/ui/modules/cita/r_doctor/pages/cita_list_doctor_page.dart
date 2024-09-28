@@ -16,8 +16,8 @@ import 'package:admin_clinica_front/app/ui/view_models/doctor_view/doctor_view_m
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../config/app_dependecy_injection.dart';
-import '../../../../../data/datasources/remote/doctor_api.dart';
-import '../../../../../dominio/repositories/ilocal_repository.dart';
+import '../../../../../common/service/doctor_api.dart';
+import '../../../../../data/repository/storage/ilocal_repository.dart';
 import '../../../../../config/routes/router.dart';
 import '../../../../../common/widget/page/page_mixin_base.dart';
 import '../../bloc/cita_bloc.dart';

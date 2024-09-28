@@ -25,8 +25,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../config/app_dependecy_injection.dart';
 import '../../../../common/constants/app_const_colors.dart';
-import '../../../../data/datasources/remote/doctor_api.dart';
-import '../../../../dominio/repositories/ilocal_repository.dart';
+import '../../../../common/service/doctor_api.dart';
+import '../../../../data/repository/storage/ilocal_repository.dart';
 import '../../../../common/widget/dialog/dialog_message/cubit/dialog_message_cubit.dart';
 import '../../../../common/widget/page/page_mixin_base.dart';
 

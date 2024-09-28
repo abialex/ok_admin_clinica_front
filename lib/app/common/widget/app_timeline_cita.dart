@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:admin_clinica_front/app/common/constants/app_const_colors.dart';
-import 'package:admin_clinica_front/app/dominio/entities/estado_cita.dart';
+import 'package:admin_clinica_front/app/data/entities/estado_cita.dart';
 import 'package:admin_clinica_front/app/common/widget/app_text_style.dart';
 import 'package:flutter/material.dart';
 
