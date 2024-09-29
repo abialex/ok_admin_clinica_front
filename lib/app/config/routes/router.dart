@@ -13,6 +13,7 @@ import 'package:admin_clinica_front/app/ui/modules/monitoreo/r_administrador/mon
 import 'package:admin_clinica_front/app/ui/modules/otros/page.dart';
 import 'package:admin_clinica_front/app/ui/modules/paciente/paciente_list/paciente_list_asist_recep_page.dart';
 import 'package:flutter/material.dart';
+import 'package:upgrader/upgrader.dart';
 
 import '../../ui/modules/cita/r_asistente_recepcion/pages/cita_add_page.dart';
 import '../../ui/modules/cita/r_asistente_recepcion/pages/cita_list_page.dart';
@@ -57,7 +58,11 @@ class AppRouter {
     switch (uri.path) {
       case Routes.login:
         return PageRouteBuilder(
-          pageBuilder: (_, __, ___) => const LoginPage(),
+          pageBuilder: (_, __, ___) => UpgradeAlert(
+            showIgnore: false,
+            showLater: false,
+            child: const LoginPage(),
+          ),
           // transitionsBuilder: _createTransition,
         );
       case Routes.home:
