@@ -95,7 +95,7 @@ BEGIN
             VALUE "InternalName", "admin_clinica_front" "\0"
             VALUE "LegalCopyright", "Copyright (C) 2024 com.example. All rights reserved." "\0"
             VALUE "OriginalFilename", "admin_clinica_front.exe" "\0"
-            VALUE "ProductName", "admin_clinica_front" "\0"
+            VALUE "ProductName", "SLG" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END
