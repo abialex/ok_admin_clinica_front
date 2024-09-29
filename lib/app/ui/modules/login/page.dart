@@ -20,15 +20,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
   @override
-  _LoginPageState createState() => _LoginPageState();
+  LoginPageState createState() => LoginPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class LoginPageState extends State<LoginPage> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   Widget mensajeWidget = AppTextGlobal.labelLightText(text: '');
@@ -192,6 +193,24 @@ class _LoginPageState extends State<LoginPage> {
                           AppBox.h10,
                           Center(child: mensajeWidget),
                           const Spacer(),
+                          GestureDetector(
+                            onTap: () async {
+                              final Uri uri = Uri.parse('https://sites.google.com/view/politica-de-privacidad-slg-app/inicio');
+
+                              if (await canLaunchUrl(uri)) {
+                                await launchUrl(uri);
+                              } else {}
+                            }, // Acción al tocar el texto
+                            child: const Text(
+                              'Política de privacidad',
+                              style: TextStyle(
+                                color: AppConstColors.grey, // Color gris del texto
+                                decoration: TextDecoration.underline, // Subrayado
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                          AppBox.h24,
                           Row(
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [

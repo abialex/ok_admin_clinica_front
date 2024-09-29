@@ -54,6 +54,8 @@ dependencies:
   path_provider: ^2.0.9
   process_run: any
   upgrader: ^10.3.0
+  package_info_plus: ^8.0.2
+  url_launcher: ^6.1.7
   flutter:
     sdk: flutter
 
