@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:admin_clinica_front/app/config/environments/env_dot_config.dart';
 import 'package:bloc/bloc.dart';
@@ -31,6 +32,13 @@ class AppBlocObserver extends BlocObserver {
 Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
   FlutterError.onError = (details) {
     log(details.exceptionAsString(), stackTrace: details.stack);
+    if (Platform.isAndroid) {
+      FirebaseCrashlytics.instance.recordFlutterFatalError(details);
+      PlatformDispatcher.instance.onError = (error, stack) {
+        FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
+        return true;
+      };
+    }
   };
   Bloc.observer = const AppBlocObserver();
 
@@ -49,6 +57,9 @@ Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
         setWindowMinSize(const Size(500, 360));
         setWindowMaxSize(Size.infinite);
       }
+
+      // Pass all uncaught asynchronous errors that aren't handled by the Flutter framework to Crashlytics
+
       // Initialize Firebase.
 
       runApp(await builder());
