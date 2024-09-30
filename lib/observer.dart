@@ -1,11 +1,16 @@
 import 'dart:async';
 import 'dart:developer';
 
+import 'package:admin_clinica_front/app/config/environments/env_dot_config.dart';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
+import 'package:upgrader/upgrader.dart';
 import 'package:window_size/window_size.dart';
 import 'app/config/app_dependecy_injection.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'firebase_options.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 class AppBlocObserver extends BlocObserver {
   const AppBlocObserver();
@@ -27,19 +32,30 @@ Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
   FlutterError.onError = (details) {
     log(details.exceptionAsString(), stackTrace: details.stack);
   };
-
-  WidgetsFlutterBinding.ensureInitialized();
   Bloc.observer = const AppBlocObserver();
-  await setupLocator();
-  if (TargetPlatform.windows == defaultTargetPlatform || TargetPlatform.macOS == defaultTargetPlatform || TargetPlatform.linux == defaultTargetPlatform) {
-    //setWindowTitle('WS');
-    setWindowMinSize(const Size(750, 600));
-    setWindowMaxSize(Size.infinite);
-  }
-  //await Firebase.initializeApp(options: options);
-  // await AppStoreProvider.instance.initializeStore();
 
-  // Add cross-flavor configuration here
+  await runZonedGuarded(
+    () async {
+      WidgetsFlutterBinding.ensureInitialized();
+      await Upgrader.clearSavedSettings(); // REMOVE this for release builds
 
-  runApp(await builder());
+      await EnvDotConfig.initialize();
+      setupLocator();
+
+      await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
+      if (TargetPlatform.windows == defaultTargetPlatform || TargetPlatform.macOS == defaultTargetPlatform || TargetPlatform.linux == defaultTargetPlatform) {
+        //setWindowTitle('WS');
+        setWindowMinSize(const Size(500, 360));
+        setWindowMaxSize(Size.infinite);
+      }
+      // Initialize Firebase.
+
+      runApp(await builder());
+    },
+    (error, stack) {
+      log(error.toString(), stackTrace: stack);
+      FirebaseCrashlytics.instance.recordError(error, stack);
+    },
+  );
 }
