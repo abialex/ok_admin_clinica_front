@@ -185,6 +185,8 @@ class LoginPageState extends State<LoginPage> {
                           ButtonSuccess(
                             text: "Ingresar",
                             onClick: () {
+                              throw Exception('Simulación de un error en Crashlytics');
+
                               if (formKey.currentState!.validate()) {
                                 context.read<LoginBloc>().add(LoginEvent.loginUsuario(_usernameController.text, _passwordController.text));
                               }

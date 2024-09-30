@@ -48,7 +48,7 @@ import '../common/mappers/local_service.dart';
 
 GetIt locator = GetIt.instance;
 
-Future<void> setupLocator() async {
+void setupLocator() {
   var dio = Dio();
   dio.options.baseUrl = AppFlavorConfig.urlApp;
   dio.interceptors.add(AppInterceptor());
