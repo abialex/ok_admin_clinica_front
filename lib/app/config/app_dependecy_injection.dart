@@ -1,3 +1,6 @@
+import 'package:admin_clinica_front/app/common/repository/firebase/firebase_repository_impl.dart';
+import 'package:admin_clinica_front/app/common/repository/firebase/i_firebase_repository.dart';
+import 'package:admin_clinica_front/app/common/service/firebase_service.dart';
 import 'package:admin_clinica_front/app/config/app_flavor_config.dart';
 import 'package:admin_clinica_front/app/config/interceptor/inteceptor.dart';
 import 'package:admin_clinica_front/app/common/service/cita_api.dart';
@@ -90,6 +93,7 @@ void setupRepositorys() {
   locator.registerLazySingleton<IServicesRepository>(() => ServicesRepository(locator()));
   locator.registerLazySingleton<IDoctorContenedorLocalRepository>(() => DoctorContenedorLocalRepository(locator()));
   locator.registerLazySingleton<IUbicacionContenedorLocalRepository>(() => UbicacionContenedorLocalRepository(locator()));
+  locator.registerLazySingleton<IFirebaseRepository>(FirebaseRepository.new);
 }
 
 void setupServices() {
@@ -101,6 +105,7 @@ void setupServices() {
   locator.registerLazySingleton<ServicesService>(() => ServicesService(locator()));
   locator.registerLazySingleton<ExcelService>(() => ExcelService());
   locator.registerLazySingleton<CMDservice>(() => CMDservice());
+  locator.registerLazySingleton<FirebaseService>(FirebaseService.new);
 }
 
 void setupDataSource() {

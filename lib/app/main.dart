@@ -1,4 +1,5 @@
 import 'package:admin_clinica_front/app/common/blocs/excel/excel_cubit.dart';
+import 'package:admin_clinica_front/app/common/blocs/firebase/firebase_notification_bloc.dart';
 import 'package:admin_clinica_front/app/common/widget/app_loader.dart';
 import 'package:admin_clinica_front/app/common/cubits/theme_cubit.dart';
 import 'package:admin_clinica_front/app/common/widget/custom_navbar_navigation/cubit/navigator_cubit.dart';
@@ -39,6 +40,7 @@ class _MainState extends State<Main> {
         BlocProvider(create: (_) => LoaderCubit()),
         BlocProvider(create: (_) => ThemeCubit()),
         BlocProvider(create: (_) => ExcelCubit()),
+        BlocProvider(create: (context) => FirebaseNotificationBloc()),
 
         //bloc
         BlocProvider(create: (context) => DoctorListBloc()),

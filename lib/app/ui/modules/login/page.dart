@@ -1,3 +1,4 @@
+import 'package:admin_clinica_front/app/common/blocs/firebase/firebase_notification_bloc.dart';
 import 'package:admin_clinica_front/app/common/constants/app_const_svgs.dart';
 import 'package:admin_clinica_front/app/common/constants/app_const_colors.dart';
 import 'package:admin_clinica_front/app/common/blocs/usuario_session/bloc/usuario_bloc.dart';
@@ -54,6 +55,8 @@ class LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     final usuarioBloc = context.read<UsuarioBloc>();
+    final firebaseBloc = context.read<FirebaseNotificationBloc>();
+    final dialogMessageCubit = context.read<DialogMessageCubit>();
     final formKey = GlobalKey<FormState>(); // Clave global para el formulario
 
     return BlocListener<LoginBloc, LoginState>(
@@ -78,15 +81,19 @@ class LoginPageState extends State<LoginPage> {
           },
           usuarioAuthenticated: (value) async {
             loadModules(value.usuario);
-
             setState(() {
               showPreview = true;
             });
           },
           usuarioLoaded: (value) async {
             loadModules(value.usuario);
-            //guardando usuario al storage
             await usuarioBloc.setUsuario(value.usuario);
+            firebaseBloc.add(const FirebaseNotificationEvent.getToken());
+            firebaseBloc.add(FirebaseNotificationEvent.suscriptionFirstPlane(
+              (p0) {
+                dialogMessageCubit.showCustomAlert(titulo: p0.notification?.title ?? 'n.a', texto: p0.notification?.body ?? 'n.a');
+              },
+            ));
             Navigator.pushReplacementNamed(context, Routes.home);
           },
           authenticatedFailure: (value) {
