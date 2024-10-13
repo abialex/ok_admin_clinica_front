@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:admin_clinica_front/app/common/blocs/firebase/firebase_notification_bloc.dart';
 import 'package:admin_clinica_front/app/common/constants/app_const_svgs.dart';
 import 'package:admin_clinica_front/app/common/constants/app_const_colors.dart';
@@ -84,16 +85,28 @@ class LoginPageState extends State<LoginPage> {
             setState(() {
               showPreview = true;
             });
+            if (Platform.isAndroid) {
+              firebaseBloc.add(const FirebaseNotificationEvent.getToken());
+              firebaseBloc.add(FirebaseNotificationEvent.suscriptionGroup(value.usuario.rol));
+              firebaseBloc.add(FirebaseNotificationEvent.suscriptionFirstPlane(
+                (notification) {
+                  dialogMessageCubit.showCustomAlert(titulo: notification.notification?.title ?? 'n.a', texto: notification.notification?.body ?? 'n.a');
+                },
+              ));
+            }
           },
           usuarioLoaded: (value) async {
             loadModules(value.usuario);
             await usuarioBloc.setUsuario(value.usuario);
-            firebaseBloc.add(const FirebaseNotificationEvent.getToken());
-            firebaseBloc.add(FirebaseNotificationEvent.suscriptionFirstPlane(
-              (p0) {
-                dialogMessageCubit.showCustomAlert(titulo: p0.notification?.title ?? 'n.a', texto: p0.notification?.body ?? 'n.a');
-              },
-            ));
+            if (Platform.isAndroid) {
+              firebaseBloc.add(const FirebaseNotificationEvent.getToken());
+              firebaseBloc.add(FirebaseNotificationEvent.suscriptionGroup(value.usuario.rol));
+              firebaseBloc.add(FirebaseNotificationEvent.suscriptionFirstPlane(
+                (notification) {
+                  dialogMessageCubit.showCustomAlert(titulo: notification.notification?.title ?? 'n.a', texto: notification.notification?.body ?? 'n.a');
+                },
+              ));
+            }
             Navigator.pushReplacementNamed(context, Routes.home);
           },
           authenticatedFailure: (value) {

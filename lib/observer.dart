@@ -46,7 +46,9 @@ Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
       await Upgrader.clearSavedSettings();
       await EnvDotConfig.initialize();
       setupLocator();
-      await FirebaseService.init();
+      if (Platform.isAndroid) {
+        await FirebaseService.init();
+      }
 
       if (TargetPlatform.windows == defaultTargetPlatform || TargetPlatform.macOS == defaultTargetPlatform || TargetPlatform.linux == defaultTargetPlatform) {
         setWindowMinSize(const Size(500, 360));
