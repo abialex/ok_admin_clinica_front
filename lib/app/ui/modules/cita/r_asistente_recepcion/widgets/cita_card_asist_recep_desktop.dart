@@ -1,4 +1,6 @@
+import 'package:admin_clinica_front/app/common/blocs/notification/notification_bloc.dart';
 import 'package:admin_clinica_front/app/common/constants/app_const_svgs.dart';
+import 'package:admin_clinica_front/app/common/models/notification/notification_data_model.dart';
 import 'package:admin_clinica_front/app/common/utils/extensions/date_time_extensions.dart';
 import 'package:admin_clinica_front/app/config/app_cita_config.dart';
 import 'package:admin_clinica_front/app/common/constants/app_const_colors.dart';
@@ -18,9 +20,7 @@ import 'package:admin_clinica_front/app/ui/modules/cita/bloc/cita_index_bloc/cit
 import 'package:admin_clinica_front/app/ui/modules/cita/bloc/cita_update_bloc/cita_update_bloc.dart';
 import 'package:admin_clinica_front/app/ui/modules/cita/bloc/cita_update_bloc/cita_update_event.dart';
 import 'package:admin_clinica_front/app/ui/view_models/cita_view/cita_view_models.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -35,6 +35,7 @@ class CitasCardAsistRecepDesktop extends StatelessWidget {
   Widget build(BuildContext context) {
     const sizeButtonLeft = 25.0;
     final dialogCubit = context.read<DialogMessageCubit>();
+
     return BlocProvider(
       create: (context) => CitaIndexBloc(),
       child: BlocBuilder<CitaIndexBloc, CitaIndexState>(
@@ -544,6 +545,8 @@ class CitasCardAsistRecepDesktop extends StatelessWidget {
   Future<void> nextCita(BuildContext context, CitasViewModel cita) async {
     final bloc = context.read<CitaIndexBloc>();
     final dialogCubit = context.read<DialogMessageCubit>();
+    final notificationBloc = context.read<NotificationBloc>();
+
     late String titulo;
     late String texto;
     late TipoAccionEnum tipoAccion;
@@ -588,6 +591,9 @@ class CitasCardAsistRecepDesktop extends StatelessWidget {
     dialogCubit.showConfirmationAlert(
       texto: texto,
       onAceptar: () {
+        notificationBloc.add(NotificationEvent.sendGroupNotification(NotificationDataModel(title: 'Paciente confirmado', body: '${cita.razon} - ${cita.datosPaciente}', data: {
+          "hora": cita.fechaHoraCita.toFormatHHm12h(),
+        })));
         bloc.add(CitaIndexEvent.nextCita(cita, tipoAccion));
       },
     );

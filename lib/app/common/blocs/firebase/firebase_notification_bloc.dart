@@ -12,6 +12,7 @@ class FirebaseNotificationBloc extends Bloc<FirebaseNotificationEvent, FirebaseN
   FirebaseNotificationBloc() : super(const FirebaseNotificationState.initial()) {
     on<SuscriptionFirstPlaneEvent>(suscriptionFirstPlane);
     on<GetTokenEvent>(getToken);
+    on<SuscriptionGroupEvent>(suscriptionGroup);
   }
 
   final repository = locator.get<IFirebaseRepository>();
@@ -23,5 +24,9 @@ class FirebaseNotificationBloc extends Bloc<FirebaseNotificationEvent, FirebaseN
   Future<void> getToken(GetTokenEvent event, Emitter<FirebaseNotificationState> emit) async {
     final token = await repository.getToken();
     print('fcm $token');
+  }
+
+  Future<void> suscriptionGroup(SuscriptionGroupEvent event, Emitter<FirebaseNotificationState> emit) async {
+    await repository.suscriptionGroup(event.group);
   }
 }

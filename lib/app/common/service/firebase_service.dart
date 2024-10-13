@@ -35,6 +35,10 @@ class FirebaseService {
   StreamSubscription<RemoteMessage> suscriptionOpenApp(void Function(RemoteMessage)? onData) {
     return FirebaseMessaging.onMessageOpenedApp.listen(onData);
   }
+
+  Future<void> suscriptionGroup(String group) async {
+    return FirebaseMessaging.instance.subscribeToTopic(group);
+  }
 }
 
 @pragma('vm:entry-point')

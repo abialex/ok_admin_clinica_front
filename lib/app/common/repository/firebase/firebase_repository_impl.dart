@@ -24,4 +24,9 @@ class FirebaseRepository implements IFirebaseRepository {
   StreamSubscription<RemoteMessage> escucharSegundoPlano(Future<void> Function(RemoteMessage p1) handler) {
     throw UnimplementedError();
   }
+
+  @override
+  Future<void> suscriptionGroup(String group) {
+    return service.suscriptionGroup(group);
+  }
 }
