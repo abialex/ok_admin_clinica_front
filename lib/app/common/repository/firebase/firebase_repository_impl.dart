@@ -29,4 +29,9 @@ class FirebaseRepository implements IFirebaseRepository {
   Future<void> suscriptionGroup(String group) {
     return service.suscriptionGroup(group);
   }
+
+  @override
+  Future<void> unsuscriptionGroup(String group) {
+    return service.unsuscriptionGroup(group);
+  }
 }

@@ -39,6 +39,10 @@ class FirebaseService {
   Future<void> suscriptionGroup(String group) async {
     return FirebaseMessaging.instance.subscribeToTopic(group);
   }
+
+  Future<void> unsuscriptionGroup(String group) async {
+    return FirebaseMessaging.instance.unsubscribeFromTopic(group);
+  }
 }
 
 @pragma('vm:entry-point')

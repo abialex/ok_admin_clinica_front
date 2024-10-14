@@ -86,8 +86,9 @@ class LoginPageState extends State<LoginPage> {
               showPreview = true;
             });
             if (Platform.isAndroid) {
+              String ubicacionId = value.usuario.ubicaciones.isNotEmpty ? value.usuario.ubicaciones.first.toString() : '';
               firebaseBloc.add(const FirebaseNotificationEvent.getToken());
-              firebaseBloc.add(FirebaseNotificationEvent.suscriptionGroup(value.usuario.rol));
+              firebaseBloc.add(FirebaseNotificationEvent.suscriptionGroup(value.usuario.rol + ubicacionId));
               firebaseBloc.add(FirebaseNotificationEvent.suscriptionFirstPlane(
                 (notification) {
                   dialogMessageCubit.showCustomAlert(titulo: notification.notification?.title ?? 'n.a', texto: notification.notification?.body ?? 'n.a');
@@ -99,8 +100,10 @@ class LoginPageState extends State<LoginPage> {
             loadModules(value.usuario);
             await usuarioBloc.setUsuario(value.usuario);
             if (Platform.isAndroid) {
+              String ubicacionId = value.usuario.ubicaciones.isNotEmpty ? value.usuario.ubicaciones.first.toString() : '';
+
               firebaseBloc.add(const FirebaseNotificationEvent.getToken());
-              firebaseBloc.add(FirebaseNotificationEvent.suscriptionGroup(value.usuario.rol));
+              firebaseBloc.add(FirebaseNotificationEvent.suscriptionGroup(value.usuario.rol + ubicacionId));
               firebaseBloc.add(FirebaseNotificationEvent.suscriptionFirstPlane(
                 (notification) {
                   dialogMessageCubit.showCustomAlert(titulo: notification.notification?.title ?? 'n.a', texto: notification.notification?.body ?? 'n.a');

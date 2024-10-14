@@ -7,4 +7,5 @@ abstract class IFirebaseRepository {
   StreamSubscription<RemoteMessage> escucharPrimerPlano(void Function(RemoteMessage remoteMessage)? handler);
   StreamSubscription<RemoteMessage> escucharSegundoPlano(Future<void> Function(RemoteMessage) handler);
   Future<void> suscriptionGroup(String group);
+  Future<void> unsuscriptionGroup(String group);
 }

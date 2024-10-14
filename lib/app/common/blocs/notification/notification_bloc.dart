@@ -20,7 +20,8 @@ class NotificationBloc extends Bloc<NotificationEvent, NotificationState> {
     if (resultUsuario == null) {
       emit(const NotificationState.failure('Error al obtener datos del usuario'));
     }
-    final request = event.request.copyWith(rol: resultUsuario!.rol);
+    String ubicacionId = resultUsuario!.ubicaciones.isNotEmpty ? resultUsuario.ubicaciones.first.toString() : '';
+    final request = event.request.copyWith(rol: resultUsuario.rol + ubicacionId);
     final result = await repository.sendGroupNotifcation(request);
 
     if (result.isLeft) {
