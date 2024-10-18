@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "43539432786",
+    "project_id": "notificacion-slg",
+    "storage_bucket": "notificacion-slg.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:43539432786:android:4ef2810a3bbfb8cbb1668b",
+        "android_client_info": {
+          "package_name": "com.slg.admin_clinica"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyASfuPFWcgXayoEMBqJIQldnaaSqb-0Gtc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
