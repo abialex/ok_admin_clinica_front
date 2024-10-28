@@ -1,3 +1,9 @@
+import 'package:admin_clinica_front/app/common/repository/firebase/firebase_repository_impl.dart';
+import 'package:admin_clinica_front/app/common/repository/firebase/i_firebase_repository.dart';
+import 'package:admin_clinica_front/app/common/repository/notification/inotification_repository.dart';
+import 'package:admin_clinica_front/app/common/repository/notification/notification_repository_impl.dart';
+import 'package:admin_clinica_front/app/common/service/firebase_service.dart';
+import 'package:admin_clinica_front/app/common/service/notification_service.dart';
 import 'package:admin_clinica_front/app/config/app_flavor_config.dart';
 import 'package:admin_clinica_front/app/config/interceptor/inteceptor.dart';
 import 'package:admin_clinica_front/app/common/service/cita_api.dart';
@@ -48,7 +54,7 @@ import '../common/mappers/local_service.dart';
 
 GetIt locator = GetIt.instance;
 
-Future<void> setupLocator() async {
+void setupLocator() {
   var dio = Dio();
   dio.options.baseUrl = AppFlavorConfig.urlApp;
   dio.interceptors.add(AppInterceptor());
@@ -90,6 +96,8 @@ void setupRepositorys() {
   locator.registerLazySingleton<IServicesRepository>(() => ServicesRepository(locator()));
   locator.registerLazySingleton<IDoctorContenedorLocalRepository>(() => DoctorContenedorLocalRepository(locator()));
   locator.registerLazySingleton<IUbicacionContenedorLocalRepository>(() => UbicacionContenedorLocalRepository(locator()));
+  locator.registerLazySingleton<IFirebaseRepository>(FirebaseRepository.new);
+  locator.registerLazySingleton<INotificationRepository>(NotificationRepository.new);
 }
 
 void setupServices() {
@@ -101,6 +109,8 @@ void setupServices() {
   locator.registerLazySingleton<ServicesService>(() => ServicesService(locator()));
   locator.registerLazySingleton<ExcelService>(() => ExcelService());
   locator.registerLazySingleton<CMDservice>(() => CMDservice());
+  locator.registerLazySingleton<FirebaseService>(FirebaseService.new);
+  locator.registerLazySingleton<NotificationService>(NotificationService.new);
 }
 
 void setupDataSource() {

@@ -1,3 +1,5 @@
+import 'dart:io';
+import 'package:admin_clinica_front/app/common/blocs/firebase/firebase_notification_bloc.dart';
 import 'package:admin_clinica_front/app/common/constants/app_const_svgs.dart';
 import 'package:admin_clinica_front/app/common/constants/app_const_colors.dart';
 import 'package:admin_clinica_front/app/common/blocs/usuario_session/bloc/usuario_bloc.dart';
@@ -20,15 +22,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
   @override
-  _LoginPageState createState() => _LoginPageState();
+  LoginPageState createState() => LoginPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class LoginPageState extends State<LoginPage> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   Widget mensajeWidget = AppTextGlobal.labelLightText(text: '');
@@ -53,6 +56,8 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     final usuarioBloc = context.read<UsuarioBloc>();
+    final firebaseBloc = context.read<FirebaseNotificationBloc>();
+    final dialogMessageCubit = context.read<DialogMessageCubit>();
     final formKey = GlobalKey<FormState>(); // Clave global para el formulario
 
     return BlocListener<LoginBloc, LoginState>(
@@ -77,15 +82,34 @@ class _LoginPageState extends State<LoginPage> {
           },
           usuarioAuthenticated: (value) async {
             loadModules(value.usuario);
-
             setState(() {
               showPreview = true;
             });
+            if (Platform.isAndroid) {
+              String ubicacionId = value.usuario.ubicaciones.isNotEmpty ? value.usuario.ubicaciones.first.toString() : '';
+              firebaseBloc.add(const FirebaseNotificationEvent.getToken());
+              firebaseBloc.add(FirebaseNotificationEvent.suscriptionGroup(value.usuario.rol + ubicacionId));
+              firebaseBloc.add(FirebaseNotificationEvent.suscriptionFirstPlane(
+                (notification) {
+                  dialogMessageCubit.showCustomAlert(titulo: notification.notification?.title ?? 'n.a', texto: notification.notification?.body ?? 'n.a');
+                },
+              ));
+            }
           },
           usuarioLoaded: (value) async {
             loadModules(value.usuario);
-            //guardando usuario al storage
             await usuarioBloc.setUsuario(value.usuario);
+            if (Platform.isAndroid) {
+              String ubicacionId = value.usuario.ubicaciones.isNotEmpty ? value.usuario.ubicaciones.first.toString() : '';
+
+              firebaseBloc.add(const FirebaseNotificationEvent.getToken());
+              firebaseBloc.add(FirebaseNotificationEvent.suscriptionGroup(value.usuario.rol + ubicacionId));
+              firebaseBloc.add(FirebaseNotificationEvent.suscriptionFirstPlane(
+                (notification) {
+                  dialogMessageCubit.showCustomAlert(titulo: notification.notification?.title ?? 'n.a', texto: notification.notification?.body ?? 'n.a');
+                },
+              ));
+            }
             Navigator.pushReplacementNamed(context, Routes.home);
           },
           authenticatedFailure: (value) {
@@ -192,6 +216,24 @@ class _LoginPageState extends State<LoginPage> {
                           AppBox.h10,
                           Center(child: mensajeWidget),
                           const Spacer(),
+                          GestureDetector(
+                            onTap: () async {
+                              final Uri uri = Uri.parse('https://sites.google.com/view/politica-de-privacidad-slg-app/inicio');
+
+                              if (await canLaunchUrl(uri)) {
+                                await launchUrl(uri);
+                              } else {}
+                            }, // Acción al tocar el texto
+                            child: const Text(
+                              'Política de privacidad',
+                              style: TextStyle(
+                                color: AppConstColors.grey, // Color gris del texto
+                                decoration: TextDecoration.underline, // Subrayado
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                          AppBox.h24,
                           Row(
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [

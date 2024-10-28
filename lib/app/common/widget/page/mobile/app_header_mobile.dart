@@ -1,3 +1,4 @@
+import 'package:admin_clinica_front/app/common/blocs/firebase/firebase_notification_bloc.dart';
 import 'package:admin_clinica_front/app/common/constants/app_const_svgs.dart';
 import 'package:admin_clinica_front/app/config/app_dependecy_injection.dart';
 import 'package:admin_clinica_front/app/common/constants/app_const_colors.dart';
@@ -28,6 +29,7 @@ class HeaderMobile extends StatelessWidget {
   Widget build(BuildContext context) {
     final auth = locator<LocalService>();
     final dialog = context.read<DialogMessageCubit>();
+    final firebaseBloc = context.read<FirebaseNotificationBloc>();
     return Container(
       // color: AppColors.white,
       padding: const EdgeInsets.only(top: 5, right: 12.5, left: 12.5),
@@ -85,6 +87,11 @@ class HeaderMobile extends StatelessWidget {
                             texto: "¿Seguro de cerrar sesión?",
                             onAceptar: () async {
                               final navbarCubit = context.read<NavigatorCubit>();
+                              final user = await auth.getUsuario();
+                              if (user != null) {
+                                final ubicacionId = user.ubicaciones.isNotEmpty ? user.ubicaciones.first.toString() : "";
+                                firebaseBloc.add(FirebaseNotificationEvent.unsuscriptionGroup(user.rol + ubicacionId));
+                              }
                               navbarCubit.updateIndexDelay(1);
                               Navigator.pushReplacementNamed(context, Routes.login);
                               await auth.clearSession();

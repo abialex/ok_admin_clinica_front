@@ -75,3 +75,7 @@
 *.freezed.dart
 assets/env/
 *.xlsx
+
+# FVM Version Cache
+.fvm/
+.fvmrc
