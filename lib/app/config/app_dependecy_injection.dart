@@ -2,6 +2,7 @@ import 'package:admin_clinica_front/app/common/repository/firebase/firebase_repo
 import 'package:admin_clinica_front/app/common/repository/firebase/i_firebase_repository.dart';
 import 'package:admin_clinica_front/app/common/repository/notification/inotification_repository.dart';
 import 'package:admin_clinica_front/app/common/repository/notification/notification_repository_impl.dart';
+import 'package:admin_clinica_front/app/common/service/connection_service.dart';
 import 'package:admin_clinica_front/app/common/service/firebase_service.dart';
 import 'package:admin_clinica_front/app/common/service/notification_service.dart';
 import 'package:admin_clinica_front/app/config/app_flavor_config.dart';
@@ -111,6 +112,7 @@ void setupServices() {
   locator.registerLazySingleton<CMDservice>(() => CMDservice());
   locator.registerLazySingleton<FirebaseService>(FirebaseService.new);
   locator.registerLazySingleton<NotificationService>(NotificationService.new);
+  locator.registerLazySingleton<ConnectionNetWorkService>(ConnectionNetWorkService.new);
 }
 
 void setupDataSource() {

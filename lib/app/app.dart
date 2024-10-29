@@ -1,3 +1,6 @@
+import 'package:admin_clinica_front/app/common/blocs/connection/connection_network_bloc.dart';
+import 'package:admin_clinica_front/app/common/service/connection_service.dart';
+import 'package:admin_clinica_front/app/config/app_dependecy_injection.dart';
 import 'package:admin_clinica_front/app/config/app_theme.dart';
 import 'package:admin_clinica_front/app/config/routes/router.dart';
 import 'package:admin_clinica_front/app/common/widget/app_loader.dart';
@@ -37,6 +40,10 @@ class App extends StatelessWidget {
       onGenerateRoute: AppRouter.generateRoute,
       initialRoute: Routes.login,
       builder: (context, child) {
+        final connectionService = locator.get<ConnectionNetWorkService>();
+        connectionService.checkConnectivity().whenComplete(() async => ConnectionNetworkEvent.changeState(await connectionService.checkConnectivity()));
+        connectionService.init((result) => context.read<ConnectionNetworkBloc>().add(ConnectionNetworkEvent.changeState(result)));
+
         return Stack(
           children: [
             MediaQuery(

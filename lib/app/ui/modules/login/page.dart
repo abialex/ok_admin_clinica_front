@@ -1,8 +1,11 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:io';
 import 'package:admin_clinica_front/app/common/blocs/firebase/firebase_notification_bloc.dart';
 import 'package:admin_clinica_front/app/common/constants/app_const_svgs.dart';
 import 'package:admin_clinica_front/app/common/constants/app_const_colors.dart';
 import 'package:admin_clinica_front/app/common/blocs/usuario_session/bloc/usuario_bloc.dart';
+import 'package:admin_clinica_front/app/common/widget/app_connection_widget.dart';
 import 'package:admin_clinica_front/app/config/routes/app_routes.dart';
 import 'package:admin_clinica_front/app/config/routes/router.dart';
 import 'package:admin_clinica_front/app/common/widget/app_box.dart';
@@ -36,6 +39,7 @@ class LoginPageState extends State<LoginPage> {
   final TextEditingController _passwordController = TextEditingController();
   Widget mensajeWidget = AppTextGlobal.labelLightText(text: '');
   bool showPreview = false;
+  String mensajeStateConnection = "";
   // final UsuarioRepository _userRepository = UsuarioRepository(locator());
   @override
   void initState() {
@@ -249,8 +253,14 @@ class LoginPageState extends State<LoginPage> {
                       ),
                     ),
                     AppBox.h10,
-                    const AppDetailsReleaseWidget(),
-                    AppBox.h2,
+                    const Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        AppConnectionWidget(),
+                        AppDetailsReleaseWidget(),
+                      ],
+                    ),
+                    AppBox.h4,
                   ],
                 ),
               ),

@@ -1,3 +1,4 @@
+import 'package:admin_clinica_front/app/common/blocs/connection/connection_network_bloc.dart';
 import 'package:admin_clinica_front/app/common/blocs/excel/excel_cubit.dart';
 import 'package:admin_clinica_front/app/common/blocs/firebase/firebase_notification_bloc.dart';
 import 'package:admin_clinica_front/app/common/blocs/notification/notification_bloc.dart';
@@ -55,6 +56,7 @@ class _MainState extends State<Main> {
         BlocProvider(create: (context) => UsuarioBloc()),
         BlocProvider(create: (context) => UbicacionBloc()),
         BlocProvider(create: (context) => LoginBloc()),
+        BlocProvider(create: (context) => ConnectionNetworkBloc()),
       ],
       child: const SafeArea(
         child: App(),
