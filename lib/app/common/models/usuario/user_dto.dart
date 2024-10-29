@@ -5,7 +5,6 @@ part 'user_dto.g.dart';
 
 @JsonSerializable() //extends User
 class UserLoginDTO {
-  final int id;
   final int user_id;
   final bool is_new_token;
   final int dias_token;
@@ -17,7 +16,6 @@ class UserLoginDTO {
   final List<int> ubicaciones;
 
   const UserLoginDTO({
-    required this.id,
     required this.user_id,
     required this.username,
     required this.nombres,

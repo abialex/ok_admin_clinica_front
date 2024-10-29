@@ -20,7 +20,6 @@ class LocalService {
       dias_token: localUsuarioViewModel.diasToken,
       tipo: localUsuarioViewModel.tipo,
       ubicaciones: localUsuarioViewModel.ubicaciones,
-      id: localUsuarioViewModel.userId,
     );
     return _localRepository.saveUsuario(model);
   }
