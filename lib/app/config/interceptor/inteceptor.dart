@@ -46,6 +46,14 @@ class AppInterceptor extends Interceptor {
         statusMessage: "Solicitud sin implementar",
       );
       return handler.resolve(responseNoConecctionn);
+    } else if (error.response?.statusCode == 302) {
+      final responseNoConecctionn = Response<dynamic>(
+        requestOptions: error.requestOptions,
+        statusCode: HttpStatusCodesApp.serverConnectionError,
+        data: null,
+        statusMessage: "No tiene internet",
+      );
+      return handler.resolve(responseNoConecctionn);
     }
     ApiModel apiModel = ApiModel.fromJson(error.response?.data);
     error.response?.data = apiModel;
