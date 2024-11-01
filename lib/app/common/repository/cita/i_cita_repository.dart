@@ -1,6 +1,6 @@
 import 'package:admin_clinica_front/app/common/models/cita/cita_ocupada/cita_ocupada_create.dart';
 import 'package:admin_clinica_front/app/common/models/request/cita_request_model.dart';
-import 'package:admin_clinica_front/app/ui/view_models/cita_view/cita_view_models.dart';
+import 'package:admin_clinica_front/app/modules/cita/model/cita_filter_data_model.dart';
 import 'package:either_dart/either.dart';
 
 import '../../models/cita/cita_agil/cita_agil_create.dart';

@@ -20,7 +20,7 @@ class AppFlavorConfig {
       case Flavor.STG:
         return 'http://147.182.205.111:4500/';
       case Flavor.PROD:
-        return 'http://147.182.205.111:4500/';
+        return 'http://192.168.0.8:8000/';
     }
   }
 }

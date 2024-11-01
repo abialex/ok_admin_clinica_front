@@ -1,27 +1,27 @@
 // ignore_for_file: constant_identifier_names, unused_element
 
-import 'package:admin_clinica_front/app/ui/modules/atencion/page.dart';
-import 'package:admin_clinica_front/app/ui/modules/cita/r_asistente_asistente/pages/cita_list_page.dart';
-import 'package:admin_clinica_front/app/ui/modules/cita/r_doctor/pages/cita_list_doctor_page.dart';
-import 'package:admin_clinica_front/app/ui/modules/cita/widget/cita_update_page.dart';
-import 'package:admin_clinica_front/app/ui/modules/cita/r_doctor_administrador/pages/cita_add_page.dart';
-import 'package:admin_clinica_front/app/ui/modules/cita/r_doctor_administrador/pages/cita_list_page.dart';
-import 'package:admin_clinica_front/app/ui/modules/cita/r_doctor_administrador/pages/cita_update_page.dart';
-import 'package:admin_clinica_front/app/ui/modules/doctor/doctor_list/doctor_list_adm_page.dart';
-import 'package:admin_clinica_front/app/ui/modules/login/page.dart';
-import 'package:admin_clinica_front/app/ui/modules/monitoreo/r_administrador/monitoreo_admin_page.dart';
-import 'package:admin_clinica_front/app/ui/modules/otros/page.dart';
-import 'package:admin_clinica_front/app/ui/modules/paciente/paciente_list/paciente_list_asist_recep_page.dart';
+import 'package:admin_clinica_front/app/modules/atencion/page.dart';
+import 'package:admin_clinica_front/app/modules/cita/pages/cita_list_asistente_administrador_page.dart';
+import 'package:admin_clinica_front/app/modules/cita/pages/cita_list_doctor_general_page.dart';
+import 'package:admin_clinica_front/app/modules/cita/widget/cita_update_page.dart';
+import 'package:admin_clinica_front/app/modules/cita/pages/cita_add_doctor_manager_page.dart';
+import 'package:admin_clinica_front/app/modules/cita/pages/cita_list_doctor_manager_page.dart';
+import 'package:admin_clinica_front/app/modules/cita/pages/cita_update_doctor_manager_page.dart';
+import 'package:admin_clinica_front/app/modules/doctor/page/doctor_list_administrador_page.dart';
+import 'package:admin_clinica_front/app/modules/login/page/login_page.dart';
+import 'package:admin_clinica_front/app/modules/monitoreo/page/monitoreo_admin_page.dart';
+import 'package:admin_clinica_front/app/modules/otros/page/otros_page.dart';
+import 'package:admin_clinica_front/app/modules/paciente/page/paciente_list_asistente_administrador_page.dart';
 import 'package:flutter/material.dart';
 import 'package:upgrader/upgrader.dart';
 
-import '../../ui/modules/cita/widget/cita_add_page.dart';
-import '../../ui/modules/cita/pages/cita_list_page.dart';
-import '../../ui/modules/doctor/doctor_add/doctor_add_asist_recep_page.dart';
-import '../../ui/modules/doctor/doctor_list/doctor_list_asist_recep_page.dart';
-import '../../ui/modules/doctor/doctor_list/doctor_list_asist_asist_page.dart';
-import '../../ui/modules/doctor/doctor_update/doctor_update_asist_recep_page.dart';
-import '../../ui/modules/home/page.dart';
+import '../../modules/cita/widget/cita_add_page.dart';
+import '../../modules/cita/pages/cita_list_asistente_doctor_page.dart';
+import '../../modules/doctor/page/doctor_add_asistente_administrador_page.dart';
+import '../../modules/doctor/page/doctor_list_asistente_administrador_page.dart';
+import '../../modules/doctor/page/doctor_list_asistente_doctor_page.dart';
+import '../../modules/doctor/page/doctor_update_asistente_administrador_page.dart';
+import '../../modules/home/page.dart';
 
 class Routes {
   static const String base_admin = "/admin";
@@ -79,7 +79,7 @@ class AppRouter {
       //? Asistente-recepcion
       case Routes.base_asistenteRecepcion + Routes.cita_list:
         return PageRouteBuilder(
-          pageBuilder: (_, __, ___) => CitaListAsistenteRecepcionPage(),
+          pageBuilder: (_, __, ___) => CitaListAsistenteDoctorPage(),
           //  transitionsBuilder: _createScaleTransition,
         );
 
@@ -97,34 +97,34 @@ class AppRouter {
 
       case Routes.doctor_list:
         return PageRouteBuilder(
-          pageBuilder: (_, __, ___) => const DoctorListAdminPage(),
+          pageBuilder: (_, __, ___) => const DoctorListAdministradorPage(),
           //   transitionsBuilder: _createSlideFadeTransition,
         );
       case Routes.base_asistenteRecepcion + Routes.doctor_list:
         return PageRouteBuilder(
-          pageBuilder: (_, __, ___) => const DoctorListAsistenteRecepcionPage(),
+          pageBuilder: (_, __, ___) => const DoctorListAsistenteAdministradorPage(),
           //   transitionsBuilder: _createSlideFadeTransition,
         );
       case Routes.base_asistenteAsistente + Routes.doctor_list:
         return PageRouteBuilder(
-          pageBuilder: (_, __, ___) => const DoctorListAsistenteAsistentePage(),
+          pageBuilder: (_, __, ___) => const DoctorListAsistenteDoctorPage(),
           //   transitionsBuilder: _createSlideFadeTransition,
         );
 
       case Routes.base_asistenteRecepcion + Routes.doctor_add:
         return PageRouteBuilder(
-          pageBuilder: (_, __, ___) => DoctorAddAsistenteRecepcionPage(),
+          pageBuilder: (_, __, ___) => DoctorAddAsistenteAdministradorPage(),
           //   transitionsBuilder: _createSlideFadeTransition,
         );
       case Routes.base_asistenteRecepcion + Routes.doctor_update:
         return PageRouteBuilder(
-          pageBuilder: (_, __, ___) => DoctorUpdateAsistenteRecepcionPage(),
+          pageBuilder: (_, __, ___) => DoctorUpdateAsistenteAdministradorPage(),
           //   transitionsBuilder: _createSlideFadeTransition,
         );
 
       case Routes.base_asistenteRecepcion + Routes.paciente_list:
         return PageRouteBuilder(
-          pageBuilder: (_, __, ___) => const PacienteListAsistenteRecepcionPage(),
+          pageBuilder: (_, __, ___) => const PacienteListAsistenteAdministradorPage(),
           //   transitionsBuilder: _createSlideFadeTransition,
         );
 
@@ -136,30 +136,30 @@ class AppRouter {
       //? Asistente-asistente
       case Routes.base_asistenteAsistente + Routes.cita_list:
         return PageRouteBuilder(
-          pageBuilder: (_, __, ___) => CitaListAsistenteAsistentePage(),
+          pageBuilder: (_, __, ___) => CitaListAsistenteAdministradorPage(),
           //  transitionsBuilder: _createScaleTransition,
         );
       //? Doctor-doctor
       case Routes.base_doctor + Routes.cita_list:
         return PageRouteBuilder(
-          pageBuilder: (_, __, ___) => CitaListDoctorPage(),
+          pageBuilder: (_, __, ___) => CitaListDoctorGeneralPage(),
           //   transitionsBuilder: _createSlideFadeTransition,
         );
 
       //? Doctor-administrador
       case Routes.base_doctor_admin + Routes.cita_list:
         return PageRouteBuilder(
-          pageBuilder: (_, __, ___) => CitaListDoctorAdministradorPage(),
+          pageBuilder: (_, __, ___) => CitaListDoctorManagerPage(),
           //   transitionsBuilder: _createSlideFadeTransition,
         );
       case Routes.base_doctor_admin + Routes.cita_add:
         return PageRouteBuilder(
-          pageBuilder: (_, __, ___) => CitaAddDoctorAdminPage(),
+          pageBuilder: (_, __, ___) => CitaAddDoctorManagerPage(),
           //   transitionsBuilder: _createSlideFadeTransition,
         );
       case Routes.base_doctor_admin + Routes.cita_update:
         return PageRouteBuilder(
-          pageBuilder: (_, __, ___) => CitaUpdateDoctorAdminPage(),
+          pageBuilder: (_, __, ___) => CitaUpdateDoctorManagerPage(),
           //   transitionsBuilder: _createSlideFadeTransition,
         );
       //? Administrador-admin

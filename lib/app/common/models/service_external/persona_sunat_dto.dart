@@ -24,4 +24,9 @@ class PersonaSunatDto {
 
   //ToJson
   Map<String, dynamic> toJson() => _$PersonaSunatDtoToJson(this);
+
+  @override
+  String toString() {
+    return '$nombres $apellidoPaterno $apellidoMaterno';
+  }
 }

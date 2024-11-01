@@ -1,16 +1,16 @@
 import 'dart:io';
 
 import 'package:admin_clinica_front/app/common/models/cita/cita_dto.dart';
+import 'package:admin_clinica_front/app/common/models/excel/excel_data_model.dart';
 import 'package:admin_clinica_front/app/config/app_dependecy_injection.dart';
 import 'package:admin_clinica_front/app/common/utils/extensions/date_time_extensions.dart';
 import 'package:admin_clinica_front/app/data/entities/estado_cita.dart';
 import 'package:admin_clinica_front/app/common/mappers/cmd_services.dart';
-import 'package:admin_clinica_front/app/ui/view_models/excel_view/excel_view.dart';
 import 'package:excel/excel.dart';
 
 class ExcelService {
   final cmdService = locator<CMDservice>();
-  String createExcel(ExcelView excelView) {
+  String createExcel(ExcelDataModel excelView) {
     var excel = Excel.createExcel();
     Sheet sheetObject = excel[excelView.sheetName ?? 'Sheet1'];
     for (var i = 0; i < excelView.headerList.length; i++) {

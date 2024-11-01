@@ -6,7 +6,7 @@ import 'package:admin_clinica_front/app/common/models/request/cita_request_model
 import 'package:admin_clinica_front/app/common/models/request/request_model.dart';
 import 'package:admin_clinica_front/app/common/repository/cita/i_cita_repository.dart';
 import 'package:admin_clinica_front/app/common/utils/extensions/date_time_extensions.dart';
-import 'package:admin_clinica_front/app/ui/view_models/cita_view/cita_view_models.dart';
+import 'package:admin_clinica_front/app/modules/cita/model/cita_filter_data_model.dart';
 import 'package:either_dart/either.dart';
 
 import '../../service/cita_api.dart';
