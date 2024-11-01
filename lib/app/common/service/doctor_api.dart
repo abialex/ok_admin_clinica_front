@@ -1,7 +1,6 @@
 import 'package:admin_clinica_front/app/common/service/base_api.dart';
 import 'package:admin_clinica_front/app/common/models/doctor/doctor_create_model.dart';
 import 'package:admin_clinica_front/app/common/models/doctor/doctor_credentials_model.dart';
-import 'package:admin_clinica_front/app/common/models/doctor/doctors_dto.dart';
 import 'package:dio/dio.dart';
 import 'package:either_dart/either.dart';
 
@@ -17,26 +16,26 @@ class DoctorApi implements BaseApi {
 
   DoctorApi(this._dio);
 
-  Future<Either<String, List<DoctorsDto>>> getDoctorsByIdUbicacionFromAsistente() async {
+  Future<Either<String, List<DoctorDto>>> getDoctorsByIdUbicacionFromAsistente() async {
     final response = await _dio.get<ApiModel>(
       "${url}by-ubicacion",
     );
-    return ApiUtils.reponseHandler(response, (data) => (data as List).map((e) => DoctorsDto.fromJson(e)).toList());
+    return ApiUtils.reponseHandler(response, (data) => (data as List).map((e) => DoctorDto.fromJson(e)).toList());
   }
 
-  Future<Either<String, List<DoctorsDto>>> getDoctorsByIdUbicacion(int ubicacionId) async {
+  Future<Either<String, List<DoctorDto>>> getDoctorsByIdUbicacion(int ubicacionId) async {
     final response = await _dio.get<ApiModel>(
       "${url}list/by-ubicacion-id",
       queryParameters: {"ubicacion_id": ubicacionId},
     );
-    return ApiUtils.reponseHandler(response, (data) => (data as List).map((e) => DoctorsDto.fromJson(e)).toList());
+    return ApiUtils.reponseHandler(response, (data) => (data as List).map((e) => DoctorDto.fromJson(e)).toList());
   }
 
-  Future<Either<String, List<DoctorsDto>>> getDoctors() async {
+  Future<Either<String, List<DoctorDto>>> getDoctors() async {
     final response = await _dio.get<ApiModel>(
       "${url}doctor/",
     );
-    return ApiUtils.reponseHandler(response, (data) => (data as List).map((e) => DoctorsDto.fromJson(e)).toList());
+    return ApiUtils.reponseHandler(response, (data) => (data as List).map((e) => DoctorDto.fromJson(e)).toList());
   }
 
   Future<Either<String, DoctorDto>> getDoctorsById(int iddoctor) async {
@@ -86,10 +85,10 @@ class DoctorApi implements BaseApi {
     return ApiUtils.reponseHandler(response, (data) => (data as String));
   }
 
-  Future<Either<String, List<DoctorsDto>>> getDoctorByUserDoctor() async {
+  Future<Either<String, List<DoctorDto>>> getDoctorByUserDoctor() async {
     final response = await _dio.get<ApiModel>(
       "${url}by-doctor_user",
     );
-    return ApiUtils.reponseHandler(response, (data) => (data as List).map((e) => DoctorsDto.fromJson(e)).toList());
+    return ApiUtils.reponseHandler(response, (data) => (data as List).map((e) => DoctorDto.fromJson(e)).toList());
   }
 }

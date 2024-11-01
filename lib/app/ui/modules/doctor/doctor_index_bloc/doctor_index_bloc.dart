@@ -1,6 +1,7 @@
+import 'package:admin_clinica_front/app/common/models/doctor/doctor_dto.dart';
+import 'package:admin_clinica_front/app/common/repository/doctor/i_doctor_repository.dart';
 import 'package:admin_clinica_front/app/config/app_dependecy_injection.dart';
-import 'package:admin_clinica_front/app/common/mappers/doctor_service.dart';
-import 'package:admin_clinica_front/app/ui/view_models/doctor_view/doctor_view_models.dart';
+import 'package:admin_clinica_front/app/common/enums/doctor_accion_enum.dart';
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -16,7 +17,7 @@ class DoctorIndexBloc extends Bloc<DoctorIndexEvent, DoctorIndexState> {
     on<ResetPasswordEvent>(resetPassword);
   }
 
-  final doctorService = locator<DoctorService>();
+  final _doctorRepository = locator<IDoctorRepository>();
 
   Future<void> initial(InitialEvent event, Emitter<DoctorIndexState> emit) async {
     emit(LoadingState());
@@ -27,11 +28,21 @@ class DoctorIndexBloc extends Bloc<DoctorIndexEvent, DoctorIndexState> {
     emit(LoadingState());
     final doctor = event.doctorsViewModel;
 
-    final result = await doctorService.doctorAction(event.doctorAction, doctor.id);
-    if (result.isRight) {
-      add(DoctorIndexEvent.getDoctor(doctor.id));
-    } else {
-      emit(FailureState(result.left));
+    switch (event.doctorAction) {
+      case DoctorActionEnum.activar:
+        final result = await _doctorRepository.activarDoctor(doctor.id);
+        if (result.isRight) {
+          add(DoctorIndexEvent.getDoctor(doctor.id));
+        } else {
+          emit(FailureState(result.left));
+        }
+      case DoctorActionEnum.inactivar:
+        final result = await _doctorRepository.inactivarDoctor(doctor.id);
+        if (result.isRight) {
+          add(DoctorIndexEvent.getDoctor(doctor.id));
+        } else {
+          emit(FailureState(result.left));
+        }
     }
   }
 
@@ -39,7 +50,7 @@ class DoctorIndexBloc extends Bloc<DoctorIndexEvent, DoctorIndexState> {
     emit(LoadingState());
     final doctor = event.doctorsViewModel;
 
-    final result = await doctorService.resetPassword(doctor.id);
+    final result = await _doctorRepository.resetPassword(doctor.id);
     if (result.isRight) {
       emit(SuccessState(result.right));
     } else {
@@ -49,21 +60,12 @@ class DoctorIndexBloc extends Bloc<DoctorIndexEvent, DoctorIndexState> {
 
   Future<void> getDoctorById(GetDoctorEvent event, Emitter<DoctorIndexState> emit) async {
     emit(LoadingState());
-    final result = await doctorService.getDoctorById(event.doctorId);
+    final result = await _doctorRepository.getDoctorById(event.doctorId);
     if (result.isRight) {
       final doctorViewModel = result.right;
       emit(
         DoctorLoadedState(
-          DoctorsViewModel(
-            id: doctorViewModel.id,
-            apellidos: doctorViewModel.apellidos,
-            fechaNacimiento: doctorViewModel.fechaNacimiento,
-            isActive: doctorViewModel.isActive,
-            usuarioId: doctorViewModel.usuarioId,
-            username: doctorViewModel.username,
-            nombres: doctorViewModel.nombres,
-            celular: doctorViewModel.celular,
-          ),
+          doctorViewModel,
         ),
       );
     } else {

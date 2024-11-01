@@ -1,56 +1,51 @@
-// ignore_for_file: non_constant_identifier_names
+// ignore_for_file: non_constant_identifier_names, invalid_annotation_target
 
 import 'package:admin_clinica_front/app/common/models/paciente/paciente_dto.dart';
-import 'package:json_annotation/json_annotation.dart';
+import 'package:admin_clinica_front/app/data/entities/estado_cita.dart';
+import 'package:admin_clinica_front/app/data/entities/tipo_cita.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+
+part 'cita_dto.freezed.dart';
 part 'cita_dto.g.dart';
 
-@JsonSerializable()
-class CitaDTO {
-  final int id;
-  final String doctor;
-  final String? ubicacion;
-  final String fechaHoraCita;
-  final int estado;
-  final int tipo;
-  final String? celular;
-  final PacienteDTO? paciente;
-  final String? razon;
-  final String? razonOcupado;
-  final String? datosPaciente;
-  final int doctor_id;
-  final int? ubicacion_id;
-  final String estado_string;
-  final String tipo_string;
-  final String? fechaConfirmacion;
-  final String? fechaValidacion;
-  final String? fechaInicio;
-  final String? fechaFin;
+@freezed
+class CitaDTO with _$CitaDTO {
+  const CitaDTO._(); // Constructor privado para usar getters.
 
-  CitaDTO({
-    required this.id,
-    required this.doctor,
-    this.ubicacion,
-    required this.fechaHoraCita,
-    required this.estado,
-    required this.tipo,
-    required this.celular,
-    this.paciente,
-    this.razon,
-    this.razonOcupado,
-    this.datosPaciente,
-    required this.doctor_id,
-    this.ubicacion_id,
-    required this.estado_string,
-    required this.tipo_string,
-    this.fechaConfirmacion,
-    this.fechaValidacion,
-    this.fechaInicio,
-    this.fechaFin,
-  });
+  const factory CitaDTO({
+    required int id,
+    String? doctor,
+    String? ubicacion,
+    required String fechaHoraCita,
+    required int estado,
+    required int tipo,
+    String? celular,
+    PacienteDTO? paciente,
+    String? razon,
+    String? razonOcupado,
+    String? datosPaciente,
+    @JsonKey(name: 'doctor_id') int? doctorId,
+    int? ubicacion_id, // Manteniendo el guion bajo.
+    @JsonKey(name: 'estado_string') required String estadoString, // Manteniendo el guion bajo.
+    required String tipo_string, // Manteniendo el guion bajo.
+    String? fechaConfirmacion,
+    String? fechaValidacion,
+    String? fechaInicio,
+    String? fechaFin,
+  }) = _CitaDTO;
 
-  //fromJson
-  factory CitaDTO.fromJson(Map<String, dynamic> map) => _$CitaDTOFromJson(map);
+  // Método para deserializar desde JSON.
+  factory CitaDTO.fromJson(Map<String, dynamic> json) => _$CitaDTOFromJson(json);
 
-  //ToJson
-  Map<String, dynamic> toJson() => _$CitaDTOToJson(this);
+  // Getters personalizados para acceder a los atributos con guion bajo.
+  String get tipoString => tipo_string;
+  int? get ubicacionId => ubicacion_id;
+  DateTime get fechaHoraCitaDate => DateTime.parse(fechaHoraCita);
+  DateTime? get fechaConfirmacionDate => DateTime.tryParse(fechaConfirmacion ?? '');
+  DateTime? get fechaValidacionDate => DateTime.tryParse(fechaValidacion ?? '');
+  DateTime? get fechaInicioDate => DateTime.tryParse(fechaInicio ?? '');
+  DateTime? get fechaFinDate => DateTime.tryParse(fechaFin ?? '');
+
+  EstadoCita get estadoEnum => EstadoCitaExtension.fromNumber(estado);
+  TipoCita get tipoEnum => TipoCitaExtension.fromNumber(tipo);
 }

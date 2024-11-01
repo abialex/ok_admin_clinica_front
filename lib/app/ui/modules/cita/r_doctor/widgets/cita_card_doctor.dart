@@ -1,9 +1,10 @@
 import 'package:admin_clinica_front/app/common/constants/app_const_svgs.dart';
+import 'package:admin_clinica_front/app/common/models/cita/cita_dto.dart';
 import 'package:admin_clinica_front/app/common/utils/extensions/date_time_extensions.dart';
 import 'package:admin_clinica_front/app/config/app_cita_config.dart';
 import 'package:admin_clinica_front/app/common/constants/app_const_colors.dart';
 import 'package:admin_clinica_front/app/data/entities/estado_cita.dart';
-import 'package:admin_clinica_front/app/common/mappers/citas_service.dart';
+import 'package:admin_clinica_front/app/common/enums/tipo_accion_enum.dart';
 import 'package:admin_clinica_front/app/common/widget/app_box.dart';
 import 'package:admin_clinica_front/app/common/widget/app_text_style.dart';
 import 'package:admin_clinica_front/app/common/widget/button_base/button_success.dart';
@@ -18,7 +19,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
 
 class CitasCardDoctor extends StatelessWidget {
-  final CitasViewModel cita;
+  final CitaDTO cita;
 
   const CitasCardDoctor({super.key, required this.cita});
 
@@ -99,7 +100,7 @@ class CitasCardDoctor extends StatelessWidget {
                                         AppBox.w6,
                                       ],
                                     ),
-                                  if (cita.pacienteDatos != null)
+                                  if (cita.paciente != null)
                                     Row(
                                       crossAxisAlignment: CrossAxisAlignment.center,
                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -109,7 +110,7 @@ class CitasCardDoctor extends StatelessWidget {
                                           color: AppConstColors.slg01,
                                         ),
                                         // AppTextGlobal.labelLightText(text: "Paciente Libre:"),
-                                        Expanded(child: Center(child: AppTextGlobal.lightText(text: stt.cita.pacienteDatos!.toUpperCase()))),
+                                        Expanded(child: Center(child: AppTextGlobal.lightText(text: stt.cita.paciente?.nombres?.toUpperCase() ?? 'N.A'))),
                                         AppBox.w6,
                                       ],
                                     ),
@@ -141,7 +142,7 @@ class CitasCardDoctor extends StatelessWidget {
                                             horizontal: 5,
                                           ),
                                           decoration: BoxDecoration(
-                                            color: stt.cita.estado.color,
+                                            color: stt.cita.estadoEnum.color,
                                             borderRadius: const BorderRadius.all(
                                               Radius.circular(
                                                 10,
@@ -356,7 +357,7 @@ class CitasCardDoctor extends StatelessWidget {
                               ),
                               // AppTextGlobal.labelLightText(text: "Hora:"),
                               AppBox.w2,
-                              AppTextGlobal.labelLightText(text: stt.cita.fechaHoraCita.toFormatHHmm()),
+                              AppTextGlobal.labelLightText(text: stt.cita.fechaHoraCitaDate.toFormatHHmm()),
                             ],
                           ),
                         ),
@@ -660,13 +661,13 @@ class CitasCardDoctor extends StatelessWidget {
     );
   }
 
-  Future<void> nextCita(BuildContext context, CitasViewModel cita) async {
+  Future<void> nextCita(BuildContext context, CitaDTO cita) async {
     final bloc = context.read<CitaIndexBloc>();
     final dialogCubit = context.read<DialogMessageCubit>();
     late String titulo;
     late String texto;
     late TipoAccionEnum tipoAccion;
-    switch (cita.estado) {
+    switch (cita.estadoEnum) {
       case EstadoCita.pendiente:
         titulo = "¿Seguro(a) de confirmar?";
         texto = "la cita estará pendiente para que el doctor acepte, una vez confirmada la cita ya no se podrá modificar.";
@@ -714,7 +715,7 @@ class CitasCardDoctor extends StatelessWidget {
 }
 
 class CitasGroupedByHourDoctor extends StatelessWidget {
-  final List<CitasViewModel> citas;
+  final List<CitaDTO> citas;
   final Function(int, String)? onAdd;
   final CitaOcupadaCreateViewModel Function(int) onBlock;
   final Function(int)? onRelease;
@@ -731,7 +732,7 @@ class CitasGroupedByHourDoctor extends StatelessWidget {
   Widget build(BuildContext context) {
     for (var horaItem in CitaConfig.horaList) {
       horaItem.listItems.clear();
-      horaItem.listItems.addAll(citas.where((element) => element.fechaHoraCita.hour == horaItem.hora).toList());
+      horaItem.listItems.addAll(citas.where((element) => element.fechaHoraCitaDate.hour == horaItem.hora).toList());
     }
 
     return ListView(

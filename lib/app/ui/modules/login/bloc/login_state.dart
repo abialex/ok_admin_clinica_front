@@ -5,8 +5,8 @@ class LoginState with _$LoginState {
   const LoginState._();
   factory LoginState.initial() = Initial;
   factory LoginState.loading() = Loading;
-  factory LoginState.usuarioAuthenticated(UsuarioLoginResponseViewModel usuario) = UsuarioAuthenticatedState;
-  factory LoginState.usuarioLoaded(UsuarioLoginResponseViewModel usuario) = UsuarioLoaded;
+  factory LoginState.usuarioAuthenticated(UserLoginDTO usuario) = UsuarioAuthenticatedState;
+  factory LoginState.usuarioLoaded(UserLoginDTO usuario) = UsuarioLoaded;
   factory LoginState.authenticatedFailure(String detalle) = authenticatedFailureState;
   factory LoginState.failure(String error) = Failure;
 

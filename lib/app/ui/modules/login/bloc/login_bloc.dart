@@ -1,7 +1,8 @@
+import 'package:admin_clinica_front/app/common/models/usuario/login_user_dto.dart';
+import 'package:admin_clinica_front/app/common/models/usuario/user_dto.dart';
+import 'package:admin_clinica_front/app/common/repository/usuario/iusuario_repository.dart';
 import 'package:admin_clinica_front/app/config/app_dependecy_injection.dart';
-import 'package:admin_clinica_front/app/common/mappers/local_service.dart';
-import 'package:admin_clinica_front/app/common/mappers/usuario_service.dart';
-import 'package:admin_clinica_front/app/ui/view_models/usuario_view/usuario_view_models.dart';
+import 'package:admin_clinica_front/app/data/repository/storage/ilocal_repository.dart';
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 part 'login_event.dart';
@@ -14,13 +15,14 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     on<AuthenticatedUsuarioEvent>(authenticatedUsuario);
   }
 
-  final _userService = locator<UsuarioService>();
-  final _localService = locator<LocalService>();
+  final _localService = locator<ILocalRepository>();
+  final _usuarioRepository = locator<IUsuarioRepository>();
+
   Future<void> loginUsuario(LoginUsuario event, Emitter<LoginState> emit) async {
     emit(Loading());
     // await Future.delayed(4.seconds);
-    final result = await _userService.login(
-      UsuarioLoginRequestViewModel(
+    final result = await _usuarioRepository.login(
+      LoginUserDto(
         username: event.username,
         password: event.password,
       ),
@@ -43,11 +45,11 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       emit(LoginState.authenticatedFailure("Ingrese sus credenciales"));
       return;
     }
-    final result = await _userService.authenticated(userLogged.token);
+    final result = await _usuarioRepository.authenticated(userLogged.token);
     result.fold(
       (left) => emit(LoginState.failure(left)),
       (right) {
-        if (right.isValido) {
+        if (right.isValid) {
           emit(LoginState.usuarioAuthenticated(userLogged));
         } else {
           emit(LoginState.failure(right.mensaje));

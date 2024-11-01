@@ -1,17 +1,17 @@
-import 'package:admin_clinica_front/app/ui/view_models/doctor_view/doctor_view_models.dart';
+import 'package:admin_clinica_front/app/common/models/doctor/doctor_dto.dart';
+import 'package:admin_clinica_front/app/common/models/usuario/user_dto.dart';
+import 'package:admin_clinica_front/app/data/repository/storage/ilocal_repository.dart';
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../../../config/app_dependecy_injection.dart';
-import '../../../mappers/local_service.dart';
-import '../../../../ui/view_models/usuario_view/usuario_view_models.dart';
 
 part 'usuario_event.dart';
 part 'usuario_state.dart';
 part 'usuario_bloc.freezed.dart';
 
 class UsuarioBloc extends Bloc<UsuarioEvent, UsuarioState> {
-  final _localService = locator<LocalService>();
+  final _localRepository = locator.get<ILocalRepository>();
 
   UsuarioBloc() : super(const _Initial()) {
     on<SetupUsuarioEvent>((event, emit) {
@@ -31,23 +31,24 @@ class UsuarioBloc extends Bloc<UsuarioEvent, UsuarioState> {
     getDoctorSelected();
   }
   getUsuario() async {
-    final result = await _localService.getUsuario();
+    final result = await _localRepository.getUsuario();
     add(SetupUsuarioEvent(result));
   }
 
-  setUsuario(UsuarioLoginResponseViewModel usuario) async {
-    await _localService.saveUsuario(usuario);
-    await _localService.saveToken(usuario.token);
+  setUsuario(UserLoginDTO usuario) async {
+    await _localRepository.saveUsuario(usuario);
+    await _localRepository.saveToken(usuario.token);
     add(SetUsuarioEvent(usuario));
   }
 
-  setDoctorSelected(DoctorsViewModel doctorId) async {
-    await _localService.saveDoctorSelected(doctorId);
+  setDoctorSelected(DoctorDto doctorId) async {
+    _localRepository.saveDoctorSelected(doctorId);
+    await _localRepository.saveDoctorSelected(doctorId);
     add(SetDoctorSelectedEvent(doctorId));
   }
 
   getDoctorSelected() async {
-    final result = await _localService.getIdDoctorSelected();
+    final result = await _localRepository.getDoctorSelected();
     add(SetupDoctorSelectedEvent(result));
   }
 }

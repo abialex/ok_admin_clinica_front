@@ -1,6 +1,7 @@
+import 'package:admin_clinica_front/app/common/models/doctor/doctor_dto.dart';
+import 'package:admin_clinica_front/app/common/models/doctor/doctor_update_model.dart';
+import 'package:admin_clinica_front/app/common/repository/doctor/i_doctor_repository.dart';
 import 'package:admin_clinica_front/app/config/app_dependecy_injection.dart';
-import 'package:admin_clinica_front/app/common/mappers/doctor_service.dart';
-import 'package:admin_clinica_front/app/ui/view_models/doctor_view/doctor_view_models.dart';
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -14,11 +15,11 @@ class DoctorUpdateBloc extends Bloc<DoctorUpdateEvent, DoctorUpdateState> {
     on<DoctorUpdatedEvent>(updateDoctor);
   }
 
-  final _doctorService = locator<DoctorService>();
+  final _doctorRepository = locator<IDoctorRepository>();
 
   Future<void> getDoctor(GetDoctor event, Emitter<DoctorUpdateState> emit) async {
     emit(DoctorUpdateState.loading());
-    final result = await _doctorService.getDoctorById(event.id);
+    final result = await _doctorRepository.getDoctorById(event.id);
     if (result.isRight) {
       emit(DoctorUpdateState.doctorSetup(result.right));
     } else {
@@ -28,7 +29,7 @@ class DoctorUpdateBloc extends Bloc<DoctorUpdateEvent, DoctorUpdateState> {
 
   Future<void> updateDoctor(DoctorUpdatedEvent event, Emitter<DoctorUpdateState> emit) async {
     emit(DoctorUpdateState.loading());
-    final result = await _doctorService.updateDoctor(event.doctorUpdateView);
+    final result = await _doctorRepository.updateDoctor(event.doctorUpdateView);
     if (result.isRight) {
       emit(DoctorUpdateState.doctorUpdated(result.right));
     } else {

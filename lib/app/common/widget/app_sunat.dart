@@ -1,11 +1,11 @@
 import 'package:admin_clinica_front/app/common/constants/app_const_icons.dart';
+import 'package:admin_clinica_front/app/common/models/service_external/persona_sunat_dto.dart';
 import 'package:admin_clinica_front/app/common/widget/app_box.dart';
 import 'package:admin_clinica_front/app/common/widget/app_loader.dart';
 import 'package:admin_clinica_front/app/common/widget/app_text_style.dart';
 import 'package:admin_clinica_front/app/common/blocs/sunat/sunat_cubit.dart';
 import 'package:admin_clinica_front/app/common/widget/input_text/input_form_02/input_text_action_base.dart';
 import 'package:admin_clinica_front/app/common/utils/validators.dart';
-import 'package:admin_clinica_front/app/ui/view_models/services_view/services_view_models.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,7 +14,7 @@ import 'package:flutter_svg/svg.dart';
 class AppSunatWidget extends StatelessWidget {
   const AppSunatWidget({super.key, required this.onTap});
 
-  final void Function(SunatPersonaViewModel?) onTap;
+  final void Function(PersonaSunatDto?) onTap;
   @override
   Widget build(BuildContext context) {
     final formKey = GlobalKey<FormState>(); // Clave global para el formulario

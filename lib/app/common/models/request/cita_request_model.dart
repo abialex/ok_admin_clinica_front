@@ -1,26 +1,26 @@
-// ignore_for_file: non_constant_identifier_names
+// ignore_for_file: invalid_annotation_target
 
-import 'package:json_annotation/json_annotation.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+
+part 'cita_request_model.freezed.dart';
 part 'cita_request_model.g.dart';
 
-@JsonSerializable()
-class CitaRequestAdmin {
-  final int ubicacion_id;
-  final int? doctor_id;
-  final String? fecha_inicio;
-  final String? fecha_fin;
-  final String? fecha;
+@freezed
+class CitaRequestAdmin with _$CitaRequestAdmin {
+  const CitaRequestAdmin._(); // Constructor privado para usar getters.
 
-  CitaRequestAdmin({
-    required this.ubicacion_id,
-    this.doctor_id,
-    this.fecha_inicio,
-    this.fecha_fin,
-    this.fecha,
-  });
-  //fromJson
-  factory CitaRequestAdmin.fromJson(Map<String, dynamic> map) => _$CitaRequestAdminFromJson(map);
+  const factory CitaRequestAdmin({
+    @JsonKey(name: 'ubicacion_id') required int ubicacionId,
+    @JsonKey(name: 'doctor_id') int? doctorId,
+    @JsonKey(name: 'fecha_inicio') String? fechaInicio,
+    @JsonKey(name: 'fecha_fin') String? fechaFin,
+    @JsonKey(name: 'fecha') String? fecha,
+  }) = _CitaRequestAdmin;
 
-  //ToJson
-  Map<String, dynamic> toJson() => _$CitaRequestAdminToJson(this);
+  // Método para deserializar desde JSON
+  factory CitaRequestAdmin.fromJson(Map<String, dynamic> json) => _$CitaRequestAdminFromJson(json);
+
+  DateTime? get fechaInicioDate => DateTime.tryParse(fechaInicio ?? '');
+  DateTime? get fechaFinDate => DateTime.tryParse(fechaFin ?? '');
+  DateTime? get fechaDate => DateTime.tryParse(fecha ?? '');
 }

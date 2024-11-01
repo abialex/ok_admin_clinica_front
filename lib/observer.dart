@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'dart:developer';
-import 'dart:io';
 import 'package:admin_clinica_front/app/common/service/firebase_service.dart';
 import 'package:admin_clinica_front/app/config/environments/env_dot_config.dart';
+import 'package:admin_clinica_front/app/config/notification_local.dart';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
@@ -30,7 +30,7 @@ class AppBlocObserver extends BlocObserver {
 Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
   FlutterError.onError = (details) {
     log(details.exceptionAsString(), stackTrace: details.stack);
-    if (Platform.isAndroid) {
+    if (TargetPlatform.android == defaultTargetPlatform) {
       FirebaseCrashlytics.instance.recordFlutterFatalError(details);
       PlatformDispatcher.instance.onError = (error, stack) {
         FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
@@ -45,8 +45,10 @@ Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
       WidgetsFlutterBinding.ensureInitialized();
       await Upgrader.clearSavedSettings();
       await EnvDotConfig.initialize();
+
       setupLocator();
-      if (Platform.isAndroid) {
+      if (TargetPlatform.android == defaultTargetPlatform) {
+        await FlutterNotificationLocal.init();
         await FirebaseService.init();
       }
 

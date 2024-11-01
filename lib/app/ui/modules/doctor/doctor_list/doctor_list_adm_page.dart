@@ -158,7 +158,7 @@ class DoctorListAdminPage extends StatelessWidget with ResponsiveWidgetMixin {
                             AppTextGlobal.labelLightText(
                               text: "Username",
                             ),
-                            AppTextGlobal.lightText(text: item.username)
+                            AppTextGlobal.lightText(text: item.username ?? 'sin user')
                           ],
                         ),
                       ],

@@ -1,3 +1,4 @@
+import 'package:admin_clinica_front/app/common/models/request/cita_request_model.dart';
 import 'package:admin_clinica_front/app/common/utils/extensions/date_time_extensions.dart';
 import 'package:admin_clinica_front/app/common/widget/app_text_style.dart';
 import 'package:admin_clinica_front/app/ui/modules/monitoreo/bloc/cita_list/cita_list_admin_bloc.dart';
@@ -12,7 +13,7 @@ class CitaControlInicioFin extends StatelessWidget {
     required this.request,
   });
 
-  final CitaRequestAdminViewModel request;
+  final CitaRequestAdmin request;
 
   @override
   Widget build(BuildContext context) {
@@ -29,10 +30,10 @@ class CitaControlInicioFin extends StatelessWidget {
             children: [
               CitaPromedioInicioFinList(
                 citas: () {
-                  final dateList = getDatesBetween(request.fechaInicio ?? (request.fecha ?? DateTime.now()), request.fechaFin ?? (request.fecha ?? DateTime.now())).map((dateItem) {
+                  final dateList = getDatesBetween(request.fechaInicioDate ?? (request.fechaDate ?? DateTime.now()), request.fechaFinDate ?? (request.fechaDate ?? DateTime.now())).map((dateItem) {
                     final citasByToday = citasCompletasDoctor
                         .where(
-                          (citaItem) => (citaItem.fechaHoraCita.isSameDate(dateItem)),
+                          (citaItem) => (citaItem.fechaHoraCitaDate.isSameDate(dateItem)),
                         )
                         .toList();
 
@@ -40,7 +41,8 @@ class CitaControlInicioFin extends StatelessWidget {
                     double promedioTime = citasByToday.fold(
                         0,
                         (previousValue, element) =>
-                            previousValue + ((element.fechaFin?.hour ?? 0) * 60 + (element.fechaFin?.minute ?? 0) - (element.fechaInicio?.minute ?? 0) - (element.fechaInicio?.hour ?? 0) * 60));
+                            previousValue +
+                            ((element.fechaFinDate?.hour ?? 0) * 60 + (element.fechaFinDate?.minute ?? 0) - (element.fechaInicioDate?.minute ?? 0) - (element.fechaInicioDate?.hour ?? 0) * 60));
                     if (citasByToday.isNotEmpty) promedioTime = promedioTime / citasByToday.length;
                     return CitaPromedioDateTime(
                       date: dateItem,

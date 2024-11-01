@@ -1,11 +1,12 @@
 import 'package:admin_clinica_front/app/common/models/cita/cita_agil/cita_agil_create.dart';
-import 'package:admin_clinica_front/app/common/models/cita/cita_agil/cita_agil_update.dart';
+import 'package:admin_clinica_front/app/common/models/cita/cita_agil/cita_agil_update_model.dart';
 import 'package:admin_clinica_front/app/common/models/cita/cita_dto.dart';
 import 'package:admin_clinica_front/app/common/models/cita/cita_ocupada/cita_ocupada_create.dart';
-import 'package:admin_clinica_front/app/common/models/cita/citas_dto.dart';
 import 'package:admin_clinica_front/app/common/models/request/cita_request_model.dart';
 import 'package:admin_clinica_front/app/common/models/request/request_model.dart';
 import 'package:admin_clinica_front/app/common/repository/cita/i_cita_repository.dart';
+import 'package:admin_clinica_front/app/common/utils/extensions/date_time_extensions.dart';
+import 'package:admin_clinica_front/app/ui/view_models/cita_view/cita_view_models.dart';
 import 'package:either_dart/either.dart';
 
 import '../../service/cita_api.dart';
@@ -15,7 +16,7 @@ class CitaRepository implements ICitaRepository {
   CitaRepository(this.api);
 
   @override
-  Future<Either<String, List<CitasDTO>>> getCitaAll() async {
+  Future<Either<String, List<CitaDTO>>> getCitaAll() async {
     return await api.getCitaAll();
   }
 
@@ -45,12 +46,32 @@ class CitaRepository implements ICitaRepository {
   }
 
   @override
-  Future<Either<String, List<CitasDTO>>> getCitasByFechaIdDoctorIdUbicacion(CitaRequest citaRequest) {
+  Future<Either<String, List<CitaDTO>>> getCitasByFechaIdDoctorIdUbicacion(CitaRequest citaRequest) {
     return api.getCitasByFechaIdDoctorIdUbicacion(citaRequest);
   }
 
   @override
-  Future<Either<String, List<CitasDTO>>> getCitasFilterByIdDoctorParams(params) {
+  Future<Either<String, List<CitaDTO>>> getCitasFilterByIdDoctorParams(CitaFilterViewModel paramsView) {
+    final params = {};
+    if (paramsView.fecha != null) {
+      params['date'] = paramsView.fecha!.toFormatyyyyMMddHHmmss();
+    }
+    if (paramsView.fecha != null) {
+      params['week'] = paramsView.semana!.toFormatyyyyMMddHHmmss();
+    }
+    if (paramsView.fecha != null) {
+      params['month'] = paramsView.mes!.toFormatyyyyMMddHHmmss();
+    }
+
+    if (paramsView.ubicacionId != null) {
+      params['ubicacion_id'] = paramsView.fecha;
+    }
+    if (paramsView.ubicacionId != null) {
+      params['doctor_id'] = paramsView.doctorId;
+    }
+    if (paramsView.ubicacionId != null) {
+      params['tipo'] = paramsView.tipo;
+    }
     return api.getCitasFilterByIdDoctorParams(params);
   }
 

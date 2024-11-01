@@ -1,17 +1,17 @@
 import 'package:admin_clinica_front/app/common/constants/app_const_svgs.dart';
 import 'package:admin_clinica_front/app/common/constants/app_const_colors.dart';
+import 'package:admin_clinica_front/app/common/models/doctor/doctor_dto.dart';
 import 'package:admin_clinica_front/app/common/widget/app_box.dart';
 import 'package:admin_clinica_front/app/common/widget/app_grid_sliver_list.dart';
 import 'package:admin_clinica_front/app/common/widget/app_text_style.dart';
-import 'package:admin_clinica_front/app/ui/view_models/doctor_view/doctor_view_models.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 
 class ListDoctorHorizontal extends StatelessWidget {
   final int? doctorIdInitialSelected;
-  final List<DoctorsViewModel> doctors;
-  final void Function(DoctorsViewModel) onChanged;
+  final List<DoctorDto> doctors;
+  final void Function(DoctorDto) onChanged;
 
   const ListDoctorHorizontal({
     super.key,
@@ -32,9 +32,9 @@ class ListDoctorHorizontal extends StatelessWidget {
 
     return BlocProvider(
       create: (context) => DoctoSelectedCubit(doctorInitial: doctorSelecteds.isNotEmpty ? doctorSelecteds.first : doctors[0]),
-      child: BlocBuilder<DoctoSelectedCubit, DoctorsViewModel?>(
+      child: BlocBuilder<DoctoSelectedCubit, DoctorDto?>(
         builder: (context, state) {
-          return AppGridSliverList<DoctorsViewModel>(
+          return AppGridSliverList<DoctorDto>(
             maxCrossAxisExtent: 50,
             itemHeight: 200,
             items: doctors,
@@ -83,11 +83,11 @@ class ListDoctorHorizontal extends StatelessWidget {
   }
 }
 
-class DoctoSelectedCubit extends Cubit<DoctorsViewModel?> {
-  final DoctorsViewModel doctorInitial;
+class DoctoSelectedCubit extends Cubit<DoctorDto?> {
+  final DoctorDto doctorInitial;
   DoctoSelectedCubit({required this.doctorInitial}) : super(doctorInitial);
 
-  void goto(DoctorsViewModel doctorsViewModel) {
+  void goto(DoctorDto doctorsViewModel) {
     emit(doctorsViewModel);
   }
 

@@ -1,4 +1,6 @@
 // ignore_for_file: must_be_immutable
+import 'package:admin_clinica_front/app/common/models/doctor/doctor_create_model.dart';
+import 'package:admin_clinica_front/app/common/models/ubicacion/ubicacion_dto.dart';
 import 'package:admin_clinica_front/app/common/utils/extensions/date_time_extensions.dart';
 import 'package:admin_clinica_front/app/common/utils/extensions/list_string_extensions.dart';
 import 'package:admin_clinica_front/app/common/widget/app_box.dart';
@@ -20,7 +22,6 @@ import 'package:admin_clinica_front/app/ui/modules/doctor/bloc/doctor_list_bloc.
 import 'package:admin_clinica_front/app/ui/modules/ubicacion/bloc/ubicacion_bloc.dart';
 import 'package:admin_clinica_front/app/common/utils/validators.dart';
 import 'package:admin_clinica_front/app/ui/view_models/doctor_view/doctor_view_models.dart';
-import 'package:admin_clinica_front/app/ui/view_models/ubicacion_view/ubicacion_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../config/app_dependecy_injection.dart';
@@ -44,7 +45,7 @@ class DoctorAddAsistenteRecepcionPage extends StatelessWidget with ResponsiveWid
   );
 
   DateTime? _fechaNacimientoSelected;
-  final _ubicacionesList = <UbicacionsViewModel>[];
+  final _ubicacionesList = <UbicacionDto>[];
 
   @override
   Widget build(BuildContext context) {
@@ -170,13 +171,13 @@ class DoctorAddAsistenteRecepcionPage extends StatelessWidget with ResponsiveWid
                         ubicacionLoaded: (stt) {
                           final ubicacionesList = stt.ubicaciones
                               .map(
-                                (e) => MultiSelectItem<UbicacionsViewModel>(
+                                (e) => MultiSelectItem<UbicacionDto>(
                                   id: e.id,
                                   item: e,
                                 ),
                               )
                               .toList();
-                          return MultiSelectForm<UbicacionsViewModel>(
+                          return MultiSelectForm<UbicacionDto>(
                             validatorParent: (value) {
                               if (value == null || value.isEmpty) {
                                 return 'Debe seleccionar al menos una ubicación';
@@ -231,13 +232,13 @@ class DoctorAddAsistenteRecepcionPage extends StatelessWidget with ResponsiveWid
                                 onClick: () async {
                                   if (formKey.currentState!.validate()) {
                                     // Si el formulario es válido, muestra un Snackbar
-                                    final model = DoctorCreateViewModel(
+                                    final model = DoctorCreateModel(
                                       dni: dniController.text,
                                       nombres: nombresController.text,
                                       apellidos: apellidosController.text,
                                       celular: muDoctor.celular,
-                                      fechaNacimiento: _fechaNacimientoSelected!,
-                                      ubicacionesId: _ubicacionesList.map((e) => e.id).toList(),
+                                      fechaNacimiento: _fechaNacimientoSelected!.toFormatyyyyMMdd(),
+                                      ubicaciones_id: _ubicacionesList.map((e) => e.id).toList(),
                                     );
                                     doctorCreateBloc.add(DoctorCreateEvent.createDoctor(model));
                                     Navigator.pop(context);
@@ -288,7 +289,7 @@ class DoctorAddAsistenteRecepcionPage extends StatelessWidget with ResponsiveWid
                                                                       text: ' con fecha de nacimiento ',
                                                                     ),
                                                                     TextSpan(
-                                                                      text: model.fechaNacimiento.toFormatddMMyyyySlash(),
+                                                                      text: model.fechaNacimiento,
                                                                       style: AppTextGlobal.labelLightText(text: "").style,
                                                                     ),
                                                                     const TextSpan(
@@ -479,13 +480,13 @@ class DoctorAddAsistenteRecepcionPage extends StatelessWidget with ResponsiveWid
                     ubicacionLoaded: (stt) {
                       final ubicacionesList = stt.ubicaciones
                           .map(
-                            (e) => MultiSelectItem<UbicacionsViewModel>(
+                            (e) => MultiSelectItem<UbicacionDto>(
                               id: e.id,
                               item: e,
                             ),
                           )
                           .toList();
-                      return MultiSelectForm<UbicacionsViewModel>(
+                      return MultiSelectForm<UbicacionDto>(
                         validatorParent: (value) {
                           if (value == null || value.isEmpty) {
                             return 'Debe seleccionar al menos una ubicación';
@@ -544,13 +545,13 @@ class DoctorAddAsistenteRecepcionPage extends StatelessWidget with ResponsiveWid
                     onClick: () async {
                       if (formKey.currentState!.validate()) {
                         // Si el formulario es válido, muestra un Snackbar
-                        final model = DoctorCreateViewModel(
+                        final model = DoctorCreateModel(
                           dni: dniController.text,
                           nombres: nombresController.text,
                           apellidos: apellidosController.text,
                           celular: muDoctor.celular,
-                          fechaNacimiento: _fechaNacimientoSelected!,
-                          ubicacionesId: _ubicacionesList.map((e) => e.id).toList(),
+                          fechaNacimiento: _fechaNacimientoSelected!.toFormatyyyyMMdd(),
+                          ubicaciones_id: _ubicacionesList.map((e) => e.id).toList(),
                         );
                         doctorCreateBloc.add(DoctorCreateEvent.createDoctor(model));
                         Navigator.pop(context);
@@ -601,7 +602,7 @@ class DoctorAddAsistenteRecepcionPage extends StatelessWidget with ResponsiveWid
                                                           text: ' con fecha de nacimiento ',
                                                         ),
                                                         TextSpan(
-                                                          text: model.fechaNacimiento.toFormatddMMyyyySlash(),
+                                                          text: model.fechaNacimiento,
                                                           style: AppTextGlobal.labelLightText(text: "").style,
                                                         ),
                                                         const TextSpan(

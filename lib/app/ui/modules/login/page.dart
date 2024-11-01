@@ -3,6 +3,7 @@ import 'package:admin_clinica_front/app/common/blocs/firebase/firebase_notificat
 import 'package:admin_clinica_front/app/common/constants/app_const_svgs.dart';
 import 'package:admin_clinica_front/app/common/constants/app_const_colors.dart';
 import 'package:admin_clinica_front/app/common/blocs/usuario_session/bloc/usuario_bloc.dart';
+import 'package:admin_clinica_front/app/common/models/usuario/user_dto.dart';
 import 'package:admin_clinica_front/app/config/routes/app_routes.dart';
 import 'package:admin_clinica_front/app/config/routes/router.dart';
 import 'package:admin_clinica_front/app/common/widget/app_box.dart';
@@ -17,7 +18,6 @@ import 'package:admin_clinica_front/app/ui/modules/login/bloc/login_bloc.dart';
 import 'package:admin_clinica_front/app/ui/modules/login/widget/preview_slg.dart';
 import 'package:admin_clinica_front/app/ui/modules/login/widget/text_form_field_box.dart';
 import 'package:admin_clinica_front/app/common/utils/validators.dart';
-import 'package:admin_clinica_front/app/ui/view_models/usuario_view/usuario_view_models.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -43,7 +43,7 @@ class LoginPageState extends State<LoginPage> {
     context.read<LoginBloc>().add(const LoginEvent.authenticated());
   }
 
-  loadModules(UsuarioLoginResponseViewModel usuario) {
+  loadModules(UserLoginDTO usuario) {
     //buscando los modulos asignados a este usuario
     final router = modulesRouterList.where((e) => e.modulesName == usuario.rol && e.modulesTipo == usuario.tipo).firstOrNull;
     //buscando el index del Home
@@ -94,6 +94,10 @@ class LoginPageState extends State<LoginPage> {
                   dialogMessageCubit.showCustomAlert(titulo: notification.notification?.title ?? 'n.a', texto: notification.notification?.body ?? 'n.a');
                 },
               ));
+
+              firebaseBloc.add(FirebaseNotificationEvent.suscriptionSecondPlane(
+                (p0) async {},
+              ));
             }
           },
           usuarioLoaded: (value) async {
@@ -108,6 +112,9 @@ class LoginPageState extends State<LoginPage> {
                 (notification) {
                   dialogMessageCubit.showCustomAlert(titulo: notification.notification?.title ?? 'n.a', texto: notification.notification?.body ?? 'n.a');
                 },
+              ));
+              firebaseBloc.add(FirebaseNotificationEvent.suscriptionSecondPlane(
+                (p0) async {},
               ));
             }
             Navigator.pushReplacementNamed(context, Routes.home);

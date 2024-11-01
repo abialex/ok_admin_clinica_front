@@ -5,7 +5,7 @@ class UsuarioState with _$UsuarioState {
   const factory UsuarioState.initial({
     @Default(false) bool isValid, //valid form
     @Default(false) bool fetching, //solicitando
-    @Default(null) UsuarioLoginResponseViewModel? usuario, //solicitando
-    @Default(null) DoctorsViewModel? doctorIdSelected, //solicitando
+    @Default(null) UserLoginDTO? usuario, //solicitando
+    @Default(null) DoctorDto? doctorIdSelected, //solicitando
   }) = _Initial;
 }

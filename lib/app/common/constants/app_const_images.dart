@@ -12,6 +12,8 @@ class AppConstImages {
   static const String logo_hor_white = '${_path}logo_hor_white.png';
   static const String logo_vert_dark = '${_path}logo_vert_dark.png';
   static const String logo_vert_white = '${_path}logo_vert_white.png';
+  static const String servicios_odontoligicos_desk = '${_path}servicios_odontologicos_desk.png';
+  static const String servicios_odontoligicos_mobil = '${_path}servicios_odontologicos_mobil.png';
 
   static const String imag01 = '${_path}imag01.jpg';
   static const String imag02 = '${_path}imag02.jpg';

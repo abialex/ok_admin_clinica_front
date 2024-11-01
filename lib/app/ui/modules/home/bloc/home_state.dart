@@ -6,6 +6,6 @@ class HomeState with _$HomeState {
     @Default(false) bool isValid, //valid form
     @Default(false) bool fetching, //solicitando
     @Default(null) String? messageError, //solicitando
-    @Default(null) UsuarioLoginResponseViewModel? usuario, //solicitando
+    @Default(null) UserLoginDTO? usuario, //solicitando
   }) = _Initial;
 }

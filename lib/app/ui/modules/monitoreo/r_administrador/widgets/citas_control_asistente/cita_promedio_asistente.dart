@@ -1,5 +1,6 @@
 import 'package:admin_clinica_front/app/common/enums/control_cita_tipo_enum.dart';
 import 'package:admin_clinica_front/app/common/cubits/index_cubit.dart';
+import 'package:admin_clinica_front/app/common/models/request/cita_request_model.dart';
 import 'package:admin_clinica_front/app/ui/modules/monitoreo/bloc/cita_list/cita_list_admin_bloc.dart';
 import 'package:admin_clinica_front/app/ui/modules/monitoreo/r_administrador/widgets/citas_by_one_day.dart';
 import 'package:admin_clinica_front/app/ui/modules/monitoreo/r_administrador/widgets/citas_by_range_days.dart';
@@ -14,7 +15,7 @@ class CitaPromedioAsistentaList extends StatelessWidget {
     required this.request,
   });
   final List<CitaPromedioDateTime> citas;
-  final CitaRequestAdminViewModel request;
+  final CitaRequestAdmin request;
 
   @override
   Widget build(BuildContext context) {
@@ -35,10 +36,10 @@ class CitaPromedioAsistentaList extends StatelessWidget {
                       0,
                       (previousValue, element) =>
                           previousValue +
-                          ((element.fechaValidacion?.hour ?? 0) * 60 +
-                              (element.fechaValidacion?.minute ?? 0) -
-                              (element.fechaConfirmacion?.minute ?? 0) -
-                              (element.fechaConfirmacion?.hour ?? 0) * 60)) /
+                          ((element.fechaValidacionDate?.hour ?? 0) * 60 +
+                              (element.fechaValidacionDate?.minute ?? 0) -
+                              (element.fechaConfirmacionDate?.minute ?? 0) -
+                              (element.fechaConfirmacionDate?.hour ?? 0) * 60)) /
                   (citas.isEmpty ? 1 : citas.expand((element) => element.citas).length),
             ),
     );

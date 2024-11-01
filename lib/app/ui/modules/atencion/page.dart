@@ -2,6 +2,9 @@
 import 'dart:async';
 import 'package:admin_clinica_front/app/common/constants/app_const_colors.dart';
 import 'package:admin_clinica_front/app/common/blocs/usuario_session/bloc/usuario_bloc.dart';
+import 'package:admin_clinica_front/app/common/models/doctor/doctor_dto.dart';
+import 'package:admin_clinica_front/app/common/models/request/request_model.dart';
+import 'package:admin_clinica_front/app/common/utils/extensions/date_time_extensions.dart';
 import 'package:admin_clinica_front/app/config/routes/router.dart';
 import 'package:admin_clinica_front/app/common/widget/app_box.dart';
 import 'package:admin_clinica_front/app/common/widget/app_text_style.dart';
@@ -16,7 +19,6 @@ import 'package:admin_clinica_front/app/ui/modules/cita/bloc/cita_crear_bloc/cit
 import 'package:admin_clinica_front/app/ui/modules/cita/bloc/cita_crear_bloc/cita_create_event.dart';
 import 'package:admin_clinica_front/app/ui/modules/doctor/bloc/doctor_list_bloc.dart';
 import 'package:admin_clinica_front/app/ui/view_models/cita_view/cita_view_models.dart';
-import 'package:admin_clinica_front/app/ui/view_models/doctor_view/doctor_view_models.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -27,7 +29,7 @@ import '../../../data/repository/storage/ilocal_repository.dart';
 class AtencionPage extends StatelessWidget with ResponsiveWidgetMixin {
   AtencionPage({super.key});
   DateTime dateSelected = DateTime.now();
-  DoctorsViewModel? doctorSelected;
+  DoctorDto? doctorSelected;
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -101,13 +103,13 @@ class AtencionPage extends StatelessWidget with ResponsiveWidgetMixin {
                           usuarioBloc.setDoctorSelected(stt.doctors[0]);
                           doctorSelected = stt.doctors[0];
                           if (doctorSelected != null) {
-                            if (doctorSelected!.isActive) {
+                            if (doctorSelected!.is_active) {
                               context.read<CitaBloc>().add(
                                     CitaEvent.getCitas(
-                                      CitaRequestViewModel(
+                                      CitaRequest(
                                         doctorId: doctorSelected!.id,
                                         ubicacionesId: usuarioBloc.state.usuario?.ubicaciones ?? [],
-                                        fechaHoraCita: DateTime.now(),
+                                        fechaHoraCita: DateTime.now().toFormatyyyyMMdd(),
                                       ),
                                     ),
                                   );
@@ -126,13 +128,13 @@ class AtencionPage extends StatelessWidget with ResponsiveWidgetMixin {
                                         (element) => doctorSelected!.id == element.id,
                                       )) {
                                         doctorSelected = stt.doctors.firstWhere((element) => doctorSelected!.id == element.id);
-                                        if (doctorSelected!.isActive) {
+                                        if (doctorSelected!.is_active) {
                                           context.read<CitaBloc>().add(
                                                 CitaEvent.getCitas(
-                                                  CitaRequestViewModel(
+                                                  CitaRequest(
                                                     doctorId: doctorSelected!.id,
                                                     ubicacionesId: usuarioBloc.state.usuario?.ubicaciones ?? [],
-                                                    fechaHoraCita: DateTime.now(),
+                                                    fechaHoraCita: DateTime.now().toFormatyyyyMMdd(),
                                                   ),
                                                 ),
                                               );
@@ -205,13 +207,13 @@ class AtencionPage extends StatelessWidget with ResponsiveWidgetMixin {
                               AppBox.w6,
                               GestureDetector(
                                 onTap: () {
-                                  if (doctorSelected!.isActive) {
+                                  if (doctorSelected!.is_active) {
                                     citaBloc.add(
                                       CitaEvent.getCitas(
-                                        CitaRequestViewModel(
+                                        CitaRequest(
                                           doctorId: doctorSelected?.id ?? 0,
                                           ubicacionesId: usuarioBloc.state.usuario?.ubicaciones ?? [],
-                                          fechaHoraCita: DateTime.now(),
+                                          fechaHoraCita: DateTime.now().toFormatyyyyMMdd(),
                                         ),
                                       ),
                                     );
@@ -257,15 +259,18 @@ class AtencionPage extends StatelessWidget with ResponsiveWidgetMixin {
         child: BlocBuilder<CitaBloc, CitaState>(
           builder: (context, state) {
             return state.map(
+              citaOcupadaCreated: (value) {
+                return SizedBox.shrink();
+              },
               initial: (state) {
                 return GestureDetector(
                   onTap: () {
                     citaBloc.add(
                       CitaEvent.getCitas(
-                        CitaRequestViewModel(
+                        CitaRequest(
                           doctorId: doctorSelected?.id ?? 0,
                           ubicacionesId: usuarioBloc.state.usuario?.ubicaciones ?? [],
-                          fechaHoraCita: DateTime.now(),
+                          fechaHoraCita: DateTime.now().toFormatyyyyMMdd(),
                         ),
                       ),
                     );

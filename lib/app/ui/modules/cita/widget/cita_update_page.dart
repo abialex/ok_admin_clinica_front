@@ -1,4 +1,5 @@
 import 'package:admin_clinica_front/app/common/constants/app_const_svgs.dart';
+import 'package:admin_clinica_front/app/common/models/request/request_model.dart';
 import 'package:admin_clinica_front/app/common/utils/extensions/date_time_extensions.dart';
 import 'package:admin_clinica_front/app/common/constants/app_const_colors.dart';
 import 'package:admin_clinica_front/app/data/entities/estado_cita.dart';
@@ -16,13 +17,12 @@ import 'package:admin_clinica_front/app/ui/modules/cita/bloc/cita_bloc.dart';
 import 'package:admin_clinica_front/app/ui/modules/cita/bloc/cita_update_bloc/cita_update_bloc.dart';
 import 'package:admin_clinica_front/app/ui/modules/cita/bloc/cita_update_bloc/cita_update_event.dart';
 import 'package:admin_clinica_front/app/ui/modules/cita/bloc/cita_update_bloc/cita_update_state.dart';
-import 'package:admin_clinica_front/app/ui/modules/cita/r_asistente_recepcion/forms/cita_update_agil.dart';
-import 'package:admin_clinica_front/app/ui/view_models/cita_view/cita_view_models.dart';
+import 'package:admin_clinica_front/app/ui/modules/cita/widget/cita_update_agil.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-import '../../../../../common/widget/page/page_mixin_base.dart';
+import '../../../../common/widget/page/page_mixin_base.dart';
 
 class CitaUpdateAsistenteRecepcionPage extends StatelessWidget with ResponsiveWidgetMixin {
   CitaUpdateAsistenteRecepcionPage({super.key});
@@ -73,7 +73,7 @@ class CitaUpdateAsistenteRecepcionPage extends StatelessWidget with ResponsiveWi
                           AppBox.w6,
                         ],
                       ),
-                    if (stt.citaViewModel.pacienteDatos != null)
+                    if (stt.citaViewModel.paciente != null)
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -82,7 +82,7 @@ class CitaUpdateAsistenteRecepcionPage extends StatelessWidget with ResponsiveWi
                             Icons.person,
                             color: AppConstColors.slg01,
                           ),
-                          Expanded(child: Center(child: AppTextGlobal.lightText(text: stt.citaViewModel.pacienteDatos!.toUpperCase()))),
+                          Expanded(child: Center(child: AppTextGlobal.lightText(text: stt.citaViewModel.paciente!.nombres!.toUpperCase()))),
                           AppBox.w6,
                         ],
                       ),
@@ -100,7 +100,7 @@ class CitaUpdateAsistenteRecepcionPage extends StatelessWidget with ResponsiveWi
                             horizontal: 5,
                           ),
                           decoration: BoxDecoration(
-                            color: stt.citaViewModel.estado.color,
+                            color: stt.citaViewModel.estadoEnum.color,
                             borderRadius: const BorderRadius.all(
                               Radius.circular(
                                 10,
@@ -121,14 +121,14 @@ class CitaUpdateAsistenteRecepcionPage extends StatelessWidget with ResponsiveWi
                             ),
                             // AppTextGlobal.labelLightText(text: "Hora:"),
                             AppBox.w2,
-                            AppTextGlobal.labelLightText(text: stt.citaViewModel.fechaHoraCita.toFormatHHmm()),
+                            AppTextGlobal.labelLightText(text: stt.citaViewModel.fechaHoraCitaDate.toFormatHHmm()),
                           ],
                         )
                       ],
                     ),
                     AppBox.h10,
                     () {
-                      switch (stt.citaViewModel.tipo) {
+                      switch (stt.citaViewModel.tipoEnum) {
                         case TipoCita.tentativa:
                           return const ConstruccionAnimated();
                         case TipoCita.agil:
@@ -147,10 +147,10 @@ class CitaUpdateAsistenteRecepcionPage extends StatelessWidget with ResponsiveWi
                 );
               },
               citaUpdateSuccess: (stt) {
-                citaBloc.add(GetCitas(CitaRequestViewModel(
+                citaBloc.add(GetCitas(CitaRequest(
                   doctorId: stt.doctorId,
                   ubicacionesId: stt.ubicacionesId,
-                  fechaHoraCita: stt.fechaCita,
+                  fechaHoraCita: stt.fechaCita.toFormatyyyyMMdd(),
                 )));
                 return Center(
                     child: Column(
@@ -241,7 +241,7 @@ class CitaUpdateAsistenteRecepcionPage extends StatelessWidget with ResponsiveWi
                           AppBox.w6,
                         ],
                       ),
-                    if (stt.citaViewModel.pacienteDatos != null)
+                    if (stt.citaViewModel.paciente != null)
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -250,7 +250,7 @@ class CitaUpdateAsistenteRecepcionPage extends StatelessWidget with ResponsiveWi
                             Icons.person,
                             color: AppConstColors.slg01,
                           ),
-                          Expanded(child: Center(child: AppTextGlobal.lightText(text: stt.citaViewModel.pacienteDatos!.toUpperCase()))),
+                          Expanded(child: Center(child: AppTextGlobal.lightText(text: stt.citaViewModel.paciente!.nombres!.toUpperCase()))),
                           AppBox.w6,
                         ],
                       ),
@@ -268,7 +268,7 @@ class CitaUpdateAsistenteRecepcionPage extends StatelessWidget with ResponsiveWi
                             horizontal: 5,
                           ),
                           decoration: BoxDecoration(
-                            color: stt.citaViewModel.estado.color,
+                            color: stt.citaViewModel.estadoEnum.color,
                             borderRadius: const BorderRadius.all(
                               Radius.circular(
                                 10,
@@ -289,14 +289,14 @@ class CitaUpdateAsistenteRecepcionPage extends StatelessWidget with ResponsiveWi
                             ),
                             // AppTextGlobal.labelLightText(text: "Hora:"),
                             AppBox.w2,
-                            AppTextGlobal.labelLightText(text: stt.citaViewModel.fechaHoraCita.toFormatHHmm()),
+                            AppTextGlobal.labelLightText(text: stt.citaViewModel.fechaHoraCitaDate.toFormatHHmm()),
                           ],
                         )
                       ],
                     ),
                     AppBox.h10,
                     () {
-                      switch (stt.citaViewModel.tipo) {
+                      switch (stt.citaViewModel.tipoEnum) {
                         case TipoCita.tentativa:
                           return const ConstruccionAnimated();
                         case TipoCita.agil:
@@ -315,10 +315,10 @@ class CitaUpdateAsistenteRecepcionPage extends StatelessWidget with ResponsiveWi
                 );
               },
               citaUpdateSuccess: (stt) {
-                citaBloc.add(GetCitas(CitaRequestViewModel(
+                citaBloc.add(GetCitas(CitaRequest(
                   doctorId: stt.doctorId,
                   ubicacionesId: stt.ubicacionesId,
-                  fechaHoraCita: stt.fechaCita,
+                  fechaHoraCita: stt.fechaCita.toFormatyyyyMMdd(),
                 )));
                 return Center(
                     child: Column(

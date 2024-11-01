@@ -1,6 +1,7 @@
+import 'package:admin_clinica_front/app/common/models/cita/cita_dto.dart';
+import 'package:admin_clinica_front/app/common/models/request/cita_request_model.dart';
+import 'package:admin_clinica_front/app/common/repository/cita/i_cita_repository.dart';
 import 'package:admin_clinica_front/app/config/app_dependecy_injection.dart';
-import 'package:admin_clinica_front/app/common/mappers/citas_service.dart';
-import 'package:admin_clinica_front/app/ui/view_models/cita_view/cita_view_models.dart';
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -14,11 +15,11 @@ class CitaListAdminBloc extends Bloc<CitaListAdminEvent, CitaListAdminState> {
     on<InitialCitaListAdmin>(initialCitas);
   }
 
-  final _citaService = locator<CitasService>();
+  final citaRepository = locator.get<ICitaRepository>();
 
   Future<void> getCitas(GetCitas event, Emitter<CitaListAdminState> emit) async {
     emit(Loading());
-    final responseApi = await _citaService.getUbicacionIdDateDoctorId(event.citaRequestViewModel);
+    final responseApi = await citaRepository.getUbicacionIdDateDoctorId(event.citaRequestViewModel);
 
     responseApi.fold(
       (left) => emit(

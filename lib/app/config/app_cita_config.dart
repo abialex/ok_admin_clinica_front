@@ -1,4 +1,4 @@
-import 'package:admin_clinica_front/app/ui/view_models/cita_view/cita_view_models.dart';
+import 'package:admin_clinica_front/app/common/models/cita/cita_dto.dart';
 
 class CitaConfig {
   static final List<Hora> horaList = [
@@ -37,7 +37,7 @@ interface class Hora {
   final int hora;
   final String horaString;
   final String horaString2;
-  final List<CitasViewModel> listItems;
+  final List<CitaDTO> listItems;
 
   Hora({
     required this.hora,

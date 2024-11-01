@@ -1,4 +1,5 @@
 import 'package:admin_clinica_front/app/common/constants/app_const_svgs.dart';
+import 'package:admin_clinica_front/app/common/models/request/request_model.dart';
 import 'package:admin_clinica_front/app/common/utils/extensions/date_time_extensions.dart';
 import 'package:admin_clinica_front/app/common/constants/app_const_colors.dart';
 import 'package:admin_clinica_front/app/common/blocs/usuario_session/bloc/usuario_bloc.dart';
@@ -14,17 +15,15 @@ import 'package:admin_clinica_front/app/ui/modules/cita/bloc/cita_bloc.dart';
 import 'package:admin_clinica_front/app/ui/modules/cita/bloc/cita_crear_bloc/cita_create_bloc.dart';
 import 'package:admin_clinica_front/app/ui/modules/cita/bloc/cita_crear_bloc/cita_create_event.dart';
 import 'package:admin_clinica_front/app/ui/modules/cita/bloc/cita_crear_bloc/cita_create_state.dart';
-import 'package:admin_clinica_front/app/ui/modules/cita/r_asistente_recepcion/forms/cita_add_agil.dart';
-import 'package:admin_clinica_front/app/ui/modules/cita/r_asistente_recepcion/forms/cita_add_ocupada.dart';
+import 'package:admin_clinica_front/app/ui/modules/cita/widget/cita_add_agil.dart';
+import 'package:admin_clinica_front/app/ui/modules/cita/widget/cita_add_ocupada.dart';
 import 'package:admin_clinica_front/app/ui/modules/cita/widget/form_pages.dart';
-import 'package:admin_clinica_front/app/ui/view_models/cita_view/cita_view_models.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-import '../../../../../common/widget/page/page_mixin_base.dart';
+import '../../../../common/widget/page/page_mixin_base.dart';
 
 class CitaAddPage extends StatelessWidget with ResponsiveWidgetMixin {
   CitaAddPage({super.key});
@@ -154,10 +153,10 @@ class CitaAddPage extends StatelessWidget with ResponsiveWidgetMixin {
               citaCreateSuccess: (stt) {
                 citaBloc.add(
                   GetCitas(
-                    CitaRequestViewModel(
+                    CitaRequest(
                       doctorId: stt.doctorId,
                       ubicacionesId: stt.ubicacionesId,
-                      fechaHoraCita: stt.fechaCita,
+                      fechaHoraCita: stt.fechaCita.toFormatyyyyMMdd(),
                     ),
                   ),
                 );
@@ -345,10 +344,10 @@ class CitaAddPage extends StatelessWidget with ResponsiveWidgetMixin {
               citaCreateSuccess: (stt) {
                 citaBloc.add(
                   GetCitas(
-                    CitaRequestViewModel(
+                    CitaRequest(
                       doctorId: stt.doctorId,
                       ubicacionesId: stt.ubicacionesId,
-                      fechaHoraCita: stt.fechaCita,
+                      fechaHoraCita: stt.fechaCita.toFormatyyyyMMdd(),
                     ),
                   ),
                 );

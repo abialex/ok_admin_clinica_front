@@ -3,7 +3,7 @@
 import 'package:admin_clinica_front/app/ui/modules/atencion/page.dart';
 import 'package:admin_clinica_front/app/ui/modules/cita/r_asistente_asistente/pages/cita_list_page.dart';
 import 'package:admin_clinica_front/app/ui/modules/cita/r_doctor/pages/cita_list_doctor_page.dart';
-import 'package:admin_clinica_front/app/ui/modules/cita/r_asistente_recepcion/pages/cita_update_page.dart';
+import 'package:admin_clinica_front/app/ui/modules/cita/widget/cita_update_page.dart';
 import 'package:admin_clinica_front/app/ui/modules/cita/r_doctor_administrador/pages/cita_add_page.dart';
 import 'package:admin_clinica_front/app/ui/modules/cita/r_doctor_administrador/pages/cita_list_page.dart';
 import 'package:admin_clinica_front/app/ui/modules/cita/r_doctor_administrador/pages/cita_update_page.dart';
@@ -15,8 +15,8 @@ import 'package:admin_clinica_front/app/ui/modules/paciente/paciente_list/pacien
 import 'package:flutter/material.dart';
 import 'package:upgrader/upgrader.dart';
 
-import '../../ui/modules/cita/r_asistente_recepcion/pages/cita_add_page.dart';
-import '../../ui/modules/cita/r_asistente_recepcion/pages/cita_list_page.dart';
+import '../../ui/modules/cita/widget/cita_add_page.dart';
+import '../../ui/modules/cita/pages/cita_list_page.dart';
 import '../../ui/modules/doctor/doctor_add/doctor_add_asist_recep_page.dart';
 import '../../ui/modules/doctor/doctor_list/doctor_list_asist_recep_page.dart';
 import '../../ui/modules/doctor/doctor_list/doctor_list_asist_asist_page.dart';

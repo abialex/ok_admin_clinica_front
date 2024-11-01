@@ -1,5 +1,6 @@
 import 'package:admin_clinica_front/app/common/enums/control_cita_tipo_enum.dart';
 import 'package:admin_clinica_front/app/common/constants/app_const_colors.dart';
+import 'package:admin_clinica_front/app/common/models/request/cita_request_model.dart';
 import 'package:admin_clinica_front/app/common/widget/app_text_style.dart';
 import 'package:admin_clinica_front/app/ui/modules/monitoreo/r_administrador/widgets/grafico_cita_asistenta.dart';
 import 'package:admin_clinica_front/app/ui/view_models/cita_view/cita_view_models.dart';
@@ -14,7 +15,7 @@ class GraficoByRangeDays extends StatelessWidget {
     required this.tipoControlCita,
   });
   final List<CitaPromedioDateTime> citas;
-  final CitaRequestAdminViewModel request;
+  final CitaRequestAdmin request;
   final ControlCitaTipoEnum tipoControlCita;
 
   @override

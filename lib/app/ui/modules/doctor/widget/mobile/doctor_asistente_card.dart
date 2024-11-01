@@ -1,20 +1,20 @@
 import 'package:admin_clinica_front/app/common/constants/app_const_colors.dart';
+import 'package:admin_clinica_front/app/common/models/cita/cita_dto.dart';
+import 'package:admin_clinica_front/app/common/models/doctor/doctor_dto.dart';
 import 'package:admin_clinica_front/app/data/entities/estado_cita.dart';
-import 'package:admin_clinica_front/app/common/mappers/citas_service.dart';
+import 'package:admin_clinica_front/app/common/enums/tipo_accion_enum.dart';
 import 'package:admin_clinica_front/app/common/widget/app_box.dart';
 import 'package:admin_clinica_front/app/common/widget/app_text_style.dart';
 import 'package:admin_clinica_front/app/common/widget/button_base/button_success.dart';
 import 'package:admin_clinica_front/app/common/widget/dialog/dialog_message/cubit/dialog_message_cubit.dart';
 import 'package:admin_clinica_front/app/ui/modules/cita/bloc/cita_index_bloc/cita_index_bloc.dart';
 import 'package:admin_clinica_front/app/ui/modules/doctor/doctor_index_bloc/doctor_index_bloc.dart';
-import 'package:admin_clinica_front/app/ui/view_models/cita_view/cita_view_models.dart';
-import 'package:admin_clinica_front/app/ui/view_models/doctor_view/doctor_view_models.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class DoctorsAsistenteCard extends StatelessWidget {
-  final DoctorsViewModel doctor;
+  final DoctorDto doctor;
   final Function(int)? onUpdate;
 
   const DoctorsAsistenteCard({
@@ -113,7 +113,7 @@ class DoctorsAsistenteCard extends StatelessWidget {
                                       children: [
                                         AppTextGlobal.labelLightText(text: "USERNAME:", fontSize: 13),
                                         AppBox.w4,
-                                        AppTextGlobal.lightText(text: stt.doctor.username, fontSize: 13),
+                                        AppTextGlobal.lightText(text: stt.doctor.username ?? 'sin user', fontSize: 13),
                                       ],
                                     ),
                                     Row(
@@ -128,7 +128,7 @@ class DoctorsAsistenteCard extends StatelessWidget {
                                             horizontal: 5,
                                           ),
                                           decoration: BoxDecoration(
-                                            color: stt.doctor.isActive ? AppConstColors.greenAccent : AppConstColors.redSunat,
+                                            color: stt.doctor.is_active ? AppConstColors.greenAccent : AppConstColors.redSunat,
                                             borderRadius: const BorderRadius.all(
                                               Radius.circular(
                                                 10,
@@ -136,7 +136,7 @@ class DoctorsAsistenteCard extends StatelessWidget {
                                             ),
                                           ),
                                           child: AppTextGlobal.labelLightText(
-                                            text: stt.doctor.isActive ? "Activo" : "Inactivo",
+                                            text: stt.doctor.is_active ? "Activo" : "Inactivo",
                                             colorText: AppConstColors.white,
                                             fontSize: 14,
                                           ).animate().flip(),
@@ -474,13 +474,13 @@ class DoctorsAsistenteCard extends StatelessWidget {
     );
   }
 
-  Future<void> doctorAction(BuildContext context, CitasViewModel cita) async {
+  Future<void> doctorAction(BuildContext context, CitaDTO cita) async {
     final bloc = context.read<CitaIndexBloc>();
     final dialogCubit = context.read<DialogMessageCubit>();
     late String titulo;
     late String texto;
     late TipoAccionEnum tipoAccion;
-    switch (cita.estado) {
+    switch (cita.estadoEnum) {
       case EstadoCita.pendiente:
         titulo = "¿Seguro(a) de confirmar?";
         texto = "la cita estará pendiente para que el doctor acepte, una vez confirmada la cita ya no se podrá modificar.";

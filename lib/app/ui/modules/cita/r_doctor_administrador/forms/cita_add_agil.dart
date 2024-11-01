@@ -1,4 +1,6 @@
 import 'package:admin_clinica_front/app/common/constants/app_const_icons.dart';
+import 'package:admin_clinica_front/app/common/models/cita/cita_agil/cita_agil_create.dart';
+import 'package:admin_clinica_front/app/common/models/ubicacion/ubicacion_dto.dart';
 import 'package:admin_clinica_front/app/common/widget/app_box.dart';
 import 'package:admin_clinica_front/app/common/widget/app_sunat.dart';
 import 'package:admin_clinica_front/app/common/widget/app_text_style.dart';
@@ -12,8 +14,6 @@ import 'package:admin_clinica_front/app/ui/modules/cita/bloc/cita_crear_bloc/cit
 import 'package:admin_clinica_front/app/ui/modules/cita/bloc/cita_crear_bloc/cita_create_event.dart';
 import 'package:admin_clinica_front/app/ui/modules/ubicacion/bloc/ubicacion_bloc.dart';
 import 'package:admin_clinica_front/app/common/utils/validators.dart';
-import 'package:admin_clinica_front/app/ui/view_models/cita_view/cita_view_models.dart';
-import 'package:admin_clinica_front/app/ui/view_models/ubicacion_view/ubicacion_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -23,7 +23,7 @@ class CitaAddFormAgil extends StatefulWidget {
   final int doctorId;
   final DateTime fechaCita;
   final int hora;
-  CitaAddFormAgil({
+  const CitaAddFormAgil({
     super.key,
     required this.doctorId,
     required this.fechaCita,
@@ -40,7 +40,7 @@ class _CitaAddFormAgilState extends State<CitaAddFormAgil> {
   final _razonController = TextEditingController();
   final _minutoController = TextEditingController();
   final _celularController = TextEditingController();
-  final _ubicacionesList = <UbicacionsViewModel>[];
+  final _ubicacionesList = <UbicacionDto>[];
 
   double target = 0;
 
@@ -154,13 +154,13 @@ class _CitaAddFormAgilState extends State<CitaAddFormAgil> {
                           ubicacionLoaded: (stt) {
                             final ubicacionesList = stt.ubicaciones
                                 .map(
-                                  (e) => MultiSelectItem<UbicacionsViewModel>(
+                                  (e) => MultiSelectItem<UbicacionDto>(
                                     id: e.id,
                                     item: e,
                                   ),
                                 )
                                 .toList();
-                            return MultiSelectForm<UbicacionsViewModel>(
+                            return MultiSelectForm<UbicacionDto>(
                               isMultiSelect: false,
                               validatorParent: (value) {
                                 if (value == null || value.isEmpty) {
@@ -209,15 +209,17 @@ class _CitaAddFormAgilState extends State<CitaAddFormAgil> {
                             if (formKey.currentState!.validate()) {
                               createCitaBloc.add(
                                 CitaCreateEvent.citaCreateLocal(
-                                  CitaAgilCreateViewModel(
+                                  CitaAgilCreateModel(
                                     doctorId: widget.doctorId,
                                     ubicacionId: _ubicacionesList.first.id,
-                                    fechaHoraCita: widget.fechaCita.copyWith(
-                                      hour: widget.hora,
-                                      minute: int.parse(_minutoController.text),
-                                      second: 0,
-                                      millisecond: 0,
-                                    ),
+                                    fechaHoraCita: widget.fechaCita
+                                        .copyWith(
+                                          hour: widget.hora,
+                                          minute: int.parse(_minutoController.text),
+                                          second: 0,
+                                          millisecond: 0,
+                                        )
+                                        .toIso8601String(),
                                     datosPaciente: _nombresController.text,
                                     celular: _celularController.text,
                                     razon: _razonController.text,

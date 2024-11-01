@@ -1,10 +1,10 @@
 import 'package:admin_clinica_front/app/common/enums/control_cita_tipo_enum.dart';
+import 'package:admin_clinica_front/app/common/models/cita/cita_dto.dart';
 import 'package:admin_clinica_front/app/common/utils/extensions/date_time_extensions.dart';
 import 'package:admin_clinica_front/app/common/constants/app_const_colors.dart';
 import 'package:admin_clinica_front/app/common/widget/app_box.dart';
 import 'package:admin_clinica_front/app/common/widget/app_sliver_list.dart';
 import 'package:admin_clinica_front/app/common/widget/app_text_style.dart';
-import 'package:admin_clinica_front/app/ui/view_models/cita_view/cita_view_models.dart';
 import 'package:flutter/cupertino.dart';
 
 //! falta lo mismo aquí
@@ -16,7 +16,7 @@ class GraficoByOneDay extends StatelessWidget {
     required this.tipoControlCita,
   });
 
-  final List<CitaViewModel> citasToday;
+  final List<CitaDTO> citasToday;
   final double promedioTimeToday;
   final ControlCitaTipoEnum tipoControlCita;
 
@@ -61,7 +61,7 @@ class GraficoByOneDay extends StatelessWidget {
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 children: [
-                                  AppTextGlobal.labelLightText(text: item.doctor),
+                                  AppTextGlobal.labelLightText(text: item.doctor ?? 'n.a'),
                                   Text(item.razon ?? 'ss'),
                                 ],
                               ),
@@ -85,14 +85,14 @@ class GraficoByOneDay extends StatelessWidget {
         : Center(child: AppTextGlobal.labelLightText(text: 'No hay citas'));
   }
 
-  Widget _inicioToFin(CitaViewModel item) {
+  Widget _inicioToFin(CitaDTO item) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            AppTextGlobal.lightText(text: item.fechaInicio?.toFormatHHm12h() ?? '--'),
+            AppTextGlobal.lightText(text: item.fechaInicioDate?.toFormatHHm12h() ?? '--'),
             AppBox.w10,
             AppTextGlobal.lightText(text: "- Hora de Inicio", textAlign: TextAlign.left),
           ],
@@ -100,7 +100,7 @@ class GraficoByOneDay extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            AppTextGlobal.lightText(text: item.fechaFin?.toFormatHHm12h() ?? '--'),
+            AppTextGlobal.lightText(text: item.fechaFinDate?.toFormatHHm12h() ?? '--'),
             AppBox.w4,
             AppTextGlobal.lightText(text: "- Hora Fin", textAlign: TextAlign.left),
           ],
@@ -111,7 +111,7 @@ class GraficoByOneDay extends StatelessWidget {
             AppTextGlobal.lightText(text: "Tiempo:", textAlign: TextAlign.left),
             AppBox.w4,
             AppTextGlobal.lightText(
-              text: convertDoubleToTimeString2(((item.fechaFin?.hour ?? 0) * 60 + (item.fechaFin?.minute ?? 0) - (item.fechaInicio?.minute ?? 0) - (item.fechaInicio?.hour ?? 0) * 60)),
+              text: convertDoubleToTimeString2(((item.fechaFinDate?.hour ?? 0) * 60 + (item.fechaFinDate?.minute ?? 0) - (item.fechaInicioDate?.minute ?? 0) - (item.fechaInicioDate?.hour ?? 0) * 60)),
             ),
           ],
         ),
@@ -119,14 +119,14 @@ class GraficoByOneDay extends StatelessWidget {
     );
   }
 
-  Widget _confirmadoToValidado(CitaViewModel item) {
+  Widget _confirmadoToValidado(CitaDTO item) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            AppTextGlobal.lightText(text: item.fechaConfirmacion?.toFormatHHm12h() ?? '--'),
+            AppTextGlobal.lightText(text: item.fechaConfirmacionDate?.toFormatHHm12h() ?? '--'),
             AppBox.w4,
             AppTextGlobal.lightText(text: "- Hora de Confirmación", textAlign: TextAlign.left),
           ],
@@ -134,7 +134,7 @@ class GraficoByOneDay extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            AppTextGlobal.lightText(text: item.fechaValidacion?.toFormatHHm12h() ?? '--'),
+            AppTextGlobal.lightText(text: item.fechaValidacionDate?.toFormatHHm12h() ?? '--'),
             AppBox.w4,
             AppTextGlobal.lightText(text: "- Hora de Validación", textAlign: TextAlign.left),
           ],
@@ -146,7 +146,7 @@ class GraficoByOneDay extends StatelessWidget {
             AppBox.w10,
             AppTextGlobal.lightText(
               text: convertDoubleToTimeString2(
-                  ((item.fechaValidacion?.hour ?? 0) * 60 + (item.fechaValidacion?.minute ?? 0) - (item.fechaConfirmacion?.minute ?? 0) - (item.fechaConfirmacion?.hour ?? 0) * 60)),
+                  ((item.fechaValidacionDate?.hour ?? 0) * 60 + (item.fechaValidacionDate?.minute ?? 0) - (item.fechaConfirmacionDate?.minute ?? 0) - (item.fechaConfirmacionDate?.hour ?? 0) * 60)),
             ),
           ],
         ),

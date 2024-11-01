@@ -1,16 +1,16 @@
 import 'package:admin_clinica_front/app/common/enums/control_cita_tipo_enum.dart';
+import 'package:admin_clinica_front/app/common/models/cita/cita_dto.dart';
 import 'package:admin_clinica_front/app/common/utils/extensions/date_time_extensions.dart';
 import 'package:admin_clinica_front/app/common/constants/app_const_colors.dart';
 import 'package:admin_clinica_front/app/common/widget/app_box.dart';
 import 'package:admin_clinica_front/app/common/widget/app_text_style.dart';
 import 'package:admin_clinica_front/app/ui/modules/monitoreo/r_administrador/widgets/citas_by_one_day.dart';
-import 'package:admin_clinica_front/app/ui/view_models/cita_view/cita_view_models.dart';
 import 'package:flutter/material.dart';
 
 class DetallesDialog extends StatelessWidget {
   const DetallesDialog({super.key, required this.citasDia, required this.promedioTime, required this.tipoControlCita});
 
-  final List<CitaViewModel> citasDia;
+  final List<CitaDTO> citasDia;
   final double promedioTime;
   final ControlCitaTipoEnum tipoControlCita;
 
@@ -61,25 +61,25 @@ class DetallesDialog extends StatelessWidget {
     );
   }
 
-  Widget _buildConfirmacionToValidacion(CitaViewModel cita) {
+  Widget _buildConfirmacionToValidacion(CitaDTO cita) {
     return Column(
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(cita.fechaValidacion?.toFormatyyyyMMddHHmmSlash() ?? '-'),
+            Text(cita.fechaValidacionDate?.toFormatyyyyMMddHHmmSlash() ?? '-'),
             const Text(' - '),
-            Text(cita.fechaConfirmacion?.toFormatyyyyMMddHHmmSlash() ?? 'n'),
+            Text(cita.fechaConfirmacionDate?.toFormatyyyyMMddHHmmSlash() ?? 'n'),
           ],
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            AppTextGlobal.labelLightText(text: cita.doctor),
+            AppTextGlobal.labelLightText(text: cita.doctor ?? 'n.a'),
             AppBox.w10,
             Text(
               convertDoubleToTimeString2(
-                  ((cita.fechaValidacion?.hour ?? 0) * 60 + (cita.fechaValidacion?.minute ?? 0) - (cita.fechaConfirmacion?.minute ?? 0) - (cita.fechaConfirmacion?.hour ?? 0) * 60)),
+                  ((cita.fechaValidacionDate?.hour ?? 0) * 60 + (cita.fechaValidacionDate?.minute ?? 0) - (cita.fechaConfirmacionDate?.minute ?? 0) - (cita.fechaConfirmacionDate?.hour ?? 0) * 60)),
             ),
           ],
         ),
@@ -92,24 +92,24 @@ class DetallesDialog extends StatelessWidget {
     );
   }
 
-  Widget _buildInicioToFin(CitaViewModel cita) {
+  Widget _buildInicioToFin(CitaDTO cita) {
     return Column(
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(cita.fechaFin?.toFormatyyyyMMddHHmmSlash() ?? '-'),
+            Text(cita.fechaFinDate?.toFormatyyyyMMddHHmmSlash() ?? '-'),
             const Text(' - '),
-            Text(cita.fechaInicio?.toFormatyyyyMMddHHmmSlash() ?? 'n'),
+            Text(cita.fechaInicioDate?.toFormatyyyyMMddHHmmSlash() ?? 'n'),
           ],
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            AppTextGlobal.labelLightText(text: cita.doctor),
+            AppTextGlobal.labelLightText(text: cita.doctor ?? 'n.a'),
             AppBox.w10,
             Text(
-              convertDoubleToTimeString2(((cita.fechaFin?.hour ?? 0) * 60 + (cita.fechaFin?.minute ?? 0) - (cita.fechaInicio?.minute ?? 0) - (cita.fechaInicio?.hour ?? 0) * 60)),
+              convertDoubleToTimeString2(((cita.fechaFinDate?.hour ?? 0) * 60 + (cita.fechaFinDate?.minute ?? 0) - (cita.fechaInicioDate?.minute ?? 0) - (cita.fechaInicioDate?.hour ?? 0) * 60)),
             ),
           ],
         ),

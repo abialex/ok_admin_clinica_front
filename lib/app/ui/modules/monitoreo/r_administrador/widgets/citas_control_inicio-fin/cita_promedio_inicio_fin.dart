@@ -1,5 +1,6 @@
 import 'package:admin_clinica_front/app/common/enums/control_cita_tipo_enum.dart';
 import 'package:admin_clinica_front/app/common/cubits/index_cubit.dart';
+import 'package:admin_clinica_front/app/common/models/request/cita_request_model.dart';
 import 'package:admin_clinica_front/app/ui/modules/monitoreo/bloc/cita_list/cita_list_admin_bloc.dart';
 import 'package:admin_clinica_front/app/ui/modules/monitoreo/r_administrador/widgets/citas_by_one_day.dart';
 import 'package:admin_clinica_front/app/ui/modules/monitoreo/r_administrador/widgets/citas_by_range_days.dart';
@@ -14,7 +15,7 @@ class CitaPromedioInicioFinList extends StatelessWidget {
     required this.request,
   });
   final List<CitaPromedioDateTime> citas;
-  final CitaRequestAdminViewModel request;
+  final CitaRequestAdmin request;
 
   @override
   Widget build(BuildContext context) {

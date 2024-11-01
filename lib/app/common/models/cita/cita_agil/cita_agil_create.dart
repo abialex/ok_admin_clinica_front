@@ -1,29 +1,26 @@
-// ignore_for_file: non_constant_identifier_names
+// ignore_for_file: invalid_annotation_target
 
-import 'package:json_annotation/json_annotation.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+
+part 'cita_agil_create.freezed.dart';
 part 'cita_agil_create.g.dart';
 
-@JsonSerializable()
-class CitaAgilCreateModel {
-  final int doctor_id;
-  final int ubicacion_id;
-  final String fechaHoraCita;
-  final String datosPaciente;
-  final String? celular;
-  final String? razon;
+@freezed
+class CitaAgilCreateModel with _$CitaAgilCreateModel {
+  const CitaAgilCreateModel._(); // Constructor privado para usar getters
 
-  CitaAgilCreateModel({
-    required this.fechaHoraCita,
-    required this.datosPaciente,
-    required this.doctor_id,
-    required this.ubicacion_id,
-    this.celular,
-    this.razon,
-  });
-  //fromJson
-  factory CitaAgilCreateModel.fromJson(Map<String, dynamic> map) =>
-      _$CitaAgilCreateModelFromJson(map);
+  const factory CitaAgilCreateModel({
+    @JsonKey(name: 'doctor_id') required int doctorId,
+    @JsonKey(name: 'ubicacion_id') required int ubicacionId,
+    @JsonKey(name: 'fechaHoraCita') required String fechaHoraCita,
+    @JsonKey(name: 'datosPaciente') required String datosPaciente,
+    String? celular,
+    String? razon,
+  }) = _CitaAgilCreateModel;
 
-  //ToJson
-  Map<String, dynamic> toJson() => _$CitaAgilCreateModelToJson(this);
+  // fromJson
+  factory CitaAgilCreateModel.fromJson(Map<String, dynamic> json) => _$CitaAgilCreateModelFromJson(json);
+
+  // Getter para convertir fechaHoraCita a DateTime
+  DateTime get fechaHoraCitaDate => DateTime.parse(fechaHoraCita);
 }

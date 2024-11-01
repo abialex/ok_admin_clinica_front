@@ -1,9 +1,10 @@
 import 'package:admin_clinica_front/app/common/constants/app_const_svgs.dart';
+import 'package:admin_clinica_front/app/common/models/cita/cita_dto.dart';
 import 'package:admin_clinica_front/app/common/utils/extensions/date_time_extensions.dart';
 import 'package:admin_clinica_front/app/config/app_cita_config.dart';
 import 'package:admin_clinica_front/app/common/constants/app_const_colors.dart';
 import 'package:admin_clinica_front/app/data/entities/estado_cita.dart';
-import 'package:admin_clinica_front/app/common/mappers/citas_service.dart';
+import 'package:admin_clinica_front/app/common/enums/tipo_accion_enum.dart';
 import 'package:admin_clinica_front/app/common/widget/app_action.dart';
 import 'package:admin_clinica_front/app/common/widget/app_box.dart';
 import 'package:admin_clinica_front/app/common/widget/app_text_style.dart';
@@ -21,7 +22,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
 
 class AtencionCardDoctor extends StatelessWidget {
-  final CitasViewModel cita;
+  final CitaDTO cita;
 
   const AtencionCardDoctor({super.key, required this.cita});
 
@@ -102,7 +103,7 @@ class AtencionCardDoctor extends StatelessWidget {
                                         AppBox.w6,
                                       ],
                                     ),
-                                  if (cita.pacienteDatos != null)
+                                  if (cita.paciente?.nombres != null)
                                     Row(
                                       crossAxisAlignment: CrossAxisAlignment.center,
                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -112,7 +113,7 @@ class AtencionCardDoctor extends StatelessWidget {
                                           color: AppConstColors.slg01,
                                         ),
                                         // AppTextGlobal.labelLightText(text: "Paciente Libre:"),
-                                        Expanded(child: Center(child: AppTextGlobal.lightText(text: stt.cita.pacienteDatos!.toUpperCase()))),
+                                        Expanded(child: Center(child: AppTextGlobal.lightText(text: stt.cita.paciente?.nombres!.toUpperCase() ?? 'n.a'))),
                                         AppBox.w6,
                                       ],
                                     ),
@@ -140,8 +141,8 @@ class AtencionCardDoctor extends StatelessWidget {
                                         EstadoCita.finalizado,
                                         EstadoCita.validado,
                                       ],
-                                      itemSelected: stt.cita.estado,
-                                      estadoPercent: stt.cita.estado.percent,
+                                      itemSelected: stt.cita.estadoEnum,
+                                      estadoPercent: stt.cita.estadoEnum.percent,
                                     ),
                                   )
                                 ],
@@ -183,7 +184,7 @@ class AtencionCardDoctor extends StatelessWidget {
                               ),
                               // AppTextGlobal.labelLightText(text: "Hora:"),
                               AppBox.w2,
-                              AppTextGlobal.labelLightText(text: stt.cita.fechaHoraCita.toFormatHHmm()),
+                              AppTextGlobal.labelLightText(text: stt.cita.fechaHoraCitaDate.toFormatHHmm()),
                             ],
                           ),
                         ),
@@ -193,7 +194,7 @@ class AtencionCardDoctor extends StatelessWidget {
                         top: -15,
                         right: -5,
                         child: () {
-                          switch (stt.cita.estado) {
+                          switch (stt.cita.estadoEnum) {
                             case EstadoCita.pendiente:
                               return const SizedBox.shrink();
 
@@ -247,7 +248,7 @@ class AtencionCardDoctor extends StatelessWidget {
 
                             default:
                               return ButtonCustomBase(
-                                backgroundColor: stt.cita.estado.color,
+                                backgroundColor: stt.cita.estadoEnum.color,
                                 textColor: AppConstColors.white,
                                 text: "N.A",
                                 onClick: () {
@@ -446,13 +447,13 @@ class AtencionCardDoctor extends StatelessWidget {
     );
   }
 
-  Future<void> nextCita(BuildContext context, CitasViewModel cita) async {
+  Future<void> nextCita(BuildContext context, CitaDTO cita) async {
     final bloc = context.read<CitaIndexBloc>();
     final dialogCubit = context.read<DialogMessageCubit>();
     late String titulo;
     late String texto;
     late TipoAccionEnum tipoAccion;
-    switch (cita.estado) {
+    switch (cita.estadoEnum) {
       case EstadoCita.pendiente:
         titulo = "¿Seguro(a) de confirmar?";
         texto = "la cita estará pendiente para que el doctor acepte, una vez confirmada la cita ya no se podrá modificar.";
@@ -504,7 +505,7 @@ class AtencionCardDoctor extends StatelessWidget {
 }
 
 class CitasGroupedByHourAtencionDoctor extends StatelessWidget {
-  final List<CitasViewModel> citas;
+  final List<CitaDTO> citas;
   final Function(int, String)? onAdd;
   final CitaOcupadaCreateViewModel Function(int) onBlock;
   final Function(int)? onRelease;
@@ -521,7 +522,8 @@ class CitasGroupedByHourAtencionDoctor extends StatelessWidget {
   Widget build(BuildContext context) {
     for (var horaItem in CitaConfig.horaList) {
       horaItem.listItems.clear();
-      horaItem.listItems.addAll(citas.where((element) => element.estado != EstadoCita.validado && element.estado != EstadoCita.cancelado && element.fechaHoraCita.hour == horaItem.hora).toList());
+      horaItem.listItems
+          .addAll(citas.where((element) => element.estadoEnum != EstadoCita.validado && element.estadoEnum != EstadoCita.cancelado && element.fechaHoraCitaDate.hour == horaItem.hora).toList());
     }
 
     return ListView(

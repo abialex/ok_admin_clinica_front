@@ -1,11 +1,11 @@
+import 'package:admin_clinica_front/app/common/models/doctor/doctor_dto.dart';
 import 'package:admin_clinica_front/app/common/widget/app_card_doctor.dart';
-import 'package:admin_clinica_front/app/ui/view_models/doctor_view/doctor_view_models.dart';
 import 'package:flutter/material.dart';
 
 class ListDoctorHorizontalScroll extends StatelessWidget {
   final int? doctorIdInitialSelected;
-  final List<DoctorsViewModel> doctors;
-  final void Function(DoctorsViewModel) onChanged;
+  final List<DoctorDto> doctors;
+  final void Function(DoctorDto) onChanged;
 
   const ListDoctorHorizontalScroll({
     super.key,

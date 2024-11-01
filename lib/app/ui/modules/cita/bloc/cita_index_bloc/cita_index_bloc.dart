@@ -1,7 +1,9 @@
+import 'package:admin_clinica_front/app/common/enums/tipo_accion_enum.dart';
+import 'package:admin_clinica_front/app/common/models/cita/cita_dto.dart';
+import 'package:admin_clinica_front/app/common/repository/cita/i_cita_repository.dart';
 import 'package:admin_clinica_front/app/config/app_dependecy_injection.dart';
-import 'package:admin_clinica_front/app/common/mappers/citas_service.dart';
-import 'package:admin_clinica_front/app/ui/view_models/cita_view/cita_view_models.dart';
 import 'package:bloc/bloc.dart';
+import 'package:either_dart/either.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'cita_index_event.dart';
@@ -16,7 +18,7 @@ class CitaIndexBloc extends Bloc<CitaIndexEvent, CitaIndexState> {
     on<EliminarCitaEvent>(eliminarCita);
   }
 
-  final citaService = locator<CitasService>();
+  final citaRepository = locator.get<ICitaRepository>();
 
   Future<void> initial(InitialEvent event, Emitter<CitaIndexState> emit) async {
     // emit(Loading());
@@ -26,8 +28,22 @@ class CitaIndexBloc extends Bloc<CitaIndexEvent, CitaIndexState> {
   Future<void> nextCita(NextCitaEvent event, Emitter<CitaIndexState> emit) async {
     emit(Loading());
     final cita = event.citaViewModel;
+    late Either<String, bool> result;
+    switch (event.tipoAccion) {
+      case TipoAccionEnum.confirmar:
+        result = await citaRepository.confirmarCita(cita.id);
+      case TipoAccionEnum.iniciar:
+        result = await citaRepository.iniciarCita(cita.id);
+      case TipoAccionEnum.finalizar:
+        result = await citaRepository.finalizarCita(cita.id);
+      case TipoAccionEnum.validar:
+        result = await citaRepository.validarCita(cita.id);
+      case TipoAccionEnum.cancelar:
+        result = await citaRepository.cancelarCita(cita.id);
+      default:
+        return emit(Failure('acción no definida'));
+    }
 
-    final result = await citaService.nextPaso(event.tipoAccion, cita.id);
     if (result.isRight) {
       add(CitaIndexEvent.getCita(cita.id));
     } else {
@@ -37,28 +53,12 @@ class CitaIndexBloc extends Bloc<CitaIndexEvent, CitaIndexState> {
 
   Future<void> getCitaById(GetCitaEvent event, Emitter<CitaIndexState> emit) async {
     emit(Loading());
-    final result = await citaService.getCitaById(event.citaId);
+    final result = await citaRepository.getCitaById(event.citaId);
     if (result.isRight) {
       final citasViewModel = result.right;
       emit(
         CitaLoaded(
-          CitasViewModel(
-            id: citasViewModel.id,
-            fechaHoraCita: citasViewModel.fechaHoraCita,
-            estado: citasViewModel.estado,
-            tipo: citasViewModel.tipo,
-            estadoString: citasViewModel.estadoString,
-            tipoString: citasViewModel.tipoString,
-            celular: citasViewModel.celular,
-            datosPaciente: citasViewModel.datosPaciente,
-            fechaConfirmacion: citasViewModel.fechaConfirmacion,
-            fechaFin: citasViewModel.fechaFin,
-            fechaInicio: citasViewModel.fechaInicio,
-            fechaValidacion: citasViewModel.fechaValidacion,
-            pacienteDatos: citasViewModel.pacienteDatos,
-            razon: citasViewModel.razon,
-            razonOcupado: citasViewModel.razonOcupado,
-          ),
+          citasViewModel,
         ),
       );
     } else {
@@ -70,7 +70,7 @@ class CitaIndexBloc extends Bloc<CitaIndexEvent, CitaIndexState> {
     emit(Loading());
     final cita = event.citaViewModel;
 
-    final result = await citaService.deleteCitaById(event.citaViewModel.id);
+    final result = await citaRepository.deleteCitaById(event.citaViewModel.id);
     if (result.isRight) {
       emit(CitaIndexState.citaEliminada(cita));
     } else {

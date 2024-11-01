@@ -4,7 +4,8 @@ part of 'cita_bloc.dart';
 class CitaState with _$CitaState {
   const CitaState._();
   factory CitaState.initial() = Initial;
-  factory CitaState.loading() = Loading;
-  factory CitaState.citaLoaded(List<CitasViewModel> citas) = CitasLoaded;
+  factory CitaState.loading() = CitaLoading;
+  factory CitaState.citaLoaded(List<CitaDTO> citas) = CitasLoaded;
+  factory CitaState.citaOcupadaCreated() = CitaOcupadaCreated;
   factory CitaState.failure(String error) = Failure;
 }

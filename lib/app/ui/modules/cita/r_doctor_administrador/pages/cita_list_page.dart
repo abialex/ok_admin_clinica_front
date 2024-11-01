@@ -1,6 +1,10 @@
 // ignore_for_file: must_be_immutable
 import 'package:admin_clinica_front/app/common/constants/app_const_colors.dart';
 import 'package:admin_clinica_front/app/common/blocs/usuario_session/bloc/usuario_bloc.dart';
+import 'package:admin_clinica_front/app/common/models/cita/cita_ocupada/cita_ocupada_create.dart';
+import 'package:admin_clinica_front/app/common/models/doctor/doctor_dto.dart';
+import 'package:admin_clinica_front/app/common/models/request/request_model.dart';
+import 'package:admin_clinica_front/app/common/utils/extensions/date_time_extensions.dart';
 import 'package:admin_clinica_front/app/common/widget/app_list_doctor_horizontal_scroll.dart';
 import 'package:admin_clinica_front/app/common/widget/app_loader_mini.dart';
 import 'package:admin_clinica_front/app/common/cubits/count_isolate_cubit.dart';
@@ -12,8 +16,6 @@ import 'package:admin_clinica_front/app/ui/modules/cita/bloc/cita_crear_bloc/cit
 import 'package:admin_clinica_front/app/ui/modules/cita/bloc/cita_crear_bloc/cita_create_event.dart';
 import 'package:admin_clinica_front/app/ui/modules/cita/r_doctor_administrador/widgets/cita_card.dart';
 import 'package:admin_clinica_front/app/ui/modules/doctor/bloc/doctor_list_bloc.dart';
-import 'package:admin_clinica_front/app/ui/view_models/cita_view/cita_view_models.dart';
-import 'package:admin_clinica_front/app/ui/view_models/doctor_view/doctor_view_models.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -27,7 +29,7 @@ import '../../bloc/cita_bloc.dart';
 class CitaListDoctorAdministradorPage extends StatelessWidget with ResponsiveWidgetMixin {
   CitaListDoctorAdministradorPage({super.key});
   DateTime dateSelected = DateTime.now();
-  DoctorsViewModel? doctorSelected;
+  DoctorDto? doctorSelected;
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -96,13 +98,13 @@ class CitaListDoctorAdministradorPage extends StatelessWidget with ResponsiveWid
                                   (element) => doctorSelected!.id == element.id,
                                 )) {
                                   doctorSelected = stt.doctors.firstWhere((element) => doctorSelected!.id == element.id);
-                                  if (doctorSelected!.isActive) {
+                                  if (doctorSelected!.is_active) {
                                     context.read<CitaBloc>().add(
                                           CitaEvent.getCitas(
-                                            CitaRequestViewModel(
+                                            CitaRequest(
                                               doctorId: doctorSelected!.id,
                                               ubicacionesId: usuarioBloc.state.usuario?.ubicaciones ?? [],
-                                              fechaHoraCita: DateTime.now(),
+                                              fechaHoraCita: DateTime.now().toFormatyyyyMMdd(),
                                             ),
                                           ),
                                         );
@@ -120,15 +122,15 @@ class CitaListDoctorAdministradorPage extends StatelessWidget with ResponsiveWid
                                 onChanged: (doctor) {
                                   doctorSelected = doctor;
                                   usuarioBloc.setDoctorSelected(doctor);
-                                  if (!doctor.isActive) {
+                                  if (!doctor.is_active) {
                                     context.read<CitaBloc>().add(CitaEvent.invalidCita("Este doctor(a) está inactivo"));
                                     return;
                                   }
                                   context.read<CitaBloc>().add(CitaEvent.getCitas(
-                                        CitaRequestViewModel(
+                                        CitaRequest(
                                           doctorId: doctor.id,
                                           ubicacionesId: usuarioBloc.state.usuario?.ubicaciones ?? [],
-                                          fechaHoraCita: dateSelected,
+                                          fechaHoraCita: dateSelected.toFormatyyyyMMdd(),
                                         ),
                                       ));
                                   context.read<CountIsolateCubit>().resetExternal();
@@ -155,12 +157,12 @@ class CitaListDoctorAdministradorPage extends StatelessWidget with ResponsiveWid
                             onDateTimeChanged: (value) {
                               dateSelected = value;
                               if (doctorSelected != null) {
-                                if (doctorSelected!.isActive) {
+                                if (doctorSelected!.is_active) {
                                   citaBloc.add(CitaEvent.getCitas(
-                                    CitaRequestViewModel(
+                                    CitaRequest(
                                       doctorId: doctorSelected!.id,
                                       ubicacionesId: usuarioBloc.state.usuario?.ubicaciones ?? [],
-                                      fechaHoraCita: value,
+                                      fechaHoraCita: value.toFormatyyyyMMdd(),
                                     ),
                                   ));
                                   context.read<CountIsolateCubit>().resetExternal();
@@ -183,15 +185,18 @@ class CitaListDoctorAdministradorPage extends StatelessWidget with ResponsiveWid
               return AnimatedSwitcher(
                 duration: 0.5.seconds,
                 child: state.map(
+                  citaOcupadaCreated: (value) {
+                    return const SizedBox.shrink();
+                  },
                   initial: (state) {
                     return GestureDetector(
                       onTap: () {
                         citaBloc.add(
                           CitaEvent.getCitas(
-                            CitaRequestViewModel(
+                            CitaRequest(
                               doctorId: doctorSelected?.id ?? 0,
                               ubicacionesId: usuarioBloc.state.usuario?.ubicaciones ?? [],
-                              fechaHoraCita: DateTime.now(),
+                              fechaHoraCita: DateTime.now().toFormatyyyyMMdd(),
                             ),
                           ),
                         );
@@ -219,7 +224,7 @@ class CitaListDoctorAdministradorPage extends StatelessWidget with ResponsiveWid
                         );
                       },
                       onBlock: (hora) {
-                        return CitaOcupadaCreateViewModel(doctorId: doctorSelected!.id, fechaHoraCita: dateSelected.copyWith(hour: hora));
+                        return CitaOcupadaCreateModel(doctorId: doctorSelected!.id, fechaHoraCita: dateSelected.copyWith(hour: hora).toIso8601String());
                       },
                       onRelease: (citaId) {
                         // dialogCubit.showErrorAlert(texto: "sin implementar $citaId");

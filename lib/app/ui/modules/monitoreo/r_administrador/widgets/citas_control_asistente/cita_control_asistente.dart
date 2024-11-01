@@ -1,3 +1,4 @@
+import 'package:admin_clinica_front/app/common/models/request/cita_request_model.dart';
 import 'package:admin_clinica_front/app/common/utils/extensions/date_time_extensions.dart';
 import 'package:admin_clinica_front/app/common/widget/app_text_style.dart';
 import 'package:admin_clinica_front/app/ui/modules/monitoreo/bloc/cita_list/cita_list_admin_bloc.dart';
@@ -12,7 +13,7 @@ class ControlAsistente extends StatelessWidget {
     required this.request,
   });
 
-  final CitaRequestAdminViewModel request;
+  final CitaRequestAdmin request;
 
   @override
   Widget build(BuildContext context) {
@@ -31,10 +32,10 @@ class ControlAsistente extends StatelessWidget {
             children: [
               CitaPromedioAsistentaList(
                 citas: () {
-                  final dateList = getDatesBetween(request.fechaInicio ?? (request.fecha ?? DateTime.now()), request.fechaFin ?? (request.fecha ?? DateTime.now())).map((dateItem) {
+                  final dateList = getDatesBetween(request.fechaInicioDate ?? (request.fechaDate ?? DateTime.now()), request.fechaFinDate ?? (request.fechaDate ?? DateTime.now())).map((dateItem) {
                     final citasByToday = citasCompletasAsistenta
                         .where(
-                          (citaItem) => (citaItem.fechaHoraCita.isSameDate(dateItem)),
+                          (citaItem) => (citaItem.fechaHoraCitaDate.isSameDate(dateItem)),
                         )
                         .toList();
 
@@ -43,10 +44,10 @@ class ControlAsistente extends StatelessWidget {
                         0,
                         (previousValue, element) =>
                             previousValue +
-                            ((element.fechaValidacion?.hour ?? 0) * 60 +
-                                (element.fechaValidacion?.minute ?? 0) -
-                                (element.fechaConfirmacion?.minute ?? 0) -
-                                (element.fechaConfirmacion?.hour ?? 0) * 60));
+                            ((element.fechaValidacionDate?.hour ?? 0) * 60 +
+                                (element.fechaValidacionDate?.minute ?? 0) -
+                                (element.fechaConfirmacionDate?.minute ?? 0) -
+                                (element.fechaConfirmacionDate?.hour ?? 0) * 60));
                     if (citasByToday.isNotEmpty) promedioTime = promedioTime / citasByToday.length;
                     return CitaPromedioDateTime(
                       date: dateItem,

@@ -1,18 +1,20 @@
+import 'package:admin_clinica_front/app/common/models/cita/cita_agil/cita_agil_update_model.dart';
+import 'package:admin_clinica_front/app/common/models/cita/cita_dto.dart';
 import 'package:admin_clinica_front/app/common/widget/app_box.dart';
 import 'package:admin_clinica_front/app/common/widget/app_sunat.dart';
 import 'package:admin_clinica_front/app/common/widget/button_base/button_cancel.dart';
 import 'package:admin_clinica_front/app/common/widget/button_base/button_success.dart';
 import 'package:admin_clinica_front/app/common/widget/input_text/input_form_02/input_text_form_base.dart';
+import 'package:admin_clinica_front/app/data/entities/estado_cita.dart';
 import 'package:admin_clinica_front/app/ui/modules/cita/bloc/cita_update_bloc/cita_update_bloc.dart';
 import 'package:admin_clinica_front/app/ui/modules/cita/bloc/cita_update_bloc/cita_update_event.dart';
 import 'package:admin_clinica_front/app/common/utils/validators.dart';
-import 'package:admin_clinica_front/app/ui/view_models/cita_view/cita_view_models.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CitaUpdateFormAgil extends StatefulWidget {
-  final CitaViewModel cita;
+  final CitaDTO cita;
 
   const CitaUpdateFormAgil({
     super.key,
@@ -46,7 +48,7 @@ class _CitaUpdateFormAgilState extends State<CitaUpdateFormAgil> {
                   children: [
                     AppBox.h10,
                     InputTextBase(
-                      initialText: widget.cita.fechaHoraCita.minute.toString(),
+                      initialText: widget.cita.fechaHoraCitaDate.minute.toString(),
                       inputFormatDeskptop: InputFormatDesktopEnum.numeros,
                       textInputType: TextInputType.number,
                       label: "MINUTO",
@@ -115,16 +117,18 @@ class _CitaUpdateFormAgilState extends State<CitaUpdateFormAgil> {
                         if (formKey.currentState!.validate()) {
                           updateCitaBloc.add(
                             CitaUpdateEvent.citaUpdateLocal(
-                              CitaAgilUpdateViewModel(
+                              CitaAgilUpdateModel(
                                 id: widget.cita.id,
-                                estado: widget.cita.estado,
-                                doctorId: widget.cita.doctorId,
+                                estado: EstadoCitaExtension.fromEstado(widget.cita.estadoEnum),
+                                doctorId: widget.cita.doctorId!,
                                 ubicacionId: widget.cita.ubicacionId!,
-                                fechaHoraCita: widget.cita.fechaHoraCita.copyWith(
-                                  minute: int.parse(_minutoController.text),
-                                  second: 0,
-                                  millisecond: 0,
-                                ),
+                                fechaHoraCita: widget.cita.fechaHoraCitaDate
+                                    .copyWith(
+                                      minute: int.parse(_minutoController.text),
+                                      second: 0,
+                                      millisecond: 0,
+                                    )
+                                    .toIso8601String(),
                                 datosPaciente: _nombresController.text,
                                 celular: _celularController.text,
                                 razon: _razonController.text,

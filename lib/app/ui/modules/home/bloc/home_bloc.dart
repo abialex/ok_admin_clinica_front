@@ -1,18 +1,18 @@
+import 'package:admin_clinica_front/app/common/models/usuario/user_dto.dart';
+import 'package:admin_clinica_front/app/data/repository/storage/ilocal_repository.dart';
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../../../config/app_dependecy_injection.dart';
-import '../../../../common/mappers/local_service.dart';
-import '../../../view_models/usuario_view/usuario_view_models.dart';
 
 part 'home_event.dart';
 part 'home_state.dart';
 part 'home_bloc.freezed.dart';
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
-  final _localService = locator<LocalService>();
+  final _localService = locator<ILocalRepository>();
 
-  HomeBloc() : super(_Initial()) {
+  HomeBloc() : super(const _Initial()) {
     on<HomeEvent>((event, emit) {});
 
     on<SetupUsuarioEvent>((event, emit) {

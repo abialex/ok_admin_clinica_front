@@ -19,12 +19,8 @@ import 'package:admin_clinica_front/app/common/repository/contenedores/doctor_co
 import 'package:admin_clinica_front/app/common/repository/contenedores/ubicacion_contenedor_impl/iubicacion_contenedor_repository.dart';
 import 'package:admin_clinica_front/app/common/repository/services_external/iservices_repository.dart';
 import 'package:admin_clinica_front/app/common/repository/ubicacion/iubicacion_repository.dart';
-import 'package:admin_clinica_front/app/common/mappers/citas_service.dart';
 import 'package:admin_clinica_front/app/common/mappers/cmd_services.dart';
 import 'package:admin_clinica_front/app/common/mappers/excel_service.dart';
-import 'package:admin_clinica_front/app/common/mappers/services_service.dart';
-import 'package:admin_clinica_front/app/common/mappers/ubicacion_service.dart';
-import 'package:admin_clinica_front/app/common/mappers/usuario_service.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -47,10 +43,7 @@ import '../common/repository/cita/i_cita_repository.dart';
 import '../common/repository/doctor/i_doctor_repository.dart';
 import '../data/repository/storage/ilocal_repository.dart';
 import '../common/repository/usuario/iusuario_repository.dart';
-import '../common/mappers/doctor_service.dart';
 import 'package:flutter/foundation.dart' as foundation;
-
-import '../common/mappers/local_service.dart';
 
 GetIt locator = GetIt.instance;
 
@@ -58,7 +51,7 @@ void setupLocator() {
   var dio = Dio();
   dio.options.baseUrl = AppFlavorConfig.urlApp;
   dio.interceptors.add(AppInterceptor());
-  dio.options.connectTimeout = const Duration(seconds: 5); // 5 seconds
+  // dio.options.connectTimeout = const Duration(seconds: 5); // 5 seconds
   dio.interceptors.add(LogInterceptor(responseBody: true)); //para visualizar
   if (kDebugMode) {
     dio.interceptors.add(
@@ -101,12 +94,6 @@ void setupRepositorys() {
 }
 
 void setupServices() {
-  locator.registerLazySingleton<CitasService>(() => CitasService(locator()));
-  locator.registerLazySingleton<DoctorService>(() => DoctorService(locator()));
-  locator.registerLazySingleton<UsuarioService>(() => UsuarioService(locator()));
-  locator.registerLazySingleton<LocalService>(() => LocalService(locator()));
-  locator.registerLazySingleton<UbicacionService>(() => UbicacionService(locator()));
-  locator.registerLazySingleton<ServicesService>(() => ServicesService(locator()));
   locator.registerLazySingleton<ExcelService>(() => ExcelService());
   locator.registerLazySingleton<CMDservice>(() => CMDservice());
   locator.registerLazySingleton<FirebaseService>(FirebaseService.new);

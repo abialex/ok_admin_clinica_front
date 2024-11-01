@@ -16,8 +16,8 @@ class DoctorContenedorLocalRepository implements IDoctorContenedorLocalRepositor
         (response) => Right(response
             .map((e) => DoctorContenedorDataModel(
                   id: e.id,
-                  usuarioId: e.usuario_id,
-                  username: e.username,
+                  usuarioId: e.usuarioId,
+                  username: e.username ?? 'sin datos contenedor',
                   nombres: e.nombres,
                   apellidos: e.apellidos,
                   isActive: e.is_active,

@@ -1,6 +1,9 @@
 // ignore_for_file: must_be_immutable
 import 'dart:async';
 import 'package:admin_clinica_front/app/common/blocs/usuario_session/bloc/usuario_bloc.dart';
+import 'package:admin_clinica_front/app/common/models/doctor/doctor_dto.dart';
+import 'package:admin_clinica_front/app/common/models/request/request_model.dart';
+import 'package:admin_clinica_front/app/common/utils/extensions/date_time_extensions.dart';
 import 'package:admin_clinica_front/app/common/widget/app_box.dart';
 import 'package:admin_clinica_front/app/common/widget/app_list_doctor_horizontal_scroll.dart';
 import 'package:admin_clinica_front/app/common/widget/date/app_date_picker_cupertino.dart';
@@ -12,7 +15,6 @@ import 'package:admin_clinica_front/app/ui/modules/cita/bloc/cita_crear_bloc/cit
 import 'package:admin_clinica_front/app/ui/modules/cita/r_doctor/widgets/cita_card_doctor.dart';
 import 'package:admin_clinica_front/app/ui/modules/doctor/bloc/doctor_list_bloc.dart';
 import 'package:admin_clinica_front/app/ui/view_models/cita_view/cita_view_models.dart';
-import 'package:admin_clinica_front/app/ui/view_models/doctor_view/doctor_view_models.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../config/app_dependecy_injection.dart';
@@ -25,7 +27,7 @@ import '../../bloc/cita_bloc.dart';
 class CitaListDoctorPage extends StatelessWidget with ResponsiveWidgetMixin {
   CitaListDoctorPage({super.key});
   DateTime dateSelected = DateTime.now();
-  DoctorsViewModel? doctorSelected;
+  DoctorDto? doctorSelected;
   @override
   Widget build(BuildContext context) {
     return whatIs(context);
@@ -96,13 +98,13 @@ class CitaListDoctorPage extends StatelessWidget with ResponsiveWidgetMixin {
                           usuarioBloc.setDoctorSelected(stt.doctors[0]);
                           doctorSelected = usuarioBloc.state.doctorIdSelected;
                           if (doctorSelected != null) {
-                            if (doctorSelected!.isActive) {
+                            if (doctorSelected!.is_active) {
                               context.read<CitaBloc>().add(
                                     CitaEvent.getCitas(
-                                      CitaRequestViewModel(
+                                      CitaRequest(
                                         doctorId: doctorSelected!.id,
                                         ubicacionesId: usuarioBloc.state.usuario?.ubicaciones ?? [],
-                                        fechaHoraCita: DateTime.now(),
+                                        fechaHoraCita: DateTime.now().toFormatyyyyMMdd(),
                                       ),
                                     ),
                                   );
@@ -138,13 +140,13 @@ class CitaListDoctorPage extends StatelessWidget with ResponsiveWidgetMixin {
                         onDateTimeChanged: (value) {
                           dateSelected = value;
                           if (doctorSelected != null) {
-                            if (doctorSelected!.isActive) {
+                            if (doctorSelected!.is_active) {
                               timerStart(timerCubit, () {
                                 citaBloc.add(CitaEvent.getCitas(
-                                  CitaRequestViewModel(
+                                  CitaRequest(
                                     doctorId: doctorSelected!.id,
                                     ubicacionesId: usuarioBloc.state.usuario?.ubicaciones ?? [],
-                                    fechaHoraCita: value,
+                                    fechaHoraCita: value.toFormatyyyyMMdd(),
                                   ),
                                 ));
                               });
@@ -196,15 +198,25 @@ class CitaListDoctorPage extends StatelessWidget with ResponsiveWidgetMixin {
         child: BlocBuilder<CitaBloc, CitaState>(
           builder: (context, state) {
             return state.map(
+              citaOcupadaCreated: (value) {
+                return SizedBox(
+                  height: 60,
+                  child: Center(
+                    child: Text(
+                      "Cita en progreso",
+                    ),
+                  ),
+                );
+              },
               initial: (state) {
                 return GestureDetector(
                   onTap: () {
                     citaBloc.add(
                       CitaEvent.getCitas(
-                        CitaRequestViewModel(
+                        CitaRequest(
                           doctorId: doctorSelected?.id ?? 0,
                           ubicacionesId: usuarioBloc.state.usuario?.ubicaciones ?? [],
-                          fechaHoraCita: DateTime.now(),
+                          fechaHoraCita: DateTime.now().toFormatyyyyMMdd(),
                         ),
                       ),
                     );

@@ -5,4 +5,9 @@ extension StringFormatting on String {
     DateFormat inputFormat = DateFormat("dd/MM/yyyy");
     return inputFormat.parse(this);
   }
+
+  String capitalizeFirstLetter() {
+    if (isEmpty) return this;
+    return this[0].toUpperCase() + substring(1).toLowerCase();
+  }
 }

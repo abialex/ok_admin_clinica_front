@@ -1,14 +1,14 @@
 import 'package:admin_clinica_front/app/common/blocs/firebase/firebase_notification_bloc.dart';
 import 'package:admin_clinica_front/app/common/constants/app_const_svgs.dart';
+import 'package:admin_clinica_front/app/common/models/usuario/user_dto.dart';
 import 'package:admin_clinica_front/app/config/app_dependecy_injection.dart';
 import 'package:admin_clinica_front/app/common/constants/app_const_colors.dart';
-import 'package:admin_clinica_front/app/common/mappers/local_service.dart';
 import 'package:admin_clinica_front/app/config/routes/router.dart';
 import 'package:admin_clinica_front/app/common/widget/app_box.dart';
 import 'package:admin_clinica_front/app/common/widget/app_text_style.dart';
 import 'package:admin_clinica_front/app/common/widget/custom_navbar_navigation/cubit/navigator_cubit.dart';
 import 'package:admin_clinica_front/app/common/widget/dialog/dialog_message/cubit/dialog_message_cubit.dart';
-import 'package:admin_clinica_front/app/ui/view_models/usuario_view/usuario_view_models.dart';
+import 'package:admin_clinica_front/app/data/repository/storage/ilocal_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -27,7 +27,7 @@ class HeaderMobile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final auth = locator<LocalService>();
+    final auth = locator<ILocalRepository>();
     final dialog = context.read<DialogMessageCubit>();
     final firebaseBloc = context.read<FirebaseNotificationBloc>();
     return Container(
@@ -47,9 +47,9 @@ class HeaderMobile extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  FutureBuilder<UsuarioLoginResponseViewModel?>(
+                  FutureBuilder<UserLoginDTO?>(
                     future: auth.getUsuario(),
-                    builder: (BuildContext context, AsyncSnapshot<UsuarioLoginResponseViewModel?> snapshot) {
+                    builder: (BuildContext context, AsyncSnapshot<UserLoginDTO?> snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
                         return const CircularProgressIndicator();
                       } else if (snapshot.hasError) {

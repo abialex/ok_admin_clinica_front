@@ -1,7 +1,7 @@
 // ignore_for_file: lines_longer_than_80_chars
 
+import 'package:admin_clinica_front/app/common/repository/cita/i_cita_repository.dart';
 import 'package:admin_clinica_front/app/config/app_dependecy_injection.dart';
-import 'package:admin_clinica_front/app/common/mappers/citas_service.dart';
 import 'package:admin_clinica_front/app/ui/modules/cita/bloc/cita_crear_bloc/cita_create_event.dart';
 import 'package:admin_clinica_front/app/ui/modules/cita/bloc/cita_crear_bloc/cita_create_state.dart';
 import 'package:bloc/bloc.dart';
@@ -14,13 +14,13 @@ class CitaCreateBloc extends Bloc<CitaCreateEvent, CitaCreateState> {
     // on<CitaCreateLocalEvent>(createLocalCitas);
   }
 
-  final CitasService _citaService = locator<CitasService>();
+  final citaRepository = locator.get<ICitaRepository>();
 
   Future<void> createCita(CitaAgilCreateEvent event, Emitter<CitaCreateState> emit) async {
     emit(CitaCreateLoadingState());
-    final result = await _citaService.citaAgilCreate(event.model);
+    final result = await citaRepository.createCitaAgil(event.model);
     if (result.isRight) {
-      emit(CitaCreateSuccessState(result.right, event.model.doctorId, [event.model.ubicacionId], event.model.fechaHoraCita));
+      emit(CitaCreateSuccessState(result.right, event.model.doctorId, [event.model.ubicacionId], event.model.fechaHoraCitaDate));
     } else {
       emit(CitaCreateErrorState(result.left));
     }

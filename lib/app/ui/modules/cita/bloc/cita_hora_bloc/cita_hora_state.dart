@@ -6,7 +6,7 @@ class CitaHoraState with _$CitaHoraState {
   factory CitaHoraState.initial() = InitialState;
   factory CitaHoraState.loading() = LoadingState;
   factory CitaHoraState.citaBloqueada(int citaId, String? razonOcupado) = CitaBloqueadaState;
-  factory CitaHoraState.citaLibre(List<CitasViewModel> cita) = CitaLibreLoadedState;
+  factory CitaHoraState.citaLibre(List<CitaDTO> cita) = CitaLibreLoadedState;
 
   factory CitaHoraState.failure(String error) = Failure;
 }

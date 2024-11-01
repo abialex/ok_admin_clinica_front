@@ -1,3 +1,4 @@
+import 'package:admin_clinica_front/app/common/utils/extensions/string_extensions.dart';
 import 'package:intl/intl.dart';
 
 extension DateFormatting on DateTime {
@@ -59,5 +60,11 @@ extension DateFormatting on DateTime {
 
   bool isSameDate(DateTime dateTime) {
     return year == dateTime.year && month == dateTime.month && day == dateTime.day;
+  }
+
+  String formatHeaderTitle() {
+    final monthName = DateFormat('MMMM', 'es').format(this).capitalizeFirstLetter();
+    final year = DateFormat('y').format(this);
+    return '$monthName $year';
   }
 }

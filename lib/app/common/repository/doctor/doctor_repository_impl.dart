@@ -6,7 +6,6 @@ import 'package:admin_clinica_front/app/common/models/doctor/doctor_dto.dart';
 
 import 'package:admin_clinica_front/app/common/models/doctor/doctor_update_model.dart';
 
-import 'package:admin_clinica_front/app/common/models/doctor/doctors_dto.dart';
 import 'package:either_dart/either.dart';
 
 import 'i_doctor_repository.dart';
@@ -22,7 +21,7 @@ class DoctorRepository implements IDoctorRepository {
   }
 
   @override
-  Future<Either<String, List<DoctorsDto>>> getDoctors() async {
+  Future<Either<String, List<DoctorDto>>> getDoctors() async {
     return api.getDoctors();
   }
 
@@ -32,7 +31,7 @@ class DoctorRepository implements IDoctorRepository {
   }
 
   @override
-  Future<Either<String, List<DoctorsDto>>> getDoctorsByIdUbicacionFromAsistente() async {
+  Future<Either<String, List<DoctorDto>>> getDoctorsByIdUbicacionFromAsistente() async {
     return api.getDoctorsByIdUbicacionFromAsistente();
   }
 
@@ -57,7 +56,7 @@ class DoctorRepository implements IDoctorRepository {
   }
 
   @override
-  Future<Either<String, List<DoctorsDto>>> getDoctorByUserDoctor() {
+  Future<Either<String, List<DoctorDto>>> getDoctorByUserDoctor() {
     return api.getDoctorByUserDoctor();
   }
 }

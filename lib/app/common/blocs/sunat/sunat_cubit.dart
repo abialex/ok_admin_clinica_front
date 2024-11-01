@@ -1,6 +1,6 @@
+import 'package:admin_clinica_front/app/common/models/service_external/persona_sunat_dto.dart';
+import 'package:admin_clinica_front/app/common/repository/services_external/iservices_repository.dart';
 import 'package:admin_clinica_front/app/config/app_dependecy_injection.dart';
-import 'package:admin_clinica_front/app/common/mappers/services_service.dart';
-import 'package:admin_clinica_front/app/ui/view_models/services_view/services_view_models.dart';
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -8,12 +8,12 @@ part 'sunat_state.dart';
 part 'sunat_cubit.freezed.dart';
 
 class SunatCubit extends Cubit<SunatState> {
-  final servicesService = locator<ServicesService>();
+  final _servicesRepository = locator<IServicesRepository>();
   SunatCubit() : super(SunatState.initial());
 
-  Future<SunatPersonaViewModel?> getPersonaByDni(String dni) async {
+  Future<PersonaSunatDto?> getPersonaByDni(String dni) async {
     emit(SunatState.loading());
-    final result = await servicesService.getPersonaSunatByDni(dni);
+    final result = await _servicesRepository.getPersonaSunatByDni(dni);
 
     if (result.isRight) {
       if (result.right.nombres.isEmpty) {

@@ -1,6 +1,6 @@
 import 'package:admin_clinica_front/app/common/constants/app_const_svgs.dart';
+import 'package:admin_clinica_front/app/common/models/doctor/doctor_dto.dart';
 import 'package:admin_clinica_front/app/common/widget/app_text_style.dart';
-import 'package:admin_clinica_front/app/ui/view_models/doctor_view/doctor_view_models.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -11,7 +11,7 @@ class AppCardDoctor extends StatelessWidget {
     this.width,
   });
 
-  final DoctorsViewModel doctor;
+  final DoctorDto doctor;
   final double? width;
 
   @override

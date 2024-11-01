@@ -1,10 +1,13 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:admin_clinica_front/app/common/constants/app_const_colors.dart';
+import 'package:admin_clinica_front/app/common/models/cita/cita_dto.dart';
 import 'package:admin_clinica_front/app/common/models/doctor/doctor_contenedor_data_model.dart';
+import 'package:admin_clinica_front/app/common/models/request/cita_request_model.dart';
 import 'package:admin_clinica_front/app/common/models/ubicacion/ubicacion_contenedor_data_model.dart';
 import 'package:admin_clinica_front/app/common/blocs/excel/excel_cubit.dart';
 import 'package:admin_clinica_front/app/common/cubits/index_cubit.dart';
+import 'package:admin_clinica_front/app/common/utils/extensions/date_time_extensions.dart';
 import 'package:admin_clinica_front/app/common/widget/app_box.dart';
 import 'package:admin_clinica_front/app/common/widget/app_text_style.dart';
 import 'package:admin_clinica_front/app/common/widget/button_base/button_success.dart';
@@ -20,7 +23,6 @@ import 'package:admin_clinica_front/app/ui/modules/monitoreo/bloc/cita_list/cita
 import 'package:admin_clinica_front/app/ui/modules/monitoreo/cubit/doctor_selected_cubit.dart';
 import 'package:admin_clinica_front/app/ui/modules/monitoreo/r_administrador/widgets/citas_control_asistente/cita_control_asistente.dart';
 import 'package:admin_clinica_front/app/ui/modules/monitoreo/r_administrador/widgets/citas_control_inicio-fin/cita_control_inicio_fin.dart';
-import 'package:admin_clinica_front/app/ui/view_models/cita_view/cita_view_models.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
@@ -28,7 +30,7 @@ import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 class MonitoreoAdminPage extends StatelessWidget with ResponsiveWidgetMixin {
   MonitoreoAdminPage({super.key});
 
-  CitaRequestAdminViewModel request = CitaRequestAdminViewModel(ubicacionId: 0);
+  CitaRequestAdmin request = CitaRequestAdmin(ubicacionId: 0);
 
   @override
   Widget build(BuildContext context) {
@@ -81,7 +83,7 @@ class PageControl extends StatelessWidget {
   final formKey = GlobalKey<FormState>();
 
   PageControl({super.key, required this.request});
-  final CitaRequestAdminViewModel request;
+  CitaRequestAdmin request;
 
   @override
   Widget build(BuildContext context) {
@@ -99,7 +101,7 @@ class PageControl extends StatelessWidget {
                   contendor: const UbicacionContenedorDataModel(nombre: "", id: 1),
                   onChanged: (value) {
                     context.read<UbicacionSelectedCubit>().setUbicacion(value!);
-                    request.ubicacionId = value.id!;
+                    request = request.copyWith(ubicacionId: value.id!);
                   },
                   label: "Ubicaciones",
                   idContenedor: 1,
@@ -109,7 +111,7 @@ class PageControl extends StatelessWidget {
                   create: (context) => IndexCubit(),
                   child: Builder(builder: (context) {
                     if (context.read<IndexCubit>().state == 0) {
-                      request.doctorId = null;
+                      request = request.copyWith(doctorId: null);
                     }
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -144,7 +146,7 @@ class PageControl extends StatelessWidget {
                                           celular: "",
                                         ),
                                         onChanged: (value) {
-                                          request.doctorId = value?.id!;
+                                          request = request.copyWith(doctorId: value?.id);
 
                                           // Aquí manejas el cambio de selección del doctor si es necesario
                                         },
@@ -165,7 +167,7 @@ class PageControl extends StatelessWidget {
                                             celular: "",
                                           ),
                                           onChanged: (value) {
-                                            request.doctorId = value?.id!;
+                                            request = request.copyWith(doctorId: value?.id);
 
                                             // Aquí manejas el cambio de selección del doctor si es necesario
                                           },
@@ -204,17 +206,20 @@ class PageControl extends StatelessWidget {
                           () {
                             switch ((state)) {
                               case 0:
-                                request.fechaFin = null;
-                                request.fechaInicio = null;
+                                request = request.copyWith(fechaFin: null, fechaInicio: null);
+
                                 return SfDateRangePicker(
                                   selectionMode: DateRangePickerSelectionMode.single,
                                   backgroundColor: AppConstColors.lightBackgroundColor,
-                                  onSelectionChanged: (s) {
-                                    request.fecha = DateTime.parse(s.value.toString());
+                                  onSelectionChanged: (value) {
+                                    final initial = DateTime.parse(value.value.toString());
+                                    request = request.copyWith(fecha: initial.toFormatyyyyMMdd());
+                                    // request.fecha = DateTime.parse(s.value.toString());
                                   },
                                 );
                               case 1:
-                                request.fecha = null;
+                                request = request.copyWith(fecha: null);
+
                                 return SfDateRangePicker(
                                   key: UniqueKey(),
                                   backgroundColor: AppConstColors.white,
@@ -222,11 +227,11 @@ class PageControl extends StatelessWidget {
                                   onSelectionChanged: (args) {
                                     if (args.value.startDate != null) {
                                       final initial = DateTime.parse(args.value.startDate.toString());
-                                      request.fechaInicio = initial;
+                                      request = request.copyWith(fechaInicio: initial.toFormatyyyyMMdd());
                                     }
                                     if (args.value.endDate != null) {
                                       final end = DateTime.parse(args.value.endDate.toString());
-                                      request.fechaFin = end;
+                                      request = request.copyWith(fechaFin: end.toFormatyyyyMMdd());
                                     }
                                   },
                                 );
@@ -277,7 +282,7 @@ class PageControl extends StatelessWidget {
                           AppTextGlobal.labelLightText(text: "EXCEL:"),
                           BlocBuilder<CitaListAdminBloc, CitaListAdminState>(
                             builder: (context, state) {
-                              final citas = <CitaViewModel>[];
+                              final citas = <CitaDTO>[];
                               if (state is CitasLoaded) {
                                 citas.addAll(state.citas);
                               }

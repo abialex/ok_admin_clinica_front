@@ -1,6 +1,9 @@
 // ignore_for_file: must_be_immutable
 import 'package:admin_clinica_front/app/common/constants/app_const_colors.dart';
 import 'package:admin_clinica_front/app/common/blocs/usuario_session/bloc/usuario_bloc.dart';
+import 'package:admin_clinica_front/app/common/models/doctor/doctor_dto.dart';
+import 'package:admin_clinica_front/app/common/models/request/request_model.dart';
+import 'package:admin_clinica_front/app/common/utils/extensions/date_time_extensions.dart';
 import 'package:admin_clinica_front/app/common/widget/app_list_doctor_horizontal_scroll.dart';
 import 'package:admin_clinica_front/app/common/widget/app_loader_mini.dart';
 import 'package:admin_clinica_front/app/common/cubits/count_isolate_cubit.dart';
@@ -13,7 +16,6 @@ import 'package:admin_clinica_front/app/ui/modules/cita/bloc/cita_crear_bloc/cit
 import 'package:admin_clinica_front/app/ui/modules/cita/r_asistente_asistente/widgets/cita_card_asist_asist.dart';
 import 'package:admin_clinica_front/app/ui/modules/doctor/bloc/doctor_list_bloc.dart';
 import 'package:admin_clinica_front/app/ui/view_models/cita_view/cita_view_models.dart';
-import 'package:admin_clinica_front/app/ui/view_models/doctor_view/doctor_view_models.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -27,7 +29,7 @@ import '../../bloc/cita_bloc.dart';
 class CitaListAsistenteAsistentePage extends StatelessWidget with ResponsiveWidgetMixin {
   CitaListAsistenteAsistentePage({super.key});
   DateTime dateSelected = DateTime.now();
-  DoctorsViewModel? doctorSelected;
+  DoctorDto? doctorSelected;
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -96,13 +98,13 @@ class CitaListAsistenteAsistentePage extends StatelessWidget with ResponsiveWidg
                                 (element) => doctorSelected!.id == element.id,
                               )) {
                                 doctorSelected = stt.doctors.firstWhere((element) => doctorSelected!.id == element.id);
-                                if (doctorSelected!.isActive) {
+                                if (doctorSelected!.is_active) {
                                   context.read<CitaBloc>().add(
                                         CitaEvent.getCitas(
-                                          CitaRequestViewModel(
+                                          CitaRequest(
                                             doctorId: doctorSelected!.id,
                                             ubicacionesId: usuarioBloc.state.usuario?.ubicaciones ?? [],
-                                            fechaHoraCita: DateTime.now(),
+                                            fechaHoraCita: DateTime.now().toFormatyyyyMMdd(),
                                           ),
                                         ),
                                       );
@@ -120,15 +122,15 @@ class CitaListAsistenteAsistentePage extends StatelessWidget with ResponsiveWidg
                               onChanged: (doctor) {
                                 doctorSelected = doctor;
                                 usuarioBloc.setDoctorSelected(doctor);
-                                if (!doctor.isActive) {
+                                if (!doctor.is_active) {
                                   context.read<CitaBloc>().add(CitaEvent.invalidCita("Este doctor(a) está inactivo"));
                                   return;
                                 }
                                 context.read<CitaBloc>().add(CitaEvent.getCitas(
-                                      CitaRequestViewModel(
+                                      CitaRequest(
                                         doctorId: doctor.id,
                                         ubicacionesId: usuarioBloc.state.usuario?.ubicaciones ?? [],
-                                        fechaHoraCita: dateSelected,
+                                        fechaHoraCita: dateSelected.toFormatyyyyMMdd(),
                                       ),
                                     ));
                               },
@@ -154,12 +156,12 @@ class CitaListAsistenteAsistentePage extends StatelessWidget with ResponsiveWidg
                           onDateTimeChanged: (value) {
                             dateSelected = value;
                             if (doctorSelected != null) {
-                              if (doctorSelected!.isActive) {
+                              if (doctorSelected!.is_active) {
                                 citaBloc.add(CitaEvent.getCitas(
-                                  CitaRequestViewModel(
+                                  CitaRequest(
                                     doctorId: doctorSelected!.id,
                                     ubicacionesId: usuarioBloc.state.usuario?.ubicaciones ?? [],
-                                    fechaHoraCita: value,
+                                    fechaHoraCita: value.toFormatyyyyMMdd(),
                                   ),
                                 ));
                               }
@@ -180,15 +182,18 @@ class CitaListAsistenteAsistentePage extends StatelessWidget with ResponsiveWidg
               return AnimatedSwitcher(
                 duration: 0.5.seconds,
                 child: state.map(
+                  citaOcupadaCreated: (value) {
+                    return const SizedBox.shrink();
+                  },
                   initial: (state) {
                     return GestureDetector(
                       onTap: () {
                         citaBloc.add(
                           CitaEvent.getCitas(
-                            CitaRequestViewModel(
+                            CitaRequest(
                               doctorId: doctorSelected?.id ?? 0,
                               ubicacionesId: usuarioBloc.state.usuario?.ubicaciones ?? [],
-                              fechaHoraCita: DateTime.now(),
+                              fechaHoraCita: DateTime.now().toFormatyyyyMMdd(),
                             ),
                           ),
                         );

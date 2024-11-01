@@ -1,9 +1,11 @@
 import 'package:admin_clinica_front/app/common/constants/app_const_svgs.dart';
+import 'package:admin_clinica_front/app/common/models/cita/cita_dto.dart';
+import 'package:admin_clinica_front/app/common/models/cita/cita_ocupada/cita_ocupada_create.dart';
 import 'package:admin_clinica_front/app/common/utils/extensions/date_time_extensions.dart';
 import 'package:admin_clinica_front/app/config/app_cita_config.dart';
 import 'package:admin_clinica_front/app/common/constants/app_const_colors.dart';
 import 'package:admin_clinica_front/app/data/entities/estado_cita.dart';
-import 'package:admin_clinica_front/app/common/mappers/citas_service.dart';
+import 'package:admin_clinica_front/app/common/enums/tipo_accion_enum.dart';
 import 'package:admin_clinica_front/app/config/routes/router.dart';
 import 'package:admin_clinica_front/app/common/widget/app_box.dart';
 import 'package:admin_clinica_front/app/common/widget/app_text_style.dart';
@@ -15,7 +17,6 @@ import 'package:admin_clinica_front/app/ui/modules/cita/bloc/cita_hora_bloc/cita
 import 'package:admin_clinica_front/app/ui/modules/cita/bloc/cita_index_bloc/cita_index_bloc.dart';
 import 'package:admin_clinica_front/app/ui/modules/cita/bloc/cita_update_bloc/cita_update_bloc.dart';
 import 'package:admin_clinica_front/app/ui/modules/cita/bloc/cita_update_bloc/cita_update_event.dart';
-import 'package:admin_clinica_front/app/ui/view_models/cita_view/cita_view_models.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -24,7 +25,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
 
 class CitaCard extends StatelessWidget {
-  final CitasViewModel cita;
+  final CitaDTO cita;
 
   const CitaCard({super.key, required this.cita});
 
@@ -106,7 +107,7 @@ class CitaCard extends StatelessWidget {
                                         AppBox.w6,
                                       ],
                                     ),
-                                  if (cita.pacienteDatos != null)
+                                  if (cita.paciente != null)
                                     Row(
                                       crossAxisAlignment: CrossAxisAlignment.center,
                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -116,7 +117,7 @@ class CitaCard extends StatelessWidget {
                                           color: AppConstColors.slg01,
                                         ),
                                         // AppTextGlobal.labelLightText(text: "Paciente Libre:"),
-                                        Expanded(child: Center(child: AppTextGlobal.lightText(text: stt.cita.pacienteDatos!.toUpperCase()))),
+                                        Expanded(child: Center(child: AppTextGlobal.lightText(text: stt.cita.paciente?.nombres?.toUpperCase() ?? 'n.a'))),
                                         AppBox.w6,
                                       ],
                                     ),
@@ -149,7 +150,7 @@ class CitaCard extends StatelessWidget {
                                                   horizontal: 5,
                                                 ),
                                                 decoration: BoxDecoration(
-                                                  color: stt.cita.estado.color,
+                                                  color: stt.cita.estadoEnum.color,
                                                   borderRadius: const BorderRadius.all(
                                                     Radius.circular(
                                                       10,
@@ -173,8 +174,8 @@ class CitaCard extends StatelessWidget {
                                               EstadoCita.finalizado,
                                               EstadoCita.validado,
                                             ],
-                                            itemSelected: stt.cita.estado,
-                                            estadoPercent: stt.cita.estado.percent,
+                                            itemSelected: stt.cita.estadoEnum,
+                                            estadoPercent: stt.cita.estadoEnum.percent,
                                           ),
                                         ),
 
@@ -312,7 +313,7 @@ class CitaCard extends StatelessWidget {
                               ),
                               // AppTextGlobal.labelLightText(text: "Hora:"),
                               AppBox.w2,
-                              AppTextGlobal.labelLightText(text: stt.cita.fechaHoraCita.toFormatHHmm()),
+                              AppTextGlobal.labelLightText(text: stt.cita.fechaHoraCitaDate.toFormatHHmm()),
                             ],
                           ),
                         ),
@@ -407,12 +408,12 @@ class CitaCard extends StatelessWidget {
                                         Expanded(child: Center(child: AppTextGlobal.lightText(text: stt.cita.datosPaciente!.toUpperCase()))),
                                       ],
                                     ),
-                                  if (cita.pacienteDatos != null)
+                                  if (cita.paciente != null)
                                     Row(
                                       crossAxisAlignment: CrossAxisAlignment.center,
                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       children: [
-                                        Expanded(child: Center(child: AppTextGlobal.lightText(text: stt.cita.pacienteDatos!.toUpperCase()))),
+                                        Expanded(child: Center(child: AppTextGlobal.lightText(text: stt.cita.paciente?.nombres?.toUpperCase() ?? 'na'))),
                                       ],
                                     ),
                                   AppBox.h10,
@@ -429,7 +430,7 @@ class CitaCard extends StatelessWidget {
                                           horizontal: 5,
                                         ),
                                         decoration: BoxDecoration(
-                                          color: stt.cita.estado.color,
+                                          color: stt.cita.estadoEnum.color,
                                           borderRadius: const BorderRadius.all(
                                             Radius.circular(
                                               10,
@@ -450,7 +451,7 @@ class CitaCard extends StatelessWidget {
                                           ),
                                           // AppTextGlobal.labelLightText(text: "Hora:"),
                                           AppBox.w2,
-                                          AppTextGlobal.labelLightText(text: stt.cita.fechaHoraCita.toFormatHHmm()),
+                                          AppTextGlobal.labelLightText(text: stt.cita.fechaHoraCitaDate.toFormatHHmm()),
                                         ],
                                       )
                                     ],
@@ -476,7 +477,7 @@ class CitaCard extends StatelessWidget {
                                       onTap: () {
                                         dialogCubit.showCustomAlert(
                                           titulo: "Cancelar",
-                                          texto: "Seguro que quiere cancelar la cita de ${stt.cita.datosPaciente ?? (stt.cita.pacienteDatos ?? "No tiene nombre")}",
+                                          texto: "Seguro que quiere cancelar la cita de ${stt.cita.datosPaciente ?? (stt.cita.paciente?.nombres ?? "No tiene nombre")}",
                                           icon: Icons.cancel,
                                           colorBackground: AppConstColors.redSunat,
                                           onAceptar: () {
@@ -493,7 +494,7 @@ class CitaCard extends StatelessWidget {
                                       onTap: () {
                                         dialogCubit.showCustomAlert(
                                           titulo: "Llamar",
-                                          texto: "Seguro que quiere llamar a ${stt.cita.datosPaciente ?? (stt.cita.pacienteDatos ?? "No tiene nombre")}",
+                                          texto: "Seguro que quiere llamar a ${stt.cita.datosPaciente ?? (stt.cita.paciente?.nombres ?? "No tiene nombre")}",
                                           icon: Icons.phone,
                                           colorBackground: AppConstColors.blueSunat,
                                           onAceptar: () {
@@ -622,13 +623,13 @@ class CitaCard extends StatelessWidget {
     );
   }
 
-  Future<void> nextCita(BuildContext context, CitasViewModel cita) async {
+  Future<void> nextCita(BuildContext context, CitaDTO cita) async {
     final bloc = context.read<CitaIndexBloc>();
     final dialogCubit = context.read<DialogMessageCubit>();
     late String titulo;
     late String texto;
     late TipoAccionEnum tipoAccion;
-    switch (cita.estado) {
+    switch (cita.estadoEnum) {
       case EstadoCita.pendiente:
         titulo = "¿Seguro(a) de confirmar?";
         texto = "la cita estará pendiente para que el doctor acepte, una vez confirmada la cita ya no se podrá modificar.";
@@ -676,9 +677,9 @@ class CitaCard extends StatelessWidget {
 }
 
 class CitasGroupedByHourAsistRecep extends StatelessWidget {
-  final List<CitasViewModel> citas;
+  final List<CitaDTO> citas;
   final Function(int, String)? onAdd;
-  final CitaOcupadaCreateViewModel Function(int) onBlock;
+  final CitaOcupadaCreateModel Function(int) onBlock;
   final Function(int)? onRelease;
 
   const CitasGroupedByHourAsistRecep({
@@ -693,7 +694,7 @@ class CitasGroupedByHourAsistRecep extends StatelessWidget {
   Widget build(BuildContext context) {
     for (var horaItem in CitaConfig.horaList) {
       horaItem.listItems.clear();
-      horaItem.listItems.addAll(citas.where((element) => element.fechaHoraCita.hour == horaItem.hora).toList());
+      horaItem.listItems.addAll(citas.where((element) => element.fechaHoraCitaDate.hour == horaItem.hora).toList());
     }
 
     return ListView(

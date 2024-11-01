@@ -1,4 +1,5 @@
 import 'package:admin_clinica_front/app/common/constants/app_const_icons.dart';
+import 'package:admin_clinica_front/app/common/models/cita/cita_agil/cita_agil_create.dart';
 import 'package:admin_clinica_front/app/common/widget/app_box.dart';
 import 'package:admin_clinica_front/app/common/widget/app_sunat.dart';
 import 'package:admin_clinica_front/app/common/widget/app_text_style.dart';
@@ -8,7 +9,6 @@ import 'package:admin_clinica_front/app/common/widget/input_text/input_form_02/i
 import 'package:admin_clinica_front/app/ui/modules/cita/bloc/cita_crear_bloc/cita_create_bloc.dart';
 import 'package:admin_clinica_front/app/ui/modules/cita/bloc/cita_crear_bloc/cita_create_event.dart';
 import 'package:admin_clinica_front/app/common/utils/validators.dart';
-import 'package:admin_clinica_front/app/ui/view_models/cita_view/cita_view_models.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -150,15 +150,17 @@ class _CitaAddFormAgilState extends State<CitaAddFormAgil> {
                             if (formKey.currentState!.validate()) {
                               createCitaBloc.add(
                                 CitaCreateEvent.citaCreateLocal(
-                                  CitaAgilCreateViewModel(
+                                  CitaAgilCreateModel(
                                     doctorId: widget.doctorId,
                                     ubicacionId: widget.ubicacionId,
-                                    fechaHoraCita: widget.fechaCita.copyWith(
-                                      hour: widget.hora,
-                                      minute: int.parse(_minutoController.text),
-                                      second: 0,
-                                      millisecond: 0,
-                                    ),
+                                    fechaHoraCita: widget.fechaCita
+                                        .copyWith(
+                                          hour: widget.hora,
+                                          minute: int.parse(_minutoController.text),
+                                          second: 0,
+                                          millisecond: 0,
+                                        )
+                                        .toIso8601String(),
                                     datosPaciente: _nombresController.text,
                                     celular: _celularController.text,
                                     razon: _razonController.text,

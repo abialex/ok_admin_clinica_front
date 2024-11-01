@@ -1,7 +1,8 @@
+import 'package:admin_clinica_front/app/common/models/cita/cita_dto.dart';
+import 'package:admin_clinica_front/app/common/models/cita/cita_ocupada/cita_ocupada_create.dart';
+import 'package:admin_clinica_front/app/common/repository/cita/i_cita_repository.dart';
 import 'package:admin_clinica_front/app/config/app_dependecy_injection.dart';
 import 'package:admin_clinica_front/app/data/entities/tipo_cita.dart';
-import 'package:admin_clinica_front/app/common/mappers/citas_service.dart';
-import 'package:admin_clinica_front/app/ui/view_models/cita_view/cita_view_models.dart';
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -16,11 +17,11 @@ class CitaHoraBloc extends Bloc<CitaHoraEvent, CitaHoraState> {
     on<ReleaseCitaEvent>(releaseCita);
   }
 
-  final citaService = locator<CitasService>();
+  final citaRepository = locator<ICitaRepository>();
 
   Future<void> initial(InitialEvent event, Emitter<CitaHoraState> emit) async {
     final citaList = event.citasViewModelList;
-    final existsCitaOcupada = citaList.any((element) => element.tipo == TipoCita.ocupada);
+    final existsCitaOcupada = citaList.any((element) => element.tipoEnum == TipoCita.ocupada);
     emit(LoadingState());
     if (existsCitaOcupada) {
       emit(
@@ -37,7 +38,7 @@ class CitaHoraBloc extends Bloc<CitaHoraEvent, CitaHoraState> {
   Future<void> blockCita(BlockCitaEvent event, Emitter<CitaHoraState> emit) async {
     emit(LoadingState());
     //*create cita ocupada
-    final result = await citaService.citaOcupadaCreate(event.citaOcupadaCreateViewModel);
+    final result = await citaRepository.createCitaOcupada(event.citaOcupadaCreateViewModel);
     if (result.isRight) {
       emit(CitaHoraState.citaBloqueada(
         result.right,
@@ -50,7 +51,7 @@ class CitaHoraBloc extends Bloc<CitaHoraEvent, CitaHoraState> {
 
   Future<void> releaseCita(ReleaseCitaEvent event, Emitter<CitaHoraState> emit) async {
     emit(LoadingState());
-    final result = await citaService.deleteCitaById(event.citaId);
+    final result = await citaRepository.deleteCitaById(event.citaId);
     if (result.isRight) {
       emit(CitaHoraState.citaLibre([]));
     } else {

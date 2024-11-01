@@ -1,22 +1,23 @@
-// ignore_for_file: non_constant_identifier_names
+// ignore_for_file: invalid_annotation_target
 
-import 'package:json_annotation/json_annotation.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+
+part 'cita_ocupada_create.freezed.dart';
 part 'cita_ocupada_create.g.dart';
 
-@JsonSerializable()
-class CitaOcupadaCreateModel {
-  final String fechaHoraCita;
-  final String? razonOcupado;
-  final int doctor_id;
+@freezed
+class CitaOcupadaCreateModel with _$CitaOcupadaCreateModel {
+  const CitaOcupadaCreateModel._(); // Constructor privado para usar getters
 
-  CitaOcupadaCreateModel({
-    required this.doctor_id,
-    required this.fechaHoraCita,
-    this.razonOcupado,
-  });
-  //fromJson
-  factory CitaOcupadaCreateModel.fromJson(Map<String, dynamic> map) => _$CitaOcupadaCreateModelFromJson(map);
+  const factory CitaOcupadaCreateModel({
+    @JsonKey(name: 'doctor_id') required int doctorId,
+    @JsonKey(name: 'fechaHoraCita') required String fechaHoraCita,
+    String? razonOcupado,
+  }) = _CitaOcupadaCreateModel;
 
-  //ToJson
-  Map<String, dynamic> toJson() => _$CitaOcupadaCreateModelToJson(this);
+  // fromJson
+  factory CitaOcupadaCreateModel.fromJson(Map<String, dynamic> json) => _$CitaOcupadaCreateModelFromJson(json);
+
+  // Getter para convertir fechaHoraCita a DateTime
+  DateTime get fechaHoraCitaDate => DateTime.parse(fechaHoraCita);
 }

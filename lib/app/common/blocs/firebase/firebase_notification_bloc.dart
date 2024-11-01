@@ -11,6 +11,7 @@ part 'firebase_notification_bloc.freezed.dart';
 class FirebaseNotificationBloc extends Bloc<FirebaseNotificationEvent, FirebaseNotificationState> {
   FirebaseNotificationBloc() : super(const FirebaseNotificationState.initial()) {
     on<SuscriptionFirstPlaneEvent>(suscriptionFirstPlane);
+    on<SuscriptionSecondPlaneEvent>(suscriptionSecondPlaneEvent);
     on<GetTokenEvent>(getToken);
     on<SuscriptionGroupEvent>(suscriptionGroup);
     on<UnsuscriptionGroupEvent>(unsuscriptionGroup);
@@ -20,6 +21,10 @@ class FirebaseNotificationBloc extends Bloc<FirebaseNotificationEvent, FirebaseN
 
   Future<void> suscriptionFirstPlane(SuscriptionFirstPlaneEvent event, Emitter<FirebaseNotificationState> emit) async {
     repository.escucharPrimerPlano(event.onData);
+  }
+
+  Future<void> suscriptionSecondPlaneEvent(SuscriptionSecondPlaneEvent event, Emitter<FirebaseNotificationState> emit) async {
+    repository.escucharSegundoPlano(event.onData);
   }
 
   Future<void> getToken(GetTokenEvent event, Emitter<FirebaseNotificationState> emit) async {
