@@ -3,6 +3,7 @@ import 'package:admin_clinica_front/app/common/models/usuario/user_response_data
 import 'package:admin_clinica_front/app/common/repository/usuario/iusuario_repository.dart';
 import 'package:admin_clinica_front/app/config/app_dependecy_injection.dart';
 import 'package:admin_clinica_front/app/data/repository/storage/ilocal_repository.dart';
+import 'package:admin_clinica_front/app/modules/login/model/update_password_request_data_model.dart';
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 part 'login_event.dart';
@@ -13,6 +14,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   LoginBloc() : super(LoginState.initial()) {
     on<LoginUsuario>(loginUsuario);
     on<AuthenticatedUsuarioEvent>(authenticatedUsuario);
+    on<UpdatePasswordUsuarioEvent>(updatePasswordUsuario);
   }
 
   final _localService = locator<ILocalRepository>();
@@ -54,6 +56,18 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         } else {
           emit(LoginState.failure(right.mensaje));
         }
+      },
+    );
+  }
+
+  Future<void> updatePasswordUsuario(UpdatePasswordUsuarioEvent event, Emitter<LoginState> emit) async {
+    emit(Loading());
+
+    final result = await _usuarioRepository.updatePassword(event.request);
+    result.fold(
+      (left) => emit(LoginState.failure(left)),
+      (right) {
+        emit(LoginState.usuarioUpdatePasswordSuccess(right));
       },
     );
   }

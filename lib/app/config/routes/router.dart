@@ -1,5 +1,6 @@
 // ignore_for_file: constant_identifier_names, unused_element
 
+import 'package:admin_clinica_front/app/common/models/usuario/user_response_data_model.dart';
 import 'package:admin_clinica_front/app/modules/atencion/page.dart';
 import 'package:admin_clinica_front/app/modules/cita/pages/cita_list_asistente_doctor_page.dart';
 import 'package:admin_clinica_front/app/modules/cita/pages/cita_list_doctor_general_page.dart';
@@ -9,6 +10,7 @@ import 'package:admin_clinica_front/app/modules/cita/pages/cita_list_doctor_mana
 import 'package:admin_clinica_front/app/modules/cita/pages/cita_update_doctor_manager_page.dart';
 import 'package:admin_clinica_front/app/modules/doctor/page/doctor_list_administrador_page.dart';
 import 'package:admin_clinica_front/app/modules/login/page/login_page.dart';
+import 'package:admin_clinica_front/app/modules/login/page/reset_password_page.dart';
 import 'package:admin_clinica_front/app/modules/monitoreo/page/monitoreo_admin_page.dart';
 import 'package:admin_clinica_front/app/modules/otros/page/otros_page.dart';
 import 'package:admin_clinica_front/app/modules/paciente/page/paciente_list_asistente_administrador_page.dart';
@@ -47,6 +49,7 @@ class Routes {
   static const String monitoreo = '/monitoreo';
 
   static const String login = '/';
+  static const String resetPassword = '/resetPassword';
 }
 //doctor administrador
 //doctor asistente
@@ -54,6 +57,8 @@ class Routes {
 
 class AppRouter {
   static Route<dynamic> generateRoute(RouteSettings settings) {
+    final args = settings.arguments;
+
     var uri = Uri.parse(settings.name ?? "");
     switch (uri.path) {
       case Routes.login:
@@ -166,6 +171,11 @@ class AppRouter {
       case Routes.base_admin + Routes.monitoreo:
         return PageRouteBuilder(
           pageBuilder: (_, __, ___) => MonitoreoAdminPage(),
+          //   transitionsBuilder: _createSlideFadeTransition,
+        );
+      case Routes.resetPassword:
+        return PageRouteBuilder(
+          pageBuilder: (_, __, ___) => ResetPasswordPage(usuario: args! as UserResponseDataModel),
           //   transitionsBuilder: _createSlideFadeTransition,
         );
 

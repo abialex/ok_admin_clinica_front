@@ -1,3 +1,4 @@
+import 'package:admin_clinica_front/app/modules/login/model/update_password_request_data_model.dart';
 import 'package:either_dart/either.dart';
 
 import '../../models/usuario/authenticated_dto.dart';
@@ -8,4 +9,5 @@ abstract class IUsuarioRepository {
   Future<Either<String, UserResponseDataModel>> login(LoginUserDto loginUserDto);
   Future<Either<String, AuthenticatedDTO>> authenticated(String token);
   Future<Either<String, bool>> logout();
+  Future<Either<String, String>> updatePassword(UpdatePasswordRequestDataModel request);
 }

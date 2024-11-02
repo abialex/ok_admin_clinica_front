@@ -16,7 +16,7 @@ class UserResponseDataModel with _$UserResponseDataModel {
     required String rol,
     required String username,
     String? tipo,
-    required bool isNewPassword,
+    bool? isNewPassword,
     required List<int> ubicaciones,
   }) = _UserResponseDataModel;
 

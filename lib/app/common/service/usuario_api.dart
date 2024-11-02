@@ -3,6 +3,7 @@ import 'package:admin_clinica_front/app/common/models/api_model/api_model.dart';
 import 'package:admin_clinica_front/app/common/models/usuario/authenticated_dto.dart';
 import 'package:admin_clinica_front/app/common/models/usuario/user_response_data_model.dart';
 import 'package:admin_clinica_front/app/common/utils/api_utils.dart';
+import 'package:admin_clinica_front/app/modules/login/model/update_password_request_data_model.dart';
 import 'package:dio/dio.dart';
 import 'package:either_dart/either.dart';
 import '../models/usuario/login_user_dto.dart';
@@ -32,5 +33,10 @@ class UsuarioApi implements BaseApi {
   Future<Either<String, bool>> logout() async {
     final response = await _dio.get<ApiModel>("${url}logout");
     return ApiUtils.reponseHandler(response, (data) => data as bool);
+  }
+
+  Future<Either<String, String>> updatePassword(UpdatePasswordRequestDataModel request) async {
+    final response = await _dio.post<ApiModel>("${url}update-password", data: request.toJson());
+    return ApiUtils.reponseHandler(response, (data) => data as String);
   }
 }

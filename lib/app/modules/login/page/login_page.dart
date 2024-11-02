@@ -67,75 +67,84 @@ class LoginPageState extends State<LoginPage> {
     return BlocListener<LoginBloc, LoginState>(
       listener: (context, state) {
         state.map(
-          initial: (value) {
-            setState(() {
-              mensajeWidget = AppTextGlobal.labelLightText(text: 'initial');
-            });
-          },
-          loading: (value) {
-            setState(() {
-              mensajeWidget = AppLoaderTextWritingAnimate(
-                  message: "Verificando...",
-                  buildText: (value) {
-                    return AppTextGlobal.labelLightText(
-                      text: value,
-                      textAlign: TextAlign.left,
-                    );
-                  });
-            });
-          },
-          usuarioAuthenticated: (value) async {
-            loadModules(value.usuario);
-            setState(() {
-              showPreview = true;
-            });
-            if (Platform.isAndroid) {
-              String ubicacionId = value.usuario.ubicaciones.isNotEmpty ? value.usuario.ubicaciones.first.toString() : '';
-              firebaseBloc.add(const FirebaseNotificationEvent.getToken());
-              firebaseBloc.add(FirebaseNotificationEvent.suscriptionGroup(value.usuario.rol + ubicacionId));
-              firebaseBloc.add(FirebaseNotificationEvent.suscriptionFirstPlane(
-                (notification) {
-                  dialogMessageCubit.showCustomAlert(titulo: notification.notification?.title ?? 'n.a', texto: notification.notification?.body ?? 'n.a');
-                },
-              ));
+            initial: (value) {
+              setState(() {
+                mensajeWidget = AppTextGlobal.labelLightText(text: 'initial');
+              });
+            },
+            loading: (value) {
+              setState(() {
+                mensajeWidget = AppLoaderTextWritingAnimate(
+                    message: "Verificando...",
+                    buildText: (value) {
+                      return AppTextGlobal.labelLightText(
+                        text: value,
+                        textAlign: TextAlign.left,
+                      );
+                    });
+              });
+            },
+            usuarioAuthenticated: (value) async {
+              loadModules(value.usuario);
+              setState(() {
+                showPreview = true;
+              });
+              if (Platform.isAndroid) {
+                String ubicacionId = value.usuario.ubicaciones.isNotEmpty ? value.usuario.ubicaciones.first.toString() : '';
+                firebaseBloc.add(const FirebaseNotificationEvent.getToken());
+                firebaseBloc.add(FirebaseNotificationEvent.suscriptionGroup(value.usuario.rol + ubicacionId));
+                firebaseBloc.add(FirebaseNotificationEvent.suscriptionFirstPlane(
+                  (notification) {
+                    dialogMessageCubit.showCustomAlert(titulo: notification.notification?.title ?? 'n.a', texto: notification.notification?.body ?? 'n.a');
+                  },
+                ));
 
-              firebaseBloc.add(FirebaseNotificationEvent.suscriptionSecondPlane(
-                (p0) async {},
-              ));
-            }
-          },
-          usuarioLoaded: (value) async {
-            loadModules(value.usuario);
-            await usuarioBloc.setUsuario(value.usuario);
-            if (Platform.isAndroid) {
-              String ubicacionId = value.usuario.ubicaciones.isNotEmpty ? value.usuario.ubicaciones.first.toString() : '';
+                firebaseBloc.add(FirebaseNotificationEvent.suscriptionSecondPlane(
+                  (p0) async {},
+                ));
+              }
+              if (value.usuario.isNewPassword ?? false) {
+                Navigator.pushReplacementNamed(context, Routes.resetPassword, arguments: value.usuario);
+              } else {
+                Navigator.pushReplacementNamed(context, Routes.home);
+              }
+            },
+            usuarioLoaded: (value) async {
+              loadModules(value.usuario);
+              await usuarioBloc.setUsuario(value.usuario);
+              if (Platform.isAndroid) {
+                String ubicacionId = value.usuario.ubicaciones.isNotEmpty ? value.usuario.ubicaciones.first.toString() : '';
 
-              firebaseBloc.add(const FirebaseNotificationEvent.getToken());
-              firebaseBloc.add(FirebaseNotificationEvent.suscriptionGroup(value.usuario.rol + ubicacionId));
-              firebaseBloc.add(FirebaseNotificationEvent.suscriptionFirstPlane(
-                (notification) {
-                  dialogMessageCubit.showCustomAlert(titulo: notification.notification?.title ?? 'n.a', texto: notification.notification?.body ?? 'n.a');
-                },
-              ));
-              firebaseBloc.add(FirebaseNotificationEvent.suscriptionSecondPlane(
-                (p0) async {},
-              ));
-            }
-            Navigator.pushReplacementNamed(context, Routes.home);
-          },
-          authenticatedFailure: (value) {
-            setState(() {
-              mensajeWidget = AppTextGlobal.labelLightText(
-                text: value.detalle,
-              );
-            });
-          },
-          failure: (value) {
-            setState(() {
-              mensajeWidget = AppTextGlobal.labelLightText(text: value.error, colorText: AppConstColors.red);
-            });
-          },
-        );
+                firebaseBloc.add(const FirebaseNotificationEvent.getToken());
+                firebaseBloc.add(FirebaseNotificationEvent.suscriptionGroup(value.usuario.rol + ubicacionId));
+                firebaseBloc.add(FirebaseNotificationEvent.suscriptionFirstPlane(
+                  (notification) {
+                    dialogMessageCubit.showCustomAlert(titulo: notification.notification?.title ?? 'n.a', texto: notification.notification?.body ?? 'n.a');
+                  },
+                ));
+                firebaseBloc.add(FirebaseNotificationEvent.suscriptionSecondPlane(
+                  (p0) async {},
+                ));
+              }
+              if (value.usuario.isNewPassword ?? false) {
+                Navigator.pushReplacementNamed(context, Routes.resetPassword, arguments: value.usuario);
+              } else {
+                Navigator.pushReplacementNamed(context, Routes.home);
+              }
+            },
+            authenticatedFailure: (value) {
+              setState(() {
+                mensajeWidget = AppTextGlobal.labelLightText(
+                  text: value.detalle,
+                );
+              });
+            },
+            failure: (value) {
+              setState(() {
+                mensajeWidget = AppTextGlobal.labelLightText(text: value.error, colorText: AppConstColors.red);
+              });
+            },
+            usuarioUpdatePasswordSuccess: (value) {});
       },
       child: Scaffold(
         resizeToAvoidBottomInset: false,
