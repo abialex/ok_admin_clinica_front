@@ -79,7 +79,6 @@ class AtencionPage extends StatelessWidget with ResponsiveWidgetMixin {
             children: [
               const Expanded(
                 child: HeaderMobile(
-                  subTitle: "Doctor",
                   title: "ATENCIÓN",
                 ),
               ),

@@ -119,7 +119,6 @@ class DoctorListAsistenteDoctorPage extends StatelessWidget with ResponsiveWidge
       //   child: const Icon(Icons.add),
       // ),
       headerWidget: const HeaderMobile(
-        subTitle: "Doctor",
         title: "DOCTORES",
       ),
       bodySliver: SliverToBoxAdapter(

@@ -43,7 +43,6 @@ class HomePage extends StatelessWidget with ResponsiveWidgetMixin {
     final navbarCubit = context.read<NavigatorCubit>();
     return PageBasePhone(
         headerWidget: const HeaderMobile(
-          subTitle: "Doctor",
           title: "HOME",
         ),
         bodySliver: SliverToBoxAdapter(

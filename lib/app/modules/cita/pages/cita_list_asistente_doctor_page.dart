@@ -252,7 +252,6 @@ class CitaListAsistenteDoctorPage extends StatelessWidget with ResponsiveWidgetM
 
     return PageBasePhoneBeta(
       headerWidget: const HeaderMobile(
-        subTitle: "Doctor",
         title: "CITAS",
       ),
       bodySliver: [

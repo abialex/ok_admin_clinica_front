@@ -54,7 +54,6 @@ class CitaListAsistenteAdministradorPage extends StatelessWidget with Responsive
 
     return PageBasePhoneBeta(
       headerWidget: const HeaderMobile(
-        subTitle: "Doctor",
         title: "CITAS",
       ),
       bodySliver: [

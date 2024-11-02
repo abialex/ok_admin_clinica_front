@@ -118,7 +118,6 @@ class CitaListDoctorGeneralPage extends StatelessWidget with ResponsiveWidgetMix
             children: [
               const Expanded(
                 child: HeaderMobile(
-                  subTitle: "Doctor",
                   title: "CITAS",
                 ),
               ),

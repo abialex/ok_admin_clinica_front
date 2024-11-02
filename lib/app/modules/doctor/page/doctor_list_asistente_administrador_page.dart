@@ -119,7 +119,6 @@ class DoctorListAsistenteAdministradorPage extends StatelessWidget with Responsi
         child: const Icon(Icons.add),
       ),
       headerWidget: const HeaderMobile(
-        subTitle: "Doctor",
         title: "DOCTORES",
       ),
       bodySliver: SliverToBoxAdapter(

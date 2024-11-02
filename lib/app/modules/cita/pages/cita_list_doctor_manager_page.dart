@@ -53,7 +53,6 @@ class CitaListDoctorManagerPage extends StatelessWidget with ResponsiveWidgetMix
 
     return PageBasePhoneBeta(
       headerWidget: const HeaderMobile(
-        subTitle: "Doctor",
         title: "CITAS",
       ),
       bodySliver: [
