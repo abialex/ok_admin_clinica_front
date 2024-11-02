@@ -31,6 +31,10 @@ class AppConstColors {
   static const Color orange = Colors.orange;
   static const Color blue = Colors.blue;
   static const Color green = Colors.green;
+  static const Color green1 = Color(0xff106A7C);
+  static const Color green2 = Color(0xff1F9A89);
+  static const Color green3 = Color(0xff0C4F54);
+
   static const Color grey = Colors.grey;
   static const Color purple = Colors.purple;
   static const Color red = Colors.red;

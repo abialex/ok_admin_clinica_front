@@ -13,6 +13,7 @@ import 'package:admin_clinica_front/app/common/widget/app_box.dart';
 import 'package:admin_clinica_front/app/common/widget/app_list_doctor_horizontal_scroll.dart';
 import 'package:admin_clinica_front/app/common/widget/app_loader_mini.dart';
 import 'package:admin_clinica_front/app/common/cubits/count_isolate_cubit.dart';
+import 'package:admin_clinica_front/app/common/widget/date/app_calendar_time_line.dart';
 import 'package:admin_clinica_front/app/common/widget/date/app_date_picker_cupertino.dart';
 import 'package:admin_clinica_front/app/common/widget/page/mobile/app_header_mobile.dart';
 import 'package:admin_clinica_front/app/common/widget/page/page_base_desktop.dart';
@@ -23,7 +24,6 @@ import 'package:admin_clinica_front/app/config/routes/router.dart';
 import 'package:admin_clinica_front/app/data/repository/storage/ilocal_repository.dart';
 import 'package:admin_clinica_front/app/modules/cita/bloc/cita_crear_bloc/cita_create_bloc.dart';
 import 'package:admin_clinica_front/app/modules/cita/bloc/cita_crear_bloc/cita_create_event.dart';
-import 'package:admin_clinica_front/app/modules/cita/widget/app_calendar_widget.dart';
 import 'package:admin_clinica_front/app/modules/cita/widget/cita_card_asist_recep.dart';
 import 'package:admin_clinica_front/app/modules/cita/widget/cita_card_asist_recep_desktop.dart';
 import 'package:admin_clinica_front/app/common/widget/app_list_doctor_horizontal.dart';
@@ -127,6 +127,7 @@ class CitaListAsistenteDoctorPage extends StatelessWidget with ResponsiveWidgetM
 
     return PageBaseDesktop(
       title: "CITAS",
+      backgroundColor: AppConstColors.white,
       bodyWidget: Builder(builder: (context) {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -161,79 +162,50 @@ class CitaListAsistenteDoctorPage extends StatelessWidget with ResponsiveWidgetM
                 ),
               ],
             ),
+            AppCalendarTimeLine(
+              onDateChange: (value) {
+                request = request.copyWith(fechaHoraCita: value.toFormatyyyyMMdd());
+                citaBloc.add(CitaEvent.getCitas(request));
+              },
+            ),
             Expanded(
-              child: Row(
+              child: Column(
                 children: [
                   Expanded(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        AppCalendarWidget(
-                          onDaySelected: (value) {
-                            request = request.copyWith(fechaHoraCita: value.toFormatyyyyMMdd());
-                            citaBloc.add(CitaEvent.getCitas(request));
+                    child: BlocBuilder<CitaBloc, CitaState>(
+                      builder: (context, state) {
+                        if (state is CitaLoading) {
+                          return SvgPicture.asset(
+                            AppConstSvgs.logo,
+                            height: 125,
+                            color: AppConstColors.slgPrincipal,
+                          )
+                              .animate(
+                                onPlay: (controller) => controller.loop(),
+                              )
+                              .rotate(
+                                duration: 1.25.seconds,
+                              );
+                        }
+                        return CitasGroupedByHourAsistRecepDesktop(
+                          citas: citaList,
+                          onAdd: (hora, horaString) {
+                            context.read<CitaCreateBloc>().add(CitaCreateEvent.citaPreCreateLocal(doctorSelected, request.fechaHoraCitaDate!, hora, horaString));
+                            Navigator.pushNamed(
+                              context,
+                              Routes.base_asistenteRecepcion + Routes.cita_add,
+                            );
                           },
-                        ),
-                      ],
-                    ),
-                  ),
-                  // Expanded(
-                  //   child: Padding(
-                  //     padding: const EdgeInsets.fromLTRB(5, 15, 5, 10),
-                  //     child: SfDateRangePicker(
-                  //       selectionMode: DateRangePickerSelectionMode.single,
-                  //       backgroundColor: AppConstColors.lightBackgroundColor,
-                  //       onSelectionChanged: (value) {
-                  //         final dateSelectedSf = DateTime.parse(value.value.toString());
-                  //         request = request.copyWith(fechaHoraCita: dateSelectedSf.toFormatyyyyMMdd());
-                  //         citaBloc.add(CitaEvent.getCitas(request));
-                  //       },
-                  //     ),
-                  //   ),
-                  // ),
-                  Expanded(
-                    flex: 3,
-                    child: Column(
-                      children: [
-                        Expanded(
-                          child: BlocBuilder<CitaBloc, CitaState>(
-                            builder: (context, state) {
-                              if (state is CitaLoading) {
-                                return SvgPicture.asset(
-                                  AppConstSvgs.logo,
-                                  height: 125,
-                                  color: AppConstColors.slgPrincipal,
-                                )
-                                    .animate(
-                                      onPlay: (controller) => controller.loop(),
-                                    )
-                                    .rotate(
-                                      duration: 1.25.seconds,
-                                    );
-                              }
-                              return CitasGroupedByHourAsistRecepDesktop(
-                                citas: citaList,
-                                onAdd: (hora, horaString) {
-                                  context.read<CitaCreateBloc>().add(CitaCreateEvent.citaPreCreateLocal(doctorSelected, request.fechaHoraCitaDate!, hora, horaString));
-                                  Navigator.pushNamed(
-                                    context,
-                                    Routes.base_asistenteRecepcion + Routes.cita_add,
-                                  );
-                                },
-                                onBlock: (hora) {
-                                  final fechaHora = (request.fechaHoraCitaDate?.copyWith(hour: hora));
-                                  return CitaOcupadaCreateModel(doctorId: request.doctorId!, fechaHoraCita: fechaHora!.toFormatyyyyMMddHHmmss());
-                                  // context.read<CitaBloc>().add(CitaEvent.blockCita());
-                                },
-                                onRelease: (citaId) {
-                                  // context.read<CitaBloc>().add(CitaEvent.freeCita(citaId));
-                                },
-                              ).animate().fade();
-                            },
-                          ),
-                        ),
-                      ],
+                          onBlock: (hora) {
+                            final fechaHora = (request.fechaHoraCitaDate?.copyWith(hour: hora));
+                            return CitaOcupadaCreateModel(doctorId: request.doctorId!, fechaHoraCita: fechaHora!.toFormatyyyyMMddHHmmss());
+                            // context.read<CitaBloc>().add(CitaEvent.blockCita());
+                          },
+                          onRelease: (citaId) {
+                            // context.read<CitaBloc>().add(CitaEvent.freeCita(citaId));
+                          },
+                        ).animate().fade();
+                      },
                     ),
                   ),
                 ],

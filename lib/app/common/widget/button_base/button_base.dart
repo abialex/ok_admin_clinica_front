@@ -9,18 +9,21 @@ class ButtonCustomBase extends StatelessWidget {
   final void Function()? onClick;
   final EdgeInsets padding;
   final double? width;
-  const ButtonCustomBase(
-      {super.key,
-      required this.backgroundColor,
-      required this.textColor,
-      required this.text,
-      this.padding = const EdgeInsets.symmetric(
-        horizontal: 20,
-        vertical: 10,
-      ),
-      this.height,
-      this.onClick,
-      this.width});
+  final Widget? suffix;
+  const ButtonCustomBase({
+    super.key,
+    required this.backgroundColor,
+    required this.textColor,
+    required this.text,
+    this.padding = const EdgeInsets.symmetric(
+      horizontal: 20,
+      vertical: 10,
+    ),
+    this.height,
+    this.onClick,
+    this.width,
+    this.suffix,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -44,12 +47,17 @@ class ButtonCustomBase extends StatelessWidget {
             ),
           ],
         ),
-        child: Text(
-          text,
-          style: TextStyle(
-            color: textColor,
-            fontWeight: FontWeight.w600,
-          ),
+        child: Row(
+          children: [
+            Text(
+              text,
+              style: TextStyle(
+                color: textColor,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+            if (suffix != null) suffix!
+          ],
         ),
       ),
     );
