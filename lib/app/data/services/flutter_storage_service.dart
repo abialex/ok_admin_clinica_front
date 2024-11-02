@@ -6,7 +6,7 @@ import 'package:admin_clinica_front/app/common/models/doctor/doctor_dto.dart';
 import 'package:admin_clinica_front/app/config/key_storage.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-import '../../common/models/usuario/user_dto.dart';
+import '../../common/models/usuario/user_response_data_model.dart';
 
 class FlutterStorageService {
   final FlutterSecureStorage _secureStorage;
@@ -17,7 +17,7 @@ class FlutterStorageService {
     await _secureStorage.write(key: KeyStorage.AUTH_TOKEN, value: token);
   }
 
-  Future<void> saveUsuario(UserLoginDTO user) async {
+  Future<void> saveUsuario(UserResponseDataModel user) async {
     await _secureStorage.write(key: KeyStorage.USER, value: jsonEncode(user.toJson()));
   }
 
@@ -29,9 +29,9 @@ class FlutterStorageService {
     await _secureStorage.delete(key: KeyStorage.AUTH_TOKEN);
   }
 
-  Future<UserLoginDTO?> getUsuario() async {
+  Future<UserResponseDataModel?> getUsuario() async {
     final result = await _secureStorage.read(key: KeyStorage.USER);
-    return result != null ? UserLoginDTO.fromJson(jsonDecode(result)) : null;
+    return result != null ? UserResponseDataModel.fromJson(jsonDecode(result)) : null;
   }
 
   Future<DoctorDto?> getDoctorSelected() async {

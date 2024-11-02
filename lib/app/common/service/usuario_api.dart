@@ -1,7 +1,7 @@
 import 'package:admin_clinica_front/app/common/service/base_api.dart';
 import 'package:admin_clinica_front/app/common/models/api_model/api_model.dart';
 import 'package:admin_clinica_front/app/common/models/usuario/authenticated_dto.dart';
-import 'package:admin_clinica_front/app/common/models/usuario/user_dto.dart';
+import 'package:admin_clinica_front/app/common/models/usuario/user_response_data_model.dart';
 import 'package:admin_clinica_front/app/common/utils/api_utils.dart';
 import 'package:dio/dio.dart';
 import 'package:either_dart/either.dart';
@@ -13,12 +13,12 @@ class UsuarioApi implements BaseApi {
   String get url => "session/";
   UsuarioApi(this._dio);
 
-  Future<Either<String, UserLoginDTO>> login(LoginUserDto loginUserDto) async {
+  Future<Either<String, UserResponseDataModel>> login(LoginUserDto loginUserDto) async {
     final response = await _dio.post<ApiModel>(
       "${url}login",
       data: loginUserDto.toJson(),
     );
-    return ApiUtils.reponseHandler(response, (data) => UserLoginDTO.fromJson(data));
+    return ApiUtils.reponseHandler(response, (data) => UserResponseDataModel.fromJson(data));
   }
 
   Future<Either<String, AuthenticatedDTO>> authenticated(String token) async {

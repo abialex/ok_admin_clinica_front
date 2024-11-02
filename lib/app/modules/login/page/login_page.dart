@@ -5,7 +5,7 @@ import 'package:admin_clinica_front/app/common/blocs/firebase/firebase_notificat
 import 'package:admin_clinica_front/app/common/constants/app_const_svgs.dart';
 import 'package:admin_clinica_front/app/common/constants/app_const_colors.dart';
 import 'package:admin_clinica_front/app/common/blocs/usuario_session/bloc/usuario_bloc.dart';
-import 'package:admin_clinica_front/app/common/models/usuario/user_dto.dart';
+import 'package:admin_clinica_front/app/common/models/usuario/user_response_data_model.dart';
 import 'package:admin_clinica_front/app/common/widget/app_connection_widget.dart';
 import 'package:admin_clinica_front/app/config/routes/app_routes.dart';
 import 'package:admin_clinica_front/app/config/routes/router.dart';
@@ -47,7 +47,7 @@ class LoginPageState extends State<LoginPage> {
     context.read<LoginBloc>().add(const LoginEvent.authenticated());
   }
 
-  loadModules(UserLoginDTO usuario) {
+  loadModules(UserResponseDataModel usuario) {
     //buscando los modulos asignados a este usuario
     final router = modulesRouterList.where((e) => e.modulesName == usuario.rol && e.modulesTipo == usuario.tipo).firstOrNull;
     //buscando el index del Home

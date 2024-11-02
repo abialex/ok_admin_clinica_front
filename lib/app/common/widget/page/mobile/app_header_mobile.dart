@@ -1,6 +1,6 @@
 import 'package:admin_clinica_front/app/common/blocs/firebase/firebase_notification_bloc.dart';
 import 'package:admin_clinica_front/app/common/constants/app_const_svgs.dart';
-import 'package:admin_clinica_front/app/common/models/usuario/user_dto.dart';
+import 'package:admin_clinica_front/app/common/models/usuario/user_response_data_model.dart';
 import 'package:admin_clinica_front/app/config/app_dependecy_injection.dart';
 import 'package:admin_clinica_front/app/common/constants/app_const_colors.dart';
 import 'package:admin_clinica_front/app/config/routes/router.dart';
@@ -47,9 +47,9 @@ class HeaderMobile extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  FutureBuilder<UserLoginDTO?>(
+                  FutureBuilder<UserResponseDataModel?>(
                     future: auth.getUsuario(),
-                    builder: (BuildContext context, AsyncSnapshot<UserLoginDTO?> snapshot) {
+                    builder: (BuildContext context, AsyncSnapshot<UserResponseDataModel?> snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
                         return const CircularProgressIndicator();
                       } else if (snapshot.hasError) {

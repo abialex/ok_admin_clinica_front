@@ -1,5 +1,5 @@
 import 'package:admin_clinica_front/app/common/models/usuario/login_user_dto.dart';
-import 'package:admin_clinica_front/app/common/models/usuario/user_dto.dart';
+import 'package:admin_clinica_front/app/common/models/usuario/user_response_data_model.dart';
 import 'package:admin_clinica_front/app/common/repository/usuario/iusuario_repository.dart';
 import 'package:admin_clinica_front/app/config/app_dependecy_injection.dart';
 import 'package:admin_clinica_front/app/data/repository/storage/ilocal_repository.dart';

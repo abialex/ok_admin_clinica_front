@@ -1,5 +1,5 @@
 import 'package:admin_clinica_front/app/common/models/doctor/doctor_dto.dart';
-import 'package:admin_clinica_front/app/common/models/usuario/user_dto.dart';
+import 'package:admin_clinica_front/app/common/models/usuario/user_response_data_model.dart';
 
 import 'ilocal_repository.dart';
 import '../../services/flutter_storage_service.dart';
@@ -19,12 +19,12 @@ class FlutterStorageRepository implements ILocalRepository {
   }
 
   @override
-  Future<void> saveUsuario(UserLoginDTO userLoginDTO) {
+  Future<void> saveUsuario(UserResponseDataModel userLoginDTO) {
     return _local.saveUsuario(userLoginDTO);
   }
 
   @override
-  Future<UserLoginDTO?> getUsuario() {
+  Future<UserResponseDataModel?> getUsuario() {
     // TODO: implement getUsuario
     return _local.getUsuario();
   }

@@ -3,5 +3,5 @@ part of 'home_bloc.dart';
 @freezed
 class HomeEvent with _$HomeEvent {
   const factory HomeEvent.started() = _Started;
-  const factory HomeEvent.setupDoctors(UserLoginDTO? usuario) = SetupUsuarioEvent;
+  const factory HomeEvent.setupDoctors(UserResponseDataModel? usuario) = SetupUsuarioEvent;
 }

@@ -5,7 +5,7 @@ import 'package:admin_clinica_front/app/common/models/doctor/doctor_dto.dart';
 import 'package:admin_clinica_front/app/config/key_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../common/models/usuario/user_dto.dart';
+import '../../common/models/usuario/user_response_data_model.dart';
 
 class SharedPreferencesService {
   final SharedPreferences _sharedPreferences;
@@ -16,17 +16,17 @@ class SharedPreferencesService {
     // await preferences.setString(_KeyStorage.AUTH_TOKEN, token);
   }
 
-  Future<void> saveUsuario(UserLoginDTO userLoginDTO) async {
+  Future<void> saveUsuario(UserResponseDataModel userLoginDTO) async {
     String jsonString = json.encode(userLoginDTO.toJson());
     _sharedPreferences.setString(KeyStorage.USER, jsonString);
 
     // await preferences.write(key: _KeyStorage.USER, value: "user");
   }
 
-  Future<UserLoginDTO?> getUsuario() async {
+  Future<UserResponseDataModel?> getUsuario() async {
     final result = _sharedPreferences.getString(KeyStorage.USER);
     if (result == null) return null;
-    return UserLoginDTO.fromJson(jsonDecode(result));
+    return UserResponseDataModel.fromJson(jsonDecode(result));
   }
 
   Future<String?> getToken() async {

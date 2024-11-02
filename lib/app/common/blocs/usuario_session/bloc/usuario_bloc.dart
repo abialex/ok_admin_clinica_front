@@ -1,5 +1,5 @@
 import 'package:admin_clinica_front/app/common/models/doctor/doctor_dto.dart';
-import 'package:admin_clinica_front/app/common/models/usuario/user_dto.dart';
+import 'package:admin_clinica_front/app/common/models/usuario/user_response_data_model.dart';
 import 'package:admin_clinica_front/app/data/repository/storage/ilocal_repository.dart';
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -35,7 +35,7 @@ class UsuarioBloc extends Bloc<UsuarioEvent, UsuarioState> {
     add(SetupUsuarioEvent(result));
   }
 
-  setUsuario(UserLoginDTO usuario) async {
+  setUsuario(UserResponseDataModel usuario) async {
     await _localRepository.saveUsuario(usuario);
     await _localRepository.saveToken(usuario.token);
     add(SetUsuarioEvent(usuario));

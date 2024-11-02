@@ -1,6 +1,6 @@
 import 'package:admin_clinica_front/app/common/models/usuario/authenticated_dto.dart';
 import 'package:admin_clinica_front/app/common/models/usuario/login_user_dto.dart';
-import 'package:admin_clinica_front/app/common/models/usuario/user_dto.dart';
+import 'package:admin_clinica_front/app/common/models/usuario/user_response_data_model.dart';
 import 'package:admin_clinica_front/app/common/repository/usuario/iusuario_repository.dart';
 import 'package:either_dart/either.dart';
 import '../../service/usuario_api.dart';
@@ -15,7 +15,7 @@ class UsuarioRepository implements IUsuarioRepository {
   }
 
   @override
-  Future<Either<String, UserLoginDTO>> login(LoginUserDto loginUserDto) async {
+  Future<Either<String, UserResponseDataModel>> login(LoginUserDto loginUserDto) async {
     return await _api.login(loginUserDto);
   }
 
