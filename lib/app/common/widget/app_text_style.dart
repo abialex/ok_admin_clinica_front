@@ -140,9 +140,11 @@ class AppTextGlobal {
         fontWeight: fontWeight,
       );
 
-  static Text largeText({required String text}) => _BaseText.largeText(
+  static Text largeText({required String text, FontWeight? fontWeight, double? fontSize}) => _BaseText.largeText(
         text: text,
         color: AppConstColors.blueSecondary,
+        fontWeight: fontWeight,
+        fontSize: fontSize,
       );
 
   static Text labelLightText({

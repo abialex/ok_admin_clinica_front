@@ -10,6 +10,7 @@ import 'package:admin_clinica_front/app/common/models/request/request_model.dart
 import 'package:admin_clinica_front/app/common/service/doctor_api.dart';
 import 'package:admin_clinica_front/app/common/utils/extensions/date_time_extensions.dart';
 import 'package:admin_clinica_front/app/common/widget/app_box.dart';
+import 'package:admin_clinica_front/app/common/widget/app_list_carousel_doctor.dart';
 import 'package:admin_clinica_front/app/common/widget/app_list_doctor_horizontal_scroll.dart';
 import 'package:admin_clinica_front/app/common/widget/app_loader_mini.dart';
 import 'package:admin_clinica_front/app/common/cubits/count_isolate_cubit.dart';
@@ -26,7 +27,6 @@ import 'package:admin_clinica_front/app/modules/cita/bloc/cita_crear_bloc/cita_c
 import 'package:admin_clinica_front/app/modules/cita/bloc/cita_crear_bloc/cita_create_event.dart';
 import 'package:admin_clinica_front/app/modules/cita/widget/cita_card_asist_recep.dart';
 import 'package:admin_clinica_front/app/modules/cita/widget/cita_card_asist_recep_desktop.dart';
-import 'package:admin_clinica_front/app/common/widget/app_list_doctor_horizontal.dart';
 import 'package:admin_clinica_front/app/modules/doctor/bloc/doctor_list_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -135,7 +135,9 @@ class CitaListAsistenteDoctorPage extends StatelessWidget with ResponsiveWidgetM
             AppBox.h10,
             Row(
               children: [
+                const Expanded(child: SizedBox.shrink()),
                 Expanded(
+                  flex: 10,
                   child: BlocBuilder<DoctorListBloc, DoctorListState>(
                     builder: (context, state) {
                       if (doctorList.isEmpty) {
@@ -143,7 +145,7 @@ class CitaListAsistenteDoctorPage extends StatelessWidget with ResponsiveWidgetM
                       }
                       return SizedBox(
                         height: 60,
-                        child: ListDoctorHorizontal(
+                        child: AppListCarouselDoctor(
                           doctorIdInitialSelected: request.doctorId,
                           doctors: doctorList,
                           onChanged: (doctor) {
@@ -160,6 +162,7 @@ class CitaListAsistenteDoctorPage extends StatelessWidget with ResponsiveWidgetM
                     },
                   ),
                 ),
+                const Expanded(child: SizedBox.shrink()),
               ],
             ),
             AppCalendarTimeLine(
