@@ -74,7 +74,7 @@ class _AppCalendarWidgetState extends State<AppCalendarWidget> {
             ),
           ),
         ),
-        rowHeight: 30,
+        rowHeight: 25,
         selectedDayPredicate: (day) {
           return isSameDay(_selectedDay, day);
         },

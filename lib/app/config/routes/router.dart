@@ -1,7 +1,7 @@
 // ignore_for_file: constant_identifier_names, unused_element
 
 import 'package:admin_clinica_front/app/modules/atencion/page.dart';
-import 'package:admin_clinica_front/app/modules/cita/pages/cita_list_asistente_administrador_page.dart';
+import 'package:admin_clinica_front/app/modules/cita/pages/cita_list_asistente_doctor_page.dart';
 import 'package:admin_clinica_front/app/modules/cita/pages/cita_list_doctor_general_page.dart';
 import 'package:admin_clinica_front/app/modules/cita/widget/cita_update_page.dart';
 import 'package:admin_clinica_front/app/modules/cita/pages/cita_add_doctor_manager_page.dart';
@@ -16,7 +16,7 @@ import 'package:flutter/material.dart';
 import 'package:upgrader/upgrader.dart';
 
 import '../../modules/cita/widget/cita_add_page.dart';
-import '../../modules/cita/pages/cita_list_asistente_doctor_page.dart';
+import '../../modules/cita/pages/cita_list_asistente_administrador_page.dart';
 import '../../modules/doctor/page/doctor_add_asistente_administrador_page.dart';
 import '../../modules/doctor/page/doctor_list_asistente_administrador_page.dart';
 import '../../modules/doctor/page/doctor_list_asistente_doctor_page.dart';

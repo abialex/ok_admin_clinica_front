@@ -25,7 +25,6 @@ class CitaDoctorCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const sizeButtonLeft = 25.0;
     return BlocProvider(
       create: (context) => CitaIndexBloc(),
       child: BlocBuilder<CitaIndexBloc, CitaIndexState>(
@@ -68,24 +67,13 @@ class CitaDoctorCard extends StatelessWidget {
                     children: [
                       Row(
                         children: [
-                          Container(
-                            decoration: const BoxDecoration(
-                              color: AppConstColors.slg01,
-                              borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(10.0),
-                                topRight: Radius.circular(10.0),
-                              ),
-                            ),
-                            width: sizeButtonLeft,
-                            child: const Icon(Icons.abc),
-                          ),
                           Expanded(
                             child: Padding(
                               padding: const EdgeInsets.all(10.0),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  AppBox.h20,
+                                  AppBox.h10,
                                   if (cita.datosPaciente != null)
                                     Row(
                                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -115,28 +103,27 @@ class CitaDoctorCard extends StatelessWidget {
                                       ],
                                     ),
                                   AppBox.h10,
-
                                   if (cita.razon != null)
                                     Row(
                                       children: [
-                                        AppTextGlobal.labelLightText(text: "Razón:", fontSize: 13),
-                                        AppBox.w4,
-                                        AppTextGlobal.lightText(text: stt.cita.razon!, fontSize: 13),
-                                      ],
-                                    ),
-                                  if (cita.razonOcupado != null) ...[
-                                    const SizedBox(height: 5.0),
-                                    Text('Razón Ocupado: ${stt.cita.razonOcupado}'),
-                                  ],
-                                  AppBox.h4,
-
-                                  Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      // AppTextGlobal.labelLightText(text: "Estado:"),
-                                      Container(
+                                        Expanded(
+                                          child: Row(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              AppTextGlobal.labelLightText(text: "Razón:", fontSize: 13),
+                                              AppBox.w4,
+                                              Expanded(
+                                                  child: AppTextGlobal.lightText(
+                                                text: stt.cita.razon ?? 'sin razón',
+                                                fontSize: 13,
+                                                maxLines: 2,
+                                              )),
+                                            ],
+                                          ),
+                                        ),
+                                        Container(
                                           alignment: Alignment.center,
-                                          width: 110,
+                                          width: 90,
                                           padding: const EdgeInsets.symmetric(
                                             vertical: 2.5,
                                             horizontal: 5,
@@ -152,179 +139,22 @@ class CitaDoctorCard extends StatelessWidget {
                                           child: AppTextGlobal.labelLightText(
                                             text: stt.cita.estadoString,
                                             colorText: AppConstColors.white,
-                                            fontSize: 14,
-                                          ).animate().flip()),
-                                    ],
-                                  ),
-
-                                  // if (cita.fechaConfirmacion != null) ...[
-                                  //   const SizedBox(height: 5.0),
-                                  //   Text('Fecha de Confirmación: ${cita.fechaConfirmacion}'),
-                                  // ],
-                                  // if (cita.fechaValidacion != null) ...[
-                                  //   const SizedBox(height: 5.0),
-                                  //   Text('Fecha de Validación: ${cita.fechaValidacion}'),
-                                  // ],
-                                  // if (cita.fechaInicio != null) ...[
-                                  //   const SizedBox(height: 5.0),
-                                  //   Text('Fecha de Inicio: ${cita.fechaInicio}'),
-                                  // ],
-                                  // if (cita.fechaFin != null) ...[
-                                  //   const SizedBox(height: 5.0),
-                                  //   Text('Fecha de Fin: ${cita.fechaFin}'),
-                                  // ],
-
-                                  AppBox.h16,
+                                            fontSize: 12,
+                                          ).animate().flip(),
+                                        ),
+                                      ],
+                                    ),
+                                  if (cita.razonOcupado != null) ...[
+                                    const SizedBox(height: 5.0),
+                                    Text('Razón Ocupado: ${stt.cita.razonOcupado}'),
+                                  ],
+                                  // AppBox.h4,
                                 ],
                               ),
                             ),
                           ),
                         ],
                       ),
-                      // Positioned(
-                      //   right: 0,
-                      //   top: 0,
-                      //   child: () {
-                      //     switch (stt.cita.estado) {
-                      //       case EstadoCita.pendiente:
-                      //         return _buildActionState(
-                      //           onTap: () {
-                      //             nextCita(context, stt.cita);
-                      //           },
-                      //           builder: () {
-                      //             return Row(
-                      //               crossAxisAlignment: CrossAxisAlignment.center,
-                      //               children: [
-                      //                 AppTextGlobal.labelLightText(text: "Confirmar", fontSize: 12),
-                      //                 AppBox.w2,
-                      //                 SvgPicture.asset(
-                      //                   AppConstSvgs.state_confirmado,
-                      //                   height: 15,
-                      //                   color: EstadoCita.confirmado.color,
-                      //                 )
-                      //                     .animate(
-                      //                       onPlay: (controller) => controller.loop(reverse: true),
-                      //                     )
-                      //                     .slide(
-                      //                       delay: 1.seconds,
-                      //                       duration: 0.8.seconds,
-                      //                       begin: const Offset(0, 0),
-                      //                       end: const Offset(0, -0.5),
-                      //                       curve: Curves.bounceIn,
-                      //                     ),
-                      //               ],
-                      //             );
-                      //           },
-                      //         );
-
-                      //       case EstadoCita.confirmado:
-                      //         return _buildActionState(
-                      //           onTap: () {
-                      //             nextCita(context, stt.cita);
-                      //           },
-                      //           builder: () {
-                      //             return Row(
-                      //               crossAxisAlignment: CrossAxisAlignment.center,
-                      //               children: [
-                      //                 AppTextGlobal.labelLightText(text: "Validar", fontSize: 12),
-                      //                 AppBox.w2,
-                      //                 const Icon(
-                      //                   Icons.warning,
-                      //                   color: AppColors.yellow,
-                      //                   size: 16,
-                      //                 )
-                      //                     .animate(
-                      //                       onPlay: (controller) => controller.loop(reverse: true),
-                      //                     )
-                      //                     .shake(delay: 2.5.seconds, duration: 0.5.seconds),
-                      //               ],
-                      //             );
-                      //           },
-                      //         );
-
-                      //       case EstadoCita.atendiendo:
-                      //         return _buildActionState(
-                      //           onTap: () {
-                      //             nextCita(context, stt.cita);
-                      //           },
-                      //           builder: () {
-                      //             return Row(
-                      //               crossAxisAlignment: CrossAxisAlignment.center,
-                      //               children: [
-                      //                 AppTextGlobal.labelLightText(text: "Finalizar", fontSize: 12),
-                      //                 AppBox.w2,
-                      //                 SvgPicture.asset(
-                      //                   AppConstSvgs.state_finalizado,
-                      //                   height: 15,
-                      //                   color: EstadoCita.finalizado.color,
-                      //                 )
-                      //                     .animate(
-                      //                       onPlay: (controller) => controller.loop(reverse: true),
-                      //                     )
-                      //                     .shake(delay: 2.5.seconds, duration: 0.5.seconds),
-                      //               ],
-                      //             );
-                      //           },
-                      //         );
-
-                      //       case EstadoCita.finalizado:
-                      //         return _buildActionState(
-                      //           onTap: () {
-                      //             nextCita(context, stt.cita);
-                      //           },
-                      //           builder: () {
-                      //             return Row(
-                      //               crossAxisAlignment: CrossAxisAlignment.center,
-                      //               children: [
-                      //                 AppTextGlobal.labelLightText(text: "Validar", fontSize: 12),
-                      //                 AppBox.w2,
-                      //                 SvgPicture.asset(
-                      //                   AppConstSvgs.state_validado,
-                      //                   height: 15,
-                      //                   color: EstadoCita.validado.color,
-                      //                 )
-                      //                     .animate(
-                      //                       onPlay: (controller) => controller.loop(reverse: true),
-                      //                     )
-                      //                     .shake(delay: 2.5.seconds, duration: 0.5.seconds),
-                      //               ],
-                      //             );
-                      //           },
-                      //         );
-                      //       case EstadoCita.validado:
-                      //         return _buildActionState(
-                      //           onTap: () {
-                      //             // nextCita(context, stt.cita);
-                      //           },
-                      //           builder: () {
-                      //             return Row(
-                      //               crossAxisAlignment: CrossAxisAlignment.center,
-                      //               children: [
-                      //                 // AppTextGlobal.labelLightText(text: "Concluido", fontSize: 12),
-                      //                 // AppBox.w2,
-                      //                 SvgPicture.asset(
-                      //                   AppConstSvgs.state_validado,
-                      //                   height: 15,
-                      //                   color: EstadoCita.validado.color,
-                      //                 ),
-                      //               ],
-                      //             );
-                      //           },
-                      //         );
-
-                      //       default:
-                      //         return ButtonCustomBase(
-                      //           backgroundColor: stt.cita.estado.color,
-                      //           textColor: AppColors.white,
-                      //           text: "default",
-                      //           onClick: () {
-                      //             // nextCita(context, stt.cita);
-                      //           },
-                      //         );
-                      //     }
-                      //   }(),
-                      // ),
-                      // *hora
                       Positioned(
                         left: -0,
                         top: -15,
@@ -363,30 +193,30 @@ class CitaDoctorCard extends StatelessWidget {
                         ),
                       ),
                       // *tipó
-                      Positioned(
-                        bottom: 2,
-                        right: 2,
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2.5),
-                          decoration: const BoxDecoration(
-                            // borderRadius: BorderRadius.vertical(top: Radius.circular(10)),
-                            color: AppConstColors.white,
-                          ),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              // AppTextGlobal.labelLightText(text: "Tipo:"),
-                              // AppBox.w4,
-                              AppTextGlobal.lightText(
-                                text: stt.cita.tipoString,
-                                fontSize: 12,
-                                colorText: AppConstColors.grey,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
+                      // Positioned(
+                      //   bottom: 2,
+                      //   right: 2,
+                      //   child: Container(
+                      //     padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2.5),
+                      //     decoration: const BoxDecoration(
+                      //       // borderRadius: BorderRadius.vertical(top: Radius.circular(10)),
+                      //       color: Colors.transparent,
+                      //     ),
+                      //     child: Row(
+                      //       crossAxisAlignment: CrossAxisAlignment.center,
+                      //       mainAxisAlignment: MainAxisAlignment.center,
+                      //       children: [
+                      //         // AppTextGlobal.labelLightText(text: "Tipo:"),
+                      //         // AppBox.w4,
+                      //         AppTextGlobal.lightText(
+                      //           text: stt.cita.tipoString,
+                      //           fontSize: 12,
+                      //           colorText: AppConstColors.grey,
+                      //         ),
+                      //       ],
+                      //     ),
+                      //   ),
+                      // ),
                       // *celular
                       // Positioned(
                       //   bottom: 0,
@@ -431,155 +261,6 @@ class CitaDoctorCard extends StatelessWidget {
                       //     ),
                       //   ),
                       // ),
-
-                      Positioned(
-                        bottom: 0,
-                        left: 0,
-                        top: 17.5,
-                        child: GestureDetector(
-                          onTap: () {
-                            // AppBottomModal.showBottomModal(
-                            //   context,
-                            //   header: Column(
-                            //     children: [
-                            //       AppBox.h10,
-                            //       if (cita.datosPaciente != null)
-                            //         Row(
-                            //           crossAxisAlignment: CrossAxisAlignment.center,
-                            //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            //           children: [
-                            //             Expanded(child: Center(child: AppTextGlobal.lightText(text: stt.cita.datosPaciente!.toUpperCase()))),
-                            //           ],
-                            //         ),
-                            //       if (cita.pacienteDatos != null)
-                            //         Row(
-                            //           crossAxisAlignment: CrossAxisAlignment.center,
-                            //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            //           children: [
-                            //             Expanded(child: Center(child: AppTextGlobal.lightText(text: stt.cita.pacienteDatos!.toUpperCase()))),
-                            //           ],
-                            //         ),
-                            //       AppBox.h10,
-                            //       Row(
-                            //         mainAxisSize: MainAxisSize.max,
-                            //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            //         children: [
-                            //           // AppTextGlobal.labelLightText(text: "Estado:"),
-                            //           Container(
-                            //             alignment: Alignment.center,
-                            //             width: 110,
-                            //             padding: const EdgeInsets.symmetric(
-                            //               vertical: 2.5,
-                            //               horizontal: 5,
-                            //             ),
-                            //             decoration: BoxDecoration(
-                            //               color: stt.cita.estado.color,
-                            //               borderRadius: const BorderRadius.all(
-                            //                 Radius.circular(
-                            //                   10,
-                            //                 ),
-                            //               ),
-                            //             ),
-                            //             child: AppTextGlobal.labelLightText(
-                            //               text: stt.cita.estadoString,
-                            //               colorText: AppColors.white,
-                            //               fontSize: 14,
-                            //             ).animate().flip(),
-                            //           ),
-                            //           Row(
-                            //             children: [
-                            //               const Icon(
-                            //                 Icons.av_timer_rounded,
-                            //                 color: AppColors.slg01,
-                            //               ),
-                            //               // AppTextGlobal.labelLightText(text: "Hora:"),
-                            //               AppBox.w2,
-                            //               AppTextGlobal.labelLightText(text: stt.cita.fechaHoraCita.toFormatHHmm()),
-                            //             ],
-                            //           )
-                            //         ],
-                            //       ),
-                            //     ],
-                            //   ),
-                            //   body: CustomScrollView(
-                            //     slivers: [
-                            //       if (stt.cita.estado == EstadoCita.pendiente)
-                            //         _buildOptionsBottomModal(
-                            //           onTap: () {
-                            //             Navigator.pop(context);
-                            //             Navigator.pushNamed(
-                            //               context,
-                            //               Routes.base_asistenteRecepcion + Routes.cita_update,
-                            //             );
-                            //             context.read<CitaUpdateBloc>().add(CitaUpdateEvent.citaGetById(stt.cita.id));
-                            //           },
-                            //           text: "MODIFICAR",
-                            //         ),
-                            //       if (stt.cita.estado == EstadoCita.pendiente)
-                            //         _buildOptionsBottomModal(
-                            //           onTap: () {
-                            //             dialogCubit.showCustomAlert(
-                            //               titulo: "CANCELAR",
-                            //               texto: "SIN IMPLEMENTAR",
-                            //               icon: Icons.cancel,
-                            //               colorBackground: AppColors.red,
-                            //             );
-                            //           },
-                            //           text: "CANCELAR",
-                            //         ),
-                            //       if (stt.cita.celular != null)
-                            //         _buildOptionsBottomModal(
-                            //           onTap: () {
-                            //             dialogCubit.showCustomAlert(
-                            //               titulo: "Llamar",
-                            //               texto: "Seguro que quiere llamar a ${stt.cita.datosPaciente ?? (stt.cita.pacienteDatos ?? "No tiene nombre")}",
-                            //               icon: Icons.phone,
-                            //               colorBackground: AppColors.blueSunat,
-                            //               onAceptar: () {
-                            //                 FlutterPhoneDirectCaller.callNumber(stt.cita.celular!);
-                            //               },
-                            //             );
-                            //           },
-                            //           text: "LLAMAR",
-                            //         ),
-                            //     ],
-                            //   ),
-                            // );
-                          },
-                          child: Container(
-                            decoration: const BoxDecoration(
-                              color: AppConstColors.slg01,
-                              borderRadius: BorderRadius.only(
-                                bottomRight: Radius.circular(10.0),
-                                topRight: Radius.circular(10.0),
-                              ),
-                            ),
-                            width: sizeButtonLeft,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                const Icon(
-                                  Icons.circle,
-                                  color: AppConstColors.white,
-                                  size: 13,
-                                ),
-                                AppBox.h16,
-                                const Icon(
-                                  Icons.circle,
-                                  color: AppConstColors.white,
-                                  size: 13,
-                                ),
-                                AppBox.h16,
-                                const Icon(
-                                  Icons.circle,
-                                  color: AppConstColors.white,
-                                  size: 13,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      )
                     ],
                   );
                 },
