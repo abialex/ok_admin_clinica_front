@@ -11,7 +11,6 @@ import 'package:admin_clinica_front/app/config/routes/router.dart';
 import 'package:admin_clinica_front/app/common/widget/app_action.dart';
 import 'package:admin_clinica_front/app/common/widget/app_box.dart';
 import 'package:admin_clinica_front/app/common/widget/app_text_style.dart';
-import 'package:admin_clinica_front/app/common/widget/app_timeline_cita.dart';
 import 'package:admin_clinica_front/app/common/widget/button_base/button_base.dart';
 import 'package:admin_clinica_front/app/common/widget/button_base/button_success.dart';
 import 'package:admin_clinica_front/app/common/widget/dialog/dialog_message/cubit/dialog_message_cubit.dart';
@@ -21,6 +20,7 @@ import 'package:admin_clinica_front/app/modules/cita/bloc/cita_hora_bloc/cita_ho
 import 'package:admin_clinica_front/app/modules/cita/bloc/cita_index_bloc/cita_index_bloc.dart';
 import 'package:admin_clinica_front/app/modules/cita/bloc/cita_update_bloc/cita_update_bloc.dart';
 import 'package:admin_clinica_front/app/modules/cita/bloc/cita_update_bloc/cita_update_event.dart';
+import 'package:admin_clinica_front/app/modules/cita/widget/app_timeline_cita_mini.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -90,53 +90,71 @@ class CitasCardAsistRecepDesktop extends StatelessWidget {
                           ),
                           Expanded(
                             child: Padding(
-                              padding: const EdgeInsets.all(10.0),
+                              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 2.5),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   AppBox.h20,
-                                  if (cita.datosPaciente != null)
-                                    Row(
-                                      crossAxisAlignment: CrossAxisAlignment.center,
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        const Icon(
-                                          Icons.person,
-                                          color: AppConstColors.slg01,
-                                        ),
-                                        // AppTextGlobal.labelLightText(text: "Paciente SLG:"),
-                                        Expanded(child: Center(child: AppTextGlobal.lightText(text: stt.cita.datosPaciente!.toUpperCase()))),
-                                        AppBox.w6,
-                                      ],
-                                    ),
-                                  if (cita.paciente?.nombres != null)
-                                    Row(
-                                      crossAxisAlignment: CrossAxisAlignment.center,
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        const Icon(
-                                          Icons.person,
-                                          color: AppConstColors.slg01,
-                                        ),
-                                        // AppTextGlobal.labelLightText(text: "Paciente Libre:"),
-                                        Expanded(child: Center(child: AppTextGlobal.lightText(text: stt.cita.paciente?.nombres?.toUpperCase() ?? 'N.A'))),
-                                        AppBox.w6,
-                                      ],
-                                    ),
                                   AppBox.h10,
-                                  if (cita.razon != null)
-                                    Row(
-                                      children: [
-                                        AppTextGlobal.labelLightText(text: "Razón:", fontSize: 13),
-                                        AppBox.w4,
-                                        AppTextGlobal.lightText(text: stt.cita.razon!, fontSize: 13),
-                                      ],
-                                    ),
+                                  Row(
+                                    children: [
+                                      if (cita.datosPaciente != null)
+                                        Expanded(
+                                          child: Row(
+                                            crossAxisAlignment: CrossAxisAlignment.center,
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              const Icon(
+                                                Icons.person,
+                                                color: AppConstColors.slg01,
+                                              ),
+                                              AppBox.w10,
+                                              // AppTextGlobal.labelLightText(text: "Paciente SLG:"),
+                                              Expanded(
+                                                  child: AppTextGlobal.lightText(
+                                                text: stt.cita.datosPaciente!.toUpperCase(),
+                                                textAlign: TextAlign.left,
+                                                maxLines: 2,
+                                              )),
+                                              AppBox.w6,
+                                            ],
+                                          ),
+                                        ),
+                                      if (cita.paciente?.nombres != null)
+                                        Expanded(
+                                          flex: 3,
+                                          child: Row(
+                                            crossAxisAlignment: CrossAxisAlignment.center,
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              const Icon(
+                                                Icons.person,
+                                                color: AppConstColors.slg01,
+                                              ),
+                                              // AppTextGlobal.labelLightText(text: "Paciente Libre:"),
+                                              Expanded(child: Center(child: AppTextGlobal.lightText(text: stt.cita.paciente?.nombres?.toUpperCase() ?? 'N.A'))),
+                                              AppBox.w6,
+                                            ],
+                                          ),
+                                        ),
+                                      if (cita.razon != null)
+                                        Expanded(
+                                          child: Row(
+                                            mainAxisAlignment: MainAxisAlignment.end,
+                                            children: [
+                                              AppTextGlobal.labelLightText(text: "Razón:", fontSize: 13),
+                                              AppBox.w4,
+                                              AppTextGlobal.lightText(text: stt.cita.razon!, fontSize: 13),
+                                            ],
+                                          ),
+                                        ),
+                                    ],
+                                  ),
                                   if (cita.razonOcupado != null) ...[
                                     const SizedBox(height: 5.0),
                                     Text('Razón Ocupado: ${stt.cita.razonOcupado}'),
                                   ],
-                                  AppBox.h10,
+                                  AppBox.h4,
                                   stt.cita.estadoEnum == EstadoCita.cancelado
                                       ? Row(
                                           mainAxisSize: MainAxisSize.min,
@@ -165,8 +183,8 @@ class CitasCardAsistRecepDesktop extends StatelessWidget {
                                           ],
                                         )
                                       : Padding(
-                                          padding: const EdgeInsets.symmetric(horizontal: 10),
-                                          child: AppTimeLine(
+                                          padding: const EdgeInsets.symmetric(horizontal: 15),
+                                          child: AppTimeLineCitaMini(
                                             itemList: const [
                                               EstadoCita.pendiente,
                                               EstadoCita.confirmado,
@@ -178,6 +196,7 @@ class CitasCardAsistRecepDesktop extends StatelessWidget {
                                             estadoPercent: stt.cita.estadoEnum.percent,
                                           ),
                                         ),
+                                  AppBox.h4,
                                 ],
                               ),
                             ),
@@ -444,15 +463,16 @@ class CitasCardAsistRecepDesktop extends StatelessWidget {
                         ),
                       ),
                       Positioned(
-                        bottom: 2,
-                        right: 12.5,
+                        top: 2.5,
+                        left: 125,
                         child: Row(
                           children: [
                             AppTextGlobal.lightText(
                               text: stt.cita.ubicacion ?? "- -",
-                              fontSize: 10,
+                              fontSize: 7.5,
                               fontWeight: FontWeight.bold,
-                              textAlign: TextAlign.right,
+                              textAlign: TextAlign.left,
+                              colorText: AppConstColors.grey,
                             ),
                           ],
                         ),
