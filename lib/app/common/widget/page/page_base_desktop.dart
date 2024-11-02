@@ -32,14 +32,14 @@ class PageBaseDesktop extends StatelessWidget {
       appBar: AppBar(
         title: AppTextGlobal.labelLargeText(text: title ?? "Título", colorText: AppConstColors.white),
         actions: const [
-          Padding(
-            padding: EdgeInsets.all(8.0),
-            child: Icon(
-              Icons.exit_to_app,
-              color: AppConstColors.white,
-              size: 30,
-            ),
-          )
+          // Padding(
+          //   padding: EdgeInsets.all(8.0),
+          //   child: Icon(
+          //     Icons.exit_to_app,
+          //     color: AppConstColors.white,
+          //     size: 30,
+          //   ),
+          // )
         ],
         centerTitle: true,
         backgroundColor: AppConstColors.slgPrincipal,
@@ -149,7 +149,7 @@ class AppDrawerDesktop extends StatelessWidget {
                 }),
           ),
           ListTile(
-            leading: const Icon(Icons.abc),
+            leading: const Icon(Icons.exit_to_app),
             title: const Text("Cerrar Sesión"),
             onTap: () async {
               final navbarCubit = context.read<NavigatorCubit>();
