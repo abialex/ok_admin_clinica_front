@@ -15,6 +15,7 @@ class PageBaseDesktop extends StatelessWidget {
   final Widget? bodyWidget;
   final Widget? footerWidget;
   final Function()? onTapFloating;
+  final bool showMenu;
   const PageBaseDesktop({
     super.key,
     this.backgroundColor = AppConstColors.lightGray,
@@ -22,6 +23,7 @@ class PageBaseDesktop extends StatelessWidget {
     this.bodyWidget,
     this.footerWidget,
     this.onTapFloating,
+    this.showMenu = true,
   });
 
   @override
@@ -41,7 +43,7 @@ class PageBaseDesktop extends StatelessWidget {
         ],
         centerTitle: true,
         backgroundColor: AppConstColors.slgPrincipal,
-        leading: _buildIconMenu(),
+        leading: showMenu ? _buildIconMenu() : const SizedBox.shrink(),
       ),
       floatingActionButton: onTapFloating != null
           ? FloatingActionButton(

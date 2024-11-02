@@ -10,6 +10,7 @@ class AppInputTextFormField extends StatelessWidget {
     this.sufixIcon,
     this.placeHolderText,
     this.label,
+    this.validator,
     super.key,
   });
   TextEditingController controller;
@@ -17,6 +18,7 @@ class AppInputTextFormField extends StatelessWidget {
   Widget? sufixIcon;
   String? placeHolderText;
   String? label;
+  String? Function(String?)? validator;
 
   @override
   Widget build(BuildContext context) {
@@ -27,6 +29,7 @@ class AppInputTextFormField extends StatelessWidget {
         label: label ?? '',
         placeholder: placeHolderText ?? '',
         sufixIcon: const SizedBox.shrink(),
+        validator: validator,
       ),
     );
   }

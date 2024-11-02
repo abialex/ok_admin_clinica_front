@@ -3,6 +3,28 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 class _BaseText {
+  static Text miniText({
+    required String text,
+    double? fontSize,
+    Color? color,
+    FontWeight? fontWeight,
+    TextAlign? textAlign,
+    int? maxLines,
+  }) {
+    return Text(
+      text,
+      softWrap: true,
+      maxLines: maxLines ?? 1,
+      textAlign: textAlign,
+      style: TextStyle(
+        fontSize: fontSize ?? 12,
+        color: color,
+        fontWeight: fontWeight,
+      ),
+      overflow: TextOverflow.ellipsis,
+    );
+  }
+
   static Text lightText({
     required String text,
     double? fontSize,
@@ -70,6 +92,23 @@ class _BaseText {
 
 class AppTextGlobal {
   // *: BASE PARA EL APP
+
+  static Text miniText({
+    required String text,
+    int? maxLines,
+    double? fontSize,
+    Color colorText = AppConstColors.dark,
+    TextAlign? textAlign,
+    FontWeight? fontWeight,
+  }) =>
+      _BaseText.miniText(
+        text: text,
+        color: colorText,
+        maxLines: maxLines,
+        fontSize: fontSize,
+        textAlign: textAlign,
+        fontWeight: fontWeight,
+      );
   static Text lightText({
     required String text,
     int? maxLines,

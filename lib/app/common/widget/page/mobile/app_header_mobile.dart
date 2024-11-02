@@ -118,12 +118,20 @@ class HeaderMobile extends StatelessWidget {
             ],
           ),
           AppBox.h10,
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              AppTextGlobal.labelMediumText(text: title, colorText: AppConstColors.white).animate().scale(curve: Curves.bounceOut, begin: Offset(0.6, 0.6)),
-            ],
-          )
+          if (title.isNotEmpty)
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                AppTextGlobal.labelMediumText(text: title, colorText: AppConstColors.white).animate().scale(curve: Curves.bounceOut, begin: const Offset(0.6, 0.6)),
+              ],
+            ),
+          if (subTitle != null)
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                AppTextGlobal.labelLightText(text: subTitle!, colorText: AppConstColors.white, fontSize: 14).animate().scale(curve: Curves.bounceOut, begin: const Offset(0.6, 0.6)),
+              ],
+            )
         ],
       ),
     );
