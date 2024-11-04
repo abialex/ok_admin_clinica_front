@@ -69,8 +69,8 @@ class CitaApi {
     return ApiUtils.reponseHandler(response, (data) => (data as List).map((e) => CitaDTO.fromJson(e)).toList());
   }
 
-  Future<Either<String, List<CitaDTO>>> getCitasFilterByIdDoctorParams(dynamic params) async {
-    params = params.isEmpty ? null : params;
+  Future<Either<String, List<CitaDTO>>> getCitasFilterByIdDoctorParams(Map<String, dynamic> params) async {
+    params = params.isEmpty ? {} : params;
 
     final response = await _dio.get<ApiModel>(
       "citas/citas-list-filter-by-iddoctor/",

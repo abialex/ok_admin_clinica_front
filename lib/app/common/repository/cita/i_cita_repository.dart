@@ -19,7 +19,7 @@ abstract class ICitaRepository {
   Future<Either<String, bool>> cancelarCita(int id);
   Future<Either<String, List<CitaDTO>>> getCitasByFechaIdDoctorIdUbicacion(CitaRequest citaRequest);
   Future<Either<String, List<CitaDTO>>> getUbicacionIdDateDoctorId(CitaRequestAdmin citaRequestAdmin);
-  Future<Either<String, List<CitaDTO>>> getCitasFilterByIdDoctorParams(CitaFilterViewModel params);
+  Future<Either<String, List<CitaDTO>>> getCitasFilterByIdDoctorParams(CitaFilterDataModel params);
   Future<Either<String, int>> createCitaAgil(CitaAgilCreateModel citaCreate);
   Future<Either<String, int>> updateCitaAgil(CitaAgilUpdateModel citaUpdate);
   Future<Either<String, int>> createCitaOcupada(CitaOcupadaCreateModel citaCreate);

@@ -51,26 +51,28 @@ class CitaRepository implements ICitaRepository {
   }
 
   @override
-  Future<Either<String, List<CitaDTO>>> getCitasFilterByIdDoctorParams(CitaFilterViewModel paramsView) {
-    final params = {};
+  Future<Either<String, List<CitaDTO>>> getCitasFilterByIdDoctorParams(CitaFilterDataModel paramsView) {
+    final params = <String, dynamic>{};
     if (paramsView.fecha != null) {
-      params['date'] = paramsView.fecha!.toFormatyyyyMMddHHmmss();
+      params['date'] = paramsView.fecha!.toFormatyyyyMMdd();
     }
-    if (paramsView.fecha != null) {
-      params['week'] = paramsView.semana!.toFormatyyyyMMddHHmmss();
+    if (paramsView.semana != null) {
+      params['week'] = paramsView.semana!.toFormatyyyyMMdd();
     }
-    if (paramsView.fecha != null) {
-      params['month'] = paramsView.mes!.toFormatyyyyMMddHHmmss();
-    }
-
-    if (paramsView.ubicacionId != null) {
-      params['ubicacion_id'] = paramsView.fecha;
+    if (paramsView.mes != null) {
+      params['month'] = paramsView.mes!.toFormatyyyyMMdd();
     }
     if (paramsView.ubicacionId != null) {
+      params['ubicacion_id'] = paramsView.ubicacionId;
+    }
+    if (paramsView.doctorId != null) {
       params['doctor_id'] = paramsView.doctorId;
     }
-    if (paramsView.ubicacionId != null) {
+    if (paramsView.tipo != null) {
       params['tipo'] = paramsView.tipo;
+    }
+    if (paramsView.estado != null) {
+      params['estado'] = paramsView.estado;
     }
     return api.getCitasFilterByIdDoctorParams(params);
   }
