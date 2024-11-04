@@ -269,11 +269,11 @@ class LoginPageState extends State<LoginPage> {
                       ),
                     ),
                     AppBox.h10,
-                    const Row(
+                    Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        AppConnectionWidget(),
-                        AppDetailsReleaseWidget(),
+                        if (Platform.isAndroid) const AppConnectionWidget() else const SizedBox.shrink(),
+                        const AppDetailsReleaseWidget(),
                       ],
                     ),
                     AppBox.h4,

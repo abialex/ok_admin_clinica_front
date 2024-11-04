@@ -61,7 +61,9 @@ Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
     },
     (error, stack) {
       log(error.toString(), stackTrace: stack);
-      FirebaseCrashlytics.instance.recordError(error, stack);
+      if (TargetPlatform.android == defaultTargetPlatform) {
+        FirebaseCrashlytics.instance.recordError(error, stack);
+      }
     },
   );
 }
