@@ -151,6 +151,7 @@ class CitaListAsistenteDoctorPage extends StatelessWidget with ResponsiveWidgetM
                           onChanged: (doctor) {
                             request = request.copyWith(doctorId: doctor.id);
                             usuarioBloc.setDoctorSelected(doctor);
+                            doctorSelected = doctor;
                             if (!doctor.is_active) {
                               context.read<CitaBloc>().add(CitaEvent.invalidCita("Este doctor(a) está inactivo"));
                               return;
