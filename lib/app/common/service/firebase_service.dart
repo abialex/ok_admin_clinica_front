@@ -1,10 +1,10 @@
 import 'dart:async';
 
-import 'package:admin_clinica_front/app/config/notification_local.dart';
+// import 'package:admin_clinica_front/app/config/notification_local.dart';
 import 'package:admin_clinica_front/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+// import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 class FirebaseService {
   static Future<void> init() async {
@@ -46,23 +46,23 @@ class FirebaseService {
 
   @pragma('vm:entry-point')
   static Future<void> firebaseMessagingBackgroundHandler(RemoteMessage remoteMessage) async {
-    const AndroidNotificationDetails androidPlatformChannelSpecifics = AndroidNotificationDetails(
-      '12345',
-      'Firebase',
-      channelDescription: 'Canal usado para avisar las entradas de firebase',
-      sound: RawResourceAndroidNotificationSound('pepe'), // Usa un archivo en res/raw
-      importance: Importance.max,
-      priority: Priority.high,
-    );
+    // const AndroidNotificationDetails androidPlatformChannelSpecifics = AndroidNotificationDetails(
+    //   '12345',
+    //   'Firebase',
+    //   channelDescription: 'Canal usado para avisar las entradas de firebase',
+    //   sound: RawResourceAndroidNotificationSound('pepe'), // Usa un archivo en res/raw
+    //   importance: Importance.max,
+    //   priority: Priority.high,
+    // );
 
-    const NotificationDetails platformChannelSpecifics = NotificationDetails(android: androidPlatformChannelSpecifics);
+    // const NotificationDetails platformChannelSpecifics = NotificationDetails(android: androidPlatformChannelSpecifics);
 
-    await flutterLocalNotificationsPlugin.show(
-      0,
-      remoteMessage.data["titulo"] ?? 'N.A',
-      remoteMessage.data["body"] ?? '',
-      platformChannelSpecifics,
-      // payload:
-    );
+    // await flutterLocalNotificationsPlugin.show(
+    //   0,
+    //   remoteMessage.data["titulo"] ?? 'N.A',
+    //   remoteMessage.data["body"] ?? '',
+    //   platformChannelSpecifics,
+    //   // payload:
+    // );
   }
 }
