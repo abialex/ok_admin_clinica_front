@@ -1,0 +1,37 @@
+import 'package:admin_clinica_front/app/common/widget/app_construccion.dart';
+import 'package:admin_clinica_front/app/common/widget/page/mobile/app_header_mobile.dart';
+import 'package:admin_clinica_front/app/common/widget/page/page_base_desktop.dart';
+import 'package:admin_clinica_front/app/common/widget/page/page_base_phone.dart';
+import 'package:admin_clinica_front/app/common/widget/page/page_mixin_base.dart';
+import 'package:flutter/material.dart';
+
+class PacienteListAsistenteAdministradorPage extends StatelessWidget with ResponsiveWidgetMixin {
+  const PacienteListAsistenteAdministradorPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return whatIs(context);
+  }
+
+  @override
+  PageBaseDesktop buildDesktop(BuildContext context) {
+    return const PageBaseDesktop(
+      title: "PACIENTES",
+      bodyWidget: Center(child: ConstruccionAnimated()),
+    );
+  }
+
+  @override
+  PageBasePhone buildMobile(BuildContext context) {
+    return const PageBasePhone(
+        headerWidget: HeaderMobile(title: "PACIENTES"),
+        bodySliver: SliverToBoxAdapter(
+          child: ConstruccionAnimated(),
+        ));
+  }
+
+  @override
+  Widget buildTablet(BuildContext context) {
+    throw UnimplementedError();
+  }
+}
