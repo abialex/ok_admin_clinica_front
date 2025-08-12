@@ -4,38 +4,6 @@
 
 Una aplicación Flutter completa para la administración de clínicas médicas, desarrollada con arquitectura limpia y patrones de diseño modernos. La aplicación permite gestionar citas, doctores, pacientes, asistentes y ubicaciones .
 
-## ✨ Características Principales
-
-### 🔐 **Autenticación y Seguridad**
-- Sistema de login seguro con almacenamiento encriptado
-- Gestión de sesiones de usuario
-- Almacenamiento seguro de credenciales
-
-### 📅 **Gestión de Citas**
-- Programación y gestión de citas médicas
-- Calendario interactivo con vista de timeline
-- Estados de citas (pendiente, confirmada, cancelada)
-- Filtros avanzados de búsqueda
-
-### 👨‍⚕️ **Gestión de Doctores**
-- Registro y perfil de doctores
-- Horarios de disponibilidad
-- Historial de consultas
-
-
-### 📍 **Gestión de Ubicaciones**
-- Múltiples sedes clínicas
-- Configuración de horarios por ubicación
-
-### 🔔 **Notificaciones**
-- Sistema de notificaciones push con Firebase
-- Notificaciones locales
-
-### 📊 **Reportes y Exportación**
-- Exportación a Excel
-- Reportes de asistencia
-- Estadísticas de consultas
-- Integración con servicios externos (SUNAT) coonsulta DNI
 
 ## 🏗️ Arquitectura del Proyecto
 
