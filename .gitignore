@@ -41,6 +41,7 @@
 **/android/**/build/
 **/android/**/*.keystore
 **/android/key.properties
+**/android/app/.cxx/
 
 # iOS/XCode related
 **/ios/**/*.generated.xcconfig

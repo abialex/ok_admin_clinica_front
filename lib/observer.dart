@@ -7,7 +7,6 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:upgrader/upgrader.dart';
-import 'package:window_size/window_size.dart';
 import 'app/config/app_dependecy_injection.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 
@@ -53,8 +52,8 @@ Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
       }
 
       if (TargetPlatform.windows == defaultTargetPlatform || TargetPlatform.macOS == defaultTargetPlatform || TargetPlatform.linux == defaultTargetPlatform) {
-        setWindowMinSize(const Size(500, 360));
-        setWindowMaxSize(Size.infinite);
+        // setWindowMinSize(const Size(500, 360));
+        // setWindowMaxSize(Size.infinite);
       }
 
       runApp(await builder());

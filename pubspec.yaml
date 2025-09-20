@@ -33,16 +33,14 @@ dependencies:
   flutter_bloc: ^8.1.4
   get_it: ^7.7.0
   dio: ^5.3.0
-  flutter_secure_storage: ^4.2.1
+  flutter_secure_storage: ^9.2.4
   json_serializable: ^6.6.2
   either_dart: ^1.0.0
   intl: ^0.19.0
-  shared_preferences: ^2.0.8
-  window_size:
-    path: package/window_size
+  shared_preferences: ^2.3.2
   flutter_animate: ^4.4.1
   flutter_svg:
-  flutter_phone_direct_caller: ^2.1.1
+  flutter_phone_direct_caller: ^2.2.1
   talker_dio_logger: ^4.1.0
   date_picker_timeline: ^1.2.5
   carousel_slider: ^5.0.0
@@ -50,13 +48,13 @@ dependencies:
   flutter_dotenv: ^5.0.2
   dropdown_button2: ^2.3.9
   excel: ^2.0.8
-  permission_handler: ^10.0.0
-  path_provider: ^2.0.9
+  permission_handler: ^11.3.1
+  path_provider: ^2.1.4
   process_run: any
   upgrader: ^10.3.0
   package_info_plus: ^8.0.2
-  url_launcher: ^6.1.7
-  flutter_local_notifications: ^9.0.0
+  url_launcher: ^6.3.0
+  flutter_local_notifications: ^18.0.0
   table_calendar: ^3.1.2
   easy_date_timeline: ^1.1.3
   flutter:
