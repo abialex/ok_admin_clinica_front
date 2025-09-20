@@ -4,8 +4,10 @@ import 'package:admin_clinica_front/app/common/constants/app_const_colors.dart';
 import 'package:admin_clinica_front/app/data/entities/estado_cita.dart';
 import 'package:admin_clinica_front/app/common/widget/app_text_style.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 
 class AppTimeLineCitaMini extends StatelessWidget {
+  final void Function() onTap;
   final List<EstadoCita> itemList;
   final EstadoCita itemSelected;
   final double estadoPercent;
@@ -14,6 +16,7 @@ class AppTimeLineCitaMini extends StatelessWidget {
     required this.itemList,
     required this.itemSelected,
     required this.estadoPercent,
+    required this.onTap,
   });
 
   @override
@@ -39,29 +42,62 @@ class AppTimeLineCitaMini extends StatelessWidget {
               children: List.generate(itemList.length, (index) {
                 // final item = itemList[index];
                 final indexSelected = itemList.indexWhere((element) => element == itemSelected);
-                return Stack(
-                  clipBehavior: Clip.none,
-                  children: [
-                    Container(
-                      width: 15,
-                      padding: EdgeInsets.all(2.5),
-                      child: Container(
-                        decoration: BoxDecoration(shape: BoxShape.circle, color: indexSelected >= index ? AppConstColors.slg01 : AppConstColors.lightGray),
+                return GestureDetector(
+                  onTap: () {
+                    if (indexSelected == index && index != 4) {
+                      onTap();
+                    }
+                  },
+                  child: Stack(
+                    clipBehavior: Clip.none,
+                    children: [
+                      MouseRegion(
+                        cursor: indexSelected == index && index != 4 ? SystemMouseCursors.click : MouseCursor.defer, // mano/pointer
+                        child: Container(
+                          width: 15,
+                          padding: EdgeInsets.all(1.5),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: indexSelected >= index ? AppConstColors.slg01 : AppConstColors.lightGray,
+                            ),
+                            child: indexSelected == index && index != 4
+                                ? CircleAvatar(
+                                    backgroundColor: AppConstColors.slg01,
+                                    child: CircleAvatar(
+                                      radius: 2.5,
+                                      backgroundColor: AppConstColors.white,
+                                    ),
+                                  )
+                                : null,
+                          ),
+                        ).animate(
+                          onComplete: (controller) {
+                            if (indexSelected == index && index != 4) {
+                              controller.loop(reverse: true);
+                            }
+                          },
+                        ).shake(
+                            delay: 3.seconds,
+                            duration: indexSelected == index && index != 4 ? 300.ms : 0.seconds, // cuánto dura la sacudida
+                            hz: 12, // frecuencia de sacudidas durante la duración
+                            offset: const Offset(1, 0) // amplitud (horizontal)
+                            ),
                       ),
-                    ),
-                    Positioned(
-                      bottom: -5,
-                      left: -20,
-                      right: -20,
-                      child: AppTextGlobal.lightText(
-                        text: itemList[index].name,
-                        colorText: indexSelected >= index ? AppConstColors.slg01 : AppConstColors.dark,
-                        fontSize: 10,
-                        textAlign: TextAlign.center,
-                        maxLines: 2,
-                      ),
-                    )
-                  ],
+                      Positioned(
+                        bottom: -7.5,
+                        left: -20,
+                        right: -20,
+                        child: AppTextGlobal.lightText(
+                          text: itemList[index].name,
+                          colorText: indexSelected >= index ? AppConstColors.slg01 : AppConstColors.dark,
+                          fontSize: 10,
+                          textAlign: TextAlign.center,
+                          maxLines: 2,
+                        ),
+                      )
+                    ],
+                  ),
                 );
               }),
             ),

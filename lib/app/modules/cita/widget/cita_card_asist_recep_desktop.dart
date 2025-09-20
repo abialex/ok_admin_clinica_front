@@ -185,6 +185,9 @@ class CitasCardAsistRecepDesktop extends StatelessWidget {
                                       : Padding(
                                           padding: const EdgeInsets.symmetric(horizontal: 15),
                                           child: AppTimeLineCitaMini(
+                                            onTap: () {
+                                              nextCita(context, cita);
+                                            },
                                             itemList: const [
                                               EstadoCita.pendiente,
                                               EstadoCita.confirmado,
@@ -203,71 +206,73 @@ class CitasCardAsistRecepDesktop extends StatelessWidget {
                           ),
                         ],
                       ),
-                      Positioned(
-                        right: -5,
-                        top: -15,
-                        child: () {
-                          switch (stt.cita.estadoEnum) {
-                            case EstadoCita.pendiente:
-                              return _buildActionState(
-                                onTap: () {
-                                  nextCita(context, stt.cita);
-                                },
-                                builder: () {
-                                  return const ActionWidget(
-                                    text: "Confirmar",
-                                    icon: Icons.touch_app,
-                                  );
-                                },
-                              );
+                      //botones
+                      // Positioned(
+                      //   right: -5,
+                      //   top: -15,
+                      //   child: () {
+                      //     switch (stt.cita.estadoEnum) {
+                      //       case EstadoCita.pendiente:
+                      //         return _buildActionState(
+                      //           onTap: () {
+                      //             nextCita(context, stt.cita);
+                      //           },
+                      //           builder: () {
+                      //             return const ActionWidget(
+                      //               text: "Confirmar",
+                      //               icon: Icons.touch_app,
+                      //             );
+                      //           },
+                      //         );
 
-                            case EstadoCita.confirmado:
-                              return _buildActionState(
-                                onTap: () {
-                                  nextCita(context, stt.cita);
-                                },
-                                builder: () {
-                                  return const ActionWidget(
-                                    text: "Validar",
-                                    icon: Icons.warning,
-                                    backgroundColor: AppConstColors.red,
-                                  );
-                                },
-                              );
+                      //       case EstadoCita.confirmado:
+                      //         return _buildActionState(
+                      //           onTap: () {
+                      //             nextCita(context, stt.cita);
+                      //           },
+                      //           builder: () {
+                      //             return const ActionWidget(
+                      //               text: "Validar",
+                      //               icon: Icons.warning,
+                      //               backgroundColor: AppConstColors.red,
+                      //             );
+                      //           },
+                      //         );
 
-                            case EstadoCita.atendiendo:
-                              return const SizedBox.shrink();
+                      //       case EstadoCita.atendiendo:
+                      //         return const SizedBox.shrink();
 
-                            case EstadoCita.finalizado:
-                              return _buildActionState(
-                                onTap: () {
-                                  nextCita(context, stt.cita);
-                                },
-                                builder: () {
-                                  return const ActionWidget(
-                                    text: "Validar",
-                                    icon: Icons.touch_app,
-                                  );
-                                },
-                              );
-                            case EstadoCita.validado:
-                              return const SizedBox.shrink();
+                      //       case EstadoCita.finalizado:
+                      //         return _buildActionState(
+                      //           onTap: () {
+                      //             nextCita(context, stt.cita);
+                      //           },
+                      //           builder: () {
+                      //             return const ActionWidget(
+                      //               text: "Validar",
+                      //               icon: Icons.touch_app,
+                      //             );
+                      //           },
+                      //         );
+                      //       case EstadoCita.validado:
+                      //         return const SizedBox.shrink();
 
-                            case EstadoCita.cancelado:
-                              return const SizedBox.shrink();
+                      //       case EstadoCita.cancelado:
+                      //         return const SizedBox.shrink();
 
-                            default:
-                              return ButtonCustomBase(
-                                backgroundColor: stt.cita.estadoEnum.color,
-                                textColor: AppConstColors.white,
-                                text: "default",
-                                onClick: () {
-                                  // nextCita(context, stt.cita);
-                                },
-                              );
-                          }
-                        }(),
-                      ),
+                      //       default:
+                      //         return ButtonCustomBase(
+                      //           backgroundColor: stt.cita.estadoEnum.color,
+                      //           textColor: AppConstColors.white,
+                      //           text: "default",
+                      //           onClick: () {
+                      //             // nextCita(context, stt.cita);
+                      //           },
+                      //         );
+                      //     }
+                      //   }(),
+                      // ),
+
                       // *hora
                       Positioned(
                         left: -0,
