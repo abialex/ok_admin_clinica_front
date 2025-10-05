@@ -1,10 +1,6 @@
-import 'package:admin_clinica_front/app/config/app_dependecy_injection.dart';
 import 'package:admin_clinica_front/app/common/constants/app_const_colors.dart';
-import 'package:admin_clinica_front/app/common/service/doctor_api.dart';
-import 'package:admin_clinica_front/app/data/repository/storage/ilocal_repository.dart';
 import 'package:admin_clinica_front/app/config/routes/router.dart';
 import 'package:admin_clinica_front/app/common/widget/app_loader_mini.dart';
-import 'package:admin_clinica_front/app/common/widget/dialog/dialog_message/cubit/dialog_message_cubit.dart';
 import 'package:admin_clinica_front/app/common/widget/page/mobile/app_header_mobile.dart';
 import 'package:admin_clinica_front/app/common/widget/page/page_base_desktop.dart';
 import 'package:admin_clinica_front/app/common/widget/page/page_base_phone.dart';
@@ -173,43 +169,7 @@ class DoctorListAsistenteDoctorPage extends StatelessWidget with ResponsiveWidge
 
   @override
   Widget buildTablet(BuildContext context) {
-    final dialog = context.read<DialogMessageCubit>();
-    return Scaffold(
-      backgroundColor: AppConstColors.cyan,
-      appBar: AppBar(
-        backgroundColor: AppConstColors.blueAccent,
-        title: const Text("ss"),
-      ),
-      body: Stack(
-        fit: StackFit.expand,
-        children: [
-          // const DialogCubitPage(),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              const Text(
-                'You have pushed :',
-              ),
-              Text(
-                '3213123',
-                style: Theme.of(context).textTheme.headlineMedium,
-              ),
-            ],
-          ),
-        ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          final api = locator<DoctorApi>();
-          final storage = locator<ILocalRepository>();
-          storage.saveToken("token 1f9579b30ba59f8dc25a853528d3adac2609f69d");
-          final result = await api.getDoctorsByIdUbicacionFromAsistente();
-          result.fold((left) => print(left), (right) => print(right));
-          dialog.showCustomAlert(titulo: "s", texto: "s");
-        },
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
-    );
+    // TODO: implement buildTablet for tablet devices
+    return buildMobile(context);
   }
 }
